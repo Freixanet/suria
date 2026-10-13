@@ -54,9 +54,11 @@ export function dataCompleta(data: string, ll: Llengua): string {
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
-/** '16.15' en català, '16:15' en castellà. */
+/** '16.15' en català, '16:15' en castellà; '9.00', no '09.00'. */
 export function hora(h: string, ll: Llengua): string {
-  return ll === 'ca' ? h.replace(':', '.') : h;
+  // Dins del text, sense zero inicial (IEC: «7.30 h», no «07.30 h»).
+  const sensezero = h.replace(/^0(\d)/, '$1');
+  return ll === 'ca' ? sensezero.replace(':', '.') : sensezero;
 }
 
 /** Interval horari amb ' h': '16.15–17.15 h'. */

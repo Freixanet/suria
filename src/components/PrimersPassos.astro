@@ -18,6 +18,13 @@ const t = traductor(llengua);
 // A la pàgina de tasca (sota l'h1) els passos són h2; a la portada (sota un h2), h3.
 const Titol = detall ? 'h2' : 'h3';
 const moment = (m: { data: string; hora: string }) => `${diaLlarg(m.data, llengua)}, ${hora(m.hora, llengua)} h`;
+// Quan acaba l'últim torn publicat: a partir d'aquí, la pàgina diu que falta informació i porta a la font oficial.
+const fiDarrerTorn = (p: Pas) =>
+  p.guardies
+    .map((g) => instantMadrid(g.finsA.data, g.finsA.hora))
+    .sort((a, b) => a.getTime() - b.getTime())
+    .at(-1)
+    ?.toISOString();
 ---
 <ol class:list={['passos', { portada: !detall }]}>
   {
@@ -46,6 +53,14 @@ const moment = (m: { data: string; hora: string }) => `${diaLlarg(m.data, llengu
                   </li>
                 ))}
               </ul>
+            )}
+            {p.guardies.length > 0 && (
+              <div class="sense-torn" data-caduca={fiDarrerTorn(p)}>
+                <p data-avis-caducat hidden role="status">
+                  <strong>{t('passos.guardia.senseVigent')}</strong>
+                  <a class="accio" href={p.fonts[0].url} hreflang="ca">{t('passos.guardia.fontOficial')}</a>
+                </p>
+              </div>
             )}
             {p.accions.length > 0 && (
               <div class="accions">
@@ -133,6 +148,12 @@ const moment = (m: { data: string; hora: string }) => `${diaLlarg(m.data, llengu
   .portada .guardies li[data-caducat] + li {
     border-top: 0;
     margin-top: 0;
+  }
+  .sense-torn strong {
+    display: block;
+    font-family: var(--font-display-stack);
+    font-weight: 800;
+    margin-top: var(--s-2);
   }
   .acabat {
     display: block;

@@ -57,6 +57,8 @@ const ca = {
   'passos.guardia.fins': 'Fins {fi}',
   'passos.guardia.desde': 'Des de {inici} fins {fi}',
   'passos.guardia.caducada': 'Aquest torn ja ha acabat.',
+  'passos.guardia.senseVigent': 'No tenim el torn de guàrdia actualitzat. Consulta’l a la font oficial.',
+  'passos.guardia.fontOficial': 'Farmàcies de guàrdia a suria.cat',
   'passos.fontResum': 'Seu electrònica de Súria i suria.cat (OAC, voluminosos, farmàcies), consultats el {data}.',
 
   'cap.titol': 'Cap on anem',
@@ -159,6 +161,8 @@ const es: Record<Clau, string> = {
   'passos.guardia.fins': 'Hasta {fi}',
   'passos.guardia.desde': 'Desde {inici} hasta {fi}',
   'passos.guardia.caducada': 'Este turno ya ha terminado.',
+  'passos.guardia.senseVigent': 'No tenemos el turno de guardia actualizado. Consúltalo en la fuente oficial.',
+  'passos.guardia.fontOficial': 'Farmacias de guardia en suria.cat',
   'passos.fontResum': 'Sede electrónica de Súria y suria.cat (OAC, voluminosos, farmacias), consultados el {data}.',
 
   'cap.titol': 'Hacia dónde vamos',

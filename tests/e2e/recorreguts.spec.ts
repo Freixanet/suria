@@ -67,6 +67,23 @@ test.describe('portada', () => {
     await expect(page.locator('.guardies li', { hasText: 'Farmàcia Ripoll' })).toBeVisible();
   });
 
+  test('farmàcia sense cap torn vigent: ho diu i porta a la font oficial (portada i detall)', async ({ page }) => {
+    await rellotge(page, '2026-10-22T10:00:00+02:00');
+    for (const ruta of ['/', '/primers-passos/']) {
+      await page.goto(`${BASE}${ruta}`);
+      const avis = page.getByText('No tenim el torn de guàrdia actualitzat. Consulta’l a la font oficial.');
+      await expect(avis).toBeVisible();
+      await expect(page.getByRole('link', { name: 'Farmàcies de guàrdia a suria.cat' })).toHaveAttribute('href', 'https://www.suria.cat/el-municipi/serveis/farmaciesdeguardia1');
+    }
+  });
+
+  test('farmàcia amb torn vigent: sense avís de manca d’informació', async ({ page }) => {
+    await rellotge(page, '2026-10-21T10:00:00+02:00');
+    await page.goto(`${BASE}/`);
+    await expect(page.getByText('No tenim el torn de guàrdia actualitzat.', { exact: false })).toBeHidden();
+    await expect(page.locator('.guardies li', { hasText: 'Farmàcia Ripoll' })).toBeVisible();
+  });
+
   test('les hores dins del text es componen en la lletra de dades', async ({ page }) => {
     await page.goto(`${BASE}/`);
     const hora = page.locator('.passos .hora').first();

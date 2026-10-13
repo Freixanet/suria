@@ -13,5 +13,6 @@ test('dates i hores en el format de cada llengua (24 h)', () => {
   assert.equal(franja('16:15', '17:15', 'es'), '16:15–17:15 h');
   assert.equal(dataCompleta('2026-10-13', 'ca'), 'Dimarts, 13 d’octubre de 2026');
   assert.equal(dataCompleta('2026-10-13', 'es'), 'Martes, 13 de octubre de 2026');
+  assert.equal(franja('09:00', '14:00', 'ca'), '9.00–14.00 h');
   assert.equal(telefonVisible('+34938682800'), '93 868 28 00');
 });

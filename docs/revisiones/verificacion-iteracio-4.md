@@ -147,7 +147,81 @@ Pendiente: `hreflang` absoluto, a la espera del dominio (T5).
 - Detector de Impeccable: solo los avisos ya justificados (`cramped-padding` en contenedores a sangre, `cream-palette` intencionado y jerarquía orientativa en el detalle).
 - Procedencia de la foto incrustada en el archivo.
 
-## 8. Recomendación tipográfica
+## 8. Revisión posterior al commit `9d65901` (13/10/2026)
+
+### Páginas revisadas en móvil (360 px) y escritorio (1440 px)
+
+Páginas: comercios, primeros pasos, «Què estem provant», «Cap on anem» y error. Ninguna se desborda en horizontal. Corregido (coherencia con el sistema, sin cambiar la dirección):
+
+| Página | Problema | Corrección |
+|---|---|---|
+| Comercios | El estado vacío seguía en una caja clara con borde (estilo de la v3) | Ahora sin caja y abierto con el filete de 2 px, como el resto de listas. El panel claro queda solo para la agenda |
+| «Cap on anem» | La leyenda «Com llegir les etiquetes» mostraba las etiquetas con caja, que ya no se usan | Ahora se ven como en el resto del sitio: texto rojo en versalitas; Idea y Demo, con filete discontinuo |
+| «Cap on anem» y portada | En móvil, el crédito de la foto dejaba un «·» suelto al principio de línea | La licencia y su separador ya no se separan |
+| Primeros pasos y farmacia | Horas con cero inicial («09.00 h») | «9.00 h», según el criterio del IEC; afecta a las dos lenguas |
+| «Què estem provant» y estado vacío | Dos tamaños fuera de la escala tipográfica | Ajustados a la escala |
+
+Avisos del detector descartados:
+- **`design-system-font`**: Astro renombra las fuentes con un sufijo (p. ej. «Schibsted Grotesk-2d57…») y les añade una alternativa calculada («… Fallback»). El detector no las reconoce, pero son las fuentes declaradas en DESIGN.md.
+- **`flat-type-hierarchy` en «Què estem provant»**: los títulos pequeños en versalitas de las listas laterales son una convención del sistema.
+- **`cramped-padding` y `cream-palette`**: ya justificados antes.
+
+### Enlaces entre idiomas
+
+**Funciona en local y está probado** (`tests/e2e/llengua.spec.ts`):
+- En las 6 páginas, CA ⇄ ES lleva a la página equivalente y vuelve.
+- `lang` y `aria-current` son correctos.
+- La lengua elegida se recuerda en el navegador.
+- En la página de error, el selector lleva a la portada de cada lengua.
+- Las etiquetas `<link rel="alternate" hreflang>` existen y apuntan a páginas que responden con 200.
+
+**Lo único que depende del dominio definitivo** (T5). Son metadatos para buscadores, sin efecto en el uso, y el sitio es privado y con `noindex`:
+1. Convertir esos `hreflang` en direcciones absolutas: fijar `site` en `astro.config.mjs` (Lighthouse lo marca).
+2. Añadir `hreflang="x-default"` y `<link rel="canonical">` absolutos, también a partir de `site`.
+
+### Densidad: B antes de consolidar frente a B consolidada
+
+Mismo contenido (semana del 12 al 18 de octubre, las mismas actividades y pasos) y mismas anchuras. B anterior reconstruida desde `archiu/v3-astro-2026-10-13/codi-font.tar.gz` con `SURIA_VARIANT=b`.
+
+| Ancho | Medida | B antes | B consolidada |
+|---|---|---|---|
+| 360 px | Altura media de una actividad | 215 px | 179 px |
+| 360 px | Inicio de «Primers passos» | 1827 px | 1311 px (−516) |
+| 360 px | Altura total | 4559 px | 4217 px |
+| 390 px | Inicio de «Primers passos» | 1726 px | 1280 px |
+| 390 px | Altura total | 4411 px | 4115 px |
+| 1440 px | Altura media de una actividad | 143 px | 119 px |
+| 1440 px | Altura total | 2309 px | 2247 px |
+
+- El primer evento queda en el mismo sitio en todos los casos: 446 px a 360, 416 px a 390 y 438 px a 1440.
+- A 360 px, «Pròximament» pasa de 1338 px a 2222 px (va después de los servicios) y «Menjar i comprar» de 2872 px a 2529 px.
+
+### Farmacia sin turno vigente
+
+Cuando acaba el último turno publicado (22/10, 9.00 h), la portada y la página de primeros pasos muestran:
+- el aviso «No tenim el torn de guàrdia actualitzat. Consulta’l a la font oficial.»;
+- el enlace «Farmàcies de guàrdia a suria.cat», que lleva a la página oficial.
+
+En el detalle, cada turno pasado sigue marcado «Aquest torn ja ha acabat». Sin JavaScript se ven los dos turnos con sus fechas. Está probado con el reloj a 21/10 (turno vigente, sin aviso) y a 22/10 (aviso y enlace).
+
+### Pruebas tras estos cambios
+
+| Prueba | Resultado |
+|---|---|
+| Unitarias | 48/48 |
+| Playwright | 99/99 (incluye idiomas, farmacia, axe, teclado y 200 %) |
+| Lighthouse | 100/100/100 en las 10 mediciones |
+
+### Pendientes explícitos
+
+- Lector de pantalla.
+- Móvil real.
+- Revisión humana del castellano.
+- Antes de las pruebas con vecinos, concretar el acceso privado (D3, T5) y el canal de comentarios (DT4).
+
+Fase de implementación y revisión automática cerrada el 13/10/2026. Los tres pendientes de arriba **siguen abiertos**: axe y Lighthouse no los cubren. Guion de comprobación manual: `docs/pruebas/guion-comprobacion-manual.md`.
+
+## 9. Recomendación tipográfica
 
 Es una recomendación profesional; la decisión es del promotor. Se valora el conjunto, no solo cada fuente por separado.
 

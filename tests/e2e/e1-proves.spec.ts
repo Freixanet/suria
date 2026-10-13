@@ -9,7 +9,7 @@ test('a les 21.45: cada negoci amb el seu estat, mai «obert ara»', async ({ pa
   await page.goto('/menjar-i-comprar/');
   await expect(fitxa(page, 'Restaurant de mostra A').locator('[data-estat-principal]')).toHaveText('Horari comunicat pel negoci: fins a les 23.00');
   await expect(fitxa(page, 'Restaurant de mostra A')).toContainText('El negoci ens ho va dir a les 13.05. No és una garantia en temps real.');
-  await expect(fitxa(page, 'Bar de mostra B').locator('[data-estat-principal]')).toHaveText('Horari comunicat pel negoci: fins a les 01.30');
+  await expect(fitxa(page, 'Bar de mostra B').locator('[data-estat-principal]')).toHaveText('Horari comunicat pel negoci: fins a les 1.30');
   await expect(fitxa(page, 'Forn de mostra C').locator('[data-estat-principal]')).toHaveText('Avui no serveix');
   await expect(fitxa(page, 'Botiga de mostra D').locator('[data-estat-principal]')).toHaveText('Sense confirmar');
   await expect(page.locator('main')).not.toContainText(/obert ara(?!»)/i);
@@ -27,7 +27,7 @@ test('la pàgina oberta passa a «Servei finalitzat» sense recarregar', async (
 test('després de mitjanit: el bar continua fins a la seva hora; la jornada nova és «Sense confirmar»', async ({ page }) => {
   await rellotge(page, '2026-10-13T00:30:00+02:00');
   await page.goto('/menjar-i-comprar/');
-  await expect(fitxa(page, 'Bar de mostra B').locator('[data-estat-principal]')).toHaveText('Horari comunicat pel negoci: fins a les 01.30');
+  await expect(fitxa(page, 'Bar de mostra B').locator('[data-estat-principal]')).toHaveText('Horari comunicat pel negoci: fins a les 1.30');
   await expect(fitxa(page, 'Restaurant de mostra A').locator('[data-estat-principal]')).toHaveText('Sense confirmar');
 });
 
