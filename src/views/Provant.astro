@@ -1,0 +1,85 @@
+---
+import PaginaTasca from './PaginaTasca.astro';
+import { traductor, type Llengua } from '../i18n/ui.ts';
+import { provant } from '../i18n/textos-pagines.ts';
+import { urlDe } from '../i18n/rutes.ts';
+
+interface Props {
+  llengua: Llengua;
+}
+const { llengua } = Astro.props;
+const t = traductor(llengua);
+const x = provant[llengua];
+const nomTasca = { setmana: t('nav.setmana'), menjar: t('nav.menjar'), passos: t('nav.passos') };
+---
+<PaginaTasca llengua={llengua} pagina="provant" titol={t('provant.titol')} descripcio={t('provant.descripcio')} maduresa="En prova">
+  <p class="intro">{x.intro}</p>
+  <section aria-labelledby="h-proves">
+    <h2 id="h-proves" class="titol-serif">{x.provesTitol}</h2>
+    <ol class="proves">
+      {x.proves.map((p) => (
+        <li>
+          <h3><a href={urlDe(p.tasca, llengua)}>{nomTasca[p.tasca]}</a></h3>
+          <p class="pregunta">{p.pregunta}</p>
+          <p>{p.com}</p>
+        </li>
+      ))}
+    </ol>
+    <p class="durada">{x.durada} {x.decisio}</p>
+  </section>
+  <section aria-labelledby="h-dades">
+    <h2 id="h-dades" class="titol-serif">{x.dadesTitol}</h2>
+    <p>{x.dades}</p>
+  </section>
+  <section aria-labelledby="h-opinar">
+    <h2 id="h-opinar" class="titol-serif">{x.opinarTitol}</h2>
+    <p>{x.opinar}</p>
+  </section>
+</PaginaTasca>
+
+<style>
+  .intro {
+    font-size: 1.1875rem;
+    line-height: 1.5;
+    max-width: 38em;
+  }
+  section {
+    margin-top: var(--s-7);
+  }
+  h2 {
+    font-size: var(--t-h2);
+    margin-bottom: var(--s-3);
+  }
+  section > p {
+    max-width: 38em;
+  }
+  .proves {
+    list-style: none;
+    border-top: var(--rule-strong);
+  }
+  .proves li {
+    padding: var(--s-3) 0 var(--s-4);
+    border-bottom: var(--rule-thin);
+  }
+  h3 {
+    font-size: var(--t-h3);
+    font-weight: 800;
+    line-height: 1.3;
+  }
+  h3 a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+  }
+  .pregunta {
+    font-family: var(--font-display-stack);
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 1.4;
+    margin-bottom: var(--s-1);
+  }
+  .durada {
+    margin-top: var(--s-4);
+    font-size: var(--t-small);
+  }
+</style>

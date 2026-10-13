@@ -1,0 +1,22 @@
+---
+import PaginaTasca from './PaginaTasca.astro';
+import Agenda from '../components/Agenda.astro';
+import Proximament from '../components/Proximament.astro';
+import { traductor, type Llengua } from '../i18n/ui.ts';
+import { agenda } from '../lib/dades.ts';
+
+interface Props {
+  llengua: Llengua;
+}
+const { llengua } = Astro.props;
+const t = traductor(llengua);
+const { setmana, aquestaSetmana, proximament } = await agenda();
+const fonts = [
+  ...setmana.fonts,
+  ...[...aquestaSetmana, ...proximament].flatMap((a) => a.fonts.map((f) => ({ ...f, peca: a.titol }))),
+];
+---
+<PaginaTasca llengua={llengua} pagina="setmana" titol={t('setmana.titol')} descripcio={t('setmana.descripcio')} maduresa="En prova" fonts={fonts}>
+  <Agenda llengua={llengua} setmana={setmana} activitats={aquestaSetmana} detall />
+  <Proximament llengua={llengua} activitats={proximament} detall nivell={2} />
+</PaginaTasca>

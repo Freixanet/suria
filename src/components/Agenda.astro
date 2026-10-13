@@ -1,0 +1,61 @@
+---
+// E2: l'agenda d'una setmana declarada. Quan la setmana acaba, la pàgina ho diu.
+import ActivitatAgenda from './ActivitatAgenda.astro';
+import EstatBuit from './EstatBuit.astro';
+import type { Activitat } from '../lib/dades.ts';
+import { traductor, type Llengua } from '../i18n/ui.ts';
+import { rangSetmana } from '../lib/format.ts';
+import { instantMadrid, sumaDies } from '../lib/hora-local.ts';
+
+interface Props {
+  llengua: Llengua;
+  setmana: { inici: string; fi: string };
+  activitats: Activitat[];
+  detall?: boolean;
+}
+const { llengua, setmana, activitats, detall = false } = Astro.props;
+const nivell = detall ? 2 : 3;
+const t = traductor(llengua);
+const rang = rangSetmana(setmana.inici, setmana.fi, llengua);
+const caduca = instantMadrid(sumaDies(setmana.fi, 1), '00:00').toISOString();
+---
+<div class="agenda" data-caduca={caduca}>
+  <p class="vigencia">{rang.charAt(0).toUpperCase() + rang.slice(1)}</p>
+  <div class="caducada" data-avis-caducat hidden role="status">
+    <p>{t('setmana.caducada', { setmana: rang })}</p>
+    <a class="accio" href="https://www.suria.cat/agenda" hreflang="ca">{t('setmana.agendaMunicipal')}</a>
+  </div>
+  {
+    activitats.length > 0 ? (
+      <ul class="llista">
+        {activitats.map((a) => (
+          <ActivitatAgenda activitat={a} llengua={llengua} detall={detall} maduresaSeccio="En prova" nivell={nivell} />
+        ))}
+      </ul>
+    ) : (
+      <EstatBuit titol={t('setmana.buida')}>
+        <a class="accio" href="https://www.suria.cat/agenda" hreflang="ca">{t('setmana.agendaMunicipal')}</a>
+      </EstatBuit>
+    )
+  }
+</div>
+
+<style>
+  .vigencia {
+    font-size: var(--t-meta);
+    color: var(--text-2);
+    margin-bottom: var(--s-3);
+  }
+  .llista {
+    list-style: none;
+    border-top: var(--rule-strong);
+  }
+  .caducada {
+    background: var(--halite);
+    border: 2px solid var(--red-ink);
+    padding: var(--s-3) var(--s-4) var(--s-1);
+    margin-bottom: var(--s-4);
+    font-family: var(--font-display-stack);
+    font-weight: 700;
+  }
+</style>

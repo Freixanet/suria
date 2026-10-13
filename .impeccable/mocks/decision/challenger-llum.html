@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ca"><head><meta charset="utf-8"><title>La secció de llum · Súria (prototip)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@300..800&display=swap" rel="stylesheet">
+<style>
+:root{--lime:#F5F6F3;--poche:#22252A;--sun:#E8B23A;--shade:#7E93B5;--line:#cfd2cc}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1440px;height:900px;overflow:hidden;background:var(--lime);color:var(--poche)}
+body{font-family:Commissioner,sans-serif;font-size:17px;line-height:1.55}
+header{display:flex;justify-content:space-between;align-items:center;height:64px;padding:0 56px;border-bottom:8px solid var(--poche)}
+.logo{font-weight:800;font-size:28px;letter-spacing:-.02em}
+.logo small{font-weight:400;font-size:14px;margin-left:10px;color:#555}
+nav a{color:var(--poche);text-decoration:none;margin-left:24px;font-weight:600;font-size:15px}nav a.on{box-shadow:inset 0 -3px var(--sun)}
+.note{padding:8px 56px;font-size:14px;background:var(--poche);color:var(--lime)}
+.day{position:relative;margin:28px 56px 0;height:190px;border-bottom:2px solid var(--poche)}
+.day h1{font-size:64px;font-weight:300;letter-spacing:-.03em;line-height:1}
+.day h1 b{font-weight:800}
+.band{position:absolute;left:0;right:0;bottom:0;height:70px;display:grid;grid-template-columns:repeat(16,1fr)}
+.band span{border-left:1px solid var(--line);font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;padding:4px 0 0 6px;color:#666}
+.light{position:absolute;bottom:0;height:70px;left:calc(100%/16*4);width:calc(100%/16*11);background:linear-gradient(90deg,rgba(232,178,58,.18),rgba(232,178,58,.55) 60%,rgba(126,147,181,.35))}
+.now{position:absolute;bottom:0;left:calc(100%/16*14 + 15px);width:3px;height:120px;background:var(--poche)}
+.now em{position:absolute;top:-4px;left:10px;font-style:normal;font-weight:800;font-size:15px;white-space:nowrap}
+.rooms{display:grid;grid-template-columns:repeat(3,1fr);margin:0 56px;border-left:2px solid var(--poche)}
+.room{border-right:2px solid var(--poche);padding:20px 24px 0}
+.room .lbl{display:flex;justify-content:space-between;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.room .lbl i{font-style:normal;border:1.5px solid var(--poche);padding:0 6px}
+h2{font-size:30px;font-weight:800;letter-spacing:-.02em;line-height:1.08;margin-bottom:10px}
+h2 a{color:var(--poche);text-decoration:none}
+ul{list-style:none}li{display:grid;grid-template-columns:88px 1fr;gap:10px;padding:7px 0;border-top:1px solid var(--line)}
+li time,li b{font-weight:700;font-variant-numeric:tabular-nums}
+.st{border-left:6px solid var(--sun);background:#fff;padding:10px 12px;margin:4px 0 10px}
+.st strong{display:block;font-size:19px;line-height:1.2}
+.ex{font-size:12px;font-weight:700;text-transform:uppercase;color:#666}
+.src{position:absolute;left:56px;right:56px;bottom:12px;font-size:14px;color:#555}
+</style></head><body>
+<header><div class="logo">Súria<small>prototip</small></div>
+<nav><a class="on" href="#">Inici</a><a href="#">Aquesta setmana</a><a href="#">Menjar i comprar</a><a href="#">Primers passos</a><a href="#">Cap on anem</a><a href="#">Castellano</a></nav></header>
+<div class="note">Prototip experimental i independent, en proves amb veïns de Súria · no és una web de l'Ajuntament</div>
+<section class="day">
+<h1>Dilluns <b>12 d'octubre</b><br>a Súria</h1>
+<div class="light"></div>
+<div class="band"><span>08</span><span>09</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span></div>
+<div class="now"><em>Ara · 22.15</em></div>
+</section>
+<main class="rooms">
+<section class="room"><div class="lbl"><span>Agenda</span><i>En prova</i></div>
+<h2><a href="#">Aquesta setmana a Súria</a></h2>
+<ul><li><time>Dc 14 oct</time><span>Deixalleria mòbil</span></li>
+<li><time>Dj 15 oct</time><span>Unitat Mòbil d'Informació al Consumidor</span></li>
+<li><time>19 oct–8 nov</time><span>Setmana de la Gent Gran</span></li></ul></section>
+<section class="room"><div class="lbl"><span>Comerç</span><i>En prova</i></div>
+<h2><a href="#">Menjar i comprar avui</a></h2>
+<p class="ex">Exemple · dades fictícies</p>
+<div class="st"><strong>Horari comunicat pel negoci: fins a les 23.00</strong>Ens ho va dir a les 13.05.</div>
+<p>Encara no hi ha negocis participants.</p></section>
+<section class="room"><div class="lbl"><span>Nouvinguts</span><i>En prova</i></div>
+<h2><a href="#">Primers passos a Súria</a></h2>
+<ul><li><b>1</b><span>Empadronar-te a la seu electrònica</span></li>
+<li><b>2</b><span>Mobles i poda: dilluns no festius</span></li>
+<li><b>3</b><span>Farmàcia de guàrdia</span></li></ul></section>
+</main>
+<p class="src">Fonts: agenda i tràmits de suria.cat, consultats el 12/10/2026</p>
+</body></html>

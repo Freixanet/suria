@@ -1,0 +1,25 @@
+ordre: 3
+titol:
+  ca: Farmàcia de guàrdia
+  es: Farmacia de guardia
+text:
+  ca: El canvi de guàrdia és a les 9.00 h. Si la farmàcia és tancada, a la porta hi diu on s’atén el servei.
+  es: El cambio de guardia es a las 9:00 h. Si la farmacia está cerrada, en la puerta indica dónde se atiende el servicio.
+guardies:
+  - farmacia: Farmàcia Massó
+    adreca: c. Pompeu Fabra, 1
+    telefon: '+34938682289'
+    desDe: { data: 2026-10-08, hora: '09:00' }
+    finsA: { data: 2026-10-15, hora: '09:00' }
+  - farmacia: Farmàcia Ripoll
+    adreca: c. Salvador Vancell, 8
+    telefon: '+34938694163'
+    desDe: { data: 2026-10-15, hora: '09:00' }
+    finsA: { data: 2026-10-22, hora: '09:00' }
+fonts:
+  - nom:
+      ca: suria.cat, farmàcies de guàrdia
+      es: suria.cat, farmacias de guardia
+    url: https://www.suria.cat/el-municipi/serveis/farmaciesdeguardia1
+consultat: 2026-10-12
+responsable: Promotor del prototip

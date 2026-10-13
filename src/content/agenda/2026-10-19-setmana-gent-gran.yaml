@@ -1,0 +1,32 @@
+titol:
+  ca: Setmana de la Gent Gran
+  es: Setmana de la Gent Gran (semana de las personas mayores)
+dies:
+  inici: 2026-10-19
+  fi: 2026-11-08
+punts:
+  - destacat:
+      ca: Dc 21 d’octubre, 9.15 h
+      es: Mié 21 de octubre, 9:15 h
+    text:
+      ca: Caminada de la Gent Gran, amb sortida a la plaça de la Serradora.
+      es: Caminata de la Gent Gran, con salida en la plaza de la Serradora.
+  - portada: true
+    destacat:
+      ca: Inscripció oberta
+      es: Inscripción abierta
+    text:
+      ca: per al dinar del 8 de novembre (gratuït, places limitades), fins al 23 d’octubre a Drets Socials, planta baixa de la Casa de la Vila.
+      es: para la comida del 8 de noviembre (gratuita, plazas limitadas), hasta el 23 de octubre en Drets Socials, planta baja de la Casa de la Vila.
+enllac:
+  url: https://www.suria.cat/actualitat/noticies/suria-celebrara-una-nova-edicio-de-la-setmana-de-la-gent-gran-a-partir-del-19-doctubre
+  text:
+    ca: Programa complet a suria.cat
+    es: Programa completo en suria.cat
+fonts:
+  - nom:
+      ca: suria.cat, notícia de la Setmana de la Gent Gran
+      es: suria.cat, noticia de la Setmana de la Gent Gran
+    url: https://www.suria.cat/actualitat/noticies/suria-celebrara-una-nova-edicio-de-la-setmana-de-la-gent-gran-a-partir-del-19-doctubre
+consultat: 2026-10-12
+responsable: Promotor del prototip

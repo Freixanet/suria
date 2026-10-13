@@ -1,0 +1,87 @@
+---
+import PaginaTasca from './PaginaTasca.astro';
+import Idees from '../components/Idees.astro';
+import Etiqueta from '../components/Etiqueta.astro';
+import FotoSuria from '../components/FotoSuria.astro';
+import { traductor, type Llengua } from '../i18n/ui.ts';
+import { idees } from '../lib/dades.ts';
+import { fotos } from '../lib/fotos.ts';
+
+interface Props {
+  llengua: Llengua;
+}
+const { llengua } = Astro.props;
+const t = traductor(llengua);
+const llista = await idees();
+const escala = [
+  { m: 'Real', clau: 'cap.escala.real' },
+  { m: 'En prova', clau: 'cap.escala.prova' },
+  { m: 'Demo', clau: 'cap.escala.demo' },
+  { m: 'Idea', clau: 'cap.escala.idea' },
+] as const;
+---
+<PaginaTasca llengua={llengua} pagina="cap" titol={t('cap.titol')} descripcio={t('cap.descripcio')} maduresa="Idea">
+  <FotoSuria foto={fotos.vista} llengua={llengua} format="ampla" sizes="(max-width: 900px) 100vw, 44rem" prioritaria />
+  <p class="identitat">{t('identitat.text')} <span>({t('identitat.font')})</span></p>
+  <Idees llengua={llengua} idees={llista} />
+  <p class="compromis">{t('cap.compromis')}</p>
+  <section class="escala" aria-labelledby="h-escala">
+    <h2 id="h-escala">{t('cap.escala.titol')}</h2>
+    <dl>
+      {escala.map((e) => (
+        <div>
+          <dt><Etiqueta maduresa={e.m} llengua={llengua} /></dt>
+          <dd>{t(e.clau)}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+</PaginaTasca>
+
+<style>
+  .identitat {
+    font-family: var(--font-display-stack);
+    font-weight: 600;
+    font-size: 1.1875rem;
+    line-height: 1.4;
+    margin: var(--s-4) 0 var(--s-2);
+  }
+  .identitat span {
+    font-family: var(--font-text-stack);
+    font-weight: 400;
+    font-size: var(--t-meta);
+    color: var(--text-2);
+  }
+  .compromis {
+    margin-top: var(--s-4);
+    color: var(--text-2);
+  }
+  .escala {
+    margin-top: var(--s-7);
+  }
+  h2 {
+    font-size: var(--t-meta);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding-bottom: var(--s-2);
+    border-bottom: var(--rule-strong);
+  }
+  dl > div {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: var(--s-3);
+    align-items: baseline;
+    padding: var(--s-3) 0;
+    border-bottom: var(--rule-thin);
+  }
+  dd {
+    font-size: var(--t-small);
+  }
+  @media (max-width: 30rem) {
+    dl > div {
+      grid-template-columns: 1fr;
+      gap: var(--s-1);
+    }
+  }
+</style>

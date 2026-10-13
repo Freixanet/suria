@@ -1,0 +1,272 @@
+---
+// Portada: el que és útil i disponible primer. Escriptori: agenda (7/12) i primers passos al costat;
+// després, pròximament i comerços. Mòbil: agenda, primers passos, pròximament, comerços.
+// La identitat es concentra a la franja de carbó amb la fotografia real.
+import Base from '../layouts/Base.astro';
+import CapcaleraSeccio from '../components/CapcaleraSeccio.astro';
+import Agenda from '../components/Agenda.astro';
+import Proximament from '../components/Proximament.astro';
+import ComercosAvui from '../components/ComercosAvui.astro';
+import PrimersPassos from '../components/PrimersPassos.astro';
+import FotoSuria from '../components/FotoSuria.astro';
+import { traductor, type Llengua } from '../i18n/ui.ts';
+import { urlDe } from '../i18n/rutes.ts';
+import { agenda, comercos, consultaMesRecent, idees, passos } from '../lib/dades.ts';
+import { dataNumerica } from '../lib/format.ts';
+import { fotos } from '../lib/fotos.ts';
+
+interface Props {
+  llengua: Llengua;
+}
+const { llengua } = Astro.props;
+const t = traductor(llengua);
+const { setmana, aquestaSetmana, proximament } = await agenda();
+const llistaPassos = await passos();
+const llistaComercos = await comercos();
+const llistaIdees = await idees();
+const consultaAgenda = dataNumerica(consultaMesRecent(aquestaSetmana));
+const consultaPassos = dataNumerica(consultaMesRecent(llistaPassos));
+const senseComercos = llistaComercos.length === 0;
+---
+<Base llengua={llengua} pagina="inici">
+  <div class="portada">
+    <div class="util">
+      <section class="setmana panell" aria-labelledby="h-setmana">
+        <CapcaleraSeccio id="h-setmana" titol={t('setmana.titol')} maduresa="En prova" llengua={llengua} />
+        <Agenda llengua={llengua} setmana={setmana} activitats={aquestaSetmana} />
+        <p class="font"><b>{t('procedencia.font')}:</b> {t('setmana.fontResum', { data: consultaAgenda })}</p>
+        <a class="accio" href={urlDe('setmana', llengua)}>{t('tasca.veureSetmana')}</a>
+      </section>
+
+      <section class="passos" aria-labelledby="h-passos">
+        <CapcaleraSeccio id="h-passos" titol={t('passos.titol')} maduresa="En prova" llengua={llengua} />
+        <PrimersPassos llengua={llengua} passos={llistaPassos} />
+        <p class="font"><b>{t('procedencia.font')}:</b> {t('passos.fontResum', { data: consultaPassos })}</p>
+        <a class="accio" href={urlDe('passos', llengua)}>{t('tasca.veurePassos')}</a>
+      </section>
+
+      {
+        proximament.length > 0 && (
+          <section class="proxim" aria-labelledby="h-proximament">
+            <CapcaleraSeccio id="h-proximament" titol={t('setmana.proximament')} maduresa="En prova" llengua={llengua} compacte />
+            <Proximament llengua={llengua} activitats={proximament} ambTitol={false} nivell={2} />
+          </section>
+        )
+      }
+
+      <section class:list={['menjar', { buit: senseComercos }]} aria-labelledby="h-menjar">
+        <CapcaleraSeccio id="h-menjar" titol={t('menjar.titol')} maduresa="En prova" llengua={llengua} compacte />
+        <ComercosAvui llengua={llengua} comercos={llistaComercos} />
+      </section>
+    </div>
+  </div>
+
+  <section class="franja" aria-labelledby="h-cap">
+    <div class="franja-dins">
+      <FotoSuria foto={fotos.vista} llengua={llengua} sizes="(max-width: 900px) 100vw, 58vw" />
+      <div class="franja-text">
+        <h2 id="h-cap" class="titol-serif">{t('cap.titol')}</h2>
+        <p class="identitat">{t('identitat.text')}</p>
+        <p class="font-identitat">{t('identitat.font')}</p>
+        <p>{t('cap.intro')}</p>
+        <p class="idea" id="idees-etiqueta">{t('cap.idees')}</p>
+        <ul class="idees" aria-labelledby="idees-etiqueta">
+          {llistaIdees.map((i) => <li>{i.text[llengua]}</li>)}
+        </ul>
+        <a class="accio" href={urlDe('cap', llengua)}>{t('nav.cap')}</a>
+      </div>
+    </div>
+  </section>
+
+  <aside class="provant" aria-labelledby="h-provant">
+    <h2 id="h-provant" class="titol-serif">{t('provant.titol')}</h2>
+    <div>
+      <p>{t('provant.resum')}</p>
+      <a class="accio" href={urlDe('provant', llengua)}>{t('nav.provant')}</a>
+    </div>
+  </aside>
+</Base>
+
+<style>
+  .portada {
+    padding: clamp(1.25rem, 3vw, 2.25rem) var(--pad) 0;
+  }
+  .util {
+    --sang: clamp(0.75rem, 1.6vw, 1.5rem);
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    grid-template-areas:
+      'setmana passos'
+      'proxim menjar';
+    column-gap: clamp(1.5rem, 3.5vw, 3.5rem);
+    row-gap: var(--s-7);
+    align-items: start;
+  }
+  .setmana {
+    grid-area: setmana;
+  }
+  /* Mateix marge superior que el panell de l'agenda: els dos titulars comparteixen línia. */
+  .passos {
+    grid-area: passos;
+    padding-top: clamp(1rem, 2.4vw, 2rem);
+  }
+  /* Els filets de «Pròximament» acaben on acaben els del panell de l'agenda. */
+  .proxim {
+    grid-area: proxim;
+    padding-right: var(--sang);
+  }
+  .menjar {
+    grid-area: menjar;
+  }
+  /* El panell sobresurt cap enfora: el text de l'agenda queda alineat amb la marca i la navegació. */
+  .panell {
+    background: var(--halite);
+    padding: clamp(1rem, 2.4vw, 2rem) var(--sang) var(--s-4);
+    margin-left: calc(-1 * var(--sang));
+  }
+  .font {
+    font-size: var(--t-meta);
+    line-height: 1.45;
+    color: var(--text-2);
+    margin-top: var(--s-3);
+  }
+  .font b {
+    color: var(--deep);
+  }
+  /* El buit de comerços: compacte, sense caixa ni columna pròpia. */
+  .buit :global(.buit) {
+    background: transparent;
+    border: 0;
+    border-top: var(--rule-strong);
+    padding: var(--s-3) 0 0;
+  }
+  .buit :global(.buit-titol) {
+    font-family: var(--font-display-stack);
+    font-size: 1.125rem;
+  }
+
+  /* Franja de carbó: la identitat concentrada, amb la fotografia real com a contingut. */
+  .franja {
+    margin-top: var(--s-8);
+    background: var(--deep);
+    color: var(--on-deep);
+  }
+  .franja-dins {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: end;
+    gap: clamp(1.5rem, 3.5vw, 3.5rem);
+    padding: 0 var(--pad) clamp(1.5rem, 3vw, 2.5rem) 0;
+  }
+  .franja :global(.foto) {
+    margin: 0;
+  }
+  .franja :global(.foto img) {
+    aspect-ratio: 16 / 10;
+  }
+  .franja :global(figcaption) {
+    color: var(--on-deep-2);
+    padding-left: var(--pad);
+  }
+  .franja :global(figcaption a) {
+    color: var(--on-deep);
+  }
+  .franja-text {
+    padding-top: clamp(1.5rem, 3vw, 2.5rem);
+  }
+  .franja h2 {
+    font-size: var(--t-h2);
+    margin-bottom: var(--s-4);
+  }
+  .identitat {
+    font-family: var(--font-display-stack);
+    font-weight: 600;
+    font-size: 1.1875rem;
+    line-height: 1.4;
+  }
+  .font-identitat {
+    font-size: var(--t-tag);
+    color: var(--on-deep-2);
+    margin: var(--s-1) 0 var(--s-4);
+  }
+  .franja p {
+    max-width: 36em;
+  }
+  /* Les idees, en segon pla: una sola etiqueta explícita i filets discontinus (el que encara no existeix). */
+  .idea {
+    margin-top: var(--s-4);
+    font-family: var(--font-display-stack);
+    font-weight: 800;
+    font-size: var(--t-tag);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--salmon);
+  }
+  .idees {
+    list-style: none;
+    margin: var(--s-1) 0 var(--s-2);
+    border-top: 1px dashed var(--marl);
+  }
+  .idees li {
+    padding: var(--s-2) 0;
+    border-bottom: 1px dashed var(--marl);
+    font-size: var(--t-small);
+    color: var(--on-deep-2);
+  }
+  .franja .accio {
+    color: var(--on-deep);
+  }
+  .franja .accio:hover {
+    color: var(--salmon);
+  }
+  .franja :global(a:focus-visible) {
+    outline-color: var(--salmon);
+  }
+
+  .provant {
+    padding: var(--s-6) var(--pad) 0;
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    column-gap: clamp(1.5rem, 3.5vw, 3.5rem);
+    align-items: baseline;
+  }
+  .provant h2 {
+    font-size: clamp(var(--t-serif-min), 2.4vw, 2.25rem);
+    margin-bottom: var(--s-2);
+  }
+  .provant p {
+    max-width: 38em;
+  }
+
+  @media (max-width: 56.25rem) {
+    .util {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: 'setmana' 'passos' 'proxim' 'menjar';
+      row-gap: var(--s-6);
+    }
+    .passos {
+      padding-top: 0;
+    }
+    .proxim {
+      padding-right: 0;
+    }
+    .panell {
+      margin-inline: calc(-1 * var(--pad));
+      padding-inline: var(--pad);
+    }
+    .franja-dins {
+      grid-template-columns: minmax(0, 1fr);
+      padding: 0 0 var(--s-6);
+      gap: 0;
+    }
+    .franja-text {
+      padding: var(--s-5) var(--pad) 0;
+    }
+    .franja :global(.foto img) {
+      aspect-ratio: 4 / 3;
+    }
+    .provant {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

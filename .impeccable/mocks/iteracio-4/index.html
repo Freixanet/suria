@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>Comparar · iteración 4</title>
+<style>
+body{font-family:system-ui,sans-serif;margin:0;padding:24px;background:#f2f2f2;color:#111;line-height:1.5}
+h1{font-size:24px;margin:0 0 4px}p.sub{margin:0 0 20px;color:#444;max-width:95ch}
+.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(740px,1fr));gap:32px}
+.col h2{font-size:20px;margin:0 0 8px}
+.lbl{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#555;margin:14px 0 6px}
+.desk{width:720px;height:450px;overflow:hidden;border:1px solid #bbb;background:#fff}
+.desk iframe{width:1440px;height:900px;border:0;transform:scale(.5);transform-origin:0 0}
+.mob{width:360px;height:740px;border:1px solid #bbb;background:#fff}
+.mob iframe{width:360px;height:740px;border:0}
+table{border-collapse:collapse;margin-top:28px;max-width:1200px;background:#fff}
+th,td{border:1px solid #ccc;padding:8px 10px;text-align:left;vertical-align:top;font-size:15px}
+th{background:#e7e7e7}
+</style></head><body>
+<h1>Iteración 4: Silvinita v3 frente a la variante B</h1>
+<p class="sub"><b>Estado (13/10/2026):</b> el promotor eligió B. B está consolidada como única versión del sitio (puerto 4329, con los ajustes de densidad posteriores). La v3 queda archivada en <code>archiu/v3-astro-2026-10-13/</code> (servidor <code>suria-v3-arxiu</code>, puerto 4350). Los recuadros de abajo corresponden al momento de la comparación.</p>
+<p class="sub">Las dos son el sitio real construido con Astro a partir de los mismos archivos de contenido: agenda del 12 al 18 de octubre, primeros pasos y foto con permiso. Cada recuadro se puede desplazar. Escritorio a 1440 px (al 50 %) y móvil a 360 px. Ninguna se ha elegido. Necesita los dos servidores locales en marcha (4329 y 4342).</p>
+<p class="sub"><b>v3 en Astro</b>: reconstrucción de la maqueta aprobada (<a href="../iteracio-3/silvinita.html">iteracio-3/silvinita.html</a>). Conserva la composición, la paleta, las tipografías, las muestras y las etiquetas. Cambios respecto a la maqueta: la fecha se calcula; cada tarea tiene página propia y enlace «Tota la setmana / Tots els passos, amb fonts»; «Cap on anem» lleva la foto real; la farmacia de guardia se presenta en dos turnos con su botón de llamada; el pie suma «Què estem provant» y una línea de privacidad; los títulos reparten mejor las líneas («Menjar i / comprar avui»). Comparación visual: <a href="maqueta-v3-frente-a-astro.png">maqueta-v3-frente-a-astro.png</a>.</p>
+<p class="sub"><b>Variante B</b>: misma base y contenido. Solo cambian las cinco hipótesis de la tabla, más un detalle: la fecha de cada actividad va siempre en rojo.</p>
+<div class="pair">
+<div class="col"><h2>Silvinita v3 (base)</h2>
+<div class="lbl">Escritorio · 1440 px</div><div class="desk"><iframe src="http://localhost:4350/" title="v3 escritorio"></iframe></div>
+<div class="lbl">Móvil · 360 px</div><div class="mob"><iframe src="http://localhost:4350/" title="v3 móvil"></iframe></div>
+<p><a href="http://localhost:4350/" target="_blank">Abrir a tamaño completo</a></p></div>
+<div class="col"><h2>Variante B (exploración)</h2>
+<div class="lbl">Escritorio · 1440 px</div><div class="desk"><iframe src="http://localhost:4329/" title="Variante B escritorio"></iframe></div>
+<div class="lbl">Móvil · 360 px</div><div class="mob"><iframe src="http://localhost:4329/" title="Variante B móvil"></iframe></div>
+<p><a href="http://localhost:4329/" target="_blank">Abrir a tamaño completo</a></p></div>
+</div>
+<table>
+<tr><th>Hipótesis</th><th>Qué hace B</th><th>De dónde viene</th></tr>
+<tr><td>1. Contraste tipográfico</td><td>Gloock (serif editorial) solo en los títulos de sección. Marca, navegación, fechas, horas y trámites siguen en grotesca; el texto, en Atkinson Hyperlegible.</td><td>america.gov y trumpaccounts.gov. Comparativa de cinco serifs en <a href="especimen.html">especimen.html</a>.</td></tr>
+<tr><td>2. Color y superficies</td><td>Sal más cálida (#ECE8E1), carbón cálido (#1F1C1A) y el mismo rojo mineral. Una sola diferencia de superficie: el panel claro de la agenda.</td><td>trumpaccounts.gov (piedra cálida y cambios sutiles de superficie).</td></tr>
+<tr><td>3. Jerarquía</td><td>La agenda ocupa 7/12 y manda. «Primers passos» va al lado. El bloque sin comercios pasa debajo, compacto, y deja de ocupar una columna casi vacía.</td><td>Criterio propio (lo útil y disponible primero).</td></tr>
+<tr><td>4. Identidad concentrada</td><td>Sin muestras ni cajas repetidas en cada sección. La madurez queda en texto rojo bajo cada título. La banda es más gruesa en escritorio. La identidad vive en la franja de carbón.</td><td>realfood.gov (campo de color a todo el ancho y una barra roja como acento).</td></tr>
+<tr><td>5. Fotografía</td><td>Foto real de Súria (K. Golik, 2022, CC BY-SA 4.0, con crédito) dentro de la franja «Cap on anem», junto a la frase de identidad. Pendiente: la foto de archivo de 1924 (dominio público) y fotos propias de vida cotidiana.</td><td>america.gov (foto cotidiana como contenido).</td></tr>
+<tr><td>Pendiente en las dos</td><td colspan="2">Lighthouse; prueba con lector de pantalla, teclado completo y móvil real; contraseña en servidor (D3); canal de opinión (sin crear); revisión humana del castellano; cero con barra de la letra del texto; los datos son de la semana del 12 al 18 y caducan solos (la página lo avisa).</td></tr>
+<tr><td>Descartado</td><td colspan="2">Desplazamiento con animaciones y desenfoques al cargar; texto centrado; contenedores redondeados; buscador conversacional; tono persuasivo; Instrument Serif (demasiado fina junto a la cabecera y copia literal de una referencia).</td></tr>
+</table>
+</body></html>

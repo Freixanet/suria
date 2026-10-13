@@ -1,0 +1,48 @@
+---
+// Obertura de secció o de pàgina: títol en serif i, just a sota, la maduresa en text.
+// La maduresa sempre al mateix lloc, perquè es reconegui d'un cop d'ull a totes les seccions.
+import { traductor, type Llengua } from '../i18n/ui.ts';
+
+interface Props {
+  id: string;
+  titol: string;
+  maduresa: 'Real' | 'En prova' | 'Demo' | 'Idea';
+  llengua: Llengua;
+  nivell?: 1 | 2;
+  /** Títol més contingut, per a seccions secundàries (mai per sota del mínim de la serif). */
+  compacte?: boolean;
+}
+const { id, titol, maduresa, llengua, nivell = 2, compacte = false } = Astro.props;
+const Titol = nivell === 1 ? 'h1' : 'h2';
+const t = traductor(llengua);
+---
+<div class="obertura">
+  <Titol id={id} class:list={['titol-serif', 'titol-seccio', `n${nivell}`, { compacte }]}>{titol}</Titol>
+  <span class="maduresa">{t(`maduresa.${maduresa}`)}</span>
+</div>
+
+<style>
+  .obertura {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+    margin-bottom: var(--s-2);
+  }
+  .n2 {
+    font-size: var(--t-h2);
+  }
+  .n1 {
+    font-size: var(--t-h1);
+  }
+  .compacte {
+    font-size: clamp(var(--t-serif-min), 2.2vw, 2rem);
+  }
+  .maduresa {
+    font-family: var(--font-display-stack);
+    font-weight: 800;
+    font-size: var(--t-tag);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--red-ink);
+  }
+</style>

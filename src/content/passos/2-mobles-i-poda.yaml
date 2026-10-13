@@ -1,0 +1,23 @@
+ordre: 2
+titol:
+  ca: Mobles vells i poda
+  es: Muebles viejos y poda
+resum:
+  ca: A la porta, els dilluns de 7.00 a 13.00 h. Demana-la a l’OAC una setmana abans.
+  es: En la puerta, los lunes de 7:00 a 13:00 h. Pídela a la OAC una semana antes.
+text:
+  ca: Recollida gratuïta a la porta, els dilluns de 7.00 a 13.00 h. Cal demanar-la a l’OAC una setmana abans i deixar-ho al costat de la porta el diumenge a la nit o el dilluns abans de les 7.00 h.
+  es: Recogida gratuita en la puerta, los lunes de 7:00 a 13:00 h. Hay que pedirla a la OAC una semana antes y dejarlo junto a la puerta el domingo por la noche o el lunes antes de las 7:00 h.
+accions:
+  - tipus: telefon
+    telefon: '+34938682800'
+    text:
+      ca: Trucar a l’OAC
+      es: Llamar a la OAC
+fonts:
+  - nom:
+      ca: suria.cat, recollida de voluminosos i poda
+      es: suria.cat, recogida de voluminosos y poda
+    url: https://www.suria.cat/voluminosos
+consultat: 2026-10-12
+responsable: Promotor del prototip

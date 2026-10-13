@@ -1,0 +1,29 @@
+titol:
+  ca: Taller d’estimulació cognitiva
+  es: Taller de estimulación cognitiva
+dies:
+  inici: 2026-10-15
+hores:
+  - inici: '15:30'
+    fi: '16:45'
+lloc:
+  ca: Escola Municipal de Formació d’Adults, aula 9
+  es: Escola Municipal de Formació d’Adults (escuela de adultos), aula 9
+requisit:
+  ca: Més de 60 anys. Gratuït, amb inscripció a l’OAC si queden places.
+  es: Mayores de 60 años. Gratuito, con inscripción en la OAC si quedan plazas.
+nota:
+  ca: Es fa cada dijous feiner. Les places són limitades.
+  es: Se hace cada jueves laborable. Las plazas son limitadas.
+enllac:
+  url: https://www.suria.cat/actualitat/agenda/tallers-gratuits-per-a-adults-inici-del-taller-destimulacio-cognitiva
+  text:
+    ca: Fitxa a suria.cat
+    es: Ficha en suria.cat
+fonts:
+  - nom:
+      ca: suria.cat, fitxa de l’agenda
+      es: suria.cat, ficha de la agenda
+    url: https://www.suria.cat/actualitat/agenda/tallers-gratuits-per-a-adults-inici-del-taller-destimulacio-cognitiva
+consultat: 2026-10-12
+responsable: Promotor del prototip

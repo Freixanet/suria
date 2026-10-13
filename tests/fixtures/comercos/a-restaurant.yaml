@@ -1,0 +1,9 @@
+# DADES DE PROVA. Només entren al build de proves (SURIA_PROVES=1); mai es publiquen.
+nom: Restaurant de mostra A
+activitat: { ca: Cuina de mercat (dades de prova), es: Cocina de mercado (datos de prueba) }
+confirmacions:
+  - { dataServei: 2026-10-12, inici: '20:00', fi: '23:00', estat: confirmat, rebutA: { data: 2026-10-12, hora: '13:05' } }
+maduresa: Demo
+fonts: [{ nom: { ca: Missatge del negoci al promotor (prova), es: Mensaje del negocio al promotor (prueba) }, url: 'https://example.org/prova' }]
+consultat: 2026-10-12
+responsable: Restaurant de mostra A

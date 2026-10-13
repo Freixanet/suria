@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ca"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Súria (prototip) · Silvinita v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500..900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--salt:#EEF0F0;--halite:#FAFBFB;--red:#A8362A;--red-ink:#8E2C22;--salmon:#E39A7B;--marl:#5C5A57;--deep:#1E1D1C;--rule:#C6CACA;--pad:clamp(16px,4vw,56px)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--salt);color:var(--deep);-webkit-text-size-adjust:100%}
+body{font-family:"Atkinson Hyperlegible",system-ui,sans-serif;font-size:17px;line-height:1.55}
+a{color:inherit;text-underline-offset:3px}
+a:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+.g{font-family:"Schibsted Grotesk",system-ui,sans-serif}
+/* avís */
+.avis{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px 20px;padding:8px var(--pad);background:var(--halite);font-size:15px;border-bottom:1px solid var(--rule)}
+.avis strong{color:var(--red-ink)}
+.lang{display:flex;gap:4px}
+.lang a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;font-weight:700;text-decoration:none;border-radius:2px}
+.lang a[aria-current]{background:var(--deep);color:var(--halite)}
+/* capçalera */
+.mast{background:var(--deep);color:var(--halite);padding:clamp(14px,2.4vw,26px) var(--pad) clamp(14px,2vw,22px);display:grid;grid-template-columns:auto 1fr;gap:12px 40px;align-items:end}
+.mast h1{font-family:"Schibsted Grotesk";font-weight:900;font-size:clamp(60px,10vw,128px);line-height:.86;letter-spacing:-.045em}
+.mast .who{font-family:"Schibsted Grotesk";font-weight:600;font-size:clamp(16px,1.5vw,20px);line-height:1.4;max-width:46ch;justify-self:end;text-align:right}
+.mast .who time{display:block;color:var(--salmon);font-weight:800;margin-bottom:4px}
+.mast .who small{display:block;font-size:14px;font-weight:500;color:#C9C6C2;margin-top:6px}
+.core{display:grid;grid-template-rows:7px 3px 9px 2px 5px;height:26px}
+.core i:nth-child(1){background:var(--red)}.core i:nth-child(2){background:var(--salmon)}.core i:nth-child(3){background:var(--red-ink)}.core i:nth-child(4){background:var(--halite)}.core i:nth-child(5){background:var(--marl)}
+/* navegació */
+nav.tasks{border-bottom:1px solid var(--rule);background:var(--salt)}
+nav.tasks ul{list-style:none;display:flex;flex-wrap:wrap;gap:0 4px;padding:0 var(--pad)}
+nav.tasks a{display:flex;align-items:center;min-height:52px;padding:0 14px;font-family:"Schibsted Grotesk";font-weight:700;font-size:17px;text-decoration:none}
+nav.tasks a:first-child{padding-left:0}
+nav.tasks a[aria-current]{box-shadow:inset 0 -4px var(--red);color:var(--red-ink)}
+/* cos */
+main{padding:clamp(20px,3vw,36px) var(--pad) 0}
+.grid{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:0}
+.sec{padding:0 clamp(18px,2vw,30px);border-left:1px solid var(--rule)}
+.sec:first-child{padding-left:0;border-left:0}.sec:last-child{padding-right:0}
+.op{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.op .sample{flex:none;width:34px;height:20px;display:grid;grid-template-rows:6px 2px 7px 5px}
+.op .sample i:nth-child(1){background:var(--red)}.op .sample i:nth-child(2){background:var(--salmon)}.op .sample i:nth-child(3){background:var(--red-ink)}.op .sample i:nth-child(4){background:var(--marl)}
+.tag{font-family:"Schibsted Grotesk";font-weight:800;font-size:14px;letter-spacing:.04em;text-transform:uppercase;border:2px solid var(--deep);padding:1px 8px;white-space:nowrap}
+h2{font-family:"Schibsted Grotesk";font-weight:800;font-size:clamp(28px,2.6vw,38px);line-height:1.04;letter-spacing:-.025em;margin-bottom:10px}
+h2 a{text-decoration:none}
+.lede{color:#3E3C3A;margin-bottom:12px;max-width:46ch}
+/* agenda */
+.ag{list-style:none;border-top:2px solid var(--deep)}
+.ag li{display:grid;grid-template-columns:7.2em 1fr;gap:4px 14px;padding:10px 0;border-bottom:1px solid var(--rule)}
+.ag time{font-family:"Schibsted Grotesk";font-weight:800;font-variant-numeric:tabular-nums;font-size:16px;line-height:1.5}
+.ag a{font-weight:700}
+.ag span.lloc{display:block;font-size:15px;color:#4A4846}
+/* estats E1 */
+.empty{background:var(--halite);border:1px solid var(--rule);padding:14px 16px;margin-bottom:14px}
+.empty strong{display:block;font-family:"Schibsted Grotesk";font-size:19px;line-height:1.3;margin-bottom:4px}
+.key{list-style:none;font-size:15px}
+.key li{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;padding:6px 0;border-top:1px solid var(--rule)}
+.mk{width:16px;height:16px;margin-top:3px;display:block}
+.mk.com{background:var(--red)}
+.mk.fin{border:2px solid var(--deep);background:linear-gradient(to top right,transparent 45%,var(--deep) 45% 55%,transparent 55%)}
+.mk.sen{border:2px dashed var(--marl)}
+
+.keyh{font-family:"Schibsted Grotesk";font-weight:800;font-size:15px;margin-bottom:4px}
+/* primers passos */
+.steps{list-style:none;border-top:2px solid var(--deep)}
+.steps li{display:grid;grid-template-columns:42px 1fr;gap:10px;padding:10px 0;border-bottom:1px solid var(--rule)}
+.steps b{font-family:"Schibsted Grotesk";font-weight:900;font-size:34px;line-height:1;color:var(--red)}
+.steps strong{font-family:"Schibsted Grotesk"}
+/* procedència */
+.src{font-size:14px;color:#4A4846;margin-top:10px;line-height:1.45}
+.src b{color:var(--deep)}
+/* segona fila */
+.row2{display:grid;grid-template-columns:2fr 1fr;gap:0;margin-top:clamp(28px,4vw,48px);border-top:2px solid var(--deep);padding-top:18px}
+.ideas{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:6px}
+.ideas li{border:2px dashed var(--marl);padding:12px 14px;background:transparent}
+.ideas .tag{border-style:dashed;font-size:14px}
+.ideas p{margin-top:8px;font-size:16px}
+.probant{padding-left:clamp(18px,2vw,30px);border-left:1px solid var(--rule);margin-left:clamp(18px,2vw,30px)}
+.probant h3,.ideash{font-family:"Schibsted Grotesk";font-weight:800;font-size:22px;margin-bottom:6px}
+footer{margin-top:clamp(28px,4vw,44px);background:var(--deep);color:#D9D6D2;padding:16px var(--pad);font-size:14px;display:flex;flex-wrap:wrap;gap:6px 24px;justify-content:space-between}
+footer a{color:var(--halite)}
+/* mòbil */
+@media (max-width:900px){
+ .mast{grid-template-columns:1fr}.mast .who{justify-self:start;text-align:left}
+ .grid{grid-template-columns:1fr}.sec{padding:0;border-left:0;border-top:2px solid var(--deep);padding-top:18px;margin-top:22px}.sec:first-child{border-top:0;margin-top:0;padding-top:0}
+ .row2{grid-template-columns:1fr}.ideas{grid-template-columns:1fr}.probant{border-left:0;margin:22px 0 0;padding:0}
+ nav.tasks ul{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+ nav.tasks a,nav.tasks a:first-child{padding:0 4px;min-height:48px;border-bottom:1px solid var(--rule)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:600px){.avis .long{display:none}.avis{flex-wrap:nowrap;font-size:14px;padding-top:6px;padding-bottom:6px}nav.tasks a,nav.tasks li:first-child a,nav.tasks a:first-child{min-height:44px}}
+</style></head><body>
+<div class="avis"><span><strong>Prototip</strong> experimental i independent, <span class="long">en proves amb veïns de Súria. </span>No és una web de l'Ajuntament.</span>
+<nav class="lang" aria-label="Llengua"><a href="#" aria-current="true" lang="ca">Català</a><a href="#" lang="es">Castellano</a></nav></div>
+<header class="mast">
+<h1>Súria</h1>
+<p class="who"><time datetime="2026-10-12">Dilluns, 12 d'octubre de 2026</time>Vila del Bages a la vall del Cardener: el Poble Vell, les Caramelles i la mina de potassa.<small>Text: turismesuria.cat · consultat el 12/10/2026</small></p>
+</header>
+<div class="core" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+<nav class="tasks" aria-label="Principal"><ul>
+<li><a href="#" aria-current="page">Inici</a></li><li><a href="#setmana">Aquesta setmana</a></li><li><a href="#menjar">Menjar i comprar</a></li><li><a href="#passos">Primers passos</a></li><li><a href="#cap">Cap on anem</a></li></ul></nav>
+<main>
+<div class="grid">
+<section class="sec" id="setmana" aria-labelledby="h-set">
+<div class="op"><span class="sample" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="tag">En prova</span></div>
+<h2 id="h-set"><a href="#">Aquesta setmana a Súria</a></h2>
+<ul class="ag">
+<li><time datetime="2026-10-14">Dc 14 oct</time><span><a href="https://www.suria.cat/actualitat/agenda/9309-deixalleria-mobil">Deixalleria mòbil</a></span></li>
+<li><time datetime="2026-10-15">Dj 15 oct</time><span><a href="https://www.suria.cat/actualitat/agenda/visita-de-la-unitat-mobil-dinformacio-al-consumidor">Unitat Mòbil d'Informació al Consumidor</a><span class="lloc">Plaça de la Serradora</span></span></li>
+<li><time datetime="2026-10-15">Dj 15 oct</time><span><a href="https://www.suria.cat/actualitat/agenda/tallers-gratuits-per-a-adults-inici-del-taller-destimulacio-cognitiva">Tallers gratuïts per a adults: estimulació cognitiva</a></span></li>
+<li><time>Fins al 31 des</time><span><a href="https://www.suria.cat/actualitat/agenda/10138-exposicio-a-cal-balaguer-del-porxo-diversitat-un-recorregut-per-diferents-obres-de-rosa-santamaria-bacardit">Exposició «Diversitat», de Rosa Santamaria</a><span class="lloc">Cal Balaguer del Porxo</span></span></li>
+<li><time>19 oct–8 nov</time><span><a href="https://www.suria.cat/actualitat/noticies/suria-celebrara-una-nova-edicio-de-la-setmana-de-la-gent-gran-a-partir-del-19-doctubre">Setmana de la Gent Gran</a></span></li>
+</ul>
+<p class="src"><b>Font:</b> agenda de <a href="https://www.suria.cat/agenda">suria.cat</a> · consultada el 12/10/2026 · vàlida per a la setmana del 12 al 18 d'octubre. Horaris i detalls, a cada enllaç.</p>
+</section>
+<section class="sec" id="menjar" aria-labelledby="h-men">
+<div class="op"><span class="sample" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="tag">En prova</span></div>
+<h2 id="h-men"><a href="#">Menjar i comprar avui</a></h2>
+<div class="empty"><strong>Encara no hi ha negocis participants.</strong>Quan n'hi hagi, cada fitxa dirà l'horari que ens han comunicat i a quina hora ens ho van dir.</div>
+<p class="keyh">Com et direm l'estat de cada negoci</p>
+<ul class="key">
+<li><span class="mk com" aria-hidden="true"></span><span><b>Horari comunicat pel negoci</b>: ens ha dit fins a quina hora serveix avui. No és una garantia en temps real.</span></li>
+<li><span class="mk fin" aria-hidden="true"></span><span><b>Servei finalitzat</b>: ja ha passat l'hora que ens va dir.</span></li>
+<li><span class="mk sen" aria-hidden="true"></span><span><b>Sense confirmar</b>: avui encara no ens ha dit res.</span></li>
+<li><svg class="mk" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 2 14 14M14 2 2 14" stroke="currentColor" stroke-width="3"/></svg><span><b>Avui no serveix</b>: ens ha avisat que avui tanca.</span></li>
+</ul>
+</section>
+<section class="sec" id="passos" aria-labelledby="h-pas">
+<div class="op"><span class="sample" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="tag">En prova</span></div>
+<h2 id="h-pas"><a href="#">Primers passos a Súria</a></h2>
+<ol class="steps">
+<li><b>1</b><span><strong>Empadronar-te.</strong> Demana el volant o certificat a la <a href="https://suria.eadministracio.cat/">Seu electrònica</a>.</span></li>
+<li><b>2</b><span><strong>Mobles vells i poda.</strong> Es recullen cada dilluns no festiu; <a href="http://www.suria.cat/voluminosos">truca a l'OAC</a> la setmana anterior.</span></li>
+<li><b>3</b><span><strong>Farmàcia de guàrdia.</strong> Consulta el <a href="http://www.suria.cat/farmacies">calendari d'octubre</a>.</span></li>
+</ol>
+<p class="src"><b>Font:</b> suria.cat i Seu electrònica de Súria · consultat el 12/10/2026.</p>
+</section>
+</div>
+<div class="row2">
+<section id="cap" aria-labelledby="h-cap"><h2 class="ideash" id="h-cap">Cap on anem</h2>
+<p class="lede">Primeres passes d'una plataforma per viure millor Súria. Això encara no existeix: digues-nos què et faria servei.</p>
+<ul class="ideas">
+<li><span class="tag">Idea · encara no existeix</span><p>Un explorador de llocs i recorreguts pensat per als veïns.</p></li>
+<li><span class="tag">Idea · encara no existeix</span><p>Tots els horaris dels comerços, sempre al dia.</p></li>
+<li><span class="tag">Idea · encara no existeix</span><p>Serveis i tràmits per a cada etapa de la vida.</p></li>
+</ul></section>
+<aside class="probant" aria-labelledby="h-pro"><h3 id="h-pro">Què estem provant</h3>
+<p>Tres proves petites amb veïns per saber què et serveix de debò. Aviat podràs opinar per WhatsApp o correu: el canal encara no està obert.</p></aside>
+</div>
+</main>
+<footer><span>Fe d'errades: si alguna dada no és correcta, la corregirem i ho indicarem.</span><span>Fonts oficials: <a href="https://www.suria.cat/">suria.cat</a></span></footer>
+</body></html>

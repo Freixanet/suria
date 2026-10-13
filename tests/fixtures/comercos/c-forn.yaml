@@ -1,0 +1,10 @@
+# DADES DE PROVA. Només entren al build de proves (SURIA_PROVES=1); mai es publiquen.
+nom: Forn de mostra C
+activitat: { ca: Pa i coca (dades de prova), es: Pan y coca (datos de prueba) }
+confirmacions:
+  - { dataServei: 2026-10-12, inici: '07:00', fi: '14:00', estat: confirmat, rebutA: { data: 2026-10-12, hora: '06:50' } }
+  - { dataServei: 2026-10-12, estat: cancelat, rebutA: { data: 2026-10-12, hora: '10:10' } }
+maduresa: Demo
+fonts: [{ nom: { ca: Missatge del negoci al promotor (prova), es: Mensaje del negocio al promotor (prueba) }, url: 'https://example.org/prova' }]
+consultat: 2026-10-12
+responsable: Forn de mostra C

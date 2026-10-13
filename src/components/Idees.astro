@@ -1,0 +1,37 @@
+---
+// Idees de futur: una sola etiqueta explícita i filets discontinus. Mai barrejades amb dades reals.
+import { traductor, type Llengua } from '../i18n/ui.ts';
+
+interface Props {
+  llengua: Llengua;
+  idees: { text: { ca: string; es: string }; maduresa: 'Idea' | 'Demo' }[];
+}
+const { llengua, idees } = Astro.props;
+const t = traductor(llengua);
+const nomes = idees.filter((i) => i.maduresa === 'Idea');
+---
+<p class="etiqueta-idees" id="idees-pagina">{t('cap.idees')}</p>
+<ul class="idees" aria-labelledby="idees-pagina">
+  {nomes.map((i) => <li>{i.text[llengua]}</li>)}
+</ul>
+
+<style>
+  .etiqueta-idees {
+    margin-top: var(--s-5);
+    font-family: var(--font-display-stack);
+    font-weight: 800;
+    font-size: var(--t-tag);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--red-ink);
+  }
+  .idees {
+    list-style: none;
+    margin-top: var(--s-1);
+    border-top: 1px dashed var(--marl);
+  }
+  li {
+    padding: var(--s-3) 0;
+    border-bottom: 1px dashed var(--marl);
+  }
+</style>

@@ -1,0 +1,40 @@
+---
+// Línia secundària d'una peça: maduresa · font · consultat · responsable (especificació UX 4.1).
+import { traductor, type Llengua } from '../i18n/ui.ts';
+import { dataNumerica } from '../lib/format.ts';
+
+interface Props {
+  llengua: Llengua;
+  maduresa: 'Real' | 'En prova' | 'Demo' | 'Idea';
+  fonts: { nom: { ca: string; es: string } }[];
+  consultat: string;
+  responsable: string;
+  vigencia?: string;
+}
+const { llengua, maduresa, fonts, consultat, responsable, vigencia } = Astro.props;
+const t = traductor(llengua);
+const qui = responsable === 'Promotor del prototip' ? t('procedencia.promotor') : responsable;
+---
+<p class="procedencia">
+  <span class="maduresa">{t(`maduresa.${maduresa}`)}</span>
+  <span>{t('procedencia.font')}: {fonts.map((f) => f.nom[llengua]).join('; ')}</span>
+  <span>{t('procedencia.consultat')}: <time datetime={consultat}>{dataNumerica(consultat)}</time></span>
+  {vigencia && <span>{t('procedencia.valid')}: {vigencia}</span>}
+  <span>{t('procedencia.responsable')}: {qui}</span>
+</p>
+
+<style>
+  .procedencia {
+    font-size: var(--t-meta);
+    line-height: 1.45;
+    color: var(--text-2);
+  }
+  .procedencia > span:not(:last-child)::after {
+    content: ' · ';
+  }
+  .maduresa {
+    font-family: var(--font-display-stack);
+    font-weight: 800;
+    color: var(--deep);
+  }
+</style>

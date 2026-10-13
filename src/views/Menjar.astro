@@ -1,0 +1,16 @@
+---
+import PaginaTasca from './PaginaTasca.astro';
+import ComercosAvui from '../components/ComercosAvui.astro';
+import { traductor, type Llengua } from '../i18n/ui.ts';
+import { comercos } from '../lib/dades.ts';
+
+interface Props {
+  llengua: Llengua;
+}
+const { llengua } = Astro.props;
+const t = traductor(llengua);
+const llista = await comercos();
+---
+<PaginaTasca llengua={llengua} pagina="menjar" titol={t('menjar.titol')} descripcio={t('menjar.descripcio')} maduresa="En prova">
+  <ComercosAvui llengua={llengua} comercos={llista} detall />
+</PaginaTasca>

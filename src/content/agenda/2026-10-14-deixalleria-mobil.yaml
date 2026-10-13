@@ -1,0 +1,26 @@
+titol:
+  ca: Deixalleria mòbil
+  es: Deixalleria mòbil (punto limpio móvil)
+dies:
+  inici: 2026-10-14
+hores:
+  - inici: '16:15'
+    fi: '17:15'
+lloc:
+  ca: Al costat de les escoles Francesc Macià i Fedac
+  es: Junto a las escuelas Francesc Macià y Fedac
+nota:
+  ca: Per a residus petits que no van als contenidors.
+  es: Para residuos pequeños que no van a los contenedores.
+enllac:
+  url: https://www.suria.cat/actualitat/agenda/9309-deixalleria-mobil
+  text:
+    ca: Fitxa a suria.cat
+    es: Ficha en suria.cat
+fonts:
+  - nom:
+      ca: suria.cat, fitxa de l’agenda
+      es: suria.cat, ficha de la agenda
+    url: https://www.suria.cat/actualitat/agenda/9309-deixalleria-mobil
+consultat: 2026-10-12
+responsable: Promotor del prototip

@@ -1,0 +1,80 @@
+---
+// Plantilla de pàgina de tasca: el que és útil primer; fonts i altres tasques al costat (al mòbil, a sota).
+import Base from '../layouts/Base.astro';
+import CapcaleraSeccio from '../components/CapcaleraSeccio.astro';
+import FontsOficials from '../components/FontsOficials.astro';
+import AltresTasques from '../components/AltresTasques.astro';
+import type { Llengua } from '../i18n/ui.ts';
+import type { Pagina } from '../i18n/rutes.ts';
+
+interface Props {
+  llengua: Llengua;
+  pagina: Pagina;
+  titol: string;
+  descripcio: string;
+  maduresa: 'Real' | 'En prova' | 'Demo' | 'Idea';
+  fonts?: { nom: { ca: string; es: string }; url: string }[];
+}
+const { llengua, pagina, titol, descripcio, maduresa, fonts = [] } = Astro.props;
+---
+<Base llengua={llengua} pagina={pagina} titol={titol} descripcio={descripcio}>
+  <div class="tasca">
+    <header class="obertura">
+      <CapcaleraSeccio id="titol-pagina" titol={titol} maduresa={maduresa} llengua={llengua} nivell={1} />
+      <p class="entrada">{descripcio}</p>
+    </header>
+    <div class="cos">
+      <slot />
+    </div>
+    <aside class="lateral">
+      {fonts.length > 0 && <FontsOficials llengua={llengua} fonts={fonts} />}
+      <AltresTasques llengua={llengua} actual={pagina} />
+    </aside>
+  </div>
+</Base>
+
+<style>
+  .tasca {
+    padding: clamp(1.5rem, 3.5vw, 2.75rem) var(--pad) 0;
+    display: grid;
+    /* La mateixa reixa que la portada (7/12 + 5/12): el lateral comença on comença «Primers passos». */
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    grid-template-areas:
+      'obertura obertura'
+      'cos lateral';
+    column-gap: clamp(1.5rem, 3.5vw, 3.5rem);
+    row-gap: var(--s-6);
+  }
+  .obertura {
+    grid-area: obertura;
+    max-width: 58rem;
+  }
+  .entrada {
+    font-size: 1.1875rem;
+    line-height: 1.5;
+    color: var(--text-2);
+    max-width: 38em;
+  }
+  /* La columna principal manté la mesura de lectura. */
+  .cos {
+    grid-area: cos;
+    min-width: 0;
+    max-width: 44rem;
+  }
+  .lateral {
+    grid-area: lateral;
+    display: grid;
+    align-content: start;
+    gap: var(--s-6);
+  }
+  @media (max-width: 56.25rem) {
+    .tasca {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: 'obertura' 'cos' 'lateral';
+      row-gap: var(--s-5);
+    }
+    .lateral {
+      margin-top: var(--s-4);
+    }
+  }
+</style>

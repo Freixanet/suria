@@ -1,0 +1,126 @@
+---
+// Activitats que comencen després de la setmana declarada: separades, mai barrejades amb «Aquesta setmana».
+// A la portada, compacte: títol, dates, el que cal fer aviat (punts marcats com a portada) i l'enllaç al detall.
+import LiniaProcedencia from './LiniaProcedencia.astro';
+import TextHores from './TextHores.astro';
+import type { Activitat } from '../lib/dades.ts';
+import { traductor, type Llengua } from '../i18n/ui.ts';
+import { urlDe } from '../i18n/rutes.ts';
+import { dataNumerica, diaMes } from '../lib/format.ts';
+
+interface Props {
+  llengua: Llengua;
+  activitats: Activitat[];
+  detall?: boolean;
+  nivell?: 2 | 3;
+  /** A la portada el títol de secció el posa CapcaleraSeccio (amb la maduresa). */
+  ambTitol?: boolean;
+}
+const { llengua, activitats, detall = false, nivell = 3, ambTitol = true } = Astro.props;
+const t = traductor(llengua);
+const Titol = nivell === 2 ? 'h2' : 'h3';
+const Peca = nivell === 2 ? 'h3' : 'h4';
+const id = `proximament-${detall ? 'detall' : 'portada'}`;
+---
+{
+  activitats.length > 0 && (
+    <div class:list={['proximament', { compacte: !detall }]} id={detall ? 'proximament' : undefined}>
+      {ambTitol && <Titol class="titol-serif obre-detall" id={id}>{t('setmana.proximament')}</Titol>}
+      {activitats.map((a) => {
+        const punts = detall ? a.punts : a.punts.filter((p) => p.portada);
+        return (
+          <article class="peca">
+            <Peca class="titol-peca">
+              {a.titol[llengua]}
+              <span class="dates">
+                {' · '}
+                {a.dies.fi ? `${diaMes(a.dies.inici, llengua)} – ${diaMes(a.dies.fi, llengua)}` : diaMes(a.dies.inici, llengua)}
+              </span>
+            </Peca>
+            {punts.length > 0 && (
+              <ul>
+                {punts.map((p) => (
+                  <li>
+                    {p.destacat && <strong>{p.destacat[llengua]}</strong>}
+                    {p.destacat && ' '}
+                    <TextHores text={p.text[llengua]} />
+                  </li>
+                ))}
+              </ul>
+            )}
+            {detall ? (
+              <a class="accio" href={a.enllac.url} hreflang="ca">{a.enllac.text[llengua]}</a>
+            ) : (
+              <a class="accio" href={`${urlDe('setmana', llengua)}#proximament`}>{t('setmana.proximamentDetall')}</a>
+            )}
+            {!detall && (
+              <p class="font">
+                <b>{t('procedencia.font')}:</b> {a.fonts.map((f) => f.nom[llengua]).join('; ')}, {t('procedencia.consultadaEl', { data: dataNumerica(a.consultat) })}.
+              </p>
+            )}
+            {detall && (
+              <LiniaProcedencia
+                llengua={llengua}
+                maduresa={a.maduresa ?? 'En prova'}
+                fonts={a.fonts}
+                consultat={a.consultat}
+                responsable={a.responsable}
+              />
+            )}
+          </article>
+        );
+      })}
+    </div>
+  )
+}
+
+<style>
+  .proximament {
+    margin-top: var(--s-6);
+    scroll-margin-top: var(--s-4);
+  }
+  .compacte {
+    margin-top: 0;
+  }
+  /* A la pàgina de detall és una secció com les altres: títol en serif. */
+  .obre-detall {
+    font-size: var(--t-h2);
+    margin: var(--s-7) 0 var(--s-3);
+  }
+  .peca {
+    border-top: var(--rule-strong);
+    padding-top: var(--s-2);
+  }
+  .peca + .peca {
+    margin-top: var(--s-5);
+  }
+  .titol-peca {
+    font-family: var(--font-display-stack);
+    font-weight: 800;
+    font-size: var(--t-h3);
+    line-height: 1.3;
+  }
+  .dates {
+    font-weight: 700;
+  }
+  ul {
+    list-style: none;
+    margin: var(--s-2) 0 var(--s-1);
+  }
+  li {
+    font-size: var(--t-small);
+    padding: var(--s-1) 0;
+  }
+  strong {
+    font-family: var(--font-display-stack);
+  }
+  .font {
+    font-size: var(--t-meta);
+    line-height: 1.45;
+    color: var(--text-2);
+    margin-top: var(--s-2);
+  }
+  .font b {
+    color: var(--deep);
+  }
+</style>

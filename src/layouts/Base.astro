@@ -1,0 +1,82 @@
+---
+import { Font } from 'astro:assets';
+import Capcalera from '../components/Capcalera.astro';
+import Peu from '../components/Peu.astro';
+import { traductor, type Llengua } from '../i18n/ui.ts';
+import { urlDe, type Pagina } from '../i18n/rutes.ts';
+import '../styles/global.css';
+
+interface Props {
+  llengua: Llengua;
+  /** Pàgina actual; null a la pàgina no trobada. */
+  pagina: Pagina | null;
+  titol?: string;
+  descripcio?: string;
+}
+const { llengua, pagina, titol, descripcio } = Astro.props;
+const t = traductor(llengua);
+const titolComplet = titol ? `${titol} · ${t('lloc.nomComplet')}` : t('lloc.nomComplet');
+const urlsLlengua: Record<Llengua, string> = {
+  ca: urlDe(pagina ?? 'inici', 'ca'),
+  es: urlDe(pagina ?? 'inici', 'es'),
+};
+---
+<!doctype html>
+<html lang={llengua}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titolComplet}</title>
+    <meta name="description" content={descripcio ?? t('lloc.descripcio')} />
+    <!-- Complementari, no és seguretat: l'accés real es protegirà amb contrasenya al servidor (D3). -->
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#1f1c1a" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    {pagina && <link rel="alternate" hreflang="ca" href={urlsLlengua.ca} />}
+    {pagina && <link rel="alternate" hreflang="es" href={urlsLlengua.es} />}
+    <Font cssVariable="--font-display" preload />
+    <Font cssVariable="--font-text" preload />
+    <Font cssVariable="--font-serif" preload />
+    <script is:inline define:vars={{ llengua, altra: llengua === 'ca' ? urlsLlengua.es : urlsLlengua.ca }}>
+      // Si la persona va triar l'altra llengua i arriba des de fora del lloc, la portem a la mateixa pàgina en la seva llengua.
+      try {
+        const triada = localStorage.getItem('suria-llengua');
+        const desDelLloc = document.referrer && new URL(document.referrer).origin === location.origin;
+        if (triada && triada !== llengua && !desDelLloc) location.replace(altra);
+      } catch (e) {
+        /* Sense emmagatzematge o referent il·legible: no fem res. */
+      }
+    </script>
+  </head>
+  <body>
+    <a class="saltar" href="#contingut">{t('saltar')}</a>
+    <Capcalera llengua={llengua} pagina={pagina} urlsLlengua={urlsLlengua} />
+    <main id="contingut" tabindex="-1">
+      <slot />
+    </main>
+    <Peu llengua={llengua} pagina={pagina} />
+    <script>
+      import '../scripts/caducitat.ts';
+    </script>
+  </body>
+</html>
+
+<style>
+  .saltar {
+    position: absolute;
+    left: var(--pad);
+    top: -100px;
+    z-index: 10;
+    background: var(--halite);
+    color: var(--deep);
+    padding: var(--s-3) var(--s-4);
+    font-family: var(--font-display-stack);
+    font-weight: 800;
+  }
+  .saltar:focus {
+    top: var(--s-2);
+  }
+  main:focus {
+    outline: none;
+  }
+</style>

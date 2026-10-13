@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ca"><head><meta charset="utf-8"><title>Portal estàndard · Súria (prototip)</title>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFFFFF;--ink:#1F2937;--blue:#1D4ED8;--soft:#EFF4FF}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1440px;height:900px;overflow:hidden;background:var(--bg);color:var(--ink)}
+body{font-family:"Public Sans",sans-serif;font-size:17px;line-height:1.55}
+.aviso{background:var(--ink);color:#fff;font-size:14px;padding:8px 64px}
+header{display:flex;justify-content:space-between;align-items:center;padding:20px 64px;border-bottom:1px solid #e5e7eb}
+.logo{font-weight:800;font-size:26px;color:var(--blue)}
+nav a{color:var(--ink);text-decoration:none;margin-left:28px;font-weight:600}
+.hero{height:340px;background:#9aa7b8;display:flex;align-items:flex-end;padding:40px 64px;color:#fff}
+.hero h1{font-size:56px;font-weight:800;line-height:1.05;max-width:760px}
+.hero p{font-size:20px;margin-top:10px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;padding:36px 64px}
+.card{background:var(--soft);border-radius:16px;padding:26px}
+.ico{width:52px;height:52px;border-radius:50%;background:var(--blue);margin-bottom:16px}
+.card h2{font-size:24px;font-weight:800;margin-bottom:8px}
+.card p{font-size:16px}
+.card a{display:inline-block;margin-top:14px;color:var(--blue);font-weight:700}
+.ph{position:absolute;left:64px;bottom:395px;font-size:13px;color:#fff;opacity:.8}
+</style></head><body>
+<div class="aviso">Prototip experimental i independent · no és una web de l'Ajuntament</div>
+<header><div class="logo">Súria</div><nav><a href="#">Inici</a><a href="#">Agenda</a><a href="#">Comerç</a><a href="#">Nouvinguts</a><a href="#">CA · ES</a></nav></header>
+<section class="hero"><div><h1>Viu Súria: tota la informació del poble</h1><p>Agenda, comerç i serveis en un sol lloc.</p></div></section>
+<span class="ph">[Espai per a foto gran del poble]</span>
+<main class="grid">
+<div class="card"><div class="ico"></div><h2>Aquesta setmana</h2><p>Deixalleria mòbil, Unitat Mòbil del Consumidor i la Setmana de la Gent Gran.</p><a href="#">Veure agenda</a></div>
+<div class="card"><div class="ico"></div><h2>Menjar i comprar</h2><p>Consulta els horaris comunicats pels negocis participants.</p><a href="#">Veure comerços</a></div>
+<div class="card"><div class="ico"></div><h2>Primers passos</h2><p>Empadronament, recollida de voluminosos i farmàcies de guàrdia.</p><a href="#">Començar</a></div>
+</main>
+</body></html>

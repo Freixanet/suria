@@ -1,0 +1,55 @@
+---
+import { traductor, type Llengua } from '../i18n/ui.ts';
+import { urlDe, type Pagina } from '../i18n/rutes.ts';
+
+interface Props {
+  llengua: Llengua;
+  actual: Pagina;
+}
+const { llengua, actual } = Astro.props;
+const t = traductor(llengua);
+const totes = [
+  { pagina: 'setmana', clau: 'nav.setmana' },
+  { pagina: 'menjar', clau: 'nav.menjar' },
+  { pagina: 'passos', clau: 'nav.passos' },
+  { pagina: 'cap', clau: 'nav.cap' },
+  { pagina: 'provant', clau: 'nav.provant' },
+] as const;
+---
+<nav class="altres" aria-labelledby="altres-tasques">
+  <h2 id="altres-tasques">{t('tasca.altres')}</h2>
+  <ul>
+    {totes.filter((x) => x.pagina !== actual).map((x) => (
+      <li><a href={urlDe(x.pagina, llengua)}>{t(x.clau)}</a></li>
+    ))}
+    <li><a href={urlDe('inici', llengua)}>{t('tasca.inici')}</a></li>
+  </ul>
+</nav>
+
+<style>
+  h2 {
+    font-size: var(--t-meta);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding-bottom: var(--s-2);
+    border-bottom: var(--rule-strong);
+  }
+  ul {
+    list-style: none;
+  }
+  li {
+    border-bottom: var(--rule-thin);
+  }
+  a {
+    display: flex;
+    align-items: center;
+    min-height: var(--tap);
+    font-family: var(--font-display-stack);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+</style>

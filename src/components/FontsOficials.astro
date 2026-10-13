@@ -1,0 +1,57 @@
+---
+// Fonts oficials d'una pàgina de tasca: enllaços complets, cadascun amb zona tàctil pròpia.
+import { traductor, type Llengua } from '../i18n/ui.ts';
+
+interface Props {
+  llengua: Llengua;
+  /** `peca`: a quina peça pertany la font, per distingir enllaços amb el mateix nom. */
+  fonts: { nom: { ca: string; es: string }; url: string; peca?: { ca: string; es: string } }[];
+}
+const { llengua, fonts } = Astro.props;
+const t = traductor(llengua);
+const uniques = [...new Map(fonts.map((f) => [f.url, f])).values()];
+---
+<section class="fonts" aria-labelledby="fonts-oficials">
+  <h2 id="fonts-oficials">{t('procedencia.fonts')}</h2>
+  <ul>
+    {uniques.map((f) => (
+      <li>
+        <a href={f.url} hreflang="ca">
+          {f.peca && <span class="peca">{f.peca[llengua]}</span>}
+          {f.nom[llengua]}
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  h2 {
+    font-size: var(--t-meta);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding-bottom: var(--s-2);
+    border-bottom: var(--rule-strong);
+  }
+  ul {
+    list-style: none;
+  }
+  li {
+    border-bottom: var(--rule-thin);
+  }
+  .peca {
+    display: block;
+    font-family: var(--font-display-stack);
+    font-weight: 700;
+  }
+  a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: var(--tap);
+    padding: var(--s-2) 0;
+    font-size: var(--t-small);
+    line-height: 1.35;
+  }
+</style>

@@ -1,0 +1,132 @@
+---
+// E1: negocis participants i el seu horari comunicat d'avui. Mai «obert ara».
+import EstatBuit from './EstatBuit.astro';
+import LiniaProcedencia from './LiniaProcedencia.astro';
+import type { Comerc } from '../lib/dades.ts';
+import { traductor, type Llengua } from '../i18n/ui.ts';
+import { diaCurt, franja, hora } from '../lib/format.ts';
+
+interface Props {
+  llengua: Llengua;
+  comercos: Comerc[];
+  detall?: boolean;
+}
+const { llengua, comercos, detall = false } = Astro.props;
+const t = traductor(llengua);
+const Titol = detall ? 'h2' : 'h3';
+const textos = {
+  sense: t('menjar.estat.sense'),
+  senseExp: t('menjar.estat.sense.exp'),
+  durant: t('menjar.estat.durant'),
+  abans: t('menjar.estat.abans'),
+  comunicatExp: t('menjar.estat.comunicat.exp'),
+  finalitzat: t('menjar.estat.finalitzat'),
+  finalitzatExp: t('menjar.estat.finalitzat.exp'),
+  cancelat: t('menjar.estat.cancelat'),
+  cancelatExp: t('menjar.estat.cancelat.exp'),
+};
+
+// Text de reserva sense JavaScript: l'últim missatge rebut, amb el seu dia i hora.
+function ultim(c: Comerc): string {
+  const m = [...c.confirmacions].sort((a, b) =>
+    `${a.rebutA.data}T${a.rebutA.hora}`.localeCompare(`${b.rebutA.data}T${b.rebutA.hora}`),
+  ).at(-1);
+  if (!m) return t('menjar.capHorari');
+  const quan = m.estat === 'cancelat' ? t('menjar.estat.cancelat') : m.inici ? franja(m.inici, m.fi, llengua) : t('menjar.estat.sense');
+  return `${diaCurt(m.dataServei, llengua)}, ${quan} (${hora(m.rebutA.hora, llengua)})`;
+}
+---
+{
+  comercos.length === 0 ? (
+    <EstatBuit titol={t('menjar.buit.titol')}>
+      <p>{t('menjar.buit.text')}</p>
+      <p>{t('menjar.buit.promesa')}</p>
+    </EstatBuit>
+  ) : (
+    <ul class="comercos" data-comercos data-llengua={llengua} data-textos={JSON.stringify(textos)}>
+      {comercos.map((c) => (
+        <li class="fitxa" data-confirmacions={JSON.stringify(c.confirmacions)} data-estat="sense-confirmar">
+          <Titol class="titol-peca">{c.nom}</Titol>
+          <p class="activitat">{c.activitat[llengua]}{c.adreca && ` · ${c.adreca}`}</p>
+          <p class="estat" aria-live="polite">
+            <strong data-estat-principal>{t('menjar.estat.sense')}</strong>
+            <span data-estat-explicacio>{t('menjar.estat.sense.exp')}</span>
+          </p>
+          <p class="sensejs" data-sense-js>{t('menjar.sensejs', { detall: ultim(c) })}</p>
+          {detall && (
+            <LiniaProcedencia
+              llengua={llengua}
+              maduresa={c.maduresa}
+              fonts={c.fonts}
+              consultat={c.consultat}
+              responsable={c.responsable}
+            />
+          )}
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+<script>
+  import '../scripts/comercos.ts';
+</script>
+
+<style>
+  .comercos {
+    list-style: none;
+    border-top: var(--rule-strong);
+  }
+  .fitxa {
+    padding: var(--s-3) 0;
+    border-bottom: var(--rule-thin);
+  }
+  .titol-peca {
+    font-weight: 800;
+    font-size: var(--t-h3);
+    line-height: 1.3;
+  }
+  .activitat,
+  .sensejs {
+    font-size: var(--t-small);
+    color: var(--text-2);
+  }
+  .estat {
+    margin: var(--s-2) 0 var(--s-1);
+  }
+  .estat strong {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-2);
+    font-family: var(--font-display-stack);
+    font-weight: 800;
+    font-size: 1.125rem;
+    line-height: 1.3;
+  }
+  /* Mostra d'estrat al costat de l'estat: el color només acompanya, el text ja diu l'estat. */
+  .estat strong::before {
+    content: '';
+    flex: none;
+    width: 0.75rem;
+    height: 0.75rem;
+    background: var(--marl);
+    transform: translateY(0.05em);
+  }
+  .estat span {
+    display: block;
+    font-size: var(--t-small);
+    color: var(--text-2);
+  }
+  .fitxa[data-estat='durant'] .estat strong::before,
+  .fitxa[data-estat='abans'] .estat strong::before {
+    background: var(--red);
+  }
+  .fitxa[data-estat='cancelat'] .estat strong::before {
+    background: transparent;
+    outline: 2px dashed var(--red-ink);
+    outline-offset: -2px;
+  }
+  .fitxa[data-estat='finalitzat'] .estat strong::before {
+    background: var(--rule);
+  }
+</style>

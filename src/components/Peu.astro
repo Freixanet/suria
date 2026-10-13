@@ -1,0 +1,65 @@
+---
+import { traductor, type Llengua } from '../i18n/ui.ts';
+import { urlDe } from '../i18n/rutes.ts';
+
+import type { Pagina } from '../i18n/rutes.ts';
+
+interface Props {
+  llengua: Llengua;
+  pagina: Pagina | null;
+}
+const { llengua, pagina } = Astro.props;
+const t = traductor(llengua);
+---
+<footer class="peu">
+  <p>{t('peu.errades')}</p>
+  <ul>
+    {/* A la portada ja hi ha l'enllaç just abans del peu: no es repeteix en l'ordre del focus. */}
+    {pagina !== 'inici' && pagina !== 'provant' && <li><a href={urlDe('provant', llengua)}>{t('nav.provant')}</a></li>}
+    <li><a href="https://www.suria.cat/" hreflang="ca">{t('peu.oficials')}</a></li>
+  </ul>
+  <p class="privacitat">{t('peu.privacitat')}</p>
+</footer>
+
+<style>
+  .peu {
+    margin-top: var(--s-7);
+    background: var(--deep);
+    color: var(--on-deep-2);
+    padding: var(--s-3) var(--pad) var(--s-4);
+    font-size: var(--t-meta);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0 var(--s-5);
+    align-items: center;
+  }
+  ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--s-5);
+  }
+  a {
+    color: var(--on-deep);
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+  }
+  a:hover {
+    color: var(--salmon);
+  }
+  a:focus-visible {
+    outline-color: var(--salmon);
+  }
+  .privacitat {
+    grid-column: 1 / -1;
+  }
+  @media (max-width: 56.25rem) {
+    .peu {
+      grid-template-columns: 1fr;
+    }
+    .peu > p:first-child {
+      padding-top: var(--s-2);
+    }
+  }
+</style>

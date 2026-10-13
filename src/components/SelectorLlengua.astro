@@ -1,0 +1,73 @@
+---
+// Canvi de llengua: porta a la mateixa pàgina en l'altra llengua i recorda la tria al navegador.
+import { llengues, traductor, type Llengua } from '../i18n/ui.ts';
+
+interface Props {
+  llengua: Llengua;
+  urls: Record<Llengua, string>;
+}
+const { llengua, urls } = Astro.props;
+const t = traductor(llengua);
+---
+<nav class="llengua" aria-label={t('llengua.etiqueta')}>
+  {
+    (Object.keys(llengues) as Llengua[]).map((ll) => (
+      <a
+        href={urls[ll]}
+        lang={ll}
+        hreflang={ll}
+        aria-current={ll === llengua ? 'true' : undefined}
+        data-tria-llengua={ll}
+      >
+        <span aria-hidden="true">{ll.toUpperCase()}</span>
+        <span class="visually-hidden">{llengues[ll]}</span>
+      </a>
+    ))
+  }
+</nav>
+
+<script>
+  for (const enllac of document.querySelectorAll<HTMLAnchorElement>('[data-tria-llengua]')) {
+    enllac.addEventListener('click', () => {
+      try {
+        localStorage.setItem('suria-llengua', enllac.dataset.triaLlengua ?? '');
+      } catch {
+        /* Sense emmagatzematge: el canvi funciona igual, només no es recorda. */
+      }
+    });
+  }
+</script>
+
+<style>
+  .llengua {
+    display: flex;
+    gap: var(--s-1);
+    align-self: start;
+  }
+  a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 3rem;
+    min-height: var(--tap);
+    padding: 0 var(--s-3);
+    font-family: var(--font-display-stack);
+    font-weight: 800;
+    font-size: var(--t-small);
+    text-decoration: none;
+    color: var(--on-deep);
+    border: 2px solid var(--marl);
+  }
+  a:hover {
+    color: var(--on-deep);
+    border-color: var(--salmon);
+  }
+  a[aria-current] {
+    background: var(--halite);
+    color: var(--deep);
+    border-color: var(--halite);
+  }
+  a:focus-visible {
+    outline-color: var(--salmon);
+  }
+</style>

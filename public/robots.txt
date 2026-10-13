@@ -1,0 +1,3 @@
+# Prototip privat: no s'ha d'indexar.
+User-agent: *
+Disallow: /

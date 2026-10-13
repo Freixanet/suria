@@ -1,0 +1,11 @@
+# Setmana que mostra «Aquesta setmana». Les activitats d'abans no es mostren;
+# les de després van a «Pròximament».
+inici: 2026-10-12
+fi: 2026-10-18
+fonts:
+  - nom:
+      ca: Agenda de suria.cat
+      es: Agenda de suria.cat
+    url: https://www.suria.cat/agenda
+consultat: 2026-10-12
+responsable: Promotor del prototip

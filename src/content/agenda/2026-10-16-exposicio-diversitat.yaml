@@ -1,0 +1,27 @@
+titol:
+  ca: Exposició «Diversitat», de Rosa Santamaria
+  es: Exposición «Diversitat», de Rosa Santamaria
+dies:
+  inici: 2026-10-16
+  fi: 2026-10-18
+hores:
+  - inici: '10:00'
+    fi: '14:00'
+lloc:
+  ca: Cal Balaguer del Porxo
+  es: Cal Balaguer del Porxo
+requisit:
+  ca: Dissabte, també de 16.00 a 19.00 h. Oberta fins al 31 de desembre.
+  es: El sábado, también de 16:00 a 19:00 h. Abierta hasta el 31 de diciembre.
+enllac:
+  url: https://www.suria.cat/actualitat/agenda/10138-exposicio-a-cal-balaguer-del-porxo-diversitat-un-recorregut-per-diferents-obres-de-rosa-santamaria-bacardit
+  text:
+    ca: Fitxa a suria.cat
+    es: Ficha en suria.cat
+fonts:
+  - nom:
+      ca: suria.cat, fitxa de l’agenda
+      es: suria.cat, ficha de la agenda
+    url: https://www.suria.cat/actualitat/agenda/10138-exposicio-a-cal-balaguer-del-porxo-diversitat-un-recorregut-per-diferents-obres-de-rosa-santamaria-bacardit
+consultat: 2026-10-12
+responsable: Promotor del prototip

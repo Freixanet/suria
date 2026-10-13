@@ -1,0 +1,185 @@
+/* Súria · sistema Silvinita (base: variant B, triada el 13/10/2026)
+   Terreny de sal càlida, roca de carbó a la capçalera i a la franja d'identitat, estrats vermells
+   de silvinita a la banda, als filets i als estats. Tres veus:
+   - Gloock (serif editorial): només títols de pàgina i de secció, sempre de 28 px o més.
+   - Schibsted Grotesk: marca, navegació, dates, hores, accions i etiquetes.
+   - Atkinson Hyperlegible: lectura. */
+
+:root {
+  /* Color */
+  --salt: #ece8e1;
+  --halite: #f8f6f2;
+  --deep: #1f1c1a;
+  --red: #a8362a;
+  --red-ink: #8e2c22;
+  --salmon: #e39a7b;
+  --marl: #5e5852;
+  --rule: #cdc6bb;
+  --text-2: #4a4540;
+  --on-deep: #fafbfb;
+  --on-deep-2: #d6cfc6;
+
+  /* Tipografia */
+  --font-display-stack: var(--font-display), system-ui, sans-serif;
+  --font-text-stack: var(--font-text), system-ui, sans-serif;
+  --font-serif-stack: var(--font-serif), Georgia, serif;
+  --t-brand: clamp(3.5rem, 9vw, 7.5rem);
+  --t-h1: clamp(2.5rem, 5.2vw, 4.25rem);
+  --t-h2: clamp(1.875rem, 2.8vw, 2.75rem);
+  /* Mínim de la serif (decisió provisional, 13/10/2026): 1.75rem = 28 px. */
+  --t-serif-min: 1.75rem;
+  --t-h3: 1.1875rem;
+  --t-body: 1.0625rem;
+  --t-small: 1rem;
+  --t-meta: 0.9375rem;
+  --t-tag: 0.875rem;
+  --lh-body: 1.55;
+  --lh-tight: 1.05;
+
+  /* Espai (base 4 px) */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 2.75rem;
+  --s-8: 4rem;
+  --pad: clamp(1rem, 4vw, 3.5rem);
+
+  /* Línies i tocs */
+  --rule-thin: 1px solid var(--rule);
+  --rule-strong: 2px solid var(--deep);
+  --tap: 2.75rem;
+  --focus: 3px solid var(--red);
+
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: var(--salt);
+  color: var(--deep);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scrollbar-color: var(--marl) var(--salt);
+}
+
+body {
+  font-family: var(--font-text-stack);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+::selection {
+  background: var(--salmon);
+  color: var(--deep);
+}
+
+input,
+textarea {
+  caret-color: var(--red);
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+  color: var(--red-ink);
+}
+
+:focus-visible {
+  outline: var(--focus);
+  outline-offset: 3px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display-stack);
+  text-wrap: balance;
+}
+
+/* Títols editorials en serif (pàgina i secció). Mai per sota de 28 px. */
+.titol-serif {
+  font-family: var(--font-serif-stack);
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+p,
+li {
+  text-wrap: pretty;
+}
+
+/* Amb el text molt ampliat, una paraula llarga es parteix abans de desbordar la pantalla
+   (sense guionets automàtics: a mida normal tallaven paraules com «Ca-ramelles»). */
+h1,
+h2,
+h3,
+h4,
+p,
+li,
+a,
+dd {
+  overflow-wrap: break-word;
+}
+
+/* Xifres alineades només on hi ha columnes; en el text, l'espaiat natural (la coma i el punt no s'eixamplen). */
+.xifres {
+  font-variant-numeric: lining-nums;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Acció: enllaç que fa una cosa (fitxa, tràmit, trucar). Sempre ≥ 44 px d'alçada. */
+.accio {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  column-gap: 0.3em;
+  font-family: var(--font-display-stack);
+  font-weight: 700;
+  font-size: var(--t-small);
+  text-decoration-line: underline;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}

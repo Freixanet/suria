@@ -1,0 +1,26 @@
+titol:
+  ca: Unitat Mòbil d’Informació al Consumidor
+  es: Unidad Móvil de Información al Consumidor
+dies:
+  inici: 2026-10-15
+hores:
+  - inici: '10:30'
+    fi: '11:30'
+lloc:
+  ca: Plaça de la Serradora
+  es: Plaza de la Serradora
+nota:
+  ca: Consultes sobre consum i drets com a consumidor.
+  es: Consultas sobre consumo y derechos como consumidor.
+enllac:
+  url: https://www.suria.cat/actualitat/agenda/visita-de-la-unitat-mobil-dinformacio-al-consumidor
+  text:
+    ca: Fitxa a suria.cat
+    es: Ficha en suria.cat
+fonts:
+  - nom:
+      ca: suria.cat, fitxa de l’agenda
+      es: suria.cat, ficha de la agenda
+    url: https://www.suria.cat/actualitat/agenda/visita-de-la-unitat-mobil-dinformacio-al-consumidor
+consultat: 2026-10-12
+responsable: Promotor del prototip

@@ -1,0 +1,214 @@
+// Textos d'interfície. Cada clau existeix en totes dues llengües (ho comprova una prova unitària).
+export const llengues = { ca: 'Català', es: 'Castellano' } as const;
+export type Llengua = keyof typeof llengues;
+export const llenguaPerDefecte: Llengua = 'ca';
+
+const ca = {
+  'lloc.nom': 'Súria',
+  'lloc.nomComplet': 'Súria (prototip)',
+  'lloc.descripcio': 'Prototip independent per viure Súria: agenda de la setmana, comerços i primers passos, amb la font de cada dada.',
+  'lloc.inici': 'Súria, inici',
+
+  'avis.fort': 'Prototip independent',
+  'avis.resta': ', en proves amb veïns. No és una web de l’Ajuntament.',
+
+  'llengua.etiqueta': 'Llengua',
+  'nav.etiqueta': 'Tasques',
+  'nav.inici': 'Inici',
+  'nav.setmana': 'Aquesta setmana',
+  'nav.menjar': 'Menjar i comprar',
+  'nav.passos': 'Primers passos',
+  'nav.cap': 'Cap on anem',
+  'nav.provant': 'Què estem provant',
+  'saltar': 'Ves al contingut',
+
+  'identitat.text': 'Vila del Bages a la vall del Cardener: el Poble Vell, les Caramelles i la mina de potassa.',
+  'identitat.font': 'Text: turismesuria.cat · consultat el 12/10/2026',
+
+  'setmana.titol': 'Aquesta setmana a Súria',
+  'setmana.descripcio': 'Activitats i serveis d’aquesta setmana a Súria, amb hora, lloc i font.',
+  'setmana.proximament': 'Pròximament',
+  'setmana.proximamentDetall': 'Programa i detalls',
+  'setmana.caducada': 'Aquesta agenda era de la setmana {setmana}. Consulta l’agenda actual a suria.cat.',
+  'setmana.passada': 'Ja ha passat',
+  'setmana.buida': 'Encara no tenim activitats verificades per a aquesta setmana. Mentrestant, pots consultar l’agenda municipal.',
+  'setmana.agendaMunicipal': 'Agenda de suria.cat',
+  'setmana.fontResum': 'fitxes de l’agenda de suria.cat, consultades el {data}.',
+
+  'menjar.titol': 'Menjar i comprar avui',
+  'menjar.descripcio': 'Quins negocis participants han comunicat l’horari d’avui i fins quan.',
+  'menjar.buit.titol': 'Encara no hi ha negocis participants.',
+  'menjar.buit.text': 'Quan n’hi hagi, veuràs l’horari que cada negoci ens ha comunicat avui i a quina hora ens el va dir.',
+  'menjar.buit.promesa': 'No direm mai «obert ara»: només el que ens han dit.',
+  'menjar.estat.sense': 'Sense confirmar',
+  'menjar.estat.sense.exp': 'El negoci encara no ens ha comunicat l’horari d’avui.',
+  'menjar.estat.durant': 'Horari comunicat pel negoci: fins a les {fi}',
+  'menjar.estat.abans': 'Avui serveix de {inici} a {fi} (horari comunicat)',
+  'menjar.estat.comunicat.exp': 'El negoci ens ho va dir a les {rebut}. No és una garantia en temps real.',
+  'menjar.estat.finalitzat': 'Servei finalitzat',
+  'menjar.estat.finalitzat.exp': 'Segons l’horari que ens va comunicar avui ({inici}–{fi}).',
+  'menjar.estat.cancelat': 'Avui no serveix',
+  'menjar.estat.cancelat.exp': 'Ens ho va comunicar a les {rebut}.',
+  'menjar.sensejs': 'Sense JavaScript no podem calcular l’estat amb l’hora actual. Últim horari comunicat: {detall}.',
+  'menjar.capHorari': 'cap',
+
+  'passos.titol': 'Primers passos a Súria',
+  'passos.descripcio': 'Empadronar-te, llençar mobles vells i trobar la farmàcia de guàrdia: el que cal saber els primers mesos.',
+  'passos.guardia.fins': 'Fins {fi}',
+  'passos.guardia.desde': 'Des de {inici} fins {fi}',
+  'passos.guardia.caducada': 'Aquest torn ja ha acabat.',
+  'passos.fontResum': 'Seu electrònica de Súria i suria.cat (OAC, voluminosos, farmàcies), consultats el {data}.',
+
+  'cap.titol': 'Cap on anem',
+  'cap.descripcio': 'Idees per al futur d’aquesta plataforma. Encara no existeixen: digues-nos què et faria servei.',
+  'cap.intro': 'Primeres passes d’una plataforma per viure millor Súria. Això encara no existeix: digues-nos què et faria servei.',
+  'cap.idea': 'Idea · encara no existeix',
+  'cap.demo': 'Demo · dades d’exemple',
+  'cap.idees': 'Idees · encara no existeixen',
+  'cap.escala.titol': 'Com llegir les etiquetes',
+  'cap.escala.real': 'Funciona i està verificat.',
+  'cap.escala.prova': 'Funciona; comprovem si et serveix.',
+  'cap.escala.demo': 'Exemple d’una idea. Les dades no són reals.',
+  'cap.escala.idea': 'Encara no existeix. La necessitaries?',
+  'cap.compromis': 'Les idees no són compromisos. És una iniciativa independent i experimental.',
+
+  'provant.titol': 'Què estem provant',
+  'provant.descripcio': 'Tres proves petites amb veïns per saber què et serveix de debò.',
+  'provant.resum': 'Tres proves petites amb veïns per saber què et serveix de debò. Aviat podràs opinar per WhatsApp o correu: el canal encara no està obert.',
+
+  'maduresa.Real': 'Real',
+  'maduresa.En prova': 'En prova',
+  'maduresa.Demo': 'Demo',
+  'maduresa.Idea': 'Idea',
+
+  'procedencia.font': 'Font',
+  'procedencia.consultat': 'Consultat',
+  'procedencia.responsable': 'Responsable',
+  'procedencia.fonts': 'Fonts oficials',
+  'procedencia.valid': 'Vigència',
+  'procedencia.promotor': 'Promotor del prototip',
+  'procedencia.consultadaEl': 'consultada el {data}',
+
+  'tasca.altres': 'Altres tasques',
+  'tasca.inici': 'Tornar a l’inici',
+  'tasca.veure': 'Veure-ho tot',
+  'tasca.veureSetmana': 'Tota la setmana, amb fonts',
+  'tasca.veurePassos': 'Tots els passos, amb fonts',
+
+  'peu.errades': 'Fe d’errades: si alguna dada no és correcta, la corregirem i ho indicarem.',
+  'peu.oficials': 'Fonts oficials: suria.cat',
+  'peu.privacitat': 'Sense analítica ni galetes. La llengua triada es desa només al teu navegador.',
+
+  'nofound.titol': 'Aquesta pàgina no existeix',
+  'nofound.text': 'Aquesta pàgina no existeix o ja no hi és. Pots tornar a l’inici o anar a:',
+} as const;
+
+export type Clau = keyof typeof ca;
+
+const es: Record<Clau, string> = {
+  'lloc.nom': 'Súria',
+  'lloc.nomComplet': 'Súria (prototipo)',
+  'lloc.descripcio': 'Prototipo independiente para vivir Súria: agenda de la semana, comercios y primeros pasos, con la fuente de cada dato.',
+  'lloc.inici': 'Súria, inicio',
+
+  'avis.fort': 'Prototipo independiente',
+  'avis.resta': ', en pruebas con vecinos. No es una web del Ayuntamiento.',
+
+  'llengua.etiqueta': 'Idioma',
+  'nav.etiqueta': 'Tareas',
+  'nav.inici': 'Inicio',
+  'nav.setmana': 'Esta semana',
+  'nav.menjar': 'Comer y comprar',
+  'nav.passos': 'Primeros pasos',
+  'nav.cap': 'Hacia dónde vamos',
+  'nav.provant': 'Qué estamos probando',
+  'saltar': 'Ir al contenido',
+
+  'identitat.text': 'Villa del Bages en el valle del Cardener: el Poble Vell, las Caramelles y la mina de potasa.',
+  'identitat.font': 'Texto: turismesuria.cat · consultado el 12/10/2026',
+
+  'setmana.titol': 'Esta semana en Súria',
+  'setmana.descripcio': 'Actividades y servicios de esta semana en Súria, con hora, lugar y fuente.',
+  'setmana.proximament': 'Próximamente',
+  'setmana.proximamentDetall': 'Programa y detalles',
+  'setmana.caducada': 'Esta agenda era de la semana {setmana}. Consulta la agenda actual en suria.cat.',
+  'setmana.passada': 'Ya ha pasado',
+  'setmana.buida': 'Todavía no tenemos actividades verificadas para esta semana. Mientras tanto, puedes consultar la agenda municipal.',
+  'setmana.agendaMunicipal': 'Agenda de suria.cat',
+  'setmana.fontResum': 'fichas de la agenda de suria.cat, consultadas el {data}.',
+
+  'menjar.titol': 'Comer y comprar hoy',
+  'menjar.descripcio': 'Qué negocios participantes han comunicado el horario de hoy y hasta cuándo.',
+  'menjar.buit.titol': 'Todavía no hay negocios participantes.',
+  'menjar.buit.text': 'Cuando los haya, verás el horario que cada negocio nos ha comunicado hoy y a qué hora nos lo dijo.',
+  'menjar.buit.promesa': 'Nunca diremos «abierto ahora»: solo lo que nos han dicho.',
+  'menjar.estat.sense': 'Sin confirmar',
+  'menjar.estat.sense.exp': 'El negocio aún no nos ha comunicado el horario de hoy.',
+  'menjar.estat.durant': 'Horario comunicado por el negocio: hasta las {fi}',
+  'menjar.estat.abans': 'Hoy sirve de {inici} a {fi} (horario comunicado)',
+  'menjar.estat.comunicat.exp': 'El negocio nos lo dijo a las {rebut}. No es una garantía en tiempo real.',
+  'menjar.estat.finalitzat': 'Servicio finalizado',
+  'menjar.estat.finalitzat.exp': 'Según el horario que nos comunicó hoy ({inici}–{fi}).',
+  'menjar.estat.cancelat': 'Hoy no sirve',
+  'menjar.estat.cancelat.exp': 'Nos lo comunicó a las {rebut}.',
+  'menjar.sensejs': 'Sin JavaScript no podemos calcular el estado con la hora actual. Último horario comunicado: {detall}.',
+  'menjar.capHorari': 'ninguno',
+
+  'passos.titol': 'Primeros pasos en Súria',
+  'passos.descripcio': 'Empadronarte, tirar muebles viejos y encontrar la farmacia de guardia: lo que hay que saber los primeros meses.',
+  'passos.guardia.fins': 'Hasta {fi}',
+  'passos.guardia.desde': 'Desde {inici} hasta {fi}',
+  'passos.guardia.caducada': 'Este turno ya ha terminado.',
+  'passos.fontResum': 'Sede electrónica de Súria y suria.cat (OAC, voluminosos, farmacias), consultados el {data}.',
+
+  'cap.titol': 'Hacia dónde vamos',
+  'cap.descripcio': 'Ideas para el futuro de esta plataforma. Todavía no existen: dinos qué te sería útil.',
+  'cap.intro': 'Primeros pasos de una plataforma para vivir mejor Súria. Esto todavía no existe: dinos qué te sería útil.',
+  'cap.idea': 'Idea · todavía no existe',
+  'cap.demo': 'Demo · datos de ejemplo',
+  'cap.idees': 'Ideas · todavía no existen',
+  'cap.escala.titol': 'Cómo leer las etiquetas',
+  'cap.escala.real': 'Funciona y está verificado.',
+  'cap.escala.prova': 'Funciona; comprobamos si te sirve.',
+  'cap.escala.demo': 'Ejemplo de una idea. Los datos no son reales.',
+  'cap.escala.idea': 'Todavía no existe. ¿La necesitarías?',
+  'cap.compromis': 'Las ideas no son compromisos. Es una iniciativa independiente y experimental.',
+
+  'provant.titol': 'Qué estamos probando',
+  'provant.descripcio': 'Tres pruebas pequeñas con vecinos para saber qué te sirve de verdad.',
+  'provant.resum': 'Tres pruebas pequeñas con vecinos para saber qué te sirve de verdad. Pronto podrás opinar por WhatsApp o correo: el canal todavía no está abierto.',
+
+  'maduresa.Real': 'Real',
+  'maduresa.En prova': 'En prueba',
+  'maduresa.Demo': 'Demo',
+  'maduresa.Idea': 'Idea',
+
+  'procedencia.font': 'Fuente',
+  'procedencia.consultat': 'Consultado',
+  'procedencia.responsable': 'Responsable',
+  'procedencia.fonts': 'Fuentes oficiales',
+  'procedencia.valid': 'Vigencia',
+  'procedencia.promotor': 'Promotor del prototipo',
+  'procedencia.consultadaEl': 'consultada el {data}',
+
+  'tasca.altres': 'Otras tareas',
+  'tasca.inici': 'Volver al inicio',
+  'tasca.veure': 'Verlo todo',
+  'tasca.veureSetmana': 'Toda la semana, con fuentes',
+  'tasca.veurePassos': 'Todos los pasos, con fuentes',
+
+  'peu.errades': 'Fe de erratas: si algún dato no es correcto, lo corregiremos y lo indicaremos.',
+  'peu.oficials': 'Fuentes oficiales: suria.cat',
+  'peu.privacitat': 'Sin analítica ni cookies. El idioma elegido se guarda solo en tu navegador.',
+
+  'nofound.titol': 'Esta página no existe',
+  'nofound.text': 'Esta página no existe o ya no está. Puedes volver al inicio o ir a:',
+};
+
+export const ui: Record<Llengua, Record<Clau, string>> = { ca, es };
+
+/** Traductor d'una llengua, amb substitució de {variables}. */
+export function traductor(llengua: Llengua) {
+  return (clau: Clau, vars: Record<string, string> = {}) =>
+    ui[llengua][clau].replace(/\{(\w+)\}/g, (_, nom: string) => vars[nom] ?? `{${nom}}`);
+}

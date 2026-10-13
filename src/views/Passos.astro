@@ -1,0 +1,16 @@
+---
+import PaginaTasca from './PaginaTasca.astro';
+import PrimersPassos from '../components/PrimersPassos.astro';
+import { traductor, type Llengua } from '../i18n/ui.ts';
+import { passos } from '../lib/dades.ts';
+
+interface Props {
+  llengua: Llengua;
+}
+const { llengua } = Astro.props;
+const t = traductor(llengua);
+const llista = await passos();
+---
+<PaginaTasca llengua={llengua} pagina="passos" titol={t('passos.titol')} descripcio={t('passos.descripcio')} maduresa="En prova" fonts={llista.flatMap((p) => p.fonts.map((f) => ({ ...f, peca: p.titol })))}>
+  <PrimersPassos llengua={llengua} passos={llista} detall />
+</PaginaTasca>

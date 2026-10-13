@@ -1,0 +1,119 @@
+---
+// Capçalera de roca fosca: marca, data d'avui i llengua; després la banda, l'avís i les tasques.
+import BandaSilvinita from './BandaSilvinita.astro';
+import NavTasques from './NavTasques.astro';
+import SelectorLlengua from './SelectorLlengua.astro';
+import { traductor, type Llengua } from '../i18n/ui.ts';
+import { urlDe, type Pagina } from '../i18n/rutes.ts';
+
+interface Props {
+  llengua: Llengua;
+  pagina: Pagina | null;
+  urlsLlengua: Record<Llengua, string>;
+}
+const { llengua, pagina, urlsLlengua } = Astro.props;
+const t = traductor(llengua);
+const esInici = pagina === 'inici';
+---
+<header class="capcalera">
+<div class="mast">
+  {
+    esInici ? (
+      <h1 class="marca">
+        {t('lloc.nom')}
+        <span class="visually-hidden"> ({t('avis.fort').toLowerCase()})</span>
+      </h1>
+    ) : (
+      <a class="marca" href={urlDe('inici', llengua)} aria-label={t('lloc.inici')}>
+        {t('lloc.nom')}
+      </a>
+    )
+  }
+  <div class="qui">
+    <time class="avui" data-avui data-llengua={llengua}></time>
+  </div>
+  <SelectorLlengua llengua={llengua} urls={urlsLlengua} />
+</div>
+<BandaSilvinita />
+<p class="avis"><strong>{t('avis.fort')}</strong>{t('avis.resta')}</p>
+<NavTasques llengua={llengua} actual={pagina} />
+</header>
+
+<script>
+  // Data d'avui a Súria. Sense JavaScript, simplement no apareix (mai una data inventada).
+  import { dataMadrid } from '../lib/hora-local.ts';
+  import { dataCompleta } from '../lib/format.ts';
+
+  for (const el of document.querySelectorAll<HTMLTimeElement>('[data-avui]')) {
+    const avui = dataMadrid(new Date());
+    el.textContent = dataCompleta(avui, el.dataset.llengua === 'es' ? 'es' : 'ca');
+    el.dateTime = avui;
+  }
+</script>
+
+<style>
+  .mast {
+    background: var(--deep);
+    color: var(--on-deep);
+    padding: var(--s-3) var(--pad) var(--s-4);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--s-2) var(--s-6);
+    align-items: end;
+  }
+  .marca {
+    font-family: var(--font-display-stack);
+    font-weight: 900;
+    font-size: var(--t-brand);
+    line-height: 0.86;
+    letter-spacing: -0.04em;
+    text-decoration: none;
+    color: var(--on-deep);
+  }
+  a.marca:hover {
+    color: var(--on-deep);
+  }
+  a.marca:focus-visible {
+    outline-color: var(--salmon);
+  }
+  .qui {
+    font-family: var(--font-display-stack);
+    font-weight: 600;
+    font-size: clamp(1rem, 1.4vw, 1.1875rem);
+    line-height: 1.4;
+    max-width: 44ch;
+  }
+  .avui {
+    display: block;
+    min-height: 1.4em;
+    color: var(--salmon);
+    font-weight: 800;
+  }
+  .avis {
+    padding: var(--s-2) var(--pad);
+    background: var(--halite);
+    border-bottom: var(--rule-thin);
+    font-size: var(--t-small);
+    line-height: 1.4;
+  }
+  .avis strong {
+    color: var(--red-ink);
+  }
+  @media (max-width: 56.25rem) {
+    /* Flex amb salt de línia: amb el text al 200 %, la llengua baixa sota la marca en lloc de sortir de la pantalla. */
+    .mast {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-block: var(--s-3);
+    }
+    .qui {
+      flex-basis: 100%;
+      order: 3;
+    }
+    .avui:empty {
+      display: none;
+    }
+  }
+</style>

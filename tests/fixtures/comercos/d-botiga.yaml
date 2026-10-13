@@ -1,0 +1,8 @@
+# DADES DE PROVA. Només entren al build de proves (SURIA_PROVES=1); mai es publiquen.
+nom: Botiga de mostra D
+activitat: { ca: Queviures (dades de prova), es: Comestibles (datos de prueba) }
+confirmacions: []
+maduresa: Demo
+fonts: [{ nom: { ca: Missatge del negoci al promotor (prova), es: Mensaje del negocio al promotor (prueba) }, url: 'https://example.org/prova' }]
+consultat: 2026-10-12
+responsable: Botiga de mostra D

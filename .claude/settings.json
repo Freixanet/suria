@@ -1,0 +1,8 @@
+{
+  "env": {
+    "GSTACK_PROJECT_SLUG": "suria",
+    "IMPECCABLE_HOME": "/Users/mfreixanet/Projects/suria/.impeccable/home",
+    "IMPECCABLE_NO_TELEMETRY": "1",
+    "DO_NOT_TRACK": "1"
+  }
+}

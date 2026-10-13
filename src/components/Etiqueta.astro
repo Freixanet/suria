@@ -1,0 +1,33 @@
+---
+// Maduresa d'una secció o peça (Real / En prova / Demo / Idea). Sempre en text; la vora només acompanya.
+import { traductor, type Llengua } from '../i18n/ui.ts';
+
+interface Props {
+  maduresa: 'Real' | 'En prova' | 'Demo' | 'Idea';
+  llengua: Llengua;
+  /** Text complet en lloc de la paraula sola, p. ex. «Idea · encara no existeix». */
+  text?: string;
+}
+const { maduresa, llengua, text } = Astro.props;
+const t = traductor(llengua);
+const especulativa = maduresa === 'Idea' || maduresa === 'Demo';
+---
+<span class:list={['etiqueta', { especulativa }]}>{text ?? t(`maduresa.${maduresa}`)}</span>
+
+<style>
+  .etiqueta {
+    display: inline-block;
+    font-family: var(--font-display-stack);
+    font-weight: 800;
+    font-size: var(--t-tag);
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border: 2px solid var(--deep);
+    padding: 1px var(--s-2);
+  }
+  .especulativa {
+    border-style: dashed;
+    border-color: var(--marl);
+  }
+</style>

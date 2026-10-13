@@ -1,0 +1,32 @@
+ordre: 1
+titol:
+  ca: Empadronar-te
+  es: Empadronarte
+resum:
+  ca: En línia, o a l’OAC (Casa de la Vila), de dilluns a divendres de 9.00 a 14.00 h; dijous, també de 16.00 a 18.30 h.
+  es: En línea, o en la OAC (Casa de la Vila), de lunes a viernes de 9:00 a 14:00 h; los jueves, también de 16:00 a 18:30 h.
+text:
+  ca: Sol·licitud d’alta al Padró, en línia o a l’OAC (planta baixa de la Casa de la Vila, c. Ernest Solvay, 13). De dilluns a divendres feiners, 9.00–14.00 h; dijous, també 16.00–18.30 h.
+  es: Solicitud de alta en el Padrón, en línea o en la OAC (planta baja de la Casa de la Vila, c. Ernest Solvay, 13). De lunes a viernes laborables, 9:00–14:00 h; los jueves, también 16:00–18:30 h.
+accions:
+  - tipus: web
+    url: https://suria.eadministracio.cat/catalog/t/d120f65c-c936-4a95-bd50-e7ae970ca149
+    text:
+      ca: Tràmit d’alta en línia
+      es: Trámite de alta en línea
+  - tipus: telefon
+    telefon: '+34938682800'
+    text:
+      ca: Trucar a l’OAC
+      es: Llamar a la OAC
+fonts:
+  - nom:
+      ca: Seu electrònica de Súria, tràmit d’alta al Padró
+      es: Sede electrónica de Súria, trámite de alta en el Padrón
+    url: https://suria.eadministracio.cat/catalog/t/d120f65c-c936-4a95-bd50-e7ae970ca149
+  - nom:
+      ca: suria.cat, Oficina d’Atenció Ciutadana
+      es: suria.cat, Oficina de Atención Ciudadana (OAC)
+    url: https://www.suria.cat/oac
+consultat: 2026-10-12
+responsable: Promotor del prototip

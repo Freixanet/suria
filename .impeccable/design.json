@@ -1,0 +1,427 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-13T00:00:00Z",
+  "title": "Design System: Súria (prototip)",
+  "extensions": {
+    "colorMeta": {
+      "salt": {
+        "role": "neutral",
+        "displayName": "Sal càlida",
+        "canonical": "#ece8e1",
+        "tonalRamp": [
+          "oklch(15.0% 0.01 81.8)",
+          "oklch(26.4% 0.01 81.8)",
+          "oklch(37.9% 0.01 81.8)",
+          "oklch(49.3% 0.01 81.8)",
+          "oklch(60.7% 0.01 81.8)",
+          "oklch(72.1% 0.01 81.8)",
+          "oklch(83.6% 0.01 81.8)",
+          "oklch(95.0% 0.01 81.8)"
+        ]
+      },
+      "halite": {
+        "role": "neutral",
+        "displayName": "Halita",
+        "canonical": "#f8f6f2",
+        "tonalRamp": [
+          "oklch(15.0% 0.006 84.6)",
+          "oklch(26.4% 0.006 84.6)",
+          "oklch(37.9% 0.006 84.6)",
+          "oklch(49.3% 0.006 84.6)",
+          "oklch(60.7% 0.006 84.6)",
+          "oklch(72.1% 0.006 84.6)",
+          "oklch(83.6% 0.006 84.6)",
+          "oklch(95.0% 0.006 84.6)"
+        ]
+      },
+      "deep": {
+        "role": "neutral",
+        "displayName": "Carbó",
+        "canonical": "#1f1c1a",
+        "tonalRamp": [
+          "oklch(15.0% 0.006 56.1)",
+          "oklch(26.4% 0.006 56.1)",
+          "oklch(37.9% 0.006 56.1)",
+          "oklch(49.3% 0.006 56.1)",
+          "oklch(60.7% 0.006 56.1)",
+          "oklch(72.1% 0.006 56.1)",
+          "oklch(83.6% 0.006 56.1)",
+          "oklch(95.0% 0.006 56.1)"
+        ]
+      },
+      "red": {
+        "role": "primary",
+        "displayName": "Vermell silvinita",
+        "canonical": "#a8362a",
+        "tonalRamp": [
+          "oklch(15.0% 0.152 29.5)",
+          "oklch(26.4% 0.152 29.5)",
+          "oklch(37.9% 0.152 29.5)",
+          "oklch(49.3% 0.152 29.5)",
+          "oklch(60.7% 0.152 29.5)",
+          "oklch(72.1% 0.152 29.5)",
+          "oklch(83.6% 0.152 29.5)",
+          "oklch(95.0% 0.152 29.5)"
+        ]
+      },
+      "red-ink": {
+        "role": "primary",
+        "displayName": "Vermell tinta",
+        "canonical": "#8e2c22",
+        "tonalRamp": [
+          "oklch(15.0% 0.134 29.3)",
+          "oklch(26.4% 0.134 29.3)",
+          "oklch(37.9% 0.134 29.3)",
+          "oklch(49.3% 0.134 29.3)",
+          "oklch(60.7% 0.134 29.3)",
+          "oklch(72.1% 0.134 29.3)",
+          "oklch(83.6% 0.134 29.3)",
+          "oklch(95.0% 0.134 29.3)"
+        ]
+      },
+      "salmon": {
+        "role": "secondary",
+        "displayName": "Salmó",
+        "canonical": "#e39a7b",
+        "tonalRamp": [
+          "oklch(15.0% 0.098 43.8)",
+          "oklch(26.4% 0.098 43.8)",
+          "oklch(37.9% 0.098 43.8)",
+          "oklch(49.3% 0.098 43.8)",
+          "oklch(60.7% 0.098 43.8)",
+          "oklch(72.1% 0.098 43.8)",
+          "oklch(83.6% 0.098 43.8)",
+          "oklch(95.0% 0.098 43.8)"
+        ]
+      },
+      "marl": {
+        "role": "neutral",
+        "displayName": "Marga",
+        "canonical": "#5e5852",
+        "tonalRamp": [
+          "oklch(15.0% 0.012 67.5)",
+          "oklch(26.4% 0.012 67.5)",
+          "oklch(37.9% 0.012 67.5)",
+          "oklch(49.3% 0.012 67.5)",
+          "oklch(60.7% 0.012 67.5)",
+          "oklch(72.1% 0.012 67.5)",
+          "oklch(83.6% 0.012 67.5)",
+          "oklch(95.0% 0.012 67.5)"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Filet",
+        "canonical": "#cdc6bb",
+        "tonalRamp": [
+          "oklch(15.0% 0.017 79.3)",
+          "oklch(26.4% 0.017 79.3)",
+          "oklch(37.9% 0.017 79.3)",
+          "oklch(49.3% 0.017 79.3)",
+          "oklch(60.7% 0.017 79.3)",
+          "oklch(72.1% 0.017 79.3)",
+          "oklch(83.6% 0.017 79.3)",
+          "oklch(95.0% 0.017 79.3)"
+        ]
+      },
+      "text-2": {
+        "role": "neutral",
+        "displayName": "Text secundari",
+        "canonical": "#4a4540",
+        "tonalRamp": [
+          "oklch(15.0% 0.011 67.5)",
+          "oklch(26.4% 0.011 67.5)",
+          "oklch(37.9% 0.011 67.5)",
+          "oklch(49.3% 0.011 67.5)",
+          "oklch(60.7% 0.011 67.5)",
+          "oklch(72.1% 0.011 67.5)",
+          "oklch(83.6% 0.011 67.5)",
+          "oklch(95.0% 0.011 67.5)"
+        ]
+      },
+      "on-deep": {
+        "role": "neutral",
+        "displayName": "Sobre carbó",
+        "canonical": "#fafbfb",
+        "tonalRamp": [
+          "oklch(15.0% 0.001 197.1)",
+          "oklch(26.4% 0.001 197.1)",
+          "oklch(37.9% 0.001 197.1)",
+          "oklch(49.3% 0.001 197.1)",
+          "oklch(60.7% 0.001 197.1)",
+          "oklch(72.1% 0.001 197.1)",
+          "oklch(83.6% 0.001 197.1)",
+          "oklch(95.0% 0.001 197.1)"
+        ]
+      },
+      "on-deep-2": {
+        "role": "neutral",
+        "displayName": "Sobre carbó 2",
+        "canonical": "#d6cfc6",
+        "tonalRamp": [
+          "oklch(15.0% 0.015 74.4)",
+          "oklch(26.4% 0.015 74.4)",
+          "oklch(37.9% 0.015 74.4)",
+          "oklch(49.3% 0.015 74.4)",
+          "oklch(60.7% 0.015 74.4)",
+          "oklch(72.1% 0.015 74.4)",
+          "oklch(83.6% 0.015 74.4)",
+          "oklch(95.0% 0.015 74.4)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "brand": {
+        "displayName": "Marca",
+        "purpose": "Solo «Súria» en la cabecera."
+      },
+      "display": {
+        "displayName": "Display",
+        "purpose": "Título de página (h1) de las tareas."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Título de sección; serif nunca por debajo de 28 px (provisional)."
+      },
+      "headline-compact": {
+        "displayName": "Headline compacto",
+        "purpose": "Secciones secundarias de portada; mínimo --t-serif-min (1.75rem)."
+      },
+      "title": {
+        "displayName": "Título de pieza",
+        "purpose": "Actividad, paso, comercio, prueba."
+      },
+      "body": {
+        "displayName": "Lectura",
+        "purpose": "Atkinson Hyperlegible (provisional)."
+      },
+      "body-small": {
+        "displayName": "Lectura pequeña",
+        "purpose": "Detalle de pieza."
+      },
+      "meta": {
+        "displayName": "Meta",
+        "purpose": "Línea de procedencia y vigencia."
+      },
+      "date": {
+        "displayName": "Fecha",
+        "purpose": "Días de agenda, cifras tabulares."
+      },
+      "action": {
+        "displayName": "Acción",
+        "purpose": "Enlaces que hacen algo."
+      },
+      "label": {
+        "displayName": "Etiqueta",
+        "purpose": "Madurez e ideas, en mayúsculas."
+      }
+    },
+    "shadows": [
+      {
+        "name": "nav-active-underline",
+        "value": "inset 0 -4px var(--red)",
+        "purpose": "Subrayado de la tarea activa; actúa como filete, no como elevación."
+      },
+      {
+        "name": "nav-hover-underline",
+        "value": "inset 0 -2px var(--marl)",
+        "purpose": "Hover de la navegación de tareas."
+      }
+    ],
+    "motion": [
+      {
+        "name": "scroll-smooth",
+        "value": "scroll-behavior: smooth (solo con prefers-reduced-motion: no-preference)",
+        "purpose": "Única transición del sistema; nada retrasa el contenido."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "una-columna",
+        "value": "56.25rem"
+      },
+      {
+        "name": "escala-madurez",
+        "value": "30rem"
+      }
+    ],
+    "focus": {
+      "light": "3px solid var(--red), outline-offset 3px",
+      "dark": "3px solid var(--salmon), outline-offset 3px"
+    },
+    "tap": {
+      "min": "2.75rem",
+      "navDesktop": "3.25rem"
+    },
+    "rules": {
+      "strong": "2px solid var(--deep)",
+      "thin": "1px solid var(--rule)",
+      "idea": "1px dashed var(--marl)"
+    },
+    "strataBand": {
+      "desktop": "30px: 8/4/9/3/6 px (red, salmon, red-ink, halite, marl)",
+      "mobile": "22px: 6/3/7/2/4 px"
+    },
+    "pending": [
+      "Botón de canal de opinión y ayuda: el canal no existe todavía",
+      "Pantalla de contraseña: aplazada al despliegue (D3/T5)"
+    ]
+  },
+  "components": [
+    {
+      "name": "Acció",
+      "kind": "button",
+      "refersTo": "action-link",
+      "description": "Enlace que hace algo (ficha, trámite, llamar); subrayado, 44 px mínimo.",
+      "html": "<a class=\"ds-accio\" href=\"#\">Fitxa a suria.cat</a>",
+      "css": ".ds-accio{display:inline-flex;align-items:center;min-height:2.75rem;font-family: var(--font-display-stack, 'Schibsted Grotesk', system-ui, sans-serif);font-weight:700;font-size:1rem;color:var(--deep,#1f1c1a);text-decoration-line:underline;text-decoration-thickness:1px;text-underline-offset:.2em}.ds-accio:hover{color:var(--red-ink,#8e2c22);text-decoration-thickness:2px}.ds-accio:focus-visible{outline:3px solid var(--red,#a8362a);outline-offset:3px}"
+    },
+    {
+      "name": "Navegació de tasques",
+      "kind": "nav",
+      "refersTo": "nav-task",
+      "description": "Navegación persistente; la tarea activa en red-ink con subrayado interior de 4 px.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\" aria-current=\"page\">Aquesta setmana</a><a href=\"#\">Menjar i comprar</a><a href=\"#\">Primers passos</a><a href=\"#\">Cap on anem</a></nav>",
+      "css": ".ds-nav{display:flex;flex-wrap:wrap;gap:0 .5rem;border-bottom:1px solid var(--rule,#cdc6bb);background:var(--salt,#ece8e1)}.ds-nav a{display:flex;align-items:center;min-height:3.25rem;padding:0 .75rem;font-family: var(--font-display-stack, 'Schibsted Grotesk', system-ui, sans-serif);font-weight:700;font-size:1.0625rem;text-decoration:none;color:var(--deep,#1f1c1a)}.ds-nav a:hover{box-shadow:inset 0 -2px var(--marl,#5e5852)}.ds-nav a[aria-current]{box-shadow:inset 0 -4px var(--red,#a8362a);color:var(--red-ink,#8e2c22)}.ds-nav a:focus-visible{outline:3px solid var(--red,#a8362a);outline-offset:3px}"
+    },
+    {
+      "name": "Selector de llengua",
+      "kind": "chip",
+      "refersTo": "lang-toggle",
+      "description": "CA/ES sobre carbón; el activo en halita.",
+      "html": "<div class=\"ds-llengua\"><a href=\"#\" aria-current=\"true\">CA</a><a href=\"#\">ES</a></div>",
+      "css": ".ds-llengua{display:flex;gap:.25rem;background:var(--deep,#1f1c1a);padding:.75rem}.ds-llengua a{display:inline-flex;align-items:center;justify-content:center;min-width:3rem;min-height:2.75rem;padding:0 .75rem;font-family: var(--font-display-stack, 'Schibsted Grotesk', system-ui, sans-serif);font-weight:800;font-size:1rem;text-decoration:none;color:var(--on-deep,#fafbfb);border:2px solid var(--marl,#5e5852)}.ds-llengua a:hover{border-color:var(--salmon,#e39a7b)}.ds-llengua a[aria-current]{background:var(--halite,#f8f6f2);color:var(--deep,#1f1c1a);border-color:var(--halite,#f8f6f2)}.ds-llengua a:focus-visible{outline:3px solid var(--salmon,#e39a7b);outline-offset:3px}"
+    },
+    {
+      "name": "Banda silvinita",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Firma del sistema: cinco estratos bajo la cabecera; única aparición de los estratos.",
+      "html": "<div class=\"ds-banda\" aria-hidden=\"true\"><i></i><i></i><i></i><i></i><i></i></div>",
+      "css": ".ds-banda{display:grid;grid-template-rows:8px 4px 9px 3px 6px;height:30px}.ds-banda i:nth-child(1){background:var(--red,#a8362a)}.ds-banda i:nth-child(2){background:var(--salmon,#e39a7b)}.ds-banda i:nth-child(3){background:var(--red-ink,#8e2c22)}.ds-banda i:nth-child(4){background:var(--halite,#f8f6f2)}.ds-banda i:nth-child(5){background:var(--marl,#5e5852)}"
+    },
+    {
+      "name": "Capçalera de secció amb maduresa",
+      "kind": "custom",
+      "refersTo": "maturity-line",
+      "description": "Título serif ≥ 28 px y la madurez en texto rojo debajo.",
+      "html": "<div class=\"ds-obertura\"><h2>Aquesta setmana a Súria</h2><span>En prova</span></div>",
+      "css": ".ds-obertura{display:flex;flex-direction:column;gap:.5rem}.ds-obertura h2{font-family: var(--font-serif-stack, Gloock, Georgia, serif);font-weight:400;font-size:clamp(1.875rem,2.8vw,2.75rem);line-height:1.02;letter-spacing:-.005em;color:var(--deep,#1f1c1a)}.ds-obertura span{font-family: var(--font-display-stack, 'Schibsted Grotesk', system-ui, sans-serif);font-weight:800;font-size:.875rem;letter-spacing:.04em;text-transform:uppercase;color:var(--red-ink,#8e2c22)}"
+    },
+    {
+      "name": "Activitat d'agenda (E2)",
+      "kind": "card",
+      "refersTo": null,
+      "description": "Pieza de lista: día, título, horas y lugar, requisito, acción y procedencia.",
+      "html": "<ul class=\"ds-llista\"><li class=\"ds-act\"><time>Dc 14</time><div><h3>Deixalleria mòbil</h3><p><b>16.15–17.15 h</b> · Al costat de les escoles</p><a href=\"#\">Fitxa a suria.cat</a><p class=\"ds-proc\"><b>En prova</b> · Font: suria.cat · Consultat: 12/10/2026</p></div></li></ul>",
+      "css": ".ds-llista{list-style:none;padding:0;margin:0;border-top:2px solid var(--deep,#1f1c1a)}.ds-act{display:grid;grid-template-columns:6.75em minmax(0,1fr);gap:.25rem 1rem;padding:.75rem 0 .5rem;border-bottom:1px solid var(--rule,#cdc6bb);font-family: var(--font-text-stack, 'Atkinson Hyperlegible', system-ui, sans-serif);color:var(--deep,#1f1c1a)}.ds-act time{font-family: var(--font-display-stack, 'Schibsted Grotesk', system-ui, sans-serif);font-weight:800;font-size:1rem;color:var(--red-ink,#8e2c22);font-variant-numeric:tabular-nums}.ds-act h3{margin:0;font-family: var(--font-display-stack, 'Schibsted Grotesk', system-ui, sans-serif);font-weight:800;font-size:1.1875rem;line-height:1.3}.ds-act p{margin:0;font-size:1rem;line-height:1.45}.ds-act p b{font-family: var(--font-display-stack, 'Schibsted Grotesk', system-ui, sans-serif);font-weight:700}.ds-act a{display:inline-flex;align-items:center;min-height:2.75rem;font-family: var(--font-display-stack, 'Schibsted Grotesk', system-ui, sans-serif);font-weight:700;color:inherit}.ds-act a:hover{color:var(--red-ink,#8e2c22)}.ds-act a:focus-visible{outline:3px solid var(--red,#a8362a);outline-offset:3px}.ds-act .ds-proc{font-size:.9375rem;color:var(--text-2,#4a4540)}"
+    },
+    {
+      "name": "Estat de comerç (E1)",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Estado principal en texto con muestra de estrato y explicación de una línea.",
+      "html": "<p class=\"ds-estat\"><strong data-estat=\"durant\">Horari comunicat pel negoci: fins a les 15.30</strong><span>El negoci ens ho va dir a les 9.10. No és una garantia en temps real.</span></p>",
+      "css": ".ds-estat{margin:0}.ds-estat strong{display:flex;align-items:baseline;gap:.5rem;font-family: var(--font-display-stack, 'Schibsted Grotesk', system-ui, sans-serif);font-weight:800;font-size:1.125rem;line-height:1.3;color:var(--deep,#1f1c1a)}.ds-estat strong::before{content:'';flex:none;width:.75rem;height:.75rem;background:var(--marl,#5e5852)}.ds-estat strong[data-estat=durant]::before{background:var(--red,#a8362a)}.ds-estat span{display:block;font-family: var(--font-text-stack, 'Atkinson Hyperlegible', system-ui, sans-serif);font-size:1rem;color:var(--text-2,#4a4540)}"
+    },
+    {
+      "name": "Estat buit",
+      "kind": "card",
+      "refersTo": "empty-state",
+      "description": "Vacío honesto: halita, filete superior de 2 px.",
+      "html": "<div class=\"ds-buit\"><p class=\"ds-buit-t\">Encara no hi ha negocis participants.</p><p>No direm mai «obert ara»: només el que ens han dit.</p></div>",
+      "css": ".ds-buit{background:var(--halite,#f8f6f2);border:1px solid var(--rule,#cdc6bb);border-top:2px solid var(--deep,#1f1c1a);padding:.75rem 1rem 1rem;font-family: var(--font-text-stack, 'Atkinson Hyperlegible', system-ui, sans-serif);color:var(--deep,#1f1c1a)}.ds-buit p{margin:0}.ds-buit-t{font-family: var(--font-display-stack, 'Schibsted Grotesk', system-ui, sans-serif);font-weight:800;font-size:1.25rem;line-height:1.3;margin-bottom:.5rem!important}"
+    },
+    {
+      "name": "Idees",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Una sola etiqueta y filetes discontinuos; nunca mezcladas con datos reales.",
+      "html": "<div class=\"ds-idees\"><p>Idees · encara no existeixen</p><ul><li>Un explorador de llocs i recorreguts pensat per als veïns.</li><li>Tots els horaris dels comerços, sempre al dia.</li></ul></div>",
+      "css": ".ds-idees>p{margin:0;font-family: var(--font-display-stack, 'Schibsted Grotesk', system-ui, sans-serif);font-weight:800;font-size:.875rem;letter-spacing:.04em;text-transform:uppercase;color:var(--red-ink,#8e2c22)}.ds-idees ul{list-style:none;padding:0;margin:.25rem 0 0;border-top:1px dashed var(--marl,#5e5852)}.ds-idees li{padding:.75rem 0;border-bottom:1px dashed var(--marl,#5e5852);font-family: var(--font-text-stack, 'Atkinson Hyperlegible', system-ui, sans-serif);color:var(--deep,#1f1c1a)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "El full de consulta mineral",
+    "overview": "Súria se lee como un pliego de consulta sobre sal: el terreno es sal cálida y halita, la roca de carbón cierra la cabecera, el pie y la franja de identidad, y el rojo de la silvinita aparece como estrato, filete y estado. Lo útil y disponible manda: fecha, hora, lugar, requisito esencial y acción. La identidad no compite con la consulta; se concentra en dos sitios, la banda de estratos bajo la cabecera y la franja de carbón con fotografía real del pueblo.\n\nLa densidad es de hoja de consulta, no de folleto: listas abiertas por un filete negro, piezas separadas por filetes finos, sin tarjetas, sin sombras, sin esquinas redondeadas. Tres voces tipográficas con reparto estricto: la serif editorial solo titula páginas y secciones grandes, la grotesca lleva todo lo que se busca con la vista (marca, navegación, fechas, horas, acciones, etiquetas) y la hiperlegible lleva la lectura.\n\nEl sistema rechaza la portada turística y la web administrativa de tarjetas. La procedencia, la vigencia y la madurez de cada dato (Real, En prova, Demo, Idea) son siempre visibles y siempre en texto.",
+    "keyCharacteristics": [
+      "Terreno claro de sal cálida con roca de carbón solo en cabecera, franja de identidad y pie.",
+      "Banda de estratos como única aparición de los estratos (30 px; 22 px en móvil).",
+      "Filete negro de 2 px abre cada lista; filete fino de 1 px separa las piezas.",
+      "Tres voces: Gloock para títulos ≥ 28 px, Schibsted Grotesk para lo que se busca, Atkinson Hyperlegible para leer.",
+      "Estados y madurez legibles sin color: siempre en texto; el color solo acompaña.",
+      "Plano y anguloso: sin sombras de elevación, sin radios.",
+      "Objetivos táctiles de 44 px como mínimo; anillo de foco de 3 px."
+    ],
+    "rules": [
+      {
+        "name": "The Two Reds Rule",
+        "body": "El rojo de estrato (red) marca superficie y forma; el texto rojo siempre es red-ink sobre claro o salmon sobre carbón.",
+        "section": "colors"
+      },
+      {
+        "name": "The Rock Placement Rule",
+        "body": "El carbón como fondo solo aparece en la cabecera, la franja de identidad con fotografía y el pie. El contenido útil vive sobre sal o halita.",
+        "section": "colors"
+      },
+      {
+        "name": "The Serif Floor Rule (provisional)",
+        "body": "Gloock solo en títulos de página y sección y nunca por debajo de 28 px (`--t-serif-min`, 1.75rem). Nunca en interfaz, fechas, horas ni etiquetas. Provisional hasta validarlo con lectura real de residentes mayores en sus teléfonos.",
+        "section": "typography"
+      },
+      {
+        "name": "The Reading Face Rule (provisional)",
+        "body": "Atkinson Hyperlegible es la letra de lectura. Provisional con la misma validación pendiente.",
+        "section": "typography"
+      },
+      {
+        "name": "The Grotesk Hours Rule (provisional)",
+        "body": "Las horas dentro de texto corrido se componen en la grotesca (600), sin partirse, como en la agenda: evita el cero barrado de la hiperlegible y hace que las horas se encuentren de un vistazo.",
+        "section": "typography"
+      },
+      {
+        "name": "The Home Density Rule",
+        "body": "La portada muestra fecha, hora, lugar, requisito esencial y acción; las explicaciones largas van a la página de detalle con un enlace claro. «Pròximament» es compacto (título, fechas, plazo, enlace) y en móvil va después de los servicios (agenda, primeros pasos, pròximament, comercios). El turno de farmacia ya caducado no ocupa sitio en portada; sin JavaScript se ven ambos turnos con sus fechas.",
+        "section": "layout"
+      },
+      {
+        "name": "The No Hiding Rule",
+        "body": "No se reduce la letra ni se esconde contenido en acordeones. Con el texto al 200 % las rejillas pasan a una columna y la navegación baja a una sola columna en lugar de desbordar.",
+        "section": "layout"
+      },
+      {
+        "name": "The Tone Not Shadow Rule",
+        "body": "Para destacar una superficie, súbela a halita o ábrela con un filete; nunca con sombra.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Strata Once Rule",
+        "body": "Los estratos aparecen solo en la banda bajo la cabecera. No se repiten como fondo, divisor ni decoración en otras superficies; los estados usan una muestra cuadrada de un solo color.",
+        "section": "shapes"
+      },
+      {
+        "name": "The Open List Rule",
+        "body": "Cada lista se abre con el filete negro de 2 px y cada pieza se cierra con el filete fino.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "**Do** mantener todos los objetivos táctiles a 44 px como mínimo (`--tap`, 2.75rem), incluidos los enlaces dentro de pies de foto.",
+      "**Do** usar el anillo de foco de 3 px con separación de 3 px: rojo sobre claro, salmón sobre carbón.",
+      "**Do** escribir siempre el estado y la madurez en texto; el color y la muestra solo acompañan.",
+      "**Do** abrir cada lista con el filete de 2 px carbón y separar piezas con el filete fino.",
+      "**Do** componer las horas del texto corrido en la grotesca (provisional).",
+      "**Do** respetar `prefers-reduced-motion`: el desplazamiento suave solo se activa sin esa preferencia.",
+      "**Do** mostrar la fuente, la fecha de consulta y la vigencia junto a cada dato."
+    ],
+    "donts": [
+      "**Don't** usar Gloock por debajo de 28 px ni en interfaz, fechas, horas o etiquetas (provisional).",
+      "**Don't** repetir los estratos fuera de la banda de la cabecera.",
+      "**Don't** añadir sombras de elevación, radios ni tarjetas.",
+      "**Don't** añadir animaciones que retrasen la aparición del contenido.",
+      "**Don't** usar el rojo de estrato (red) para texto pequeño; el texto rojo es red-ink o salmón.",
+      "**Don't** mezclar ideas con datos reales: van con una sola etiqueta y filetes discontinuos.",
+      "**Don't** poner explicaciones largas en la portada; van a la página de detalle."
+    ]
+  }
+}

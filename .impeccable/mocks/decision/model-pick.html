@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ca"><head><meta charset="utf-8"><title>Silvinita · Súria (prototip)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--salt:#EEF0F0;--red:#A8362A;--salmon:#E39A7B;--marl:#5C5A57;--deep:#1E1D1C;--halite:#F8F9F9}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1440px;height:900px;overflow:hidden;background:var(--salt);color:var(--deep)}
+body{font-family:"Atkinson Hyperlegible",sans-serif;font-size:17px;line-height:1.55}
+.strata{height:300px;display:grid;grid-template-rows:38px 22px 64px 14px 92px 30px 40px;position:relative}
+.strata div:nth-child(1){background:var(--deep)}
+.strata div:nth-child(2){background:var(--salmon)}
+.strata div:nth-child(3){background:var(--red)}
+.strata div:nth-child(4){background:var(--halite)}
+.strata div:nth-child(5){background:var(--red)}
+.strata div:nth-child(6){background:var(--salmon)}
+.strata div:nth-child(7){background:var(--marl)}
+.top{position:absolute;top:0;left:0;right:0;height:38px;display:flex;justify-content:space-between;align-items:center;padding:0 48px;color:var(--halite);font-family:"Schibsted Grotesk";font-size:14px;font-weight:600}
+.top a{color:var(--halite);text-decoration:none;margin-left:14px}.top a.on{text-decoration:underline;text-underline-offset:5px}
+.name{position:absolute;left:48px;top:58px;font-family:"Schibsted Grotesk";font-weight:900;font-size:176px;line-height:1;letter-spacing:-.04em;color:var(--halite)}
+.claim{position:absolute;right:48px;top:150px;width:420px;color:var(--halite);font-family:"Schibsted Grotesk";font-size:22px;font-weight:600;line-height:1.25;text-align:right}
+.depth{position:absolute;left:0;top:300px;bottom:0;width:48px;border-right:1px solid #c8cbcb}
+nav.main{display:flex;gap:30px;padding:16px 48px 16px 96px;border-bottom:1px solid #c8cbcb;font-family:"Schibsted Grotesk";font-weight:700;font-size:16px}
+nav.main a{color:var(--deep);text-decoration:none}nav.main a.on{color:var(--red);box-shadow:inset 0 -3px var(--red)}
+.layers{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;padding:26px 48px 0 96px}
+.layer{position:relative}
+.layer .z{position:absolute;left:-64px;top:4px;width:40px;font-family:"Schibsted Grotesk";font-weight:800;font-size:13px;color:var(--marl);text-align:right;font-variant-numeric:tabular-nums}
+.tag{display:inline-block;font-family:"Schibsted Grotesk";font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.06em;border:2px solid var(--deep);padding:1px 7px;margin-bottom:10px}
+h2{font-family:"Schibsted Grotesk";font-weight:800;font-size:34px;line-height:1.05;letter-spacing:-.02em;margin-bottom:12px}
+h2 a{color:var(--deep);text-decoration:none;border-bottom:4px solid var(--salmon)}
+ul{list-style:none}
+li{padding:8px 0;border-top:1px solid #c8cbcb;display:grid;grid-template-columns:88px 1fr;gap:10px}
+li time,li b{font-family:"Schibsted Grotesk";font-weight:800;font-variant-numeric:tabular-nums}
+li b{color:var(--red);font-size:22px;line-height:1}
+.st{background:var(--halite);border-left:10px solid var(--red);padding:12px 14px;margin:4px 0 10px}
+.st strong{display:block;font-family:"Schibsted Grotesk";font-size:20px;line-height:1.15}
+.ex{font-family:"Schibsted Grotesk";font-size:12px;font-weight:800;text-transform:uppercase;color:var(--marl)}
+.src{position:absolute;left:96px;right:48px;bottom:14px;font-size:14px;color:var(--marl);border-top:1px solid #c8cbcb;padding-top:8px}
+</style></head><body>
+<div class="strata"><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+<div class="top"><span>Prototip experimental i independent · en proves amb veïns · no és una web de l'Ajuntament</span><span><a class="on" href="#">Català</a><a href="#">Castellano</a></span></div>
+<div class="name">Súria</div>
+<div class="claim">El que passa avui al poble, capa per capa. Dilluns, 12 d'octubre de 2026.</div>
+</div>
+<div class="depth"></div>
+<nav class="main"><a class="on" href="#">Inici</a><a href="#">Aquesta setmana</a><a href="#">Menjar i comprar</a><a href="#">Primers passos</a><a href="#">Cap on anem</a></nav>
+<main class="layers">
+<section class="layer"><span class="z">0 m</span><span class="tag">En prova</span>
+<h2><a href="#">Aquesta setmana a Súria</a></h2>
+<ul><li><time>Dc 14 oct</time><span>Deixalleria mòbil</span></li>
+<li><time>Dj 15 oct</time><span>Unitat Mòbil d'Informació al Consumidor · Pl. de la Serradora</span></li>
+<li><time>19 oct–8 nov</time><span>Setmana de la Gent Gran</span></li></ul>
+</section>
+<section class="layer"><span class="z">−1</span><span class="tag">En prova</span>
+<h2><a href="#">Menjar i comprar avui</a></h2>
+<p class="ex">Exemple · dades fictícies</p>
+<div class="st"><strong>Horari comunicat pel negoci: fins a les 23.00</strong>Ens ho va dir a les 13.05. No és una garantia en temps real.</div>
+<p>Encara no hi ha negocis participants.</p>
+</section>
+<section class="layer"><span class="z">−2</span><span class="tag">En prova</span>
+<h2><a href="#">Primers passos a Súria</a></h2>
+<ul><li><b>1</b><span>Empadronar-te: volant a la seu electrònica</span></li>
+<li><b>2</b><span>Mobles i poda: dilluns no festius, avisa l'OAC</span></li>
+<li><b>3</b><span>Farmàcia de guàrdia: calendari a suria.cat</span></li></ul>
+</section>
+</main>
+<p class="src">Fonts: agenda i tràmits de suria.cat, consultats el 12/10/2026 · Bandes inspirades en la silvinita de la conca potàssica (il·lustració, no fotografia)</p>
+</body></html>

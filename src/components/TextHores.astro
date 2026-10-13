@@ -1,0 +1,19 @@
+---
+// Text corrent amb les hores marcades: es componen en la grotesca, com a l'agenda
+// (evita el zero barrat de la lletra de lectura i fa que les hores es trobin d'un cop d'ull).
+interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+const HORA = /(\d{1,2}[.:]\d{2}(?:\s?[–-]\s?\d{1,2}[.:]\d{2})?(?:\s?h)?)/g;
+const trossos = text.split(HORA);
+---
+{trossos.map((t, i) => (i % 2 === 1 ? <span class="hora">{t}</span> : t))}
+
+<style>
+  .hora {
+    font-family: var(--font-display-stack);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+</style>
