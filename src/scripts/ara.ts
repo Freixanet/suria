@@ -20,9 +20,8 @@ function pinta() {
     const llengua = bloc.dataset.llengua === 'es' ? 'es' : 'ca';
     const r = composaResum(dades, new Date(), llengua);
 
-    bloc.dataset.moment = r.moment;
     const titol = bloc.querySelector<HTMLElement>('[data-salutacio]');
-    if (titol) titol.replaceChildren(el('span', 'salutacio', r.salutacio), document.createTextNode(' '), el('span', 'data', r.data));
+    if (titol) titol.textContent = `${r.salutacio} · ${r.data}`;
 
     const agenda = bloc.querySelector<HTMLElement>('[data-fet-agenda]');
     if (agenda) {

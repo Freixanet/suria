@@ -1,9 +1,11 @@
 ---
-// Portada «Façanes», segona passada. La capçalera porta la foto del poble a tota amplada amb el nom al cel.
-// Després, «Avui a Súria» (Belle Isle): salutació breu i dos fets per llegir d'un cop d'ull, agenda i farmàcia,
-// sobre el cel del moment del dia. Després, el que és útil (Lentos): l'agenda amb el cartell de pròximament a sota
-// i, al costat, primers passos i comerços (compacte si encara no n'hi ha). Al final, «Cap on anem» en el verd del turó.
-// Mòbil: foto i nom, tasques, avui, agenda, primers passos, pròximament, comerços.
+// Portada «Façanes», tercera passada. La capçalera porta la marca i les tasques sobre fons clar i, a sota,
+// la foto del poble a tota amplada, neta.
+// Després, «Avui a Súria» (Belle Isle) sobre el fons clar: títol fix, salutació i data en segon pla, i dos fets
+// per llegir d'un cop d'ull, l'agenda (d'avui o la pròxima, amb data) i la farmàcia de guàrdia.
+// Després, el que és útil (Lentos): l'agenda amb el cartell de pròximament a sota i, al costat, primers passos
+// i comerços (compacte si encara no n'hi ha). Al final, «Cap on anem» en el verd del turó.
+// Mòbil: marca i tasques, foto, avui, agenda, primers passos, pròximament, comerços.
 import Base from '../layouts/Base.astro';
 import CapcaleraSeccio from '../components/CapcaleraSeccio.astro';
 import Agenda from '../components/Agenda.astro';
@@ -47,19 +49,20 @@ const textosAra = {
 };
 ---
 <Base llengua={llengua} pagina="inici">
-  <section class="avui" data-moment="mati" aria-labelledby="h-avui" data-avui-resum={JSON.stringify(dadesAra)} data-textos={JSON.stringify(textosAra)} data-llengua={llengua}>
-    <div class="ample avui-dins">
-      <h2 id="h-avui" class="avui-titol" data-salutacio>{t('ara.titol')}</h2>
-      <div class="fet" data-facana="ocre" data-fet-agenda>
-        <p class="fet-etiqueta">{t('nav.setmana')}</p>
-        <a class="fet-titol" href="#h-setmana">{t('ara.senseJs.agenda', { n: String(aquestaSetmana.length) })}</a>
-      </div>
-      <div class="fet" data-facana="cel" data-fet-farmacia>
-        <p class="fet-etiqueta">{farmacia?.titol[llengua]}</p>
-        <a class="fet-titol" href={`${urlDe('passos', llengua)}#farmacia`}>{t('ara.senseJs.farmacia')}</a>
-      </div>
-      <p class="font avui-font"><b>{t('procedencia.font')}:</b> {t('ara.font', { data: consultaAvui })}</p>
+  <section class="ample avui" aria-labelledby="h-avui" data-avui-resum={JSON.stringify(dadesAra)} data-textos={JSON.stringify(textosAra)} data-llengua={llengua}>
+    <div class="avui-cap">
+      <h2 id="h-avui" class="titol-gran">{t('ara.titol')}</h2>
+      <p class="avui-salutacio" data-salutacio></p>
     </div>
+    <div class="fet" data-facana="ocre" data-fet-agenda>
+      <p class="fet-etiqueta">{t('nav.setmana')}</p>
+      <a class="fet-titol" href="#h-setmana">{t('ara.senseJs.agenda', { n: String(aquestaSetmana.length) })}</a>
+    </div>
+    <div class="fet" data-facana="cel" data-fet-farmacia>
+      <p class="fet-etiqueta">{farmacia?.titol[llengua]}</p>
+      <a class="fet-titol" href={`${urlDe('passos', llengua)}#farmacia`}>{t('ara.senseJs.farmacia')}</a>
+    </div>
+    <p class="font avui-font"><b>{t('procedencia.font')}:</b> {t('ara.font', { data: consultaAvui })}</p>
   </section>
 
   <div class:list={['ample', 'util', { 'amb-comercos': !senseComercos }]}>
@@ -117,48 +120,37 @@ const textosAra = {
 </script>
 
 <style>
-  /* «Avui a Súria»: salutació breu i dos fets, sobre el cel del moment del dia (l'únic moviment de la portada). */
+  /* «Avui a Súria»: sobre el fons clar del contingut, amb la mateixa reixa que l'agenda i els primers passos.
+     El color, només als filets d'accent de cada fet. */
   .avui {
-    --cel-a: #d6e1ea;
-    --cel-b: #f6e5c0;
-    margin-top: var(--s-5);
-    background: linear-gradient(170deg, var(--cel-a) 0%, var(--cel-b) 100%);
-    transition:
-      --cel-a 1.6s var(--ease),
-      --cel-b 1.6s var(--ease);
-  }
-  .avui[data-moment='tarda'] {
-    --cel-a: #cfdbe6;
-    --cel-b: #f3d6c4;
-  }
-  .avui[data-moment='vespre'] {
-    --cel-a: #c3cddc;
-    --cel-b: #e4d6e3;
-  }
-  .avui-dins {
     display: grid;
-    grid-template-columns: minmax(0, 4fr) minmax(0, 5fr) minmax(0, 4fr);
-    gap: var(--s-4) clamp(1.5rem, 4vw, 3.5rem);
-    padding-block: clamp(1.25rem, 3vw, 2.25rem) var(--s-4);
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    column-gap: clamp(1.5rem, 5vw, 5rem);
+    row-gap: var(--s-4);
+    padding-top: var(--s-5);
     align-items: start;
   }
-  .avui-titol {
-    min-height: 2.2em;
-    font-size: clamp(1.75rem, 3.4vw, 3rem);
-    font-weight: 600;
-    line-height: 1.02;
-    letter-spacing: -0.03em;
+  .avui-cap {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--s-1) var(--s-4);
   }
-  .avui-titol :global(.data) {
-    display: block;
-    margin-top: var(--s-2);
-    font-size: clamp(1.125rem, 1.5vw, 1.375rem);
+  .avui-cap h2 {
+    font-size: var(--t-h2);
+  }
+  .avui-salutacio {
+    font-family: var(--display);
     font-weight: 500;
-    letter-spacing: -0.005em;
+    font-size: clamp(1.0625rem, 1.5vw, 1.375rem);
     color: var(--tinta-2);
   }
-  /* Un fet: etiqueta amb la mostra de la seva façana, el què en gran i el quan i on a sota. */
-  /* L'alçada mínima reserva el lloc del resum calculat: la pàgina no salta quan el script substitueix el text de reserva. */
+  .avui-salutacio:empty {
+    display: none;
+  }
+  /* Un fet: filet d'accent de la seva façana, etiqueta, el què en gran i el quan i on a sota. L'agenda mana;
+     la farmàcia, un graó per sota. L'alçada mínima reserva el lloc del resum calculat (la pàgina no salta). */
   .fet {
     min-height: 9.5rem;
     display: flex;
@@ -188,6 +180,9 @@ const textosAra = {
     text-wrap: balance;
   }
   .fet :global(a.fet-titol) {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
     text-decoration-thickness: 1.5px;
     text-underline-offset: 0.16em;
     text-decoration-color: rgb(29 37 50 / 0.35);
@@ -205,11 +200,15 @@ const textosAra = {
   .fet :global(.fet-lloc) {
     font-size: var(--t-small);
   }
+  .fet[data-facana='ocre'] :global(.fet-titol),
+  .fet[data-facana='ocre'] :global(.fet-avis) {
+    font-size: clamp(1.5rem, 2.4vw, 2.125rem);
+  }
   .fet[data-facana='cel'] {
     border-top-color: var(--cel-tinta);
   }
   .avui-font {
-    grid-column: 2 / -1;
+    grid-column: 1 / -1;
   }
 
   /* Útil (Lentos): agenda i, a sota, el cartell de pròximament; al costat, primers passos i comerços. */
@@ -330,31 +329,16 @@ const textosAra = {
   }
 
   @media (max-width: 56.25rem) {
-    .avui-dins {
-      grid-template-columns: minmax(0, 1fr);
-      row-gap: var(--s-4);
-    }
     .avui {
-      margin-top: var(--s-2);
-    }
-    .avui-dins {
-      padding-block: var(--s-4) var(--s-2);
+      grid-template-columns: minmax(0, 1fr);
       row-gap: var(--s-3);
+      padding-top: var(--s-3);
     }
-    .avui-titol {
-      min-height: 2.1em;
-      font-size: 1.5rem;
+    .avui-cap h2 {
+      font-size: 1.875rem;
     }
-    .avui-titol :global(.data) {
-      display: inline;
-      font-size: inherit;
-      font-weight: 400;
-    }
-    .avui-titol :global(.data::before) {
-      content: '· ';
-    }
-    .avui-font {
-      grid-column: 1;
+    .fet {
+      min-height: 9rem;
     }
     .util,
     .cap-dins {
@@ -363,7 +347,7 @@ const textosAra = {
     .util {
       grid-template-rows: none;
       row-gap: var(--s-7);
-      padding-top: var(--s-5);
+      padding-top: var(--s-4);
     }
     .setmana,
     .passos,

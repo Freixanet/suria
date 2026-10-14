@@ -7,7 +7,7 @@ import type { Llengua } from '../i18n/ui.ts';
 interface Props {
   foto: Foto;
   llengua: Llengua;
-  /** Retall: 'escena' (portada, a tota amplada amb el nom al cel), 'panoramica' o 'ampla' (pàgina de visió). */
+  /** Retall: 'escena' (portada, a tota amplada i neta), 'panoramica' o 'ampla' (pàgina de visió). */
   format?: 'escena' | 'panoramica' | 'ampla';
   sizes: string;
   /** La foto és l'element principal de la pàgina: es carrega de seguida i amb prioritat. */
@@ -52,16 +52,16 @@ const credit = {
     aspect-ratio: 21 / 8;
     object-position: 62% 50%;
   }
-  /* Portada: a tota amplada, alçada continguda, el cel a dalt (hi va el nom) i el campanar dins del quadre. */
+  /* Portada: a tota amplada, alçada continguda, el poble i el campanar al centre del quadre. */
   .escena :global(img) {
-    height: clamp(14rem, 28vw, 26rem);
-    object-position: 62% 8%;
+    height: clamp(12rem, 22vw, 20rem);
+    object-position: 62% 30%;
     border-radius: 0;
   }
   @media (max-width: 56.25rem) {
     .escena :global(img) {
       height: auto;
-      aspect-ratio: 2 / 1;
+      aspect-ratio: 5 / 2;
     }
   }
   .ampla :global(img) {

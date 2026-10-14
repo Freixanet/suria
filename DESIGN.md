@@ -24,10 +24,10 @@ colors:
 typography:
   brand-home:
     fontFamily: "Bricolage Grotesque, system-ui, sans-serif"
-    fontSize: "clamp(4.5rem, 13vw, 12rem) (mòbil: clamp(4rem, 18vw, 6rem))"
+    fontSize: "clamp(3.25rem, 7.5vw, 7rem)"
     fontWeight: 700
-    fontVariation: "wdth 90"
-    lineHeight: 0.8
+    fontVariation: "wdth 88"
+    lineHeight: 0.82
     letterSpacing: "-0.05em"
   brand:
     fontFamily: "Bricolage Grotesque, system-ui, sans-serif"
@@ -38,10 +38,9 @@ typography:
     letterSpacing: "-0.045em"
   greeting:
     fontFamily: "Bricolage Grotesque, system-ui, sans-serif"
-    fontSize: "clamp(1.75rem, 3.4vw, 3rem) (mòbil: 1.5rem)"
-    fontWeight: 600
-    lineHeight: 1.02
-    letterSpacing: "-0.03em"
+    fontSize: "clamp(1.0625rem, 1.5vw, 1.375rem)"
+    fontWeight: 500
+    textColor: "{colors.tinta-2}"
   fact:
     fontFamily: "Bricolage Grotesque, system-ui, sans-serif"
     fontSize: "clamp(1.3125rem, 1.9vw, 1.75rem)"
@@ -107,14 +106,13 @@ components:
   nav-task-active:
     fontWeight: 750
     underline: "3px, color de la façana"
-  home-scene:
-    image: "foto del poble a tota amplada, alçada clamp(14rem, 28vw, 26rem); 2:1 al mòbil"
-    brand: "{typography.brand-home}, en tinta sobre el cel de la foto"
-    credit: "sobre la foto a baix a la dreta (escriptori); a sota (mòbil)"
+  home-photo:
+    image: "foto del poble a tota amplada i neta, alçada clamp(12rem, 22vw, 20rem); 5:2 al mòbil"
+    credit: "a sota, alineat a la dreta, una o dues línies llegibles"
   today-summary:
-    background: "linear-gradient(cel → llum càlida), segons matí / tarda / vespre"
-    typography: "{typography.greeting}"
-    facts: "agenda (filet ocre) i farmàcia (filet cel), {typography.fact}"
+    background: "{colors.calc} (sense franja ni degradat)"
+    heading: "«Avui a Súria» ({typography.headline}); salutació i data, {typography.greeting}"
+    facts: "agenda (filet ocre, títol més gran) i farmàcia (filet cel), {typography.fact}"
   date-window:
     backgroundColor: "{colors.ocre-clar}"
     borderTop: "4px {colors.ocre}"
@@ -156,8 +154,8 @@ components:
 Substitueix Silvinita B (sal i carbó, serif editorial). La versió anterior es pot recuperar amb l'etiqueta git `silvinita-b-2026-10-14` i es pot obrir construïda a `archiu/silvinita-b-2026-10-14/dist/`.
 
 Tres gestos fan la identitat:
-1. **El poble i el seu nom, junts**: a la portada, la foto de Súria a tota amplada amb «Súria» escrit al cel (segona passada, 14/10/2026). A la resta de pàgines, la marca compacta.
-2. **«Avui a Súria»**: una salutació breu i dos fets per llegir d'un cop d'ull (agenda i farmàcia de guàrdia), sobre un cel que canvia amb el moment del dia, com fa Belle Isle. Si les activitats d'avui ja han passat, mana la pròxima confirmada amb la seva data; una absència és una nota petita, no el missatge principal.
+1. **El nom i el poble**: a la portada, «Súria» gran sobre fons clar al costat de les tasques i la llengua (com Lentos) i, a sota, la foto del poble a tota amplada, neta, amb el seu crèdit. A la resta de pàgines, la marca compacta.
+2. **«Avui a Súria»**: títol fix, salutació i data en segon pla, i dos fets per llegir d'un cop d'ull (agenda i farmàcia de guàrdia) sobre el fons clar del contingut, amb el color només als filets d'accent. Si les activitats d'avui ja han passat, mana la pròxima confirmada amb la seva data; una absència és una nota petita, no el missatge principal.
 3. **Cada mena de contingut té la seva façana**: agenda ocre, primers passos cel, comerços teula, cap on anem verd turó. El color s'acompanya sempre del nom; mai és l'únic senyal.
 
 Mode: Read per a la portada (consulta ràpida i identitat) i Operate/Read per a les pàgines de tasca.
@@ -188,7 +186,7 @@ Marca de portada 76–272 px · títol de pàgina 40–84 px · títol de secci�
 
 ## Layout
 
-Contenidor de 90rem amb marge lateral `clamp(1rem, 4vw, 3.5rem)`. Portada: franja de servei → foto a tota amplada amb el nom al cel → tasques sobre un filet de 2 px → «Avui a Súria» (salutació 4/13, agenda 5/13, farmàcia 4/13) → agenda amb el cartell de pròximament a sota (7/12) i, al costat, primers passos i comerços (5/12; nota compacta si no n'hi ha; a tota amplada si n'hi ha) → cap on anem en la franja verda, amb la frase d'identitat i l'enllaç a «Què estem provant» → peu. Mòbil: foto i nom, tasques, avui, agenda, primers passos, pròximament, comerços.
+Contenidor de 90rem amb marge lateral `clamp(1rem, 4vw, 3.5rem)`. Portada: franja de servei (avís i data) → marca, tasques i llengua en una fila (per sota de 72rem, marca i llengua a dalt i tasques a sota) → foto a tota amplada i crèdit → «Avui a Súria» (agenda 7/12, farmàcia 5/12, alineades amb la reixa de sota) → agenda amb el cartell de pròximament a sota (7/12) i, al costat, primers passos i comerços (5/12; nota compacta si no n'hi ha; a tota amplada si n'hi ha) → cap on anem en la franja verda, amb la frase d'identitat i l'enllaç a «Què estem provant» → peu. Mòbil: marca i llengua, tasques, foto, avui, agenda, primers passos, pròximament, comerços.
 
 Pàgines de tasca: obertura del color de la seva façana (filet de 6 px a dalt), cos de lectura de 48rem màxim i lateral enganxós amb fonts oficials i altres tasques.
 
@@ -204,22 +202,22 @@ Sense ombres. La profunditat la donen el color de façana i els filets.
 Cantonades de 0.75rem en fotos, torns, cartell i avisos; 0.3em a les etiquetes; la data de l'agenda és una «finestra» amb filet superior de 4 px i cantonades inferiors arrodonides.
 
 ## Motion
-Un sol moment: el cel d'«Avui a Súria» passa al color del moment del dia (1,6 s, ease-out exponencial) quan el script calcula l'hora de Súria. Petits gestos: la fletxa de les accions avança i la mostra de la navegació creix en passar-hi. Tot es desactiva amb `prefers-reduced-motion`.
+Sense moviment d'entrada ni de fons (el degradat del cel es va retirar el 14/10/2026: no aportava informació). Només petits gestos en passar-hi: la fletxa de les accions avança i la mostra de la navegació creix. Tot es desactiva amb `prefers-reduced-motion`.
 
 ## Components
 
 ### Franja de servei
-Tinta, a dalt de tot: «Prototip independent, en proves amb veïns. No és una web de l'Ajuntament.» (independent en ocre), data d'avui a Súria i CA/ES. Mai sembla municipal.
+Tinta, a dalt de tot: «Prototip independent, en proves amb veïns. No és una web de l'Ajuntament.» (independent en ocre) i la data d'avui a Súria (amagada a la portada mòbil, on ja és al resum). Mai sembla municipal. CA/ES és a la fila de la marca.
 
 ### Navegació de tasques
 Quatre paraules grans sobre un filet de tinta, cada una amb la mostra de la seva façana. La pàgina actual: subratllat de 3 px del seu color i pes 750. Al mòbil, 2×2 (una columna amb el text ampliat).
 
-### Escena de portada
-La foto de Súria a tota amplada, retallada perquè el cel quedi a dalt i el campanar dins del quadre, amb «Súria» (h1) en tinta sobre el cel. El crèdit (autor, any, «retallada», llicència, original) va sobre la foto a l'escriptori i a sota al mòbil, amb objectius de 44 px.
+### Capçalera i foto de portada
+«Súria» (h1) gran en tinta sobre calç, les quatre tasques i CA/ES a la dreta. A sota, la foto de Súria a tota amplada i neta, retallada amb el poble i el campanar al centre (5:2 al mòbil). El crèdit (autor, any, «retallada», llicència, original) va a sota, en una o dues línies llegibles, amb els enllaços en línia i una zona tàctil de 44 px.
 
 ### Avui a Súria
 Resum compost per `src/lib/ara.ts`, provat en tres zones horàries:
-- **Salutació i data** («Bon vespre · Dimecres 14 d'octubre»).
+- **Títol fix** «Avui a Súria» i, en segon pla, **salutació i data** («Bon vespre · Dimecres 14 d'octubre»).
 - **Agenda:** l'activitat d'avui que encara no ha acabat, amb «I 1 activitat més avui» si n'hi ha més. Si ja han passat, «Pròxima activitat» amb la seva data i la nota «Les d'avui ja han passat.». Amb la setmana caducada, l'activitat verificada en curs o la pròxima, amb la nota «No tenim l'agenda d'aquesta setmana.» i l'enllaç a l'agenda de suria.cat.
 - **Farmàcia:** el torn vigent, amb l'adreça, fins quan i el telèfon com a acció. Sense torn vigent, l'avís i la font oficial.
 - **Font:** una sola línia per a tot el resum.

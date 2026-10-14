@@ -92,3 +92,35 @@ El promotor autorizó sustituir Silvinita B por una dirección nueva, conservand
 **Pendiente:**
 - En móvil, la foto y los créditos ocupan unos 250 px antes de las tareas.
 - Si en las pruebas con vecinos se ve que retrasan el resumen, la foto puede bajar a 5:2.
+
+## Tercera pasada: cabecera clara y resumen integrado (14/10/2026)
+
+**Versión anterior recuperable:** etiqueta `facanes-v2` (commit `5665ed9`).
+
+**Cambios:**
+- «Súria» sale de la foto: va grande, sobre fondo claro, junto a las tareas, con CA/ES a la derecha, como en Lentos.
+  - En pantallas medianas y en móvil: el nombre y el idioma arriba, y las tareas debajo.
+  - La franja superior conserva el aviso de independencia y la fecha.
+- La foto queda limpia, a todo el ancho.
+  - Altura: `clamp(12rem, 22vw, 20rem)` en escritorio y proporción 5:2 en móvil. Se mantiene una vista reconocible del pueblo y del campanario.
+  - Crédito debajo, en una o dos líneas legibles, con los enlaces en línea (zona táctil de 44 px).
+- «Avui a Súria» ya no es una banda de color ni lleva degradado.
+  - Encabezado fijo; el saludo y la fecha, en segundo plano.
+  - La agenda (con el título más grande) y la farmacia, alineadas con la cuadrícula de debajo.
+  - El color queda solo en los filetes de acento.
+  - Se retira el movimiento del cielo y no se sustituye por otro.
+- Se reserva la altura de la fecha y del resumen. CLS en móvil: 0,03 o menos.
+
+**Antes y después (inicio del título de la agenda, mismo contenido, 21.30 h):**
+
+| Pantalla | Segunda pasada | Tercera pasada |
+|---|---|---|
+| 390 × 844 | 999 px | 938 px |
+| 360 × 740 | 975 px | 949 px |
+| 1440 × 900 | 878 px | 866 px |
+
+**Comprobaciones:**
+- Unitarias en verde (35, más las ejecuciones en Auckland y Nueva York).
+- E2E: 103 de 103.
+- Lighthouse: rendimiento de 97 a 100, accesibilidad 100.
+- Capturas en catalán y castellano, a 1440, 920 y 390 px, por la mañana, por la noche y con datos caducados.

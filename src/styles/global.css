@@ -285,14 +285,3 @@ dd {
   }
 }
 
-/* Colors del cel de «Avui a Súria», registrats perquè puguin fer la transició. */
-@property --cel-a {
-  syntax: '<color>';
-  inherits: true;
-  initial-value: #d6e1ea;
-}
-@property --cel-b {
-  syntax: '<color>';
-  inherits: true;
-  initial-value: #f6e5c0;
-}

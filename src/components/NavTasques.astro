@@ -38,11 +38,13 @@ const items: { pagina: Pagina; clau: 'nav.inici' | 'nav.setmana' | 'nav.menjar' 
     border-top: var(--filet-fort);
     margin-bottom: var(--s-1);
   }
+  /* Cada tasca ocupa el que necessita: els noms llargs («Hacia dónde vamos») no es parteixen si hi caben. */
   ul {
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    column-gap: var(--s-4);
+    grid-template-columns: repeat(4, auto);
+    justify-content: space-between;
+    column-gap: var(--s-5);
   }
   li.inici {
     display: none;

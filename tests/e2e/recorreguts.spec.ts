@@ -85,7 +85,8 @@ test.describe('portada', () => {
     await expect(agenda).toContainText('Les d’avui ja han passat.');
     await expect(agenda).toContainText('Unitat Mòbil d’Informació al Consumidor');
     await expect(agenda).toContainText('Dijous 15 d’octubre · 10.30–11.30 h');
-    await expect(page.locator('#h-avui')).toContainText('Bon vespre');
+    await expect(page.locator('#h-avui')).toHaveText('Avui a Súria');
+    await expect(page.locator('[data-salutacio]')).toHaveText('Bon vespre · Dimecres 14 d’octubre');
   });
 
   test('resum d’avui: setmana caducada, l’activitat verificada en curs i la nota amb l’agenda municipal (en castellà)', async ({ page }) => {
