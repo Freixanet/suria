@@ -47,7 +47,8 @@ function pinta() {
       const fills: HTMLElement[] = [el('p', 'fet-etiqueta', f.etiqueta)];
       if (f.tipus === 'torn') {
         fills.push(el('p', 'fet-titol', f.nom));
-        fills.push(el('p', 'fet-quan', f.detall));
+        fills.push(el('p', 'fet-quan', f.fins));
+        fills.push(el('p', 'fet-lloc', f.adreca));
         const trucar = el('a', 'accio', `${f.nom.replace(/^Farmàcia /, '')}: `, { href: `tel:${f.telefon}` });
         trucar.append(el('span', 'xifres', telefonVisible(f.telefon)));
         fills.push(trucar);

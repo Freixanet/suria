@@ -1,5 +1,5 @@
 ---
-// Una activitat de l'agenda. A la portada: dia, títol, hora · lloc, requisit essencial i acció.
+// Una activitat de l'agenda, sempre en el mateix ordre: dia (a la finestra), nom, hora, lloc, requisit essencial i acció.
 // A la pàgina de detall, a més, l'explicació llarga i la línia de procedència.
 import LiniaProcedencia from './LiniaProcedencia.astro';
 import TextHores from './TextHores.astro';
@@ -28,11 +28,8 @@ const hores = a.hores.map((h) => franja(h.inici, h.fi, llengua)).join(', ');
   <time class="dia" datetime={a.dies.inici}>{rangCurt(a.dies.inici, a.dies.fi, llengua)}</time>
   <div class="cos">
     <Titol class="titol-peca">{a.titol[llengua]}</Titol>
-    <p class="quan">
-      {hores && <span class="hores">{hores}</span>}
-      {hores && a.lloc && ' · '}
-      {a.lloc && a.lloc[llengua]}
-    </p>
+    {hores && <p class="quan"><span class="hores">{hores}</span></p>}
+    {a.lloc && <p class="lloc">{a.lloc[llengua]}</p>}
     {a.requisit && <p class="requisit"><TextHores text={a.requisit[llengua]} /></p>}
     {detall && a.nota && <p class="nota"><TextHores text={a.nota[llengua]} /></p>}
     <p class="passat" data-avis-caducat hidden>{t('setmana.passada')}</p>
@@ -55,12 +52,16 @@ const hores = a.hores.map((h) => franja(h.inici, h.fi, llengua)).join(', ');
 
 <style>
   /* Fila de l'agenda (Lentos): la data en una «finestra» del color de la façana, i al costat què, quan i on. */
+  /* Més espai entre entrades que entre les dades d'una mateixa entrada. */
   .activitat {
     display: grid;
     grid-template-columns: 6.5rem minmax(0, 1fr);
     gap: var(--s-1) var(--s-5);
-    padding-block: var(--s-5);
+    padding-block: var(--s-5) var(--s-6);
     border-bottom: var(--filet-fi);
+  }
+  .activitat:first-child {
+    padding-top: var(--s-2);
   }
   .dia {
     align-self: start;
@@ -70,7 +71,7 @@ const hores = a.hores.map((h) => franja(h.inici, h.fi, llengua)).join(', ');
     border-top: 4px solid var(--f);
     border-radius: 0 0 0.4rem 0.4rem;
     font-family: var(--display);
-    font-weight: 700;
+    font-weight: 600;
     font-size: 1.375rem;
     line-height: 1.1;
     letter-spacing: -0.01em;
@@ -80,26 +81,30 @@ const hores = a.hores.map((h) => franja(h.inici, h.fi, llengua)).join(', ');
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--s-1);
+    gap: 0.15rem;
     max-width: 44rem;
   }
   .titol-peca {
     font-size: var(--t-h3);
     font-weight: 650;
     line-height: 1.2;
+    margin-bottom: var(--s-1);
   }
+  /* Hora: pes mitjà i xifres alineades; lloc: lletra de lectura. Cap renglera sencera en negreta. */
   .quan {
     font-family: var(--display);
-    font-weight: 500;
+    font-weight: 550;
     font-size: var(--t-small);
-  }
-  .hores {
-    font-weight: 700;
     font-variant-numeric: lining-nums tabular-nums;
   }
+  .lloc {
+    font-size: var(--t-small);
+  }
   .requisit {
+    margin-top: var(--s-1);
     padding-left: var(--s-3);
-    border-left: 1px solid var(--f);
+    border-left: 2px solid var(--f);
+    font-size: var(--t-small);
   }
   .nota {
     color: var(--tinta-2);

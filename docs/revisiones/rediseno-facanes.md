@@ -149,3 +149,27 @@ El promotor autorizó sustituir Silvinita B por una dirección nueva, conservand
 - E2E: 103 de 103.
 - Lighthouse: rendimiento 98–100, accesibilidad 100, CLS ≤ 0,021.
 - Capturas en catalán y castellano, a 390, 960, 1024, 1180 y 1440 px.
+
+## Quinta pasada: legibilidad y jerarquía (14/10/2026)
+
+**Versión anterior recuperable:** etiqueta `facanes-v4` (commit `2f0457f`).
+
+**Cambios:**
+- CA/ES queda centrado verticalmente en la franja superior, también en móvil.
+- **Crédito dentro de la foto,** abajo a la derecha, sobre un fondo oscuro solo detrás del texto. Va a 14 px, en una línea en escritorio y dos en móvil. Conserva la autoría, la indicación del recorte, la licencia y el original, con una zona táctil de 44 px.
+- **Sin rayas que cierren los títulos:** se quitan las de la agenda, primeros pasos, «Pròximament» (dentro del cartel), «Cap on anem», «Altres tasques», «Què estem provant» y 404. Quedan los filetes finos entre entradas, pero no después de la última.
+  - En «Avui a Súria», el acento de color pasa a un trazo corto sobre cada dato.
+- **Pesos:** los títulos se mantienen, por decisión del promotor, igual que los nombres de actividades y servicios.
+  - Hora, vigencia, etiquetas, fuentes y fechas de la ventanita pasan a peso medio (500–600), sin reducir tamaño ni contraste.
+  - «En prova» deja de llevar recuadro; «Idea» y «Demo» conservan el marco discontinuo.
+  - Los enlaces de acción mantienen el subrayado, más fino y con más separación del texto.
+- **Orden de cada entrada:**
+  - agenda: nombre, hora en una línea propia, lugar, condiciones y acción;
+  - farmacia: nombre, «Fins…», dirección y teléfono.
+  - Hay más espacio entre entradas que dentro de una entrada.
+
+**Comprobaciones:**
+- Unitarias en verde.
+- E2E: 103 de 103.
+- Lighthouse: rendimiento 98–100, accesibilidad 100, CLS ≤ 0,027.
+- Capturas a 390 y 1440 px, en catalán y castellano, de la portada, la agenda y los primeros pasos.

@@ -29,7 +29,7 @@ const caduca = instantMadrid(sumaDies(setmana.fi, 1), '00:00').toISOString();
   </div>
   {
     activitats.length > 0 ? (
-      <ul class:list={['llista', { obre: senseVigencia }]}>
+      <ul class="llista">
         {activitats.map((a) => (
           <ActivitatAgenda activitat={a} llengua={llengua} detall={detall} maduresaSeccio="En prova" nivell={nivell} />
         ))}
@@ -45,11 +45,10 @@ const caduca = instantMadrid(sumaDies(setmana.fi, 1), '00:00').toISOString();
 <style>
   .vigencia {
     font-family: var(--display);
-    font-weight: 600;
+    font-weight: 500;
     font-size: var(--t-small);
     color: var(--tinta-2);
-    padding-bottom: var(--s-3);
-    border-bottom: var(--filet-fort);
+    margin-bottom: var(--s-4);
   }
   .caducada {
     margin-top: var(--s-4);
@@ -63,8 +62,8 @@ const caduca = instantMadrid(sumaDies(setmana.fi, 1), '00:00').toISOString();
   .llista {
     list-style: none;
   }
-  /* Sense la línia de vigència, el filet de tinta obre la llista. */
-  .obre {
-    border-top: var(--filet-fort);
+  /* L'última entrada no porta filet: la llista acaba amb l'espai, no amb una ratlla. */
+  .llista > :global(li:last-child) {
+    border-bottom: 0;
   }
 </style>

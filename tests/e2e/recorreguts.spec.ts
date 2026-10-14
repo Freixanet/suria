@@ -73,7 +73,7 @@ test.describe('portada', () => {
     await page.goto(`${BASE}/`);
     const farmacia = page.locator('[data-fet-farmacia]');
     await expect(farmacia).toContainText('Farmàcia Ripoll');
-    await expect(farmacia).toContainText('fins al dijous 22 d’octubre a les 9.00 h');
+    await expect(farmacia).toContainText('Fins al dijous 22 d’octubre a les 9.00 h');
     await expect(farmacia).not.toContainText('Massó');
     await expect(farmacia.getByRole('link', { name: /Ripoll/ })).toHaveAttribute('href', 'tel:+34938694163');
   });

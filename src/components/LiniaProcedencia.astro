@@ -36,7 +36,10 @@ const qui = responsable === 'Promotor del prototip' ? t('procedencia.promotor') 
     line-height: 1.45;
     color: var(--tinta-2);
   }
-  .procedencia > span:not(.maduresa):not(:last-child)::after {
+  .procedencia > .maduresa {
+    display: block;
+  }
+  .procedencia > span:not(.especulativa):not(:last-child)::after {
     content: ' ·';
   }
 </style>

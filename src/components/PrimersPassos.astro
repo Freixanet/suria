@@ -102,11 +102,16 @@ const fiDarrerTorn = (p: Pas) =>
   /* Primers passos (Domino Park, «Plan your visit»): el que cal saber, amb l'acció a mà. */
   .passos {
     list-style: none;
-    border-top: var(--filet-fort);
   }
   .pas {
-    padding-block: var(--s-5);
+    padding-block: var(--s-5) var(--s-6);
     border-bottom: var(--filet-fi);
+  }
+  .pas:first-child {
+    padding-top: var(--s-2);
+  }
+  .pas:last-child {
+    border-bottom: 0;
   }
   .n {
     display: none;
@@ -135,7 +140,7 @@ const fiDarrerTorn = (p: Pas) =>
   .quan {
     display: block;
     font-family: var(--display);
-    font-weight: 650;
+    font-weight: 500;
     font-size: var(--t-small);
     color: var(--cel-tinta);
   }

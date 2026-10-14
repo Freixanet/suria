@@ -104,29 +104,49 @@ const esInici = pagina === 'inici';
     letter-spacing: -0.05em;
     margin-left: -0.03em;
   }
+  /* Crèdit de la foto: dins de la imatge, a baix a la dreta, sobre un fons fosc només darrere del text
+     (la foto no s'enfosqueix). Una línia a l'escriptori; dues al mòbil si cal. Els enllaços conserven
+     la zona tàctil de 44 px amb farciment en línia, sense fer més alta la franja. */
   .capcalera :global(.escena) {
+    position: relative;
     margin-top: var(--s-2);
   }
-  /* Crèdit de la foto: a sota, en una o dues línies llegibles. Els enllaços, en línia: la zona tàctil de 44 px
-     (farciment) no separa les línies. */
   .capcalera :global(.escena figcaption) {
-    max-width: var(--amplada);
-    margin-inline: auto;
-    padding: var(--s-1) var(--pad) 0;
-    line-height: 1.6;
-    text-align: right;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    max-width: 100%;
+    padding: 0.3rem var(--s-3) 0.35rem;
+    background: rgb(29 37 50 / 0.8);
+    color: var(--calc);
+    border-top-left-radius: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    text-align: left;
   }
   .capcalera :global(.escena figcaption a) {
     display: inline;
-    padding-block: 0.75rem;
+    padding-block: 0.875rem;
+    color: var(--calc);
+  }
+  .capcalera :global(.escena figcaption a:hover) {
+    color: var(--ocre);
+  }
+  .capcalera :global(.escena figcaption a:focus-visible) {
+    outline-color: var(--ocre);
+    outline-offset: 1px;
   }
   @media (max-width: 56.25rem) {
     .barra-dins {
       font-size: var(--t-tag);
-      align-items: start;
     }
     .mast {
       padding-top: var(--s-3);
+    }
+    .capcalera :global(.escena figcaption) {
+      padding-inline: var(--pad) var(--s-3);
+      border-top-left-radius: 0;
+      width: 100%;
     }
     /* Al mòbil, les tasques sempre a la seva fila (2×2), sota la marca. */
     .mast > :global(.tasques) {

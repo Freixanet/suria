@@ -45,17 +45,35 @@ const t = traductor(llengua);
   .compacte {
     font-size: clamp(1.75rem, 2.6vw, 2.375rem);
   }
-  /* Maduresa i detall a la mateixa línia mentre hi caben; al mòbil, el detall continua a sota. */
+  /* Maduresa i detall com un sol text: si no hi cap, el detall continua a la línia següent de manera natural. */
   .meta {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: var(--s-1) var(--s-3);
     font-family: var(--display);
-    font-weight: 600;
+    font-weight: 500;
     font-size: var(--t-small);
     line-height: 1.35;
     color: var(--tinta-2);
+  }
+  /* «En prova · Del dilluns…»: el punt separa l'etiqueta del detall (Idea i Demo ja tenen el seu marc). */
+  .meta > .maduresa {
+    display: inline;
+    margin-right: 0.3em;
+    font-size: inherit;
+  }
+  .meta > .maduresa.especulativa {
+    display: inline-block;
+  }
+  .meta > .maduresa:not(.especulativa) + span::before {
+    content: '· ';
+    font-weight: 500;
+    color: var(--tinta-2);
+  }
+  /* La descripció d'una pàgina, a la línia següent de l'etiqueta: és un paràgraf, no una dada. */
+  .meta .entrada {
+    display: block;
+    margin-top: var(--s-2);
+  }
+  .meta > .maduresa:not(.especulativa) + .entrada::before {
+    content: none;
   }
   .meta .entrada {
     font-family: var(--text);

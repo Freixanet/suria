@@ -23,7 +23,7 @@ test('matí: salutació, data, activitat d’avui i farmàcia fins demà', () =>
   assert.equal(r.salutacio, 'Bon dia');
   assert.equal(r.data, 'Dimecres 14 d’octubre');
   assert.deepEqual(r.agenda, { tipus: 'activitat', etiqueta: 'Avui a l’agenda', titol: 'Deixalleria mòbil', ancora: '#h-setmana', quan: 'Avui · 16.15–17.15 h', lloc: 'Escoles', mes: undefined });
-  assert.deepEqual(r.farmacia, { tipus: 'torn', etiqueta: 'Farmàcia de guàrdia', nom: 'Farmàcia Massó', detall: 'c. Pompeu Fabra, 1 · fins demà a les 9.00 h', telefon: '+34938682289' });
+  assert.deepEqual(r.farmacia, { tipus: 'torn', etiqueta: 'Farmàcia de guàrdia', nom: 'Farmàcia Massó', fins: 'Fins demà a les 9.00 h', adreca: 'c. Pompeu Fabra, 1', telefon: '+34938682289' });
 });
 
 test('activitats d’avui acabades: protagonisme per a la pròxima, amb la seva data, i una nota discreta', () => {
@@ -39,7 +39,7 @@ test('activitats d’avui acabades: protagonisme per a la pròxima, amb la seva 
 
 test('canvi de torn a les 9.00 h: fins avui i, després, el torn nou', () => {
   const abans = resum('2026-10-15T08:30:00+02:00').farmacia;
-  assert.equal(abans.tipus === 'torn' && abans.detall, 'c. Pompeu Fabra, 1 · fins avui a les 9.00 h');
+  assert.equal(abans.tipus === 'torn' && abans.fins, 'Fins avui a les 9.00 h');
   const despres = resum('2026-10-15T09:00:00+02:00').farmacia;
   assert.equal(despres.tipus === 'torn' && despres.nom, 'Farmàcia Ripoll');
 });
@@ -70,7 +70,7 @@ test('castellà complet', () => {
   const r = resum('2026-10-14T21:30:00+02:00', 'es');
   assert.equal(`${r.salutacio} · ${r.data}`, 'Buenas noches · Miércoles 14 de octubre');
   assert.equal(r.agenda.tipus === 'activitat' && `${r.agenda.etiqueta} | ${r.agenda.nota} | ${r.agenda.quan}`, 'Próxima actividad | Las de hoy ya han pasado. | Jueves 15 de octubre · 15:30–16:45 h');
-  assert.equal(r.farmacia.tipus === 'torn' && r.farmacia.detall, 'c. Pompeu Fabra, 1 · hasta mañana a las 9:00 h');
+  assert.equal(r.farmacia.tipus === 'torn' && r.farmacia.fins, 'Hasta mañana a las 9:00 h');
 });
 
 test('el moment del dia és el de Súria, sigui quina sigui la zona del navegador', () => {

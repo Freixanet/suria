@@ -41,7 +41,7 @@ export interface ResumAra {
     | { tipus: 'activitat'; etiqueta: string; titol: string; ancora: string; quan: string; lloc?: string; nota?: string; mes?: string; oficial?: boolean }
     | { tipus: 'avis'; etiqueta: string; text: string };
   farmacia:
-    | { tipus: 'torn'; etiqueta: string; nom: string; detall: string; telefon: string }
+    | { tipus: 'torn'; etiqueta: string; nom: string; fins: string; adreca: string; telefon: string }
     | { tipus: 'avis'; etiqueta: string };
 }
 
@@ -166,7 +166,7 @@ export function composaResum(dades: DadesAra, ara: Date, ll: Llengua): ResumAra 
         : vigent.finsA.data === sumaDies(avui, 1)
           ? omple(x.finsDema, { hora: h })
           : omple(x.finsDia, { dia: diaLlarg(vigent.finsA.data, ll), hora: h });
-    farmacia = { tipus: 'torn', etiqueta: x.farmacia, nom: vigent.farmacia, detall: `${vigent.adreca} · ${fins}`, telefon: vigent.telefon };
+    farmacia = { tipus: 'torn', etiqueta: x.farmacia, nom: vigent.farmacia, fins: majuscula(fins), adreca: vigent.adreca, telefon: vigent.telefon };
   }
 
   return { moment, salutacio: x[moment], data: majuscula(diaLlarg(avui, ll)), agenda, farmacia };
