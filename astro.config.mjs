@@ -14,48 +14,32 @@ export default defineConfig({
   },
   fonts: [
     {
-      name: 'Schibsted Grotesk',
+      // Veu de Súria: marca, títols, navegació, dates i hores. Variable (pes, amplada i mida òptica).
+      name: 'Bricolage Grotesque',
       cssVariable: '--font-display',
       provider: fontProviders.local(),
       fallbacks: ['system-ui', 'sans-serif'],
       options: {
         variants: [
           {
-            src: ['./src/assets/fonts/SchibstedGrotesk-500-900-latin.woff2'],
-            weight: '500 900',
+            src: ['./src/assets/fonts/BricolageGrotesque-var-latin.woff2'],
+            weight: '200 800',
             style: 'normal',
           },
         ],
       },
     },
     {
-      name: 'Atkinson Hyperlegible',
+      // Lectura: dissenyada per a persones amb baixa visió.
+      name: 'Atkinson Hyperlegible Next',
       cssVariable: '--font-text',
       provider: fontProviders.local(),
       fallbacks: ['system-ui', 'sans-serif'],
       options: {
         variants: [
-          {
-            src: ['./src/assets/fonts/AtkinsonHyperlegible-400-latin.woff2'],
-            weight: 400,
-            style: 'normal',
-          },
-          {
-            src: ['./src/assets/fonts/AtkinsonHyperlegible-700-latin.woff2'],
-            weight: 700,
-            style: 'normal',
-          },
+          { src: ['./src/assets/fonts/AtkinsonHyperlegibleNext-var-latin.woff2'], weight: '200 800', style: 'normal' },
+          { src: ['./src/assets/fonts/AtkinsonHyperlegibleNext-var-latin-italic.woff2'], weight: '200 800', style: 'italic' },
         ],
-      },
-    },
-    {
-      // Serif editorial només per a títols de pàgina i de secció (mínim 28 px).
-      name: 'Gloock',
-      cssVariable: '--font-serif',
-      provider: fontProviders.local(),
-      fallbacks: ['Georgia', 'serif'],
-      options: {
-        variants: [{ src: ['./src/assets/fonts/Gloock-400-latin.woff2'], weight: 400, style: 'normal' }],
       },
     },
   ],

@@ -1,322 +1,236 @@
 ---
 name: Súria (prototip)
-description: Full de consulta mineral para residentes de Súria; sistema Silvinita, variante B consolidada (13/10/2026).
+description: Web per viure i conèixer Súria; direcció «Façanes» (14/10/2026). Substitueix Silvinita B (etiqueta git silvinita-b-2026-10-14 i còpia a archiu/silvinita-b-2026-10-14/).
 colors:
-  salt: "#ece8e1"
-  halite: "#f8f6f2"
-  deep: "#1f1c1a"
-  red: "#a8362a"
-  red-ink: "#8e2c22"
-  salmon: "#e39a7b"
-  marl: "#5e5852"
-  rule: "#cdc6bb"
-  text-2: "#4a4540"
-  on-deep: "#fafbfb"
-  on-deep-2: "#d6cfc6"
+  calc: "#fdfcfa"
+  pedra: "#f2eee7"
+  tinta: "#1d2532"
+  tinta-2: "#4a5363"
+  filet: "#d6cfc3"
+  cel: "#dfe7ee"
+  cel-fort: "#c3d2df"
+  cel-tinta: "#35506b"
+  ocre: "#e8b14a"
+  ocre-clar: "#f8e6bd"
+  ocre-tinta: "#6f4c0d"
+  teula: "#c0582f"
+  teula-clar: "#f5d9cb"
+  teula-tinta: "#9a3d1b"
+  rosa: "#eab7a9"
+  turo: "#2f4f36"
+  turo-clar: "#dfe8dc"
+  sobre-turo: "#f6f3ec"
+  sobre-turo-2: "#cfdccb"
 typography:
+  brand-home:
+    fontFamily: "Bricolage Grotesque, system-ui, sans-serif"
+    fontSize: "clamp(4.75rem, 21vw, 17rem)"
+    fontWeight: 700
+    fontVariation: "wdth 90"
+    lineHeight: 0.78
+    letterSpacing: "-0.055em"
   brand:
-    fontFamily: "Schibsted Grotesk, system-ui, sans-serif"
-    fontSize: "clamp(3.5rem, 9vw, 7.5rem)"
-    fontWeight: 900
-    lineHeight: 0.86
-    letterSpacing: "-0.04em"
+    fontFamily: "Bricolage Grotesque, system-ui, sans-serif"
+    fontSize: "clamp(2.75rem, 6vw, 4.25rem)"
+    fontWeight: 700
+    fontVariation: "wdth 82"
+    lineHeight: 0.82
+    letterSpacing: "-0.045em"
+  greeting:
+    fontFamily: "Bricolage Grotesque, system-ui, sans-serif"
+    fontSize: "clamp(1.75rem, 4vw, 3.5rem)"
+    fontWeight: 500
+    lineHeight: 1.12
+    letterSpacing: "-0.025em"
   display:
-    fontFamily: "Gloock, Georgia, serif"
-    fontSize: "clamp(2.5rem, 5.2vw, 4.25rem)"
-    fontWeight: 400
-    lineHeight: 1.02
-    letterSpacing: "-0.005em"
+    fontFamily: "Bricolage Grotesque, system-ui, sans-serif"
+    fontSize: "clamp(2.5rem, 6.2vw, 5.25rem)"
+    fontWeight: 700
+    fontVariation: "wdth 88"
+    lineHeight: 0.98
+    letterSpacing: "-0.03em"
   headline:
-    fontFamily: "Gloock, Georgia, serif"
-    fontSize: "clamp(1.875rem, 2.8vw, 2.75rem)"
-    fontWeight: 400
-    lineHeight: 1.02
-    letterSpacing: "-0.005em"
-  headline-compact:
-    fontFamily: "Gloock, Georgia, serif"
-    fontSize: "clamp(1.75rem, 2.2vw, 2rem)"
-    fontWeight: 400
-    lineHeight: 1.02
-    letterSpacing: "-0.005em"
+    fontFamily: "Bricolage Grotesque, system-ui, sans-serif"
+    fontSize: "clamp(2rem, 3.8vw, 3.25rem)"
+    fontWeight: 700
+    fontVariation: "wdth 88"
+    lineHeight: 0.98
+    letterSpacing: "-0.03em"
   title:
-    fontFamily: "Schibsted Grotesk, system-ui, sans-serif"
-    fontSize: "1.1875rem"
-    fontWeight: 800
-    lineHeight: 1.3
+    fontFamily: "Bricolage Grotesque, system-ui, sans-serif"
+    fontSize: "clamp(1.3125rem, 1.6vw, 1.5rem)"
+    fontWeight: 650
+    lineHeight: 1.2
+  nav:
+    fontFamily: "Bricolage Grotesque, system-ui, sans-serif"
+    fontSize: "clamp(1.125rem, 1.7vw, 1.5rem)"
+    fontWeight: 600
   body:
-    fontFamily: "Atkinson Hyperlegible, system-ui, sans-serif"
-    fontSize: "1.0625rem"
+    fontFamily: "Atkinson Hyperlegible Next, system-ui, sans-serif"
+    fontSize: "1.1875rem"
     fontWeight: 400
     lineHeight: 1.55
   body-small:
-    fontFamily: "Atkinson Hyperlegible, system-ui, sans-serif"
-    fontSize: "1rem"
-    fontWeight: 400
-    lineHeight: 1.45
+    fontFamily: "Atkinson Hyperlegible Next, system-ui, sans-serif"
+    fontSize: "1.0625rem"
   meta:
-    fontFamily: "Atkinson Hyperlegible, system-ui, sans-serif"
-    fontSize: "0.9375rem"
-    fontWeight: 400
+    fontFamily: "Atkinson Hyperlegible Next, system-ui, sans-serif"
+    fontSize: "1rem"
     lineHeight: 1.45
-  date:
-    fontFamily: "Schibsted Grotesk, system-ui, sans-serif"
-    fontSize: "1rem"
-    fontWeight: 800
-    lineHeight: 1.5
-    fontFeature: "tnum"
-  action:
-    fontFamily: "Schibsted Grotesk, system-ui, sans-serif"
-    fontSize: "1rem"
-    fontWeight: 700
   label:
-    fontFamily: "Schibsted Grotesk, system-ui, sans-serif"
-    fontSize: "0.875rem"
-    fontWeight: 800
-    letterSpacing: "0.04em"
+    fontFamily: "Bricolage Grotesque, system-ui, sans-serif"
+    fontSize: "0.9375rem"
+    fontWeight: 650
 rounded:
-  none: "0px"
+  none: "0"
+  tag: "0.3em"
+  date: "0 0 0.4rem 0.4rem"
+  panel: "0.75rem"
 spacing:
-  s-1: "0.25rem"
-  s-2: "0.5rem"
-  s-3: "0.75rem"
-  s-4: "1rem"
-  s-5: "1.5rem"
-  s-6: "2rem"
-  s-7: "2.75rem"
-  s-8: "4rem"
+  base: "4px"
   pad: "clamp(1rem, 4vw, 3.5rem)"
+  max: "90rem"
 components:
-  mast:
-    backgroundColor: "{colors.deep}"
-    textColor: "{colors.on-deep}"
-    typography: "{typography.brand}"
-    padding: "0.75rem clamp(1rem, 4vw, 3.5rem) 1rem"
-  action-link:
-    textColor: "{colors.deep}"
-    typography: "{typography.action}"
-    height: "2.75rem"
-  action-link-hover:
-    textColor: "{colors.red-ink}"
+  service-bar:
+    backgroundColor: "{colors.tinta}"
+    textColor: "{colors.calc}"
+    accent: "{colors.ocre}"
   nav-task:
-    textColor: "{colors.deep}"
+    textColor: "{colors.tinta}"
     height: "3.25rem"
-    padding: "0 0.75rem"
+    swatch: "0.55em × 0.8em, color de la façana"
   nav-task-active:
-    textColor: "{colors.red-ink}"
-  lang-toggle:
-    textColor: "{colors.on-deep}"
-    rounded: "{rounded.none}"
-    height: "2.75rem"
-    width: "3rem"
-    padding: "0 0.75rem"
-  lang-toggle-active:
-    backgroundColor: "{colors.halite}"
-    textColor: "{colors.deep}"
-  agenda-panel:
-    backgroundColor: "{colors.halite}"
-    rounded: "{rounded.none}"
-    padding: "clamp(1rem, 2.4vw, 2rem) clamp(0.75rem, 1.6vw, 1.5rem) 1rem"
-  maturity-line:
-    textColor: "{colors.red-ink}"
-    typography: "{typography.label}"
+    fontWeight: 750
+    underline: "3px, color de la façana"
+  greeting-band:
+    background: "linear-gradient(cel → llum càlida), segons matí / tarda / vespre"
+    typography: "{typography.greeting}"
+  date-window:
+    backgroundColor: "{colors.ocre-clar}"
+    borderTop: "4px {colors.ocre}"
+    rounded: "{rounded.date}"
+  pharmacy-turn:
+    backgroundColor: "{colors.cel}"
+    rounded: "{rounded.panel}"
+  upcoming-poster:
+    backgroundColor: "{colors.ocre}"
+    textColor: "{colors.tinta}"
+    rounded: "{rounded.panel}"
+  shop-card:
+    borderTop: "4px {colors.teula}"
+    state-panel: "{colors.pedra} / {colors.teula-clar} quan hi ha horari comunicat"
   maturity-tag:
-    textColor: "{colors.deep}"
+    border: "1.5px solid; discontinu per a Idea i Demo"
+    rounded: "{rounded.tag}"
     typography: "{typography.label}"
-    rounded: "{rounded.none}"
-    padding: "1px 0.5rem"
-  empty-state:
-    backgroundColor: "{colors.halite}"
-    rounded: "{rounded.none}"
-    padding: "0.75rem 1rem 1rem"
-  prototype-notice:
-    backgroundColor: "{colors.halite}"
-    textColor: "{colors.deep}"
-    typography: "{typography.body-small}"
-    padding: "0.5rem clamp(1rem, 4vw, 3.5rem)"
+  warning:
+    backgroundColor: "{colors.teula-clar}"
+    rounded: "{rounded.panel}"
+  page-opening:
+    backgroundColor: "color clar de la façana"
+    borderTop: "6px color de la façana"
+  ideas-band:
+    backgroundColor: "{colors.turo}"
+    textColor: "{colors.sobre-turo}"
   footer:
-    backgroundColor: "{colors.deep}"
-    textColor: "{colors.on-deep-2}"
-    typography: "{typography.meta}"
+    backgroundColor: "{colors.tinta}"
+    textColor: "{colors.calc}"
 ---
 
 # Design System: Súria (prototip)
 
 ## Overview
 
-**Creative North Star: "El full de consulta mineral"**
+**Direcció «Façanes»** (14/10/2026). Surt de l'única foto del poble amb permís comprovat (Krzysztof Golik, 2022): les façanes ocre, teula, rosa i calç apilades al turó, sota un cel de pissarra. La web vol semblar feta a Súria i per a la gent de Súria: clara com un programa de festa major, útil com el tauler de la plaça, càlida com el carrer.
 
-Súria se lee como un pliego de consulta sobre sal: el terreno es sal cálida y halita, la roca de carbón cierra la cabecera, el pie y la franja de identidad, y el rojo de la silvinita aparece como estrato, filete y estado. Lo útil y disponible manda: fecha, hora, lugar, requisito esencial y acción. La identidad no compite con la consulta; se concentra en dos sitios, la banda de estratos bajo la cabecera y la franja de carbón con fotografía real del pueblo.
+Substitueix Silvinita B (sal i carbó, serif editorial). La versió anterior es pot recuperar amb l'etiqueta git `silvinita-b-2026-10-14` i es pot obrir construïda a `archiu/silvinita-b-2026-10-14/dist/`.
 
-La densidad es de hoja de consulta, no de folleto: listas abiertas por un filete negro, piezas separadas por filetes finos, sin tarjetas, sin sombras, sin esquinas redondeadas. Tres voces tipográficas con reparto estricto: la serif editorial solo titula páginas y secciones grandes, la grotesca lleva todo lo que se busca con la vista (marca, navegación, fechas, horas, acciones, etiquetas) y la hiperlegible lleva la lectura.
+Tres gestos fan la identitat:
+1. **El nom de Súria a tota amplada** a la portada, com fa Lentos amb el seu nom; compacte a la resta de pàgines.
+2. **«Avui a Súria»**: una frase gran feta amb les dades d'avui (agenda i farmàcia de guàrdia), sobre un cel que canvia amb el moment del dia, com la salutació de Belle Isle. Si una dada falta o ha caducat, la frase ho diu.
+3. **Cada mena de contingut té la seva façana**: agenda ocre, primers passos cel, comerços teula, cap on anem verd turó. El color s'acompanya sempre del nom; mai és l'únic senyal.
 
-El sistema rechaza la portada turística y la web administrativa de tarjetas. La procedencia, la vigencia y la madurez de cada dato (Real, En prova, Demo, Idea) son siempre visibles y siempre en texto.
-
-**Key Characteristics:**
-- Terreno claro de sal cálida con roca de carbón solo en cabecera, franja de identidad y pie.
-- Banda de estratos como única aparición de los estratos (30 px; 22 px en móvil).
-- Filete negro de 2 px abre cada lista; filete fino de 1 px separa las piezas.
-- Tres voces: Gloock para títulos ≥ 28 px, Schibsted Grotesk para lo que se busca, Atkinson Hyperlegible para leer.
-- Estados y madurez legibles sin color: siempre en texto; el color solo acompaña.
-- Plano y anguloso: sin sombras de elevación, sin radios.
-- Objetivos táctiles de 44 px como mínimo; anillo de foco de 3 px.
+Mode: Read per a la portada (consulta ràpida i identitat) i Operate/Read per a les pàgines de tasca.
 
 ## Colors
 
-Paleta mineral de cuatro materias: sal (fondos), carbón (roca e ink), silvinita (rojos y salmón) y marga (gris cálido de apoyo).
-
-### Primary
-- **Vermell silvinita** (red): el rojo de estrato. Banda, subrayado de 4 px de la tarea activa, numerales grandes de «Primers passos», muestra de estado activo en la ficha de comercio y anillo de foco sobre claro. No se usa para texto de cuerpo pequeño.
-- **Vermell tinta** (red-ink): el rojo legible para texto. Madurez bajo cada título, días de la agenda, tarea activa, «Prototip independent» del aviso, hover de enlaces, etiqueta de ideas sobre claro y borde de la agenda caducada.
-
-### Secondary
-- **Salmó** (salmon): el rojo sobre carbón. Fecha de hoy en la cabecera, hover y anillo de foco sobre fondo oscuro, etiqueta de ideas en la franja, selección de texto y estrato claro de la banda.
-
-### Neutral
-- **Sal càlida** (salt): fondo de página.
-- **Halita** (halite): superficie elevada por tono: panel de la agenda, aviso de prototipo, estado vacío, botón de idioma activo y estrato claro de la banda.
-- **Carbó** (deep): tinta principal, filete fuerte, fondo de cabecera, franja de identidad y pie.
-- **Marga** (marl): estrato inferior de la banda, contenido caducado (texto y estado «finalizado»), filetes discontinuos de ideas, borde del selector de idioma y muestra de estado neutro.
-- **Filet** (rule): filete fino entre piezas y bordes de 1 px; muestra de «Servei finalitzat».
-- **Text secundari** (text-2): línea de procedencia, vigencia, explicaciones de estado, pies de foto y notas.
-- **Sobre carbó** (on-deep) y **Sobre carbó 2** (on-deep-2): texto principal y secundario sobre carbón.
+- **Neutres:** calç `#fdfcfa` (fons), pedra `#f2eee7` (superfície secundària), tinta `#1d2532` (text, del cel de tempesta), tinta-2 `#4a5363` (text secundari, ≥ 7:1 sobre calç), filet `#d6cfc3`.
+- **Façanes:** ocre `#e8b14a` / `#f8e6bd` / `#6f4c0d`; cel `#c3d2df` / `#dfe7ee` / `#35506b`; teula `#c0582f` / `#f5d9cb` / `#9a3d1b`; turó `#2f4f36` / `#dfe8dc`. Cada secció declara `data-facana` i rep `--f`, `--f-clar` i `--f-tinta`.
 
 ### Named Rules
-**The Two Reds Rule.** El rojo de estrato (red) marca superficie y forma; el texto rojo siempre es red-ink sobre claro o salmon sobre carbón.
-
-**The Rock Placement Rule.** El carbón como fondo solo aparece en la cabecera, la franja de identidad con fotografía y el pie. El contenido útil vive sobre sal o halita.
+- **Color amb nom.** Cap color sol vol dir res: la mostra de la navegació porta el nom de la tasca; els estats porten paraules i forma.
+- **Avís en teula clara.** Agenda caducada, torn de farmàcia sense actualitzar: fons teula clar i text en tinta, sempre amb l'enllaç a la font oficial.
+- **Clar per defecte.** Escena d'ús: veïns, sovint grans, amb el mòbil al carrer i de dia. No hi ha mode fosc.
 
 ## Typography
 
-**Display Font:** Gloock (con Georgia, serif)
-**Brand / UI Font:** Schibsted Grotesk 500–900 (con system-ui, sans-serif)
-**Body Font:** Atkinson Hyperlegible 400/700 (con system-ui, sans-serif)
+- **Bricolage Grotesque** (variable: pes, amplada i mida òptica; OFL): la veu de Súria. Marca, títols, salutació, navegació, dates, hores, etiquetes i accions. Una mica estreta en els títols grans (`wdth` 82–90), com la lletra dels cartells de festa major; ample en la salutació i a mida de text.
+- **Atkinson Hyperlegible Next** (variable; OFL): lectura, a 19 px, dissenyada per a persones amb baixa visió.
 
-Las tres familias se sirven desde el propio sitio (sin peticiones a terceros) y se precargan.
-
-**Character:** Una serif editorial de alto contraste da voz a los títulos; una grotesca compacta y negra hace de rótulo de consulta; una hiperlegible pensada para baja visión lleva todo lo que se lee de corrido.
+Per què: les tintes irregulars de Bricolage donen calidesa i caràcter local sense nostàlgia, i l'eix d'amplada permet que el nom ompli l'espai com un rètol. Atkinson Next substitueix Atkinson Hyperlegible amb més pesos i la mateixa llegibilitat. Decisió provisional fins a provar-la amb lectura real.
 
 ### Hierarchy
-- **Brand** (Schibsted Grotesk 900, interlineado 0.86, tracking −0.04em): solo la marca «Súria» de la cabecera; es el h1 en la portada y un enlace al inicio en el resto.
-- **Display** (Gloock 400): título de página (h1) en las páginas de tarea.
-- **Headline** (Gloock 400): título de sección; también «Cap on anem», 404 y las secciones de «Què estem provant».
-- **Headline compact** (Gloock 400, mínimo 28 px): secciones secundarias de portada («Pròximament», «Menjar i comprar avui», «Què estem provant»).
-- **Title** (Schibsted Grotesk 800, interlineado 1.3): título de cada pieza (actividad, paso, comercio, prueba).
-- **Body** (Atkinson Hyperlegible 400, interlineado 1.55): lectura; medida de 36–44 em en columnas de texto.
-- **Body small / Meta** (Atkinson Hyperlegible): detalle de pieza y línea de procedencia.
-- **Date** (Schibsted Grotesk 800, cifras tabulares): días de la agenda en red-ink.
-- **Action** (Schibsted Grotesk 700, subrayado): enlaces que hacen algo.
-- **Label** (Schibsted Grotesk 800, tracking 0.04em, mayúsculas): madurez y etiqueta de ideas.
+Marca de portada 76–272 px · títol de pàgina 40–84 px · títol de secció 32–52 px · salutació 28–56 px · títol de peça 21–24 px · text 19 px · secundari 17 px · font i meta 16 px · etiqueta 15 px (mínim).
 
 ### Named Rules
-**The Serif Floor Rule (provisional).** Gloock solo en títulos de página y sección y nunca por debajo de 28 px (`--t-serif-min`, 1.75rem). Nunca en interfaz, fechas, horas ni etiquetas. Provisional hasta validarlo con lectura real de residentes mayores en sus teléfonos.
-
-**The Reading Face Rule (provisional).** Atkinson Hyperlegible es la letra de lectura. Provisional con la misma validación pendiente.
-
-**The Grotesk Hours Rule (provisional).** Las horas dentro de texto corrido se componen en la grotesca (600), sin partirse, como en la agenda: evita el cero barrado de la hiperlegible y hace que las horas se encuentren de un vistazo.
+- **Cap text sota 15 px.** Amb el text al 200 % no es perd res ni apareix scroll horitzontal (provat).
+- **Hores en la lletra de dades:** dins del text, les hores van en Bricolage i no es parteixen.
 
 ## Layout
 
-Rejilla de dos columnas 7/12 + 5/12 compartida por la portada, las páginas de tarea y la franja de identidad, con margen lateral fluido (`pad`) y separación de columnas clamp(1.5rem, 3.5vw, 3.5rem). Ritmo de espaciado con base de 4 px (s-1 a s-8). Un único punto de ruptura a 56.25rem (900 px): por debajo todo pasa a una columna.
+Contenidor de 90rem amb marge lateral `clamp(1rem, 4vw, 3.5rem)`. Portada: franja de servei → nom → tasques sobre un filet de 2 px → «Avui a Súria» (7/12 frase, 5/12 foto) → agenda amb pròximament a sota (7/12) i primers passos al costat (5/12) → comerços a tota amplada → cap on anem en la franja verda → què estem provant → peu. Mòbil: avui, agenda, primers passos, pròximament, comerços.
 
-**Primera vista:** cabecera de carbón compacta (marca, fecha, CA/ES), banda, aviso de independencia, navegación de tareas y enseguida el panel claro de la agenda (7/12) con «Primers passos» al lado; en móvil la navegación es una rejilla 2×2 (el inicio es la marca) y el primer evento aparece antes de 450 px.
-
-**Panel de agenda:** superficie halita que sobresale hacia fuera para que su texto quede alineado con la marca y la navegación; en móvil ocupa todo el ancho.
-
-**Columna de lectura:** la columna principal de una tarea no pasa de 44rem; las entradas y párrafos de 38 em.
+Pàgines de tasca: obertura del color de la seva façana (filet de 6 px a dalt), cos de lectura de 48rem màxim i lateral enganxós amb fonts oficials i altres tasques.
 
 ### Named Rules
-**The Home Density Rule.** La portada muestra fecha, hora, lugar, requisito esencial y acción; las explicaciones largas van a la página de detalle con un enlace claro. «Pròximament» es compacto (título, fechas, plazo, enlace) y en móvil va después de los servicios (agenda, primeros pasos, pròximament, comercios). El turno de farmacia ya caducado no ocupa sitio en portada; sin JavaScript se ven ambos turnos con sus fechas.
-
-**The No Hiding Rule.** No se reduce la letra ni se esconde contenido en acordeones. Con el texto al 200 % las rejillas pasan a una columna y la navegación baja a una sola columna en lugar de desbordar.
+- **A la primera pantalla, les tasques i el resum d'avui.** A l'escriptori també el títol de l'agenda; al mòbil, l'agenda comença abans d'1,3 pantalles (provat).
+- **Filets, no caixes.** Les llistes s'obren amb un filet de tinta de 2 px i se separen amb filets fins. Només tenen fons el torn de farmàcia, el cartell de pròximament, els avisos i l'estat d'un comerç.
 
 ## Elevation & Depth
-
-Sistema plano. No hay sombras de elevación: la profundidad se expresa por tono (sal → halita) y por roca (carbón). La única `box-shadow` del sistema es un subrayado interior de la navegación (4 px rojo para la tarea activa, 2 px marga en hover), que actúa como filete, no como elevación.
-
-### Named Rules
-**The Tone Not Shadow Rule.** Para destacar una superficie, súbela a halita o ábrela con un filete; nunca con sombra.
+Sense ombres. La profunditat la donen el color de façana i els filets.
 
 ## Shapes
+Cantonades de 0.75rem en fotos, torns, cartell i avisos; 0.3em a les etiquetes; la data de l'agenda és una «finestra» amb filet superior de 4 px i cantonades inferiors arrodonides.
 
-Todo es rectangular y sin radio. La forma se construye con filetes: 2 px de carbón para abrir listas y estados vacíos, 1 px de `rule` para separar piezas, discontinuo de 1 px marga para lo que aún no existe. La banda de estratos es la firma: cinco franjas horizontales (rojo, salmón, rojo tinta, halita, marga) de 8/4/9/3/6 px en escritorio y 6/3/7/2/4 px en móvil.
-
-### Named Rules
-**The Strata Once Rule.** Los estratos aparecen solo en la banda bajo la cabecera. No se repiten como fondo, divisor ni decoración en otras superficies; los estados usan una muestra cuadrada de un solo color.
-
-**The Open List Rule.** Cada lista se abre con el filete negro de 2 px y cada pieza se cierra con el filete fino.
+## Motion
+Un sol moment: el cel d'«Avui a Súria» passa al color del moment del dia (1,6 s, ease-out exponencial) quan el script calcula l'hora de Súria. Petits gestos: la fletxa de les accions avança i la mostra de la navegació creix en passar-hi. Tot es desactiva amb `prefers-reduced-motion`.
 
 ## Components
 
-Mapa del vocabulario de la especificación UX (§9, estados §4.2) al componente construido.
+### Franja de servei
+Tinta, a dalt de tot: «Prototip independent, en proves amb veïns. No és una web de l'Ajuntament.» (independent en ocre), data d'avui a Súria i CA/ES. Mai sembla municipal.
 
-### Aviso de prototipo
-Franja halita bajo la banda, filete fino inferior; «Prototip independent» en negrita red-ink y el resto en carbón. (Dentro de la cabecera.)
+### Navegació de tasques
+Quatre paraules grans sobre un filet de tinta, cada una amb la mostra de la seva façana. La pàgina actual: subratllat de 3 px del seu color i pes 750. Al mòbil, 2×2 (una columna amb el text ampliat).
 
-### Selector de idioma
-Dos botones cuadrados CA/ES sobre carbón, 44 px de alto, borde de 2 px marga; el activo se rellena de halita con texto carbón; hover cambia el borde a salmón. Recuerda la elección en el navegador.
-
-### Navegación persistente
-Tareas en grotesca 700. Escritorio: fila con objetivos de 52 px; activa en red-ink con subrayado interior de 4 px rojo. Móvil: rejilla 2×2 de 44 px, cada celda con filete fino inferior; la entrada «Inici» se oculta porque la marca lleva al inicio.
-
-### Bloque de identidad
-Franja de carbón a sangre con fotografía real (crédito y licencia en el pie de foto) en 7/12 y texto en 5/12: título serif, línea de identidad en grotesca 600, ideas y acción. Es la segunda y última concentración de identidad tras la banda.
-
-### Entrada de tarea
-Cada tarea en portada es una sección con su cabecera, la lista, una línea «Font:» resumida y una acción «Tota la setmana / Tots els passos». En las páginas de detalle, la plantilla de tarea abre con título display y una entrada de 1.1875rem en text-2; lateral con fuentes oficiales y «otras tareas».
-
-### Cabecera de sección con madurez
-Título serif y, justo debajo, la madurez en texto: grotesca 800, mayúsculas, red-ink. Siempre en el mismo sitio en todas las secciones. Es un estado del contenido, no un antetítulo.
-
-### Estado principal
-En la ficha de comercio: texto del estado en grotesca 800 a 1.125rem, precedido de una muestra cuadrada de 0.75rem (roja en curso o antes de empezar; `rule` finalizado; contorno discontinuo red-ink cancelado; marga sin confirmar) y seguido de la explicación de una línea en text-2.
-
-### Línea secundaria
-Línea de procedencia en meta, text-2: madurez (grotesca 800 carbón) · fuente · consultado · vigencia · responsable, separados por « · ».
-
-### Ficha de comercio (E1)
-Pieza de lista abierta: título, actividad y dirección en text-2, estado principal y línea secundaria. Sin JavaScript muestra el último horario comunicado en texto. Estado vacío propio si no hay negocios.
+### Avui a Súria
+Frase composta per `src/lib/ara.ts` (provada en tres zones horàries): salutació, data, activitats d'avui que encara no han acabat o «ja han passat», farmàcia de guàrdia vigent amb l'hora de canvi, o els avisos «No tenim l'agenda d'aquesta setmana» / «No tenim el torn… actualitzat». Cada tros enllaça al detall o a la font oficial. Sense JavaScript, una benvinguda que no depèn de l'hora.
 
 ### Actividad de agenda (E2)
-Rejilla día (6.75em, red-ink, cifras tabulares) + cuerpo: título, horas en grotesca 700 y lugar, requisito, nota (solo en detalle), acción y línea secundaria. En móvil el día va encima del título. Caducada: título y día en marga y aviso «ja ha passat» en texto.
+Finestra de data ocre, títol, hora en negreta · lloc, requisit amb un filet fi del color de la façana, acció «Fitxa a suria.cat». Passada: finestra en pedra i «Ja ha passat».
 
-### Respuesta de primeros pasos (E3)
-Rejilla de numeral (grotesca 900, 2rem, rojo) + cuerpo con título, explicación, acciones (trámite, teléfono) y línea secundaria. Las guardias de farmacia se separan con filete discontinuo `rule`.
+### Primers passos (E3) i torn de farmàcia
+Títol, resum i accions (tràmit en línia, trucar). Cada torn és una fitxa de cel amb «Fins…», el nom i l'adreça, i el telèfon com a acció. Torn acabat: pedra i «Aquest torn ja ha acabat» (a la portada desapareix). Sense torn vigent: avís en teula clara amb la font oficial.
 
-### Enlace a fuente oficial
-Lista lateral bajo un rótulo en grotesca 800 mayúsculas con filete de 2 px; cada enlace de 44 px muestra la pieza en grotesca 700 y la fuente debajo.
+### Pròximament
+Cartell ocre (programa de festa major): títol estret, dates, punts essencials, enllaç al programa i font.
 
-### Estado vacío
-Caja halita con borde fino y filete superior de 2 px carbón; título en grotesca 800 (1.25rem) y texto honesto sobre lo que no sabemos. En portada pierde la caja y queda solo el filete.
+### Ficha de comercio (E1)
+Nom com un rètol amb un filet teula a dalt, ofici i adreça, i l'estat amb paraules i forma: quadrat ple (horari comunicat), buit (sense confirmar), discontinu (avui no), gris (finalitzat). Mai «obert ara». Sense comerços: una frase gran i honesta i la promesa «No direm mai “obert ara”».
 
-### Idea / Demo
-Idea: una sola etiqueta «Idees · encara no existeixen» (grotesca 800 mayúsculas; red-ink sobre claro, salmón en la franja) y lista entre filetes discontinuos de 1 px marga. La etiqueta con borde (2 px carbón; discontinuo marga para Idea y Demo) solo aparece en la escala de madurez de «Cap on anem». No hay contenido Demo publicado: la variante existe pero no se ha usado.
+### Etiqueta de maduresa
+Text dins d'un marc fi («En prova», «Real»); discontinu per a «Idea» i «Demo». Al costat de cada títol de secció.
 
-### Acción
-Enlace subrayado en grotesca 700, alto mínimo de 44 px; hover a red-ink (salmón sobre carbón) con subrayado de 2 px.
+### Línia de procedència
+Sota cada peça al detall, darrere d'un filet discontinu: maduresa, font, consultat, vigència i responsable.
 
-### Página no encontrada
-Dos columnas bilingües (CA y ES) con título serif y la lista de tareas abierta por el filete de 2 px.
+### Cap on anem
+Franja verda del turó amb el text d'identitat i la seva font, i les idees amb etiqueta «Idees · encara no existeixen» i filets discontinus. Mai semblen funcions disponibles.
 
-### Pendientes (no construidos)
-- **Botón de canal de opinión y ayuda:** no existe porque el canal todavía no existe; según §4.3 no se muestra hasta que haya un contacto configurado. «Què estem provant» lo dice en texto.
-- **Pantalla de contraseña:** aplazada al despliegue (D3/T5); hoy solo hay `noindex` como medida complementaria.
+### Peu
+Bloc de tinta amb el nom, l'avís d'independència, la fe d'errades, l'enllaç a les fonts oficials i la nota de privacitat.
 
-## Do's and Don'ts
-
-### Do:
-- **Do** mantener todos los objetivos táctiles a 44 px como mínimo (`--tap`, 2.75rem), incluidos los enlaces dentro de pies de foto.
-- **Do** usar el anillo de foco de 3 px con separación de 3 px: rojo sobre claro, salmón sobre carbón.
-- **Do** escribir siempre el estado y la madurez en texto; el color y la muestra solo acompañan.
-- **Do** abrir cada lista con el filete de 2 px carbón y separar piezas con el filete fino.
-- **Do** componer las horas del texto corrido en la grotesca (provisional).
-- **Do** respetar `prefers-reduced-motion`: el desplazamiento suave solo se activa sin esa preferencia.
-- **Do** mostrar la fuente, la fecha de consulta y la vigencia junto a cada dato.
-
-### Don't:
-- **Don't** usar Gloock por debajo de 28 px ni en interfaz, fechas, horas o etiquetas (provisional).
-- **Don't** repetir los estratos fuera de la banda de la cabecera.
-- **Don't** añadir sombras de elevación, radios ni tarjetas.
-- **Don't** añadir animaciones que retrasen la aparición del contenido.
-- **Don't** usar el rojo de estrato (red) para texto pequeño; el texto rojo es red-ink o salmón.
-- **Don't** mezclar ideas con datos reales: van con una sola etiqueta y filetes discontinuos.
-- **Don't** poner explicaciones largas en la portada; van a la página de detalle.
+## Pending
+- Lectura real amb persones grans de les dues lletres i de la mida de 19 px.
+- Fotos pròpies o cedides de vida quotidiana (mercat, carrers, Caramelles) i dels comerços participants; la foto de 1924 (domini públic) segueix candidata.
+- Lector de pantalla, mòbil real i revisió humana del castellà (pendents de l'etapa anterior, no tancats per aquest redisseny).

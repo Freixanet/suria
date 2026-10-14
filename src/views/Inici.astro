@@ -1,7 +1,9 @@
 ---
-// Portada: el que és útil i disponible primer. Escriptori: agenda (7/12) i primers passos al costat;
-// després, pròximament i comerços. Mòbil: agenda, primers passos, pròximament, comerços.
-// La identitat es concentra a la franja de carbó amb la fotografia real.
+// Portada «Façanes». Primer, «Avui a Súria» (Belle Isle): una frase feta amb les dades d'avui
+// (agenda i farmàcia de guàrdia) sobre el cel del moment del dia, amb la foto real del poble.
+// Després, el que és útil: l'agenda de la setmana (Lentos) amb pròximament a sota, i al costat primers passos;
+// els comerços (Union Boulangerie); i «Cap on anem» en la façana verda del turó, en segon pla.
+// Mòbil: avui, agenda, primers passos, pròximament, comerços, cap on anem.
 import Base from '../layouts/Base.astro';
 import CapcaleraSeccio from '../components/CapcaleraSeccio.astro';
 import Agenda from '../components/Agenda.astro';
@@ -14,6 +16,7 @@ import { urlDe } from '../i18n/rutes.ts';
 import { agenda, comercos, consultaMesRecent, idees, passos } from '../lib/dades.ts';
 import { dataNumerica } from '../lib/format.ts';
 import { fotos } from '../lib/fotos.ts';
+import type { DadesAra } from '../lib/ara.ts';
 
 interface Props {
   llengua: Llengua;
@@ -27,47 +30,72 @@ const llistaIdees = await idees();
 const consultaAgenda = dataNumerica(consultaMesRecent(aquestaSetmana));
 const consultaPassos = dataNumerica(consultaMesRecent(llistaPassos));
 const senseComercos = llistaComercos.length === 0;
+
+const farmacia = llistaPassos.find((p) => p.guardies.length > 0);
+const dadesAra: DadesAra = {
+  setmana,
+  activitats: aquestaSetmana.map((a) => ({ titol: a.titol[llengua], inici: a.dies.inici, fi: a.dies.fi, hores: a.hores })),
+  guardies: farmacia?.guardies.map((g) => ({ farmacia: g.farmacia, desDe: g.desDe, finsA: g.finsA })) ?? [],
+};
+const enllacos = {
+  agenda: '#h-setmana',
+  'agenda-oficial': 'https://www.suria.cat/agenda',
+  farmacia: '#farmacia',
+  'farmacia-oficial': farmacia?.fonts[0]?.url ?? 'https://www.suria.cat/',
+};
 ---
 <Base llengua={llengua} pagina="inici">
-  <div class="portada">
-    <div class="util">
-      <section class="setmana panell" aria-labelledby="h-setmana">
-        <CapcaleraSeccio id="h-setmana" titol={t('setmana.titol')} maduresa="En prova" llengua={llengua} />
-        <Agenda llengua={llengua} setmana={setmana} activitats={aquestaSetmana} />
-        <p class="font"><b>{t('procedencia.font')}:</b> {t('setmana.fontResum', { data: consultaAgenda })}</p>
-        <a class="accio" href={urlDe('setmana', llengua)}>{t('tasca.veureSetmana')}</a>
-      </section>
-
-      <section class="passos" aria-labelledby="h-passos">
-        <CapcaleraSeccio id="h-passos" titol={t('passos.titol')} maduresa="En prova" llengua={llengua} />
-        <PrimersPassos llengua={llengua} passos={llistaPassos} />
-        <p class="font"><b>{t('procedencia.font')}:</b> {t('passos.fontResum', { data: consultaPassos })}</p>
-        <a class="accio" href={urlDe('passos', llengua)}>{t('tasca.veurePassos')}</a>
-      </section>
-
-      {
-        proximament.length > 0 && (
-          <section class="proxim" aria-labelledby="h-proximament">
-            <CapcaleraSeccio id="h-proximament" titol={t('setmana.proximament')} maduresa="En prova" llengua={llengua} compacte />
-            <Proximament llengua={llengua} activitats={proximament} ambTitol={false} nivell={2} />
-          </section>
-        )
-      }
-
-      <section class:list={['menjar', { buit: senseComercos }]} aria-labelledby="h-menjar">
-        <CapcaleraSeccio id="h-menjar" titol={t('menjar.titol')} maduresa="En prova" llengua={llengua} compacte />
-        <ComercosAvui llengua={llengua} comercos={llistaComercos} />
-      </section>
+  <section class="ara" data-moment="mati" aria-labelledby="h-ara">
+    <div class="ample ara-dins">
+      <div class="ara-text">
+        <h2 id="h-ara" class="visually-hidden">{t('ara.titol')}</h2>
+        <p class="salutacio" data-ara={JSON.stringify(dadesAra)} data-enllacos={JSON.stringify(enllacos)} data-llengua={llengua}>
+          {t('ara.sensejs')}
+        </p>
+        <p class="font ara-font">{t('ara.font')}</p>
+      </div>
+      <FotoSuria foto={fotos.vista} llengua={llengua} format="ampla" sizes="(max-width: 900px) 100vw, 40vw" prioritaria />
     </div>
+  </section>
+
+  <div class="ample util">
+    <section class="setmana" data-facana="ocre" aria-labelledby="h-setmana">
+      <CapcaleraSeccio id="h-setmana" titol={t('setmana.titol')} maduresa="En prova" llengua={llengua} />
+      <Agenda llengua={llengua} setmana={setmana} activitats={aquestaSetmana} />
+      <p class="font peu-seccio"><b>{t('procedencia.font')}:</b> {t('setmana.fontResum', { data: consultaAgenda })}</p>
+      <a class="accio" href={urlDe('setmana', llengua)}>{t('tasca.veureSetmana')}</a>
+    </section>
+
+    <section class="passos" data-facana="cel" aria-labelledby="h-passos">
+      <CapcaleraSeccio id="h-passos" titol={t('passos.titol')} maduresa="En prova" llengua={llengua} compacte />
+      <PrimersPassos llengua={llengua} passos={llistaPassos} />
+      <p class="font peu-seccio"><b>{t('procedencia.font')}:</b> {t('passos.fontResum', { data: consultaPassos })}</p>
+      <a class="accio" href={urlDe('passos', llengua)}>{t('tasca.veurePassos')}</a>
+    </section>
+
+    {
+      proximament.length > 0 && (
+        <section class="proxim" data-facana="ocre" aria-labelledby="h-proximament">
+          <CapcaleraSeccio id="h-proximament" titol={t('setmana.proximament')} maduresa="En prova" llengua={llengua} compacte />
+          <Proximament llengua={llengua} activitats={proximament} ambTitol={false} nivell={2} />
+        </section>
+      )
+    }
+
+    <section class:list={['menjar', { buida: senseComercos }]} data-facana="teula" aria-labelledby="h-menjar">
+      <CapcaleraSeccio id="h-menjar" titol={t('menjar.titol')} maduresa="En prova" llengua={llengua} />
+      <ComercosAvui llengua={llengua} comercos={llistaComercos} />
+    </section>
   </div>
 
-  <section class="franja" aria-labelledby="h-cap">
-    <div class="franja-dins">
-      <FotoSuria foto={fotos.vista} llengua={llengua} sizes="(max-width: 900px) 100vw, 58vw" />
-      <div class="franja-text">
-        <h2 id="h-cap" class="titol-serif">{t('cap.titol')}</h2>
+  <section class="cap" data-facana="turo" aria-labelledby="h-cap">
+    <div class="ample cap-dins">
+      <div>
+        <h2 id="h-cap" class="titol-gran">{t('cap.titol')}</h2>
         <p class="identitat">{t('identitat.text')}</p>
         <p class="font-identitat">{t('identitat.font')}</p>
+      </div>
+      <div>
         <p>{t('cap.intro')}</p>
         <p class="idea" id="idees-etiqueta">{t('cap.idees')}</p>
         <ul class="idees" aria-labelledby="idees-etiqueta">
@@ -78,8 +106,8 @@ const senseComercos = llistaComercos.length === 0;
     </div>
   </section>
 
-  <aside class="provant" aria-labelledby="h-provant">
-    <h2 id="h-provant" class="titol-serif">{t('provant.titol')}</h2>
+  <aside class="ample provant" aria-labelledby="h-provant">
+    <h2 id="h-provant" class="titol-gran">{t('provant.titol')}</h2>
     <div>
       <p>{t('provant.resum')}</p>
       <a class="accio" href={urlDe('provant', llengua)}>{t('nav.provant')}</a>
@@ -87,147 +115,166 @@ const senseComercos = llistaComercos.length === 0;
   </aside>
 </Base>
 
+<script>
+  import '../scripts/ara.ts';
+</script>
+
 <style>
-  .portada {
-    padding: clamp(1.25rem, 3vw, 2.25rem) var(--pad) 0;
+  /* «Avui a Súria»: el cel canvia amb el moment del dia (l'únic moviment de la portada). */
+  .ara {
+    --cel-a: #d6e1ea;
+    --cel-b: #f6e5c0;
+    background: linear-gradient(180deg, var(--cel-a) 0%, var(--cel-b) 100%);
+    transition:
+      --cel-a 1.6s var(--ease),
+      --cel-b 1.6s var(--ease);
   }
+  .ara[data-moment='tarda'] {
+    --cel-a: #cfdbe6;
+    --cel-b: #f3d6c4;
+  }
+  .ara[data-moment='vespre'] {
+    --cel-a: #c3cddc;
+    --cel-b: #e4d6e3;
+  }
+  .ara-dins {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--s-5) clamp(1.5rem, 4vw, 4rem);
+    align-items: end;
+    padding-block: clamp(1.5rem, 3.2vw, 2.75rem);
+  }
+  .salutacio {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: var(--t-salutacio);
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    text-wrap: pretty;
+    max-width: 22em;
+  }
+  .salutacio :global(a) {
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.14em;
+    text-decoration-color: rgb(29 37 50 / 0.45);
+  }
+  .salutacio :global(a:hover) {
+    color: var(--tinta);
+    text-decoration-color: var(--teula);
+  }
+  .ara-font {
+    margin-top: var(--s-4);
+    max-width: 40rem;
+  }
+  .ara :global(.foto img) {
+    aspect-ratio: 16 / 10;
+  }
+
+  /* Útil: l'agenda i, a sota, pròximament (la mateixa façana ocre); al costat, primers passos. */
   .util {
-    --sang: clamp(0.75rem, 1.6vw, 1.5rem);
     display: grid;
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
     grid-template-areas:
       'setmana passos'
-      'proxim menjar';
-    column-gap: clamp(1.5rem, 3.5vw, 3.5rem);
-    row-gap: var(--s-7);
+      'proxim passos'
+      'menjar menjar';
+    gap: var(--s-8) clamp(1.5rem, 5vw, 5rem);
+    padding-top: clamp(1.75rem, 2.5vw, 2.25rem);
     align-items: start;
   }
   .setmana {
     grid-area: setmana;
   }
-  /* Mateix marge superior que el panell de l'agenda: els dos titulars comparteixen línia. */
   .passos {
     grid-area: passos;
-    padding-top: clamp(1rem, 2.4vw, 2rem);
   }
-  /* Els filets de «Pròximament» acaben on acaben els del panell de l'agenda. */
   .proxim {
     grid-area: proxim;
-    padding-right: var(--sang);
   }
   .menjar {
     grid-area: menjar;
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    column-gap: clamp(1.5rem, 5vw, 5rem);
+    padding-top: var(--s-5);
+    border-top: 6px solid var(--teula);
   }
-  /* El panell sobresurt cap enfora: el text de l'agenda queda alineat amb la marca i la navegació. */
-  .panell {
-    background: var(--halite);
-    padding: clamp(1rem, 2.4vw, 2rem) var(--sang) var(--s-4);
-    margin-left: calc(-1 * var(--sang));
+  .peu-seccio {
+    margin-top: var(--s-4);
   }
-  .font {
-    font-size: var(--t-meta);
-    line-height: 1.45;
-    color: var(--text-2);
-    margin-top: var(--s-3);
-  }
-  .font b {
-    color: var(--deep);
-  }
-  /* El buit de comerços: compacte, sense caixa ni columna pròpia. */
-  .buit :global(.buit) {
-    background: transparent;
-    border: 0;
-    border-top: var(--rule-strong);
-    padding: var(--s-3) 0 0;
+  /* Comerços buits: el missatge honest en gran (una frase, com fa Lentos quan no hi ha dates). */
+  .buida :global(.buit) {
+    padding-top: 0;
   }
 
-  /* Franja de carbó: la identitat concentrada, amb la fotografia real com a contingut. */
-  .franja {
-    margin-top: var(--s-8);
-    background: var(--deep);
-    color: var(--on-deep);
+  /* Cap on anem: la façana verda del turó. Les idees, amb filets discontinus i l'etiqueta explícita. */
+  .cap {
+    margin-top: var(--s-9);
+    background: var(--turo);
+    color: var(--sobre-turo);
   }
-  .franja-dins {
+  .cap-dins {
     display: grid;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    align-items: end;
-    gap: clamp(1.5rem, 3.5vw, 3.5rem);
-    padding: 0 var(--pad) clamp(1.5rem, 3vw, 2.5rem) 0;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+    gap: var(--s-6) clamp(1.5rem, 5vw, 5rem);
+    padding-block: clamp(2.5rem, 6vw, 5rem);
   }
-  .franja :global(.foto) {
-    margin: 0;
-  }
-  .franja :global(.foto img) {
-    aspect-ratio: 16 / 10;
-  }
-  .franja :global(figcaption) {
-    color: var(--on-deep-2);
-    padding-left: var(--pad);
-  }
-  .franja :global(figcaption a) {
-    color: var(--on-deep);
-  }
-  .franja-text {
-    padding-top: clamp(1.5rem, 3vw, 2.5rem);
-  }
-  .franja h2 {
+  .cap h2 {
     font-size: var(--t-h2);
     margin-bottom: var(--s-4);
   }
   .identitat {
-    font-family: var(--font-display-stack);
-    font-weight: 600;
-    font-size: 1.1875rem;
-    line-height: 1.4;
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(1.375rem, 2.4vw, 2rem);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    max-width: 24em;
   }
   .font-identitat {
-    font-size: var(--t-tag);
-    color: var(--on-deep-2);
-    margin: var(--s-1) 0 var(--s-4);
+    margin-top: var(--s-2);
+    font-size: var(--t-meta);
+    color: var(--sobre-turo-2);
   }
-  .franja p {
+  .cap p {
     max-width: 36em;
   }
-  /* Les idees, en segon pla: una sola etiqueta explícita i filets discontinus (el que encara no existeix). */
   .idea {
-    margin-top: var(--s-4);
-    font-family: var(--font-display-stack);
-    font-weight: 800;
-    font-size: var(--t-tag);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--salmon);
+    display: inline-block;
+    margin-top: var(--s-5);
+    padding: 0.05em 0.5em 0.1em;
+    border: 1.5px dashed currentColor;
+    border-radius: 0.3em;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: var(--t-small);
   }
   .idees {
     list-style: none;
-    margin: var(--s-1) 0 var(--s-2);
-    border-top: 1px dashed var(--marl);
+    margin: var(--s-3) 0 var(--s-2);
+    border-top: 1px dashed var(--sobre-turo-2);
   }
   .idees li {
     padding: var(--s-2) 0;
-    border-bottom: 1px dashed var(--marl);
-    font-size: var(--t-small);
-    color: var(--on-deep-2);
+    border-bottom: 1px dashed var(--sobre-turo-2);
+    color: var(--sobre-turo-2);
   }
-  .franja .accio {
-    color: var(--on-deep);
+  .cap .accio:hover {
+    color: var(--ocre);
   }
-  .franja .accio:hover {
-    color: var(--salmon);
-  }
-  .franja :global(a:focus-visible) {
-    outline-color: var(--salmon);
+  .cap :global(a:focus-visible) {
+    outline-color: var(--ocre);
   }
 
   .provant {
-    padding: var(--s-6) var(--pad) 0;
     display: grid;
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    column-gap: clamp(1.5rem, 3.5vw, 3.5rem);
+    column-gap: clamp(1.5rem, 5vw, 5rem);
     align-items: baseline;
+    padding-top: var(--s-7);
   }
   .provant h2 {
-    font-size: clamp(var(--t-serif-min), 2.4vw, 2.25rem);
+    font-size: clamp(1.75rem, 2.6vw, 2.375rem);
     margin-bottom: var(--s-2);
   }
   .provant p {
@@ -235,34 +282,19 @@ const senseComercos = llistaComercos.length === 0;
   }
 
   @media (max-width: 56.25rem) {
-    .util {
-      grid-template-columns: minmax(0, 1fr);
-      grid-template-areas: 'setmana' 'passos' 'proxim' 'menjar';
-      row-gap: var(--s-6);
-    }
-    .passos {
-      padding-top: 0;
-    }
-    .proxim {
-      padding-right: 0;
-    }
-    .panell {
-      margin-inline: calc(-1 * var(--pad));
-      padding-inline: var(--pad);
-    }
-    .franja-dins {
-      grid-template-columns: minmax(0, 1fr);
-      padding: 0 0 var(--s-6);
-      gap: 0;
-    }
-    .franja-text {
-      padding: var(--s-5) var(--pad) 0;
-    }
-    .franja :global(.foto img) {
-      aspect-ratio: 4 / 3;
-    }
+    .ara-dins,
+    .util,
+    .menjar,
+    .cap-dins,
     .provant {
       grid-template-columns: minmax(0, 1fr);
+    }
+    .util {
+      grid-template-areas: 'setmana' 'passos' 'proxim' 'menjar';
+      row-gap: var(--s-7);
+    }
+    .ara :global(.foto img) {
+      aspect-ratio: 21 / 9;
     }
   }
 </style>

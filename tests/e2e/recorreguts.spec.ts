@@ -12,9 +12,15 @@ test.describe('portada', () => {
     for (const nom of ['Aquesta setmana', 'Menjar i comprar', 'Primers passos', 'Cap on anem']) {
       await expect(nav.getByRole('link', { name: nom })).toBeVisible();
     }
-    // La primera tasca comença dins de la primera pantalla.
+    // «Façanes»: dins de la primera pantalla hi ha les tasques i el resum d'avui (agenda i farmàcia, enllaçats).
+    const alt = page.viewportSize()!.height;
+    const salutacio = page.locator('.salutacio');
+    expect(await salutacio.evaluate((el) => el.getBoundingClientRect().top)).toBeLessThan(alt * 0.6);
+    await expect(salutacio.locator('a[href="#h-setmana"]')).toBeVisible();
+    await expect(salutacio.locator('a[href="#farmacia"]')).toBeVisible();
+    // L'agenda completa: a la primera pantalla a l'escriptori; al mòbil, just després del resum (≤ 1,3 pantalles).
     const top = await page.locator('#h-setmana').evaluate((el) => el.getBoundingClientRect().top);
-    expect(top).toBeLessThan(page.viewportSize()!.height * 0.6);
+    expect(top).toBeLessThan(alt * (page.viewportSize()!.width < 900 ? 1.3 : 1));
   });
 
   test('«Aquesta setmana» només conté activitats de la setmana; la resta va a «Pròximament»', async ({ page }) => {
@@ -88,7 +94,7 @@ test.describe('portada', () => {
     await page.goto(`${BASE}/`);
     const hora = page.locator('.passos .hora').first();
     await expect(hora).toHaveText('9.00');
-    expect(await hora.evaluate((e) => getComputedStyle(e).fontFamily)).toContain('Schibsted');
+    expect(await hora.evaluate((e) => getComputedStyle(e).fontFamily)).toContain('Bricolage');
   });
 
   test('cada activitat té dia, hora, lloc i enllaç a la seva fitxa', async ({ page }) => {

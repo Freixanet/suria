@@ -12,54 +12,76 @@ const { llengua, pagina } = Astro.props;
 const t = traductor(llengua);
 ---
 <footer class="peu">
-  <p>{t('peu.errades')}</p>
-  <ul>
-    {/* A la portada ja hi ha l'enllaç just abans del peu: no es repeteix en l'ordre del focus. */}
-    {pagina !== 'inici' && pagina !== 'provant' && <li><a href={urlDe('provant', llengua)}>{t('nav.provant')}</a></li>}
-    <li><a href="https://www.suria.cat/" hreflang="ca">{t('peu.oficials')}</a></li>
-  </ul>
-  <p class="privacitat">{t('peu.privacitat')}</p>
+  <div class="ample peu-dins">
+    <p class="marca-peu" aria-hidden="true">{t('lloc.nom')}</p>
+    <div class="columna">
+      <p><strong>{t('avis.fort')}</strong>{t('avis.resta')}</p>
+      <p>{t('peu.errades')}</p>
+    </div>
+    <div class="columna">
+      <ul>
+        {/* A la portada ja hi ha l'enllaç just abans del peu: no es repeteix en l'ordre del focus. */}
+        {pagina !== 'inici' && pagina !== 'provant' && <li><a href={urlDe('provant', llengua)}>{t('nav.provant')}</a></li>}
+        <li><a href="https://www.suria.cat/" hreflang="ca">{t('peu.oficials')}</a></li>
+      </ul>
+      <p class="privacitat">{t('peu.privacitat')}</p>
+    </div>
+  </div>
 </footer>
 
 <style>
+  /* Peu (Lentos): bloc de tinta, la marca i el que cal saber de qui fa el lloc. */
   .peu {
-    margin-top: var(--s-7);
-    background: var(--deep);
-    color: var(--on-deep-2);
-    padding: var(--s-3) var(--pad) var(--s-4);
-    font-size: var(--t-meta);
+    margin-top: var(--s-9);
+    background: var(--tinta);
+    color: var(--calc);
+    font-size: var(--t-small);
+  }
+  .peu-dins {
     display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 0 var(--s-5);
-    align-items: center;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 4fr) minmax(0, 4fr);
+    gap: var(--s-5) clamp(1.5rem, 4vw, 4rem);
+    padding-block: var(--s-7) var(--s-8);
+  }
+  .marca-peu {
+    font-family: var(--display);
+    font-weight: 700;
+    font-variation-settings: 'wdth' 82;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 0.8;
+    letter-spacing: -0.05em;
+  }
+  .columna {
+    display: grid;
+    align-content: start;
+    gap: var(--s-3);
+    max-width: 30rem;
+  }
+  strong {
+    color: var(--ocre);
   }
   ul {
     list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0 var(--s-5);
   }
   a {
-    color: var(--on-deep);
     display: inline-flex;
     align-items: center;
     min-height: var(--tap);
+    font-family: var(--display);
+    font-weight: 600;
   }
   a:hover {
-    color: var(--salmon);
+    color: var(--ocre);
   }
   a:focus-visible {
-    outline-color: var(--salmon);
+    outline-color: var(--ocre);
   }
   .privacitat {
-    grid-column: 1 / -1;
+    color: #c9cdd4;
   }
   @media (max-width: 56.25rem) {
-    .peu {
-      grid-template-columns: 1fr;
-    }
-    .peu > p:first-child {
-      padding-top: var(--s-2);
+    .peu-dins {
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 </style>

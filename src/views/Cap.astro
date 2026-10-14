@@ -21,7 +21,7 @@ const escala = [
 ] as const;
 ---
 <PaginaTasca llengua={llengua} pagina="cap" titol={t('cap.titol')} descripcio={t('cap.descripcio')} maduresa="Idea">
-  <FotoSuria foto={fotos.vista} llengua={llengua} format="ampla" sizes="(max-width: 900px) 100vw, 44rem" prioritaria />
+  <div class="cos-cap"><FotoSuria foto={fotos.vista} llengua={llengua} format="ampla" sizes="(max-width: 900px) 100vw, 44rem" prioritaria />
   <p class="identitat">{t('identitat.text')} <span>({t('identitat.font')})</span></p>
   <Idees llengua={llengua} idees={llista} />
   <p class="compromis">{t('cap.compromis')}</p>
@@ -36,51 +36,52 @@ const escala = [
       ))}
     </dl>
   </section>
+</div>
 </PaginaTasca>
 
 <style>
+  .cos-cap :global(.foto) {
+    margin-bottom: var(--s-5);
+  }
   .identitat {
-    font-family: var(--font-display-stack);
+    font-family: var(--display);
     font-weight: 600;
-    font-size: 1.1875rem;
-    line-height: 1.4;
-    margin: var(--s-4) 0 var(--s-2);
+    font-size: clamp(1.375rem, 2.2vw, 1.75rem);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
   }
   .identitat span {
-    font-family: var(--font-text-stack);
+    display: block;
+    margin-top: var(--s-2);
+    font-family: var(--text);
     font-weight: 400;
     font-size: var(--t-meta);
-    color: var(--text-2);
+    letter-spacing: 0;
+    color: var(--tinta-2);
   }
   .compromis {
     margin-top: var(--s-4);
-    color: var(--text-2);
+    font-weight: 700;
   }
   .escala {
     margin-top: var(--s-7);
   }
   h2 {
-    font-size: var(--t-meta);
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    font-size: var(--t-h3);
     padding-bottom: var(--s-2);
-    border-bottom: var(--rule-strong);
+    border-bottom: var(--filet-fort);
   }
   dl > div {
     display: grid;
-    grid-template-columns: 9rem 1fr;
-    gap: var(--s-3);
+    grid-template-columns: 8rem minmax(0, 1fr);
+    gap: var(--s-4);
     align-items: baseline;
-    padding: var(--s-3) 0;
-    border-bottom: var(--rule-thin);
-  }
-  dd {
-    font-size: var(--t-small);
+    padding-block: var(--s-3);
+    border-bottom: var(--filet-fi);
   }
   @media (max-width: 30rem) {
     dl > div {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
       gap: var(--s-1);
     }
   }

@@ -4,7 +4,7 @@ Instrucciones compartidas para todos los agentes (Claude Code, Codex, etc.).
 
 ## Estado actual
 
-Prototipo v0 en construcción local (pedido por el usuario el 12/10/2026): web estática con Astro, en catalán y castellano, dirección visual «Silvinita» (variante B, elegida el 13/10/2026; la v3 anterior está archivada en `archiu/`). Nada se publica ni se despliega sin confirmación.
+Prototipo v0 en construcción local (pedido por el usuario el 12/10/2026): web estática con Astro, en catalán y castellano, dirección visual **«Façanes»** (rediseño autorizado por el promotor el 14/10/2026). Las direcciones anteriores se conservan recuperables: Silvinita B en la etiqueta git `silvinita-b-2026-10-14` y en `archiu/silvinita-b-2026-10-14/`; la v3 en `archiu/v3-astro-2026-10-13/`. Nada se publica ni se despliega sin confirmación.
 
 Dónde está cada cosa (no dupliques su contenido aquí):
 - Verdad de producto y criterios de diseño: `PRODUCT.md`.

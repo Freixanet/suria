@@ -1,6 +1,23 @@
 # Referencias visuales y material de Súria
 
-Documento de trabajo para **perfeccionar Silvinita**, no para reabrir la dirección (elegida el 12/10/2026; ver `PRODUCT.md`). Cada referencia dice qué tomamos, cómo encaja y qué dejamos fuera. Consultado el 13/10/2026 salvo que se indique otra fecha.
+Cada referencia dice qué tomamos, cómo encaja y qué dejamos fuera.
+
+- **Dirección vigente: «Façanes»** (14/10/2026). Sus referencias están en la sección 0.
+- **Secciones 1 y 2:** las de Silvinita (12–13/10/2026), que se conservan como historia, y el registro de fotos, que sigue vigente.
+
+## 0. Referencias de «Façanes» (consultadas el 14/10/2026)
+
+La selección salió de comparar dos propuestas a partir de mkdir.directory. El informe de la otra IA se conserva fuera del repositorio, en `~/Documents/Codex/2026-10-14/mi-x20/outputs/`. Cada web se consultó con una pregunta concreta. Se toma su estructura y su forma de resolver; nunca sus logotipos, fotos, textos ni identidad.
+
+| Referencia | Pregunta | Qué tomamos | Qué dejamos |
+|---|---|---|---|
+| [Belle Isle Conservancy](https://www.belleisleconservancy.org/) ([caso de Scorpion Rose](https://scorpionrose.studio/belleisle)) | ¿Cómo une identidad del lugar, actividades e información práctica? | La franja superior con horario y «ahora». La salutación grande que ya informa («Good Afternoon! It's 3:11 PM on Belle Isle…»), aquí construida con la agenda y la farmacia de guardia del día. El cielo con degradado según el momento. La foto real con esquinas suaves. | El tiempo y el reloj como decoración, el tono de destino turístico y las donaciones. |
+| [Lentos](https://www.lentos.at/en) | ¿Cómo jerarquiza la agenda y el contenido? | El nombre a todo el ancho. Una navegación de cuatro palabras grandes sobre un filete. El calendario por semana con el rango de fechas. El vacío honesto en una frase grande («No dates found.»). Las etiquetas en marco fino. El pie con horario y contacto. | El banner de cookies, la venta de entradas y la complejidad de un museo grande. |
+| [Union Boulangerie](https://unionboulangerie.com/) | ¿Cómo presenta un comercio de barrio? | Cada tienda como un rótulo con su barrio y una acción directa. El oficio antes que la publicidad. | La animación letra a letra (dificulta la lectura), la estética de lujo y las fotos de producto, que en Súria no tenemos todavía. |
+| [Domino Park](https://www.dominopark.com/) | ¿Cómo une historia industrial y uso actual? | La idea, para la evolución: «Cómo llegar y normas» para orientar las visitas, e «Historia y objetos» unida a la vida actual. En el v0 no hay contenido verificado para construirlo; no se inventa. | — |
+| [Life Stories](https://lifestories.org/) | — | Solo para la evolución: la memoria de los vecinos, cuando haya material y consentimiento. | Todo en el v0. |
+| Royal Sites of Ireland, NTGent | — | Apoyo; no se han necesitado en esta fase. | — |
+
 
 Herramientas: Taste y Lazyweb no están disponibles en esta instalación; este documento local las sustituye. No se ha contratado ningún servicio.
 

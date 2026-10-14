@@ -1,6 +1,6 @@
 ---
-// Maduresa (Real / En prova / Demo / Idea) tal com apareix a tot el lloc: text en versaletes vermelles.
-// Idea i Demo porten a sota el filet discontinu de «el que encara no existeix». Mai només color.
+// Maduresa (Real / En prova / Demo / Idea) tal com apareix a tot el lloc: text dins d'un marc.
+// Idea i Demo, amb el marc discontinu de «el que encara no existeix». Mai només color.
 import { traductor, type Llengua } from '../i18n/ui.ts';
 
 interface Props {
@@ -13,20 +13,4 @@ const { maduresa, llengua, text } = Astro.props;
 const t = traductor(llengua);
 const especulativa = maduresa === 'Idea' || maduresa === 'Demo';
 ---
-<span class:list={['etiqueta', { especulativa }]}>{text ?? t(`maduresa.${maduresa}`)}</span>
-
-<style>
-  .etiqueta {
-    display: inline-block;
-    font-family: var(--font-display-stack);
-    font-weight: 800;
-    font-size: var(--t-tag);
-    line-height: 1.5;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--red-ink);
-  }
-  .especulativa {
-    border-bottom: 1px dashed var(--marl);
-  }
-</style>
+<span class:list={['maduresa', { especulativa }]}>{text ?? t(`maduresa.${maduresa}`)}</span>

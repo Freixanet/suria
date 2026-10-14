@@ -1,7 +1,9 @@
 ---
-// Navegació persistent: les tasques, sempre visibles. Al mòbil, rejilla 2×2 (l'inici és la marca).
+// Navegació persistent (Lentos): poques paraules grans sobre un filet. Cada tasca porta la mostra
+// de la seva façana, sempre amb el nom escrit. L'inici és la marca. Al mòbil, rejilla 2×2.
 import { traductor, type Llengua } from '../i18n/ui.ts';
 import { urlDe, type Pagina } from '../i18n/rutes.ts';
+import { facanaDe } from '../lib/facanes.ts';
 
 interface Props {
   llengua: Llengua;
@@ -21,7 +23,7 @@ const items: { pagina: Pagina; clau: 'nav.inici' | 'nav.setmana' | 'nav.menjar' 
   <ul>
     {
       items.map(({ pagina, clau }) => (
-        <li class:list={{ inici: pagina === 'inici' }}>
+        <li class:list={{ inici: pagina === 'inici' }} data-facana={facanaDe[pagina]}>
           <a href={urlDe(pagina, llengua)} aria-current={pagina === actual ? 'page' : undefined}>
             {t(clau)}
           </a>
@@ -33,62 +35,69 @@ const items: { pagina: Pagina; clau: 'nav.inici' | 'nav.setmana' | 'nav.menjar' 
 
 <style>
   .tasques {
-    border-bottom: var(--rule-thin);
-  }
-  @media (max-width: 56.25rem) {
-    /* L'última fila no duplica la línia inferior de la navegació. */
-    .tasques ul {
-      margin-bottom: -1px;
-    }
+    border-top: var(--filet-fort);
+    margin-bottom: var(--s-1);
   }
   ul {
     list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0 var(--s-2);
-    padding: 0 var(--pad);
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: var(--s-4);
+  }
+  li.inici {
+    display: none;
   }
   a {
     display: flex;
     align-items: center;
+    gap: 0.55em;
     min-height: 3.25rem;
-    padding: 0 var(--s-3);
-    font-family: var(--font-display-stack);
-    font-weight: 700;
-    font-size: var(--t-body);
+    padding-block: var(--s-2);
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(1.125rem, 1.7vw, 1.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
     text-decoration: none;
   }
-  li:first-child a {
-    padding-left: 0;
-  }
-  a[aria-current] {
-    box-shadow: inset 0 -4px var(--red);
-    color: var(--red-ink);
+  /* Mostra de façana: un rectangle vertical, com una finestra. */
+  a::before {
+    content: '';
+    flex: none;
+    width: 0.55em;
+    height: 0.8em;
+    background: var(--f);
+    border-radius: 1px;
+    transition: height 0.3s var(--ease);
   }
   a:hover {
-    box-shadow: inset 0 -2px var(--marl);
+    color: var(--tinta);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
   }
-  a[aria-current]:hover {
-    box-shadow: inset 0 -4px var(--red);
+  a:hover::before {
+    height: 1.05em;
+  }
+  a[aria-current] {
+    font-weight: 750;
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-decoration-color: var(--f);
+    text-underline-offset: 0.3em;
+  }
+  a[aria-current]::before {
+    height: 1.05em;
   }
   @media (max-width: 56.25rem) {
     /* Dues columnes a mida normal; una sola si el text s'amplia (la mida mínima va en rem). */
     ul {
-      display: grid;
       grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr));
-      gap: 0 var(--s-2);
+      column-gap: var(--s-3);
     }
-    li.inici {
-      display: none;
-    }
-    a,
-    li:first-child a {
-      padding: 0 var(--s-1);
+    a {
       min-height: var(--tap);
       font-size: var(--t-small);
-    }
-    li a {
-      border-bottom: var(--rule-thin);
+      border-bottom: var(--filet-fi);
     }
   }
 </style>

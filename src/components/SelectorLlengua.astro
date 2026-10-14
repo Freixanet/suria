@@ -42,32 +42,25 @@ const t = traductor(llengua);
   .llengua {
     display: flex;
     gap: var(--s-1);
-    align-self: start;
   }
   a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 3rem;
+    min-width: var(--tap);
     min-height: var(--tap);
-    padding: 0 var(--s-3);
-    font-family: var(--font-display-stack);
-    font-weight: 800;
-    font-size: var(--t-small);
+    font-family: var(--display);
+    font-weight: 650;
     text-decoration: none;
-    color: var(--on-deep);
-    border: 2px solid var(--marl);
+    color: var(--calc);
+    border-radius: 0.3em;
   }
   a:hover {
-    color: var(--on-deep);
-    border-color: var(--salmon);
+    color: var(--ocre);
+    text-decoration: underline;
   }
   a[aria-current] {
-    background: var(--halite);
-    color: var(--deep);
-    border-color: var(--halite);
-  }
-  a:focus-visible {
-    outline-color: var(--salmon);
+    background: var(--calc);
+    color: var(--tinta);
   }
 </style>

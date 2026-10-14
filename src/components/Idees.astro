@@ -16,22 +16,24 @@ const nomes = idees.filter((i) => i.maduresa === 'Idea');
 </ul>
 
 <style>
+  /* Les idees: una sola etiqueta explícita i filets discontinus (el que encara no existeix). */
   .etiqueta-idees {
-    margin-top: var(--s-5);
-    font-family: var(--font-display-stack);
-    font-weight: 800;
-    font-size: var(--t-tag);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--red-ink);
+    margin-top: var(--s-6);
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: var(--t-small);
+    display: inline-block;
+    padding: 0.05em 0.5em 0.1em;
+    border: 1.5px dashed currentColor;
+    border-radius: 0.3em;
   }
   .idees {
     list-style: none;
-    margin-top: var(--s-1);
-    border-top: 1px dashed var(--marl);
+    margin-top: var(--s-3);
+    border-top: 1px dashed var(--tinta-2);
   }
   li {
     padding: var(--s-3) 0;
-    border-bottom: 1px dashed var(--marl);
+    border-bottom: 1px dashed var(--tinta-2);
   }
 </style>

@@ -1,6 +1,6 @@
 ---
-// Capçalera de roca fosca: marca, data d'avui i llengua; després la banda, l'avís i les tasques.
-import BandaSilvinita from './BandaSilvinita.astro';
+// Capçalera: a dalt, la franja de servei (avís d'independència, data d'avui a Súria i llengua);
+// després la marca —enorme a la portada, compacta a la resta— i les tasques sobre un filet.
 import NavTasques from './NavTasques.astro';
 import SelectorLlengua from './SelectorLlengua.astro';
 import { traductor, type Llengua } from '../i18n/ui.ts';
@@ -15,28 +15,31 @@ const { llengua, pagina, urlsLlengua } = Astro.props;
 const t = traductor(llengua);
 const esInici = pagina === 'inici';
 ---
-<header class="capcalera">
-<div class="mast">
-  {
-    esInici ? (
-      <h1 class="marca">
-        {t('lloc.nom')}
-        <span class="visually-hidden"> ({t('avis.fort').toLowerCase()})</span>
-      </h1>
-    ) : (
-      <a class="marca" href={urlDe('inici', llengua)} aria-label={t('lloc.inici')}>
-        {t('lloc.nom')}
-      </a>
-    )
-  }
-  <div class="qui">
-    <time class="avui" data-avui data-llengua={llengua}></time>
+<header class:list={['capcalera', { inici: esInici }]}>
+  <div class="barra">
+    <div class="ample barra-dins">
+      <p class="avis"><strong>{t('avis.fort')}</strong>{t('avis.resta')}</p>
+      <div class="servei">
+        <time class="avui" data-avui data-llengua={llengua}></time>
+        <SelectorLlengua llengua={llengua} urls={urlsLlengua} />
+      </div>
+    </div>
   </div>
-  <SelectorLlengua llengua={llengua} urls={urlsLlengua} />
-</div>
-<BandaSilvinita />
-<p class="avis"><strong>{t('avis.fort')}</strong>{t('avis.resta')}</p>
-<NavTasques llengua={llengua} actual={pagina} />
+  <div class="ample mast">
+    {
+      esInici ? (
+        <h1 class="marca">
+          {t('lloc.nom')}
+          <span class="visually-hidden"> ({t('avis.fort').toLowerCase()})</span>
+        </h1>
+      ) : (
+        <a class="marca" href={urlDe('inici', llengua)} aria-label={t('lloc.inici')}>
+          {t('lloc.nom')}
+        </a>
+      )
+    }
+    <NavTasques llengua={llengua} actual={pagina} />
+  </div>
 </header>
 
 <script>
@@ -52,67 +55,110 @@ const esInici = pagina === 'inici';
 </script>
 
 <style>
-  .mast {
-    background: var(--deep);
-    color: var(--on-deep);
-    padding: var(--s-3) var(--pad) var(--s-4);
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: var(--s-2) var(--s-6);
-    align-items: end;
-  }
-  .marca {
-    font-family: var(--font-display-stack);
-    font-weight: 900;
-    font-size: var(--t-brand);
-    line-height: 0.86;
-    letter-spacing: -0.04em;
-    text-decoration: none;
-    color: var(--on-deep);
-  }
-  a.marca:hover {
-    color: var(--on-deep);
-  }
-  a.marca:focus-visible {
-    outline-color: var(--salmon);
-  }
-  .qui {
-    font-family: var(--font-display-stack);
-    font-weight: 600;
-    font-size: clamp(1rem, 1.4vw, 1.1875rem);
+  .barra {
+    background: var(--tinta);
+    color: var(--calc);
+    font-size: var(--t-meta);
     line-height: 1.4;
-    max-width: 44ch;
   }
-  .avui {
-    display: block;
-    min-height: 1.4em;
-    color: var(--salmon);
-    font-weight: 800;
+  .barra-dins {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-1) var(--s-5);
+    padding-block: var(--s-1);
   }
   .avis {
-    padding: var(--s-2) var(--pad);
-    background: var(--halite);
-    border-bottom: var(--rule-thin);
-    font-size: var(--t-small);
-    line-height: 1.4;
+    padding-block: var(--s-2);
   }
   .avis strong {
-    color: var(--red-ink);
+    font-weight: 700;
+    color: var(--ocre);
+  }
+  .servei {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-4);
+    margin-left: auto;
+  }
+  .avui {
+    font-family: var(--display);
+    font-weight: 600;
   }
   @media (max-width: 56.25rem) {
-    /* Flex amb salt de línia: amb el text al 200 %, la llengua baixa sota la marca en lloc de sortir de la pantalla. */
+    /* La data es parteix en dues línies abans que la llengua baixi a una fila pròpia. */
+    .avui {
+      flex: 1 1 10rem;
+      min-width: 0;
+    }
+  }
+  .avui:empty {
+    display: none;
+  }
+  .barra :global(:focus-visible) {
+    outline-color: var(--ocre);
+  }
+
+  /* Portada: el nom ocupa tota l'amplada (Lentos). Resta: marca compacta i tasques a la mateixa línia. */
+  .mast {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: end;
+    column-gap: var(--s-6);
+    padding-top: var(--s-4);
+  }
+  .marca {
+    display: block;
+    font-family: var(--display);
+    font-weight: 700;
+    font-variation-settings: 'wdth' 82;
+    font-size: clamp(2.75rem, 6vw, 4.25rem);
+    line-height: 0.82;
+    letter-spacing: -0.045em;
+    text-decoration: none;
+    color: var(--tinta);
+    padding-bottom: var(--s-3);
+  }
+  a.marca:hover {
+    color: var(--tinta);
+  }
+  .inici .mast {
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: var(--s-2);
+  }
+  .inici .marca {
+    font-size: var(--t-marca);
+    font-variation-settings: 'wdth' 90;
+    line-height: 0.78;
+    letter-spacing: -0.055em;
+    margin-left: -0.04em;
+    padding-bottom: 0.04em;
+  }
+  @media (max-width: 56.25rem) {
     .mast {
-      display: flex;
-      flex-wrap: wrap;
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .barra-dins {
+      font-size: var(--t-tag);
+    }
+    /* Al mòbil: l'avís a dalt i, a sota, la data a l'esquerra i la llengua a la dreta. */
+    .servei {
+      width: 100%;
       justify-content: space-between;
-      align-items: flex-end;
-      padding-block: var(--s-3);
     }
-    .qui {
-      flex-basis: 100%;
-      order: 3;
+    /* A la portada no hi ha data a la franja: la llengua puja al costat de l'avís. */
+    .inici .barra-dins {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: start;
     }
-    .avui:empty {
+    .inici .servei {
+      width: auto;
+    }
+    /* A la portada, la data ja és a la salutació. */
+    .inici .avui {
       display: none;
     }
   }

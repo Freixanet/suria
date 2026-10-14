@@ -30,13 +30,12 @@ const urlsLlengua: Record<Llengua, string> = {
     <meta name="description" content={descripcio ?? t('lloc.descripcio')} />
     <!-- Complementari, no és seguretat: l'accés real es protegirà amb contrasenya al servidor (D3). -->
     <meta name="robots" content="noindex, nofollow" />
-    <meta name="theme-color" content="#1f1c1a" />
+    <meta name="theme-color" content="#fdfcfa" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     {pagina && <link rel="alternate" hreflang="ca" href={urlsLlengua.ca} />}
     {pagina && <link rel="alternate" hreflang="es" href={urlsLlengua.es} />}
     <Font cssVariable="--font-display" preload />
     <Font cssVariable="--font-text" preload />
-    <Font cssVariable="--font-serif" preload />
     <script is:inline define:vars={{ llengua, altra: llengua === 'ca' ? urlsLlengua.es : urlsLlengua.ca }}>
       // Si la persona va triar l'altra llengua i arriba des de fora del lloc, la portem a la mateixa pàgina en la seva llengua.
       try {
@@ -67,11 +66,15 @@ const urlsLlengua: Record<Llengua, string> = {
     left: var(--pad);
     top: -100px;
     z-index: 10;
-    background: var(--halite);
-    color: var(--deep);
+    background: var(--tinta);
+    color: var(--calc);
     padding: var(--s-3) var(--s-4);
-    font-family: var(--font-display-stack);
-    font-weight: 800;
+    border-radius: 0 0 var(--radi) var(--radi);
+    font-family: var(--display);
+    font-weight: 700;
+  }
+  .saltar:focus-visible {
+    outline-color: var(--tinta);
   }
   .saltar:focus {
     top: var(--s-2);

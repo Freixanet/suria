@@ -15,7 +15,7 @@ const nomTasca = { setmana: t('nav.setmana'), menjar: t('nav.menjar'), passos: t
 <PaginaTasca llengua={llengua} pagina="provant" titol={t('provant.titol')} descripcio={t('provant.descripcio')} maduresa="En prova">
   <p class="intro">{x.intro}</p>
   <section aria-labelledby="h-proves">
-    <h2 id="h-proves" class="titol-serif">{x.provesTitol}</h2>
+    <h2 id="h-proves" class="titol-gran">{x.provesTitol}</h2>
     <ol class="proves">
       {x.proves.map((p) => (
         <li>
@@ -28,43 +28,40 @@ const nomTasca = { setmana: t('nav.setmana'), menjar: t('nav.menjar'), passos: t
     <p class="durada">{x.durada} {x.decisio}</p>
   </section>
   <section aria-labelledby="h-dades">
-    <h2 id="h-dades" class="titol-serif">{x.dadesTitol}</h2>
+    <h2 id="h-dades" class="titol-gran">{x.dadesTitol}</h2>
     <p>{x.dades}</p>
   </section>
   <section aria-labelledby="h-opinar">
-    <h2 id="h-opinar" class="titol-serif">{x.opinarTitol}</h2>
+    <h2 id="h-opinar" class="titol-gran">{x.opinarTitol}</h2>
     <p>{x.opinar}</p>
   </section>
 </PaginaTasca>
 
 <style>
   .intro {
-    font-size: 1.1875rem;
-    line-height: 1.5;
-    max-width: 38em;
+    font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+    line-height: 1.4;
   }
   section {
     margin-top: var(--s-7);
   }
   h2 {
     font-size: var(--t-h2);
-    margin-bottom: var(--s-3);
+    margin-bottom: var(--s-4);
   }
   section > p {
-    max-width: 38em;
+    max-width: 40rem;
   }
   .proves {
     list-style: none;
-    border-top: var(--rule-strong);
+    border-top: var(--filet-fort);
   }
   .proves li {
-    padding: var(--s-3) 0 var(--s-4);
-    border-bottom: var(--rule-thin);
+    padding-block: var(--s-4);
+    border-bottom: var(--filet-fi);
   }
   h3 {
     font-size: var(--t-h3);
-    font-weight: 800;
-    line-height: 1.3;
   }
   h3 a {
     display: inline-flex;
@@ -72,14 +69,10 @@ const nomTasca = { setmana: t('nav.setmana'), menjar: t('nav.menjar'), passos: t
     min-height: var(--tap);
   }
   .pregunta {
-    font-family: var(--font-display-stack);
-    font-weight: 600;
-    font-size: var(--t-h3);
-    line-height: 1.4;
-    margin-bottom: var(--s-1);
+    font-weight: 700;
   }
   .durada {
     margin-top: var(--s-4);
-    font-size: var(--t-small);
+    color: var(--tinta-2);
   }
 </style>

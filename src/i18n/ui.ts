@@ -22,6 +22,10 @@ const ca = {
   'nav.provant': 'Què estem provant',
   'saltar': 'Ves al contingut',
 
+  'ara.titol': 'Avui a Súria',
+  'ara.sensejs': 'Et donem la benvinguda a Súria. Aquí tens l’agenda d’aquesta setmana, els primers passos per viure-hi i la farmàcia de guàrdia, amb la font de cada dada.',
+  'ara.font': 'Calculat amb l’hora de Súria a partir de l’agenda i dels torns de farmàcia d’aquesta pàgina.',
+
   'identitat.text': 'Vila del Bages a la vall del Cardener: el Poble Vell, les Caramelles i la mina de potassa.',
   'identitat.font': 'Text: turismesuria.cat · consultat el 12/10/2026',
 
@@ -125,6 +129,10 @@ const es: Record<Clau, string> = {
   'nav.cap': 'Hacia dónde vamos',
   'nav.provant': 'Qué estamos probando',
   'saltar': 'Ir al contenido',
+
+  'ara.titol': 'Hoy en Súria',
+  'ara.sensejs': 'Te damos la bienvenida a Súria. Aquí tienes la agenda de esta semana, los primeros pasos para vivir aquí y la farmacia de guardia, con la fuente de cada dato.',
+  'ara.font': 'Calculado con la hora de Súria a partir de la agenda y de los turnos de farmacia de esta página.',
 
   'identitat.text': 'Villa del Bages en el valle del Cardener: el Poble Vell, las Caramelles y la mina de potasa.',
   'identitat.font': 'Texto: turismesuria.cat · consultado el 12/10/2026',

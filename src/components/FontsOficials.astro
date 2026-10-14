@@ -26,32 +26,33 @@ const uniques = [...new Map(fonts.map((f) => [f.url, f])).values()];
 </section>
 
 <style>
+  .fonts {
+    padding: var(--s-4);
+    background: var(--pedra);
+    border-radius: var(--radi);
+  }
   h2 {
-    font-size: var(--t-meta);
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding-bottom: var(--s-2);
-    border-bottom: var(--rule-strong);
+    font-size: var(--t-small);
+    font-weight: 700;
+    margin-bottom: var(--s-2);
   }
   ul {
     list-style: none;
   }
-  li {
-    border-bottom: var(--rule-thin);
+  li + li {
+    border-top: var(--filet-fi);
+  }
+  a {
+    display: block;
+    padding-block: var(--s-3);
+    font-size: var(--t-small);
+    line-height: 1.35;
   }
   .peca {
     display: block;
-    font-family: var(--font-display-stack);
-    font-weight: 700;
-  }
-  a {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: var(--tap);
-    padding: var(--s-2) 0;
-    font-size: var(--t-small);
-    line-height: 1.35;
+    font-family: var(--display);
+    font-weight: 650;
+    font-size: var(--t-tag);
+    color: var(--tinta-2);
   }
 </style>

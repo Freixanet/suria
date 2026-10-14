@@ -1,5 +1,5 @@
 ---
-// Obertura de secció o de pàgina: títol en serif i, just a sota, la maduresa en text.
+// Obertura de secció o de pàgina: títol gran i, al costat, la maduresa en text dins d'un marc.
 // La maduresa sempre al mateix lloc, perquè es reconegui d'un cop d'ull a totes les seccions.
 import { traductor, type Llengua } from '../i18n/ui.ts';
 
@@ -9,7 +9,7 @@ interface Props {
   maduresa: 'Real' | 'En prova' | 'Demo' | 'Idea';
   llengua: Llengua;
   nivell?: 1 | 2;
-  /** Títol més contingut, per a seccions secundàries (mai per sota del mínim de la serif). */
+  /** Títol més contingut, per a seccions secundàries. */
   compacte?: boolean;
 }
 const { id, titol, maduresa, llengua, nivell = 2, compacte = false } = Astro.props;
@@ -17,16 +17,17 @@ const Titol = nivell === 1 ? 'h1' : 'h2';
 const t = traductor(llengua);
 ---
 <div class="obertura">
-  <Titol id={id} class:list={['titol-serif', 'titol-seccio', `n${nivell}`, { compacte }]}>{titol}</Titol>
+  <Titol id={id} class:list={['titol-gran', 'titol-seccio', `n${nivell}`, { compacte }]}>{titol}</Titol>
   <span class="maduresa">{t(`maduresa.${maduresa}`)}</span>
 </div>
 
 <style>
   .obertura {
     display: flex;
-    flex-direction: column;
-    gap: var(--s-2);
-    margin-bottom: var(--s-2);
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--s-2) var(--s-4);
+    margin-bottom: var(--s-4);
   }
   .n2 {
     font-size: var(--t-h2);
@@ -35,14 +36,9 @@ const t = traductor(llengua);
     font-size: var(--t-h1);
   }
   .compacte {
-    font-size: clamp(var(--t-serif-min), 2.2vw, 2rem);
+    font-size: clamp(1.75rem, 2.6vw, 2.375rem);
   }
   .maduresa {
-    font-family: var(--font-display-stack);
-    font-weight: 800;
-    font-size: var(--t-tag);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--red-ink);
+    translate: 0 -0.2em;
   }
 </style>

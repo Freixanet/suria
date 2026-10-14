@@ -10,9 +10,9 @@ const tasques = ['setmana', 'menjar', 'passos'] as const;
 const clau = { setmana: 'nav.setmana', menjar: 'nav.menjar', passos: 'nav.passos' } as const;
 ---
 <Base llengua="ca" pagina={null} titol={ca('nofound.titol')}>
-  <div class="nf">
+  <div class="ample nf">
     <section aria-labelledby="nf-ca">
-      <h1 id="nf-ca" class="titol-serif">{ca('nofound.titol')}</h1>
+      <h1 id="nf-ca" class="titol-gran">{ca('nofound.titol')}</h1>
       <p>{ca('nofound.text')}</p>
       <ul>
         <li><a href={urlDe('inici', 'ca')}>{ca('tasca.inici')}</a></li>
@@ -20,7 +20,7 @@ const clau = { setmana: 'nav.setmana', menjar: 'nav.menjar', passos: 'nav.passos
       </ul>
     </section>
     <section lang="es" aria-labelledby="nf-es">
-      <h2 id="nf-es" class="titol-serif">{es('nofound.titol')}</h2>
+      <h2 id="nf-es" class="titol-gran">{es('nofound.titol')}</h2>
       <p>{es('nofound.text')}</p>
       <ul>
         <li><a href={urlDe('inici', 'es')}>{es('tasca.inici')}</a></li>
@@ -32,30 +32,34 @@ const clau = { setmana: 'nav.setmana', menjar: 'nav.menjar', passos: 'nav.passos
 
 <style>
   .nf {
-    padding: clamp(1.5rem, 3.5vw, 2.75rem) var(--pad) 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
-    gap: var(--s-7);
-    max-width: 64rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-7) clamp(1.5rem, 5vw, 5rem);
+    padding-top: clamp(2rem, 5vw, 4.5rem);
   }
   h1,
   h2 {
-    font-size: var(--t-h2);
-    margin-bottom: var(--s-3);
+    font-size: clamp(2.25rem, 5vw, 4rem);
+    margin-bottom: var(--s-4);
   }
   ul {
     list-style: none;
-    border-top: var(--rule-strong);
-    margin-top: var(--s-3);
+    margin-top: var(--s-4);
+    border-top: var(--filet-fort);
   }
   li {
-    border-bottom: var(--rule-thin);
+    border-bottom: var(--filet-fi);
   }
   a {
     display: flex;
     align-items: center;
     min-height: var(--tap);
-    font-family: var(--font-display-stack);
-    font-weight: 700;
+    font-family: var(--display);
+    font-weight: 600;
+  }
+  @media (max-width: 56.25rem) {
+    .nf {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
 </style>

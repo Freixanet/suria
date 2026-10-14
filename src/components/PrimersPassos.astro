@@ -31,7 +31,7 @@ const fiDarrerTorn = (p: Pas) =>
     passos.map((p) => {
       const text = detall ? p.text : p.resum;
       return (
-        <li class="pas">
+        <li class="pas" id={p.guardies.length > 0 ? 'farmacia' : undefined}>
           <span class="n" aria-hidden="true">{p.ordre}</span>
           <div>
             <Titol class="titol-peca">{p.titol[llengua]}</Titol>
@@ -92,84 +92,87 @@ const fiDarrerTorn = (p: Pas) =>
 </ol>
 
 <style>
+  /* Primers passos (Domino Park, «Plan your visit»): el que cal saber, amb l'acció a mà. */
   .passos {
     list-style: none;
-    border-top: var(--rule-strong);
+    border-top: var(--filet-fort);
   }
   .pas {
-    display: grid;
-    grid-template-columns: 2.375rem minmax(0, 1fr);
-    gap: var(--s-3);
-    padding: var(--s-3) 0 0;
-    border-bottom: var(--rule-thin);
+    padding-block: var(--s-5);
+    border-bottom: var(--filet-fi);
   }
   .n {
-    font-family: var(--font-display-stack);
-    font-weight: 900;
-    font-size: 2rem;
-    line-height: 1;
-    color: var(--red);
+    display: none;
   }
   .titol-peca {
-    font-weight: 800;
     font-size: var(--t-h3);
-    line-height: 1.3;
+    font-weight: 650;
+    line-height: 1.2;
+    margin-bottom: var(--s-2);
   }
   p {
-    font-size: var(--t-small);
-    line-height: 1.45;
-    margin-top: 2px;
+    max-width: 40rem;
   }
   .guardies {
     list-style: none;
-    margin-top: var(--s-1);
+    margin-top: var(--s-3);
+    display: grid;
+    gap: var(--s-3);
   }
+  /* Torn de guàrdia: una fitxa del color del cel, amb el telèfon com a acció principal. */
   .guardies li {
-    font-size: var(--t-small);
-    line-height: 1.45;
-    padding-top: var(--s-2);
-  }
-  .guardies li + li {
-    border-top: 1px dashed var(--rule);
-    margin-top: var(--s-1);
+    padding: var(--s-3) var(--s-4) var(--s-2);
+    background: var(--cel);
+    border-radius: var(--radi);
   }
   .quan {
     display: block;
-    font-family: var(--font-display-stack);
+    font-family: var(--display);
+    font-weight: 650;
+    font-size: var(--t-small);
+    color: var(--cel-tinta);
+  }
+  .guardies strong {
+    font-family: var(--display);
     font-weight: 700;
-  }
-  .guardies li[data-caducat] {
-    color: var(--marl);
-  }
-  /* A la portada, un torn acabat ja no ocupa lloc: queda el vigent (sense JavaScript, es veuen tots dos amb les dates). */
-  .portada .guardies li[data-caducat] {
-    display: none;
-  }
-  .portada .guardies li[data-caducat] + li {
-    border-top: 0;
-    margin-top: 0;
-  }
-  .sense-torn strong {
-    display: block;
-    font-family: var(--font-display-stack);
-    font-weight: 800;
-    margin-top: var(--s-2);
-  }
-  .acabat {
-    display: block;
-    font-family: var(--font-display-stack);
-    font-weight: 800;
+    font-size: 1.25rem;
   }
   .guardies .accio {
     display: flex;
     width: fit-content;
   }
+  .guardies li[data-caducat] {
+    background: var(--pedra);
+    color: var(--tinta-2);
+  }
+  .guardies li[data-caducat] .quan {
+    color: var(--tinta-2);
+  }
+  /* A la portada, un torn acabat ja no ocupa lloc: queda el vigent (sense JavaScript, es veuen tots dos amb les dates). */
+  .portada .guardies li[data-caducat] {
+    display: none;
+  }
+  .acabat {
+    display: block;
+    font-family: var(--display);
+    font-weight: 650;
+    font-size: var(--t-tag);
+  }
+  .sense-torn p {
+    margin-top: var(--s-3);
+    padding: var(--s-3) var(--s-4);
+    background: var(--teula-clar);
+    border-radius: var(--radi);
+  }
+  .sense-torn strong {
+    display: block;
+    font-family: var(--display);
+    font-weight: 700;
+  }
   .accions {
     display: flex;
     flex-wrap: wrap;
-    gap: 0 var(--s-5);
-  }
-  .pas :global(.procedencia) {
-    margin: var(--s-1) 0 var(--s-2);
+    column-gap: var(--s-5);
+    margin-top: var(--s-1);
   }
 </style>

@@ -1,40 +1,50 @@
-/* Súria · sistema Silvinita (base: variant B, triada el 13/10/2026)
-   Terreny de sal càlida, roca de carbó a la capçalera i a la franja d'identitat, estrats vermells
-   de silvinita a la banda, als filets i als estats. Tres veus:
-   - Gloock (serif editorial): només títols de pàgina i de secció, sempre de 28 px o més.
-   - Schibsted Grotesk: marca, navegació, dates, hores, accions i etiquetes.
-   - Atkinson Hyperlegible: lectura. */
+/* Súria · direcció «Façanes» (14/10/2026; substitueix Silvinita B, conservada a l'etiqueta silvinita-b-2026-10-14).
+   Surt de la foto real del poble: façanes ocre, teula, rosa i calç apilades al turó, sota un cel de pissarra.
+   - Color: fons de calç; tinta de núvol de tempesta; cada mena de contingut té la seva façana
+     (agenda ocre, primers passos cel, comerços teula, cap on anem turó). Sempre acompanyat de text.
+   - Lletra: Bricolage Grotesque (veu de Súria: marca, títols, dates, navegació) i
+     Atkinson Hyperlegible Next (lectura, 19 px). */
 
 :root {
   /* Color */
-  --salt: #ece8e1;
-  --halite: #f8f6f2;
-  --deep: #1f1c1a;
-  --red: #a8362a;
-  --red-ink: #8e2c22;
-  --salmon: #e39a7b;
-  --marl: #5e5852;
-  --rule: #cdc6bb;
-  --text-2: #4a4540;
-  --on-deep: #fafbfb;
-  --on-deep-2: #d6cfc6;
+  --calc: #fdfcfa;
+  --pedra: #f2eee7;
+  --tinta: #1d2532;
+  --tinta-2: #4a5363;
+  --filet: #d6cfc3;
+  --cel: #dfe7ee;
+  --cel-fort: #c3d2df;
+  --cel-tinta: #35506b;
+  --ocre: #e8b14a;
+  --ocre-clar: #f8e6bd;
+  --ocre-tinta: #6f4c0d;
+  --teula: #c0582f;
+  --teula-clar: #f5d9cb;
+  --teula-tinta: #9a3d1b;
+  --rosa: #eab7a9;
+  --turo: #2f4f36;
+  --turo-clar: #dfe8dc;
+  --sobre-turo: #f6f3ec;
+  --sobre-turo-2: #cfdccb;
+
+  /* Façana de la secció: cada secció la sobreescriu amb data-facana. */
+  --f: var(--tinta);
+  --f-clar: var(--pedra);
+  --f-tinta: var(--tinta);
 
   /* Tipografia */
-  --font-display-stack: var(--font-display), system-ui, sans-serif;
-  --font-text-stack: var(--font-text), system-ui, sans-serif;
-  --font-serif-stack: var(--font-serif), Georgia, serif;
-  --t-brand: clamp(3.5rem, 9vw, 7.5rem);
-  --t-h1: clamp(2.5rem, 5.2vw, 4.25rem);
-  --t-h2: clamp(1.875rem, 2.8vw, 2.75rem);
-  /* Mínim de la serif (decisió provisional, 13/10/2026): 1.75rem = 28 px. */
-  --t-serif-min: 1.75rem;
-  --t-h3: 1.1875rem;
-  --t-body: 1.0625rem;
-  --t-small: 1rem;
-  --t-meta: 0.9375rem;
-  --t-tag: 0.875rem;
+  --display: var(--font-display), system-ui, sans-serif;
+  --text: var(--font-text), system-ui, sans-serif;
+  --t-marca: clamp(4.75rem, 21vw, 17rem);
+  --t-salutacio: clamp(1.75rem, 4vw, 3.5rem);
+  --t-h1: clamp(2.5rem, 6.2vw, 5.25rem);
+  --t-h2: clamp(2rem, 3.8vw, 3.25rem);
+  --t-h3: clamp(1.3125rem, 1.6vw, 1.5rem);
+  --t-body: 1.1875rem;
+  --t-small: 1.0625rem;
+  --t-meta: 1rem;
+  --t-tag: 0.9375rem;
   --lh-body: 1.55;
-  --lh-tight: 1.05;
 
   /* Espai (base 4 px) */
   --s-1: 0.25rem;
@@ -43,17 +53,40 @@
   --s-4: 1rem;
   --s-5: 1.5rem;
   --s-6: 2rem;
-  --s-7: 2.75rem;
-  --s-8: 4rem;
+  --s-7: 3rem;
+  --s-8: 4.5rem;
+  --s-9: 6.5rem;
   --pad: clamp(1rem, 4vw, 3.5rem);
+  --amplada: 90rem;
 
-  /* Línies i tocs */
-  --rule-thin: 1px solid var(--rule);
-  --rule-strong: 2px solid var(--deep);
   --tap: 2.75rem;
-  --focus: 3px solid var(--red);
+  --radi: 0.75rem;
+  --filet-fi: 1px solid var(--filet);
+  --filet-fort: 2px solid var(--tinta);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
 
   color-scheme: light;
+}
+
+[data-facana='ocre'] {
+  --f: var(--ocre);
+  --f-clar: var(--ocre-clar);
+  --f-tinta: var(--ocre-tinta);
+}
+[data-facana='cel'] {
+  --f: var(--cel-fort);
+  --f-clar: var(--cel);
+  --f-tinta: var(--cel-tinta);
+}
+[data-facana='teula'] {
+  --f: var(--teula);
+  --f-clar: var(--teula-clar);
+  --f-tinta: var(--teula-tinta);
+}
+[data-facana='turo'] {
+  --f: var(--turo);
+  --f-clar: var(--turo-clar);
+  --f-tinta: var(--turo);
 }
 
 *,
@@ -68,20 +101,21 @@
 }
 
 html {
-  background: var(--salt);
-  color: var(--deep);
+  background: var(--calc);
+  color: var(--tinta);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  scrollbar-color: var(--marl) var(--salt);
+  scrollbar-color: var(--tinta-2) var(--pedra);
 }
 
 body {
-  font-family: var(--font-text-stack);
+  font-family: var(--text);
   font-size: var(--t-body);
   line-height: var(--lh-body);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: var(--calc);
 }
 
 main {
@@ -89,45 +123,50 @@ main {
 }
 
 ::selection {
-  background: var(--salmon);
-  color: var(--deep);
+  background: var(--ocre-clar);
+  color: var(--tinta);
 }
 
 input,
 textarea {
-  caret-color: var(--red);
+  caret-color: var(--teula);
 }
 
 a {
   color: inherit;
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.2em;
+  text-underline-offset: 0.22em;
 }
 
 a:hover {
   text-decoration-thickness: 2px;
-  color: var(--red-ink);
+  color: var(--teula-tinta);
 }
 
 :focus-visible {
-  outline: var(--focus);
+  outline: 3px solid var(--tinta);
   outline-offset: 3px;
+  border-radius: 2px;
 }
 
 h1,
 h2,
-h3 {
-  font-family: var(--font-display-stack);
+h3,
+h4 {
+  font-family: var(--display);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
   text-wrap: balance;
 }
 
-/* Títols editorials en serif (pàgina i secció). Mai per sota de 28 px. */
-.titol-serif {
-  font-family: var(--font-serif-stack);
-  font-weight: 400;
-  letter-spacing: -0.005em;
-  line-height: 1.02;
-  text-wrap: balance;
+/* Títol gran de secció o de pàgina: la veu de Súria, una mica estreta, com un cartell de festa major. */
+.titol-gran {
+  font-family: var(--display);
+  font-weight: 700;
+  font-variation-settings: 'wdth' 88;
+  letter-spacing: -0.03em;
+  line-height: 0.98;
 }
 
 p,
@@ -135,8 +174,7 @@ li {
   text-wrap: pretty;
 }
 
-/* Amb el text molt ampliat, una paraula llarga es parteix abans de desbordar la pantalla
-   (sense guionets automàtics: a mida normal tallaven paraules com «Ca-ramelles»). */
+/* Amb el text molt ampliat, una paraula llarga es parteix abans de desbordar la pantalla. */
 h1,
 h2,
 h3,
@@ -148,9 +186,9 @@ dd {
   overflow-wrap: break-word;
 }
 
-/* Xifres alineades només on hi ha columnes; en el text, l'espaiat natural (la coma i el punt no s'eixamplen). */
+/* Xifres de taula on hi ha columnes (dates, hores, telèfons). */
 .xifres {
-  font-variant-numeric: lining-nums;
+  font-variant-numeric: lining-nums tabular-nums;
 }
 
 [hidden] {
@@ -166,20 +204,96 @@ dd {
   white-space: nowrap;
 }
 
-/* Acció: enllaç que fa una cosa (fitxa, tràmit, trucar). Sempre ≥ 44 px d'alçada. */
+/* Contenidor de pàgina: mateix marge lateral a tot arreu. */
+.ample {
+  width: 100%;
+  max-width: var(--amplada);
+  margin-inline: auto;
+  padding-inline: var(--pad);
+}
+
+/* Acció: enllaç que fa una cosa (fitxa, tràmit, trucar). Sempre ≥ 44 px d'alçada, amb fletxa dibuixada. */
 .accio {
   display: inline-flex;
   align-items: center;
   min-height: var(--tap);
-  column-gap: 0.3em;
-  font-family: var(--font-display-stack);
-  font-weight: 700;
+  column-gap: 0.4em;
+  font-family: var(--display);
+  font-weight: 650;
   font-size: var(--t-small);
   text-decoration-line: underline;
+  text-decoration-thickness: 1.5px;
+}
+.accio::after {
+  content: '';
+  flex: none;
+  width: 0.7em;
+  height: 0.7em;
+  background: currentColor;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M1 6h9M6.5 2.5 10 6l-3.5 3.5' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+  transition: translate 0.25s var(--ease);
+}
+.accio:hover::after {
+  translate: 0.15em 0;
+}
+.accio[href^='tel:']::after {
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3.2 1.2 4.6 3.6 3.6 4.7c.5 1.4 2.2 3.1 3.6 3.6l1.1-1 2.4 1.4-.6 1.9c-4.4.2-8.9-4.3-8.7-8.7z' fill='none' stroke='%23000' stroke-width='1.4' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* Maduresa: text dins d'un marc fi (com les etiquetes de Lentos). Idea i Demo, amb marc discontinu. */
+.maduresa {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 0.05em 0.5em 0.1em;
+  border: 1.5px solid currentColor;
+  border-radius: 0.3em;
+  font-family: var(--display);
+  font-weight: 650;
+  font-size: var(--t-tag);
+  line-height: 1.4;
+  color: var(--tinta);
+  white-space: nowrap;
+}
+.maduresa.especulativa {
+  border-style: dashed;
+}
+
+/* Línia de font: discreta però sempre llegible (contrast ≥ 7:1). */
+.font {
+  font-size: var(--t-meta);
+  line-height: 1.45;
+  color: var(--tinta-2);
+}
+.font b {
+  color: var(--tinta);
+  font-weight: 700;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* Colors del cel de «Avui a Súria», registrats perquè puguin fer la transició. */
+@property --cel-a {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #d6e1ea;
+}
+@property --cel-b {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #f6e5c0;
 }

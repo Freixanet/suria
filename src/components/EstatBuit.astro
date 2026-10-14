@@ -11,18 +11,19 @@ const { titol } = Astro.props;
 </div>
 
 <style>
-  /* Sense caixa: com la resta de llistes, s'obre amb el filet de 2 px (el panell clar és només per a l'agenda). */
+  /* Buit honest (Lentos: «No dates found.»): una frase gran i clara, sense caixa. */
   .buit {
-    border-top: var(--rule-strong);
-    padding: var(--s-3) 0 var(--s-2);
-    max-width: 44rem;
+    padding-top: var(--s-4);
+    max-width: 40rem;
   }
   .buit-titol {
-    font-family: var(--font-display-stack);
-    font-weight: 800;
-    font-size: var(--t-h3);
-    line-height: 1.3;
-    margin-bottom: var(--s-2);
+    font-family: var(--display);
+    font-weight: 650;
+    font-size: clamp(1.5rem, 2.6vw, 2.125rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    margin-bottom: var(--s-3);
   }
   .buit :global(p + p) {
     margin-top: var(--s-2);

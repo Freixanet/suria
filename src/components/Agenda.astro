@@ -42,20 +42,23 @@ const caduca = instantMadrid(sumaDies(setmana.fi, 1), '00:00').toISOString();
 
 <style>
   .vigencia {
-    font-size: var(--t-meta);
-    color: var(--text-2);
-    margin-bottom: var(--s-3);
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: var(--t-small);
+    color: var(--tinta-2);
+    padding-bottom: var(--s-3);
+    border-bottom: var(--filet-fort);
+  }
+  .caducada {
+    margin-top: var(--s-4);
+    padding: var(--s-4);
+    background: var(--teula-clar);
+    border-radius: var(--radi);
+  }
+  .caducada p {
+    font-weight: 700;
   }
   .llista {
     list-style: none;
-    border-top: var(--rule-strong);
-  }
-  .caducada {
-    background: var(--halite);
-    border: 2px solid var(--red-ink);
-    padding: var(--s-3) var(--s-4) var(--s-1);
-    margin-bottom: var(--s-4);
-    font-family: var(--font-display-stack);
-    font-weight: 700;
   }
 </style>
