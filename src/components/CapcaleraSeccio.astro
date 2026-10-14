@@ -1,6 +1,6 @@
 ---
-// Obertura de secció o de pàgina: títol gran i, al costat, la maduresa en text dins d'un marc.
-// La maduresa sempre al mateix lloc, perquè es reconegui d'un cop d'ull a totes les seccions.
+// Obertura de secció o de pàgina: primer el títol i, a sota, alineada a l'esquerra, la maduresa en text dins d'un marc,
+// seguida del període o la descripció quan n'hi ha. Sempre al mateix lloc a totes les seccions.
 import { traductor, type Llengua } from '../i18n/ui.ts';
 
 interface Props {
@@ -11,22 +11,29 @@ interface Props {
   nivell?: 1 | 2;
   /** Títol més contingut, per a seccions secundàries. */
   compacte?: boolean;
+  /** Informació secundària al costat de la maduresa: el període (agenda) o la descripció (pàgina). */
+  detall?: string;
+  /** Classe del detall, per estil i proves ('vigencia', 'entrada'). */
+  classeDetall?: string;
 }
-const { id, titol, maduresa, llengua, nivell = 2, compacte = false } = Astro.props;
+const { id, titol, maduresa, llengua, nivell = 2, compacte = false, detall, classeDetall } = Astro.props;
 const Titol = nivell === 1 ? 'h1' : 'h2';
 const t = traductor(llengua);
 ---
 <div class="obertura">
   <Titol id={id} class:list={['titol-gran', 'titol-seccio', `n${nivell}`, { compacte }]}>{titol}</Titol>
-  <span class="maduresa">{t(`maduresa.${maduresa}`)}</span>
+  <p class="meta">
+    <span class:list={['maduresa', { especulativa: maduresa === 'Idea' || maduresa === 'Demo' }]}>{t(`maduresa.${maduresa}`)}</span>
+    {detall && <span class={classeDetall}>{detall}</span>}
+  </p>
 </div>
 
 <style>
   .obertura {
     display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: var(--s-2) var(--s-4);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--s-3);
     margin-bottom: var(--s-4);
   }
   .n2 {
@@ -38,7 +45,24 @@ const t = traductor(llengua);
   .compacte {
     font-size: clamp(1.75rem, 2.6vw, 2.375rem);
   }
-  .maduresa {
-    translate: 0 -0.2em;
+  /* Maduresa i detall a la mateixa línia mentre hi caben; al mòbil, el detall continua a sota. */
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--s-1) var(--s-3);
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: var(--t-small);
+    line-height: 1.35;
+    color: var(--tinta-2);
+  }
+  .meta .entrada {
+    font-family: var(--text);
+    font-weight: 400;
+    font-size: clamp(1.1875rem, 1.6vw, 1.375rem);
+    line-height: 1.45;
+    color: var(--tinta);
+    max-width: 38em;
   }
 </style>

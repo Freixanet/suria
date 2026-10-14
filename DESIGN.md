@@ -99,6 +99,9 @@ components:
     backgroundColor: "{colors.tinta}"
     textColor: "{colors.calc}"
     accent: "{colors.ocre}"
+    content: "avís d'independència i CA/ES (sense data)"
+  section-opening:
+    order: "títol; a sota i alineada a l'esquerra, la maduresa seguida del període o la descripció"
   nav-task:
     textColor: "{colors.tinta}"
     height: "3.25rem"
@@ -107,7 +110,7 @@ components:
     fontWeight: 750
     underline: "3px, color de la façana"
   home-photo:
-    image: "foto del poble a tota amplada i neta, alçada clamp(12rem, 22vw, 20rem); 5:2 al mòbil"
+    image: "foto del poble a tota amplada i neta, alçada clamp(16rem, 31vw, 30rem) amb enquadrament 60% 22%; 16:10 al mòbil (64% 50%)"
     credit: "a sota, alineat a la dreta, una o dues línies llegibles"
   today-summary:
     background: "{colors.calc} (sense franja ni degradat)"
@@ -186,12 +189,14 @@ Marca de portada 76–272 px · títol de pàgina 40–84 px · títol de secci�
 
 ## Layout
 
-Contenidor de 90rem amb marge lateral `clamp(1rem, 4vw, 3.5rem)`. Portada: franja de servei (avís i data) → marca, tasques i llengua en una fila (per sota de 72rem, marca i llengua a dalt i tasques a sota) → foto a tota amplada i crèdit → «Avui a Súria» (agenda 7/12, farmàcia 5/12, alineades amb la reixa de sota) → agenda amb el cartell de pròximament a sota (7/12) i, al costat, primers passos i comerços (5/12; nota compacta si no n'hi ha; a tota amplada si n'hi ha) → cap on anem en la franja verda, amb la frase d'identitat i l'enllaç a «Què estem provant» → peu. Mòbil: marca i llengua, tasques, foto, avui, agenda, primers passos, pròximament, comerços.
+Contenidor de 90rem amb marge lateral `clamp(1rem, 4vw, 3.5rem)`. Portada: franja de servei (avís i CA/ES) → marca i tasques, separades per `clamp(2.5rem, 6vw, 6rem)`, en una fila si les tasques hi caben senceres; si no, les tasques baixen a una fila pròpia (2×2 al mòbil) → foto a tota amplada i crèdit → «Avui a Súria» (agenda 7/12, farmàcia 5/12, alineades amb la reixa de sota) → agenda amb el cartell de pròximament a sota (7/12) i, al costat, primers passos i comerços (5/12; nota compacta si no n'hi ha; a tota amplada si n'hi ha) → cap on anem en la franja verda, amb la frase d'identitat i l'enllaç a «Què estem provant» → peu. Mòbil: marca, tasques, foto, avui, agenda, primers passos, pròximament, comerços.
 
 Pàgines de tasca: obertura del color de la seva façana (filet de 6 px a dalt), cos de lectura de 48rem màxim i lateral enganxós amb fonts oficials i altres tasques.
 
 ### Named Rules
-- **A la primera pantalla, el poble, les tasques i el resum d'avui.** El títol del resum, dins dels 2/3 superiors; el primer fet, dins dels 3/4. A l'escriptori també hi ha el títol de l'agenda; al mòbil, l'agenda comença abans d'1,3 pantalles (provat).
+- **A la primera pantalla, el poble, les tasques i el resum d'avui.** La qualitat de la foto té prioritat sobre avançar l'agenda: el títol del resum i el seu primer fet, dins de la primera pantalla; l'agenda, abans d'1,25 pantalles a l'escriptori i d'1,5 al mòbil (provat).
+- **Títol primer, informació secundària a sota.** A totes les obertures: el títol i, a sota i alineada a l'esquerra, l'etiqueta de maduresa amb el període («[En prova] Del dilluns 12 al diumenge 18 d'octubre») o la descripció de la pàgina. «Avui a Súria» porta a sota la salutació i la data, l'únic lloc on apareix la data d'avui. Mai etiquetes centrades verticalment al costat d'un títol gran.
+- **El peu s'enganxa a una franja final.** Si la pàgina acaba amb una franja a tota amplada (`data-tanca-pagina`, com «Cap on anem» a la portada), el peu no hi deixa marge; a la resta de pàgines manté el seu marge superior.
 - **Una sola explicació per cosa.** L'avís d'independència, a la franja de servei i al peu. Les fonts a la portada, en una línia curta i comprensible («Font: agenda de suria.cat · consultada el 12/10/2026»). La metodologia, a les pàgines de detall.
 - **Filets, no caixes.** Les llistes s'obren amb un filet de tinta de 2 px i se separen amb filets fins. Només tenen fons el torn de farmàcia, el cartell de pròximament, els avisos i l'estat d'un comerç.
 
@@ -207,13 +212,13 @@ Sense moviment d'entrada ni de fons (el degradat del cel es va retirar el 14/10/
 ## Components
 
 ### Franja de servei
-Tinta, a dalt de tot: «Prototip independent, en proves amb veïns. No és una web de l'Ajuntament.» (independent en ocre) i la data d'avui a Súria (amagada a la portada mòbil, on ja és al resum). Mai sembla municipal. CA/ES és a la fila de la marca.
+Tinta, a dalt de tot: «Prototip independent, en proves amb veïns. No és una web de l'Ajuntament.» (independent en ocre) i CA/ES a la dreta. Mai sembla municipal. Sense data: la data d'avui només és al resum «Avui a Súria».
 
 ### Navegació de tasques
 Quatre paraules grans sobre un filet de tinta, cada una amb la mostra de la seva façana. La pàgina actual: subratllat de 3 px del seu color i pes 750. Al mòbil, 2×2 (una columna amb el text ampliat).
 
 ### Capçalera i foto de portada
-«Súria» (h1) gran en tinta sobre calç, les quatre tasques i CA/ES a la dreta. A sota, la foto de Súria a tota amplada i neta, retallada amb el poble i el campanar al centre (5:2 al mòbil). El crèdit (autor, any, «retallada», llicència, original) va a sota, en una o dues línies llegibles, amb els enllaços en línia i una zona tàctil de 44 px.
+«Súria» (h1) gran en tinta sobre calç i les quatre tasques, amb aire entre tots dos. A sota, la foto de Súria a tota amplada i neta, amb aire sobre el campanar i el conjunt de les cases; enquadrament propi a l'escriptori i al mòbil (16:10). El crèdit (autor, any, «retallada», llicència, original) va a sota, en una o dues línies llegibles, amb els enllaços en línia i una zona tàctil de 44 px.
 
 ### Avui a Súria
 Resum compost per `src/lib/ara.ts`, provat en tres zones horàries:

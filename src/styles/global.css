@@ -285,3 +285,8 @@ dd {
   }
 }
 
+/* Quan una pàgina acaba amb una franja a tota amplada (data-tanca-pagina), el peu s'hi enganxa:
+   el marge superior del peu només separa el peu del contingut normal. */
+main:has(> [data-tanca-pagina]:last-child) + .peu {
+  margin-top: 0;
+}

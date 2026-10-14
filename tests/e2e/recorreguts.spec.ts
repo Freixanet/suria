@@ -17,11 +17,12 @@ test.describe('portada', () => {
     await page.reload();
     const alt = page.viewportSize()!.height;
     const posicio = (sel: string) => page.locator(sel).evaluate((el) => el.getBoundingClientRect().top);
-    expect(await posicio('#h-avui')).toBeLessThan(alt * 0.67);
-    expect(await posicio('[data-fet-agenda]')).toBeLessThan(alt * 0.75);
+    // La foto té prioritat de qualitat (14/10/2026): el resum d'avui i el seu primer fet, dins de la primera pantalla.
+    expect(await posicio('#h-avui')).toBeLessThan(alt * 0.85);
+    expect(await posicio('[data-fet-agenda]')).toBeLessThan(alt);
     await expect(page.locator('[data-fet-agenda] a.fet-titol')).toHaveAttribute('href', '#h-setmana');
-    // L'agenda completa: a la primera pantalla a l'escriptori; al mòbil, abans d'1,3 pantalles.
-    expect(await posicio('#h-setmana')).toBeLessThan(alt * (page.viewportSize()!.width < 900 ? 1.3 : 1));
+    // L'agenda completa, just després: abans d'1,25 pantalles a l'escriptori i d'1,5 al mòbil.
+    expect(await posicio('#h-setmana')).toBeLessThan(alt * (page.viewportSize()!.width < 900 ? 1.5 : 1.25));
   });
 
   test('«Aquesta setmana» només conté activitats de la setmana; la resta va a «Pròximament»', async ({ page }) => {

@@ -52,16 +52,18 @@ const credit = {
     aspect-ratio: 21 / 8;
     object-position: 62% 50%;
   }
-  /* Portada: a tota amplada, alçada continguda, el poble i el campanar al centre del quadre. */
+  /* Portada: a tota amplada, amb aire sobre el campanar i el conjunt de les cases sencer. L'enquadrament
+     es tria per separat a l'escriptori i al mòbil. */
   .escena :global(img) {
-    height: clamp(12rem, 22vw, 20rem);
-    object-position: 62% 30%;
+    height: clamp(16rem, 31vw, 30rem);
+    object-position: 60% 22%;
     border-radius: 0;
   }
   @media (max-width: 56.25rem) {
     .escena :global(img) {
       height: auto;
-      aspect-ratio: 5 / 2;
+      aspect-ratio: 16 / 10;
+      object-position: 64% 50%;
     }
   }
   .ampla :global(img) {

@@ -38,13 +38,13 @@ const items: { pagina: Pagina; clau: 'nav.inici' | 'nav.setmana' | 'nav.menjar' 
     border-top: var(--filet-fort);
     margin-bottom: var(--s-1);
   }
-  /* Cada tasca ocupa el que necessita: els noms llargs («Hacia dónde vamos») no es parteixen si hi caben. */
+  /* Cada tasca ocupa el que necessita i el seu nom no es parteix; si no hi caben totes, passen a una altra fila. */
   ul {
     list-style: none;
-    display: grid;
-    grid-template-columns: repeat(4, auto);
+    display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    column-gap: var(--s-5);
+    column-gap: clamp(1.25rem, 3vw, 3rem);
   }
   li.inici {
     display: none;
@@ -61,6 +61,7 @@ const items: { pagina: Pagina; clau: 'nav.inici' | 'nav.setmana' | 'nav.menjar' 
     line-height: 1.1;
     letter-spacing: -0.01em;
     text-decoration: none;
+    white-space: nowrap;
   }
   /* Mostra de façana: un rectangle vertical, com una finestra. */
   a::before {
@@ -93,11 +94,13 @@ const items: { pagina: Pagina; clau: 'nav.inici' | 'nav.setmana' | 'nav.menjar' 
   @media (max-width: 56.25rem) {
     /* Dues columnes a mida normal; una sola si el text s'amplia (la mida mínima va en rem). */
     ul {
+      display: grid;
       grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr));
       column-gap: var(--s-3);
     }
     a {
       min-height: var(--tap);
+      white-space: normal;
       font-size: var(--t-meta);
       border-bottom: var(--filet-fi);
     }

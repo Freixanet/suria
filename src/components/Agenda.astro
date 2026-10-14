@@ -12,22 +12,24 @@ interface Props {
   setmana: { inici: string; fi: string };
   activitats: Activitat[];
   detall?: boolean;
+  /** El període el mostra l'obertura de la secció (portada): aquí no es repeteix. */
+  senseVigencia?: boolean;
 }
-const { llengua, setmana, activitats, detall = false } = Astro.props;
+const { llengua, setmana, activitats, detall = false, senseVigencia = false } = Astro.props;
 const nivell = detall ? 2 : 3;
 const t = traductor(llengua);
 const rang = rangSetmana(setmana.inici, setmana.fi, llengua);
 const caduca = instantMadrid(sumaDies(setmana.fi, 1), '00:00').toISOString();
 ---
 <div class="agenda" data-caduca={caduca}>
-  <p class="vigencia">{rang.charAt(0).toUpperCase() + rang.slice(1)}</p>
+  {!senseVigencia && <p class="vigencia">{rang.charAt(0).toUpperCase() + rang.slice(1)}</p>}
   <div class="caducada" data-avis-caducat hidden role="status">
     <p>{t('setmana.caducada', { setmana: rang })}</p>
     <a class="accio" href="https://www.suria.cat/agenda" hreflang="ca">{t('setmana.agendaMunicipal')}</a>
   </div>
   {
     activitats.length > 0 ? (
-      <ul class="llista">
+      <ul class:list={['llista', { obre: senseVigencia }]}>
         {activitats.map((a) => (
           <ActivitatAgenda activitat={a} llengua={llengua} detall={detall} maduresaSeccio="En prova" nivell={nivell} />
         ))}
@@ -60,5 +62,9 @@ const caduca = instantMadrid(sumaDies(setmana.fi, 1), '00:00').toISOString();
   }
   .llista {
     list-style: none;
+  }
+  /* Sense la línia de vigència, el filet de tinta obre la llista. */
+  .obre {
+    border-top: var(--filet-fort);
   }
 </style>

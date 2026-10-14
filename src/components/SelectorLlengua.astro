@@ -39,7 +39,7 @@ const t = traductor(llengua);
 </script>
 
 <style>
-  /* Sobre fons clar, al costat de les tasques (Lentos: DE EN a la dreta de la navegació). */
+  /* A la franja de servei, al costat de l'avís d'independència. */
   .llengua {
     display: flex;
     gap: var(--s-1);
@@ -53,15 +53,15 @@ const t = traductor(llengua);
     font-family: var(--display);
     font-weight: 650;
     text-decoration: none;
-    color: var(--tinta);
+    color: var(--calc);
     border-radius: 0.3em;
   }
   a:hover {
+    color: var(--ocre);
     text-decoration: underline;
-    color: var(--tinta);
   }
   a[aria-current] {
-    background: var(--tinta);
-    color: var(--calc);
+    background: var(--calc);
+    color: var(--tinta);
   }
 </style>

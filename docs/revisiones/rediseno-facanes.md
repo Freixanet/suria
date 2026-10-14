@@ -124,3 +124,28 @@ El promotor autorizó sustituir Silvinita B por una dirección nueva, conservand
 - E2E: 103 de 103.
 - Lighthouse: rendimiento de 97 a 100, accesibilidad 100.
 - Capturas en catalán y castellano, a 1440, 920 y 390 px, por la mañana, por la noche y con datos caducados.
+
+## Cuarta pasada: foto, cabecera y títulos (14/10/2026)
+
+**Versión anterior recuperable:** etiqueta `facanes-v3` (commit `365e990`).
+
+**Cambios:**
+- **Foto más alta y con encuadre propio:**
+  - escritorio: `clamp(16rem, 31vw, 30rem)` y posición 60 % / 22 %, con aire sobre el campanario y las casas enteras;
+  - móvil: 16:10 y posición 64 % / 50 %;
+  - el crédito sigue debajo, legible.
+- **Cabecera:**
+  - CA/ES pasa a la franja superior, junto al aviso de independencia;
+  - la fecha sale de la franja y queda solo en «Avui a Súria»;
+  - más separación entre «Súria» y las tareas;
+  - si las tareas no caben enteras, bajan a una fila propia, sin cortar nombres (comprobado a 960, 1024, 1180 y 1440 px).
+- **Aperturas de sección:** primero el título y, debajo y alineada a la izquierda, la etiqueta de madurez con el periodo o la descripción. En la portada, el periodo de la agenda va en esa línea. En las páginas de tarea, la descripción acompaña a la etiqueta.
+- **Pie:** desaparece la franja blanca entre «Cap on anem» y el pie. Solo cambia en las páginas que terminan con una franja a todo el ancho (`data-tanca-pagina`).
+
+**Medidas (inicio del título de la agenda, 21.30 h):** 1041 px en 1440 × 900 y 1059 px en 390 × 844. Bajan respecto a la tercera pasada por la foto más alta, que fue lo que se pidió. El resumen de hoy y su primer dato siguen en la primera pantalla. Nuevo contrato de prueba: agenda antes de 1,25 pantallas en escritorio y de 1,5 en móvil.
+
+**Comprobaciones:**
+- Unitarias en verde (35, más las ejecuciones en las otras zonas horarias).
+- E2E: 103 de 103.
+- Lighthouse: rendimiento 98–100, accesibilidad 100, CLS ≤ 0,021.
+- Capturas en catalán y castellano, a 390, 960, 1024, 1180 y 1440 px.

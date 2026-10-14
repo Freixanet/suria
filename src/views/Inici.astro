@@ -15,7 +15,7 @@ import PrimersPassos from '../components/PrimersPassos.astro';
 import { traductor, type Llengua } from '../i18n/ui.ts';
 import { urlDe } from '../i18n/rutes.ts';
 import { agenda, comercos, consultaMesRecent, idees, passos } from '../lib/dades.ts';
-import { dataNumerica } from '../lib/format.ts';
+import { dataNumerica, rangSetmana } from '../lib/format.ts';
 import type { DadesAra } from '../lib/ara.ts';
 
 interface Props {
@@ -30,6 +30,8 @@ const llistaIdees = await idees();
 const consultaAgenda = dataNumerica(consultaMesRecent(aquestaSetmana));
 const consultaPassos = dataNumerica(consultaMesRecent(llistaPassos));
 const senseComercos = llistaComercos.length === 0;
+const rang = rangSetmana(setmana.inici, setmana.fi, llengua);
+const vigencia = rang.charAt(0).toUpperCase() + rang.slice(1);
 
 const farmacia = llistaPassos.find((p) => p.guardies.length > 0);
 const consultaAvui = dataNumerica(consultaMesRecent([...aquestaSetmana, ...(farmacia ? [farmacia] : [])]));
@@ -67,8 +69,8 @@ const textosAra = {
 
   <div class:list={['ample', 'util', { 'amb-comercos': !senseComercos }]}>
     <section class="setmana" data-facana="ocre" aria-labelledby="h-setmana">
-      <CapcaleraSeccio id="h-setmana" titol={t('setmana.titol')} maduresa="En prova" llengua={llengua} />
-      <Agenda llengua={llengua} setmana={setmana} activitats={aquestaSetmana} />
+      <CapcaleraSeccio id="h-setmana" titol={t('setmana.titol')} maduresa="En prova" llengua={llengua} detall={vigencia} classeDetall="vigencia" />
+      <Agenda llengua={llengua} setmana={setmana} activitats={aquestaSetmana} senseVigencia />
       <p class="font peu-seccio"><b>{t('procedencia.font')}:</b> {t('setmana.fontResum', { data: consultaAgenda })}</p>
       <a class="accio" href={urlDe('setmana', llengua)}>{t('tasca.veureSetmana')}</a>
     </section>
@@ -95,7 +97,7 @@ const textosAra = {
     </section>
   </div>
 
-  <section class="cap" data-facana="turo" aria-labelledby="h-cap">
+  <section class="cap" data-facana="turo" data-tanca-pagina aria-labelledby="h-cap">
     <div class="ample cap-dins">
       <div>
         <h2 id="h-cap" class="titol-gran">{t('cap.titol')}</h2>
@@ -133,9 +135,9 @@ const textosAra = {
   .avui-cap {
     grid-column: 1 / -1;
     display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: var(--s-1) var(--s-4);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--s-2);
   }
   .avui-cap h2 {
     font-size: var(--t-h2);

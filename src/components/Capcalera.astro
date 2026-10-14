@@ -1,7 +1,7 @@
 ---
-// Capçalera: a dalt, la franja de servei (avís d'independència i data d'avui a Súria); després la marca,
-// les tasques i la llengua sobre fons clar, com fa Lentos (la marca més gran a la portada) i, a la portada, la foto del poble
-// a tota amplada, neta, amb el seu crèdit a sota.
+// Capçalera: a dalt, la franja de servei (avís d'independència i CA/ES); després la marca i les tasques sobre fons
+// clar (la marca més gran a la portada), amb les tasques a una altra fila quan no hi caben còmodament; i, a la portada,
+// la foto del poble a tota amplada, neta, amb el seu crèdit a sota. La data només és al resum «Avui a Súria».
 import NavTasques from './NavTasques.astro';
 import SelectorLlengua from './SelectorLlengua.astro';
 import FotoSuria from './FotoSuria.astro';
@@ -22,7 +22,7 @@ const esInici = pagina === 'inici';
   <div class="barra">
     <div class="ample barra-dins">
       <p class="avis"><strong>{t('avis.fort')}</strong>{t('avis.resta')}</p>
-      <time class="avui" data-avui data-llengua={llengua}></time>
+      <SelectorLlengua llengua={llengua} urls={urlsLlengua} />
     </div>
   </div>
   <div class="ample mast">
@@ -39,22 +39,9 @@ const esInici = pagina === 'inici';
       )
     }
     <NavTasques llengua={llengua} actual={pagina} />
-    <SelectorLlengua llengua={llengua} urls={urlsLlengua} />
   </div>
   {esInici && <FotoSuria foto={fotos.vista} llengua={llengua} format="escena" sizes="100vw" prioritaria />}
 </header>
-
-<script>
-  // Data d'avui a Súria. Sense JavaScript, simplement no apareix (mai una data inventada).
-  import { dataMadrid } from '../lib/hora-local.ts';
-  import { dataCompleta } from '../lib/format.ts';
-
-  for (const el of document.querySelectorAll<HTMLTimeElement>('[data-avui]')) {
-    const avui = dataMadrid(new Date());
-    el.textContent = dataCompleta(avui, el.dataset.llengua === 'es' ? 'es' : 'ca');
-    el.dateTime = avui;
-  }
-</script>
 
 <style>
   .barra {
@@ -64,11 +51,10 @@ const esInici = pagina === 'inici';
     line-height: 1.4;
   }
   .barra-dins {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--s-1) var(--s-5);
+    column-gap: var(--s-4);
     padding-block: var(--s-1);
   }
   .avis {
@@ -78,54 +64,22 @@ const esInici = pagina === 'inici';
     font-weight: 700;
     color: var(--ocre);
   }
-
-  .avui {
-    font-family: var(--display);
-    font-weight: 600;
-  }
-  @media (max-width: 56.25rem) {
-    /* La data es parteix en dues línies abans que la llengua baixi a una fila pròpia. */
-    .avui {
-      flex: 1 1 10rem;
-      min-width: 0;
-    }
-  }
-  /* L'espai de la data queda reservat: quan el script l'escriu, la pàgina no salta. */
-  .avui {
-    min-height: calc(1.4em + 2 * var(--s-2));
-  }
-  .avui:empty {
-    visibility: hidden;
-  }
   .barra :global(:focus-visible) {
     outline-color: var(--ocre);
   }
-  .avui {
-    padding-block: var(--s-2);
-  }
 
-  /* Marca i tasques a la mateixa línia (al mòbil, una sota l'altra), sobre fons clar. */
+  /* Marca i tasques: en una fila si hi caben senceres, amb aire entre totes dues; si no, les tasques baixen
+     a una fila pròpia a tota amplada. Mai es comprimeixen els noms. */
   .mast {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    grid-template-areas: 'marca tasques llengua';
-    align-items: end;
-    column-gap: var(--s-6);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    column-gap: clamp(2.5rem, 6vw, 6rem);
+    row-gap: var(--s-2);
     padding-top: var(--s-4);
   }
   .marca {
-    grid-area: marca;
-  }
-  .mast > :global(.tasques) {
-    grid-area: tasques;
-  }
-  .mast > :global(.llengua) {
-    grid-area: llengua;
-    margin-bottom: var(--s-1);
-    padding-block: var(--s-1);
-    border-top: var(--filet-fort);
-  }
-  .marca {
+    flex: none;
     display: block;
     font-family: var(--display);
     font-weight: 700;
@@ -140,7 +94,10 @@ const esInici = pagina === 'inici';
   a.marca:hover {
     color: var(--tinta);
   }
-  /* Portada: el nom més gran, al costat de les tasques; la foto, a sota i a tota amplada. */
+  .mast > :global(.tasques) {
+    flex: 1 1 auto;
+  }
+  /* Portada: el nom més gran. */
   .inici .marca {
     font-size: clamp(3.25rem, 7.5vw, 7rem);
     font-variation-settings: 'wdth' 88;
@@ -163,27 +120,17 @@ const esInici = pagina === 'inici';
     display: inline;
     padding-block: 0.75rem;
   }
-  /* Pantalles mitjanes i mòbil: la marca i la llengua a la primera fila; les tasques, a sota, a tota amplada. */
-  @media (max-width: 72rem) {
-    .mast {
-      grid-template-columns: minmax(0, 1fr) auto;
-      grid-template-areas: 'marca llengua' 'tasques tasques';
-      padding-top: var(--s-3);
-    }
-    .mast > :global(.llengua) {
-      align-self: center;
-      margin-bottom: var(--s-2);
-      padding-block: 0;
-      border-top: 0;
-    }
-  }
   @media (max-width: 56.25rem) {
     .barra-dins {
       font-size: var(--t-tag);
+      align-items: start;
     }
-    /* A la portada, la data ja és al resum d'avui. */
-    .inici .avui {
-      display: none;
+    .mast {
+      padding-top: var(--s-3);
+    }
+    /* Al mòbil, les tasques sempre a la seva fila (2×2), sota la marca. */
+    .mast > :global(.tasques) {
+      flex-basis: 100%;
     }
   }
 </style>
