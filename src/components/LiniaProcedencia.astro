@@ -1,7 +1,7 @@
 ---
-// Línia secundària d'una peça: maduresa · font · consultat · responsable (especificació UX 4.1).
+// Línia secundària d'una peça: font, vigència i responsable; la maduresa només si és Idea o Demo.
+// La data de consulta es conserva a les dades però no es mostra (decisió del promotor, 14/10/2026).
 import { traductor, type Llengua } from '../i18n/ui.ts';
-import { dataNumerica } from '../lib/format.ts';
 
 interface Props {
   llengua: Llengua;
@@ -16,9 +16,8 @@ const t = traductor(llengua);
 const qui = responsable === 'Promotor del prototip' ? t('procedencia.promotor') : responsable;
 ---
 <p class="procedencia">
-  <span class:list={['maduresa', { especulativa: maduresa === 'Idea' || maduresa === 'Demo' }]}>{t(`maduresa.${maduresa}`)}</span>
+  {(maduresa === 'Idea' || maduresa === 'Demo') && <span class="maduresa especulativa">{t(`maduresa.${maduresa}`)}</span>}
   <span>{t('procedencia.font')}: {fonts.map((f) => f.nom[llengua]).join('; ')}</span>
-  <span>{t('procedencia.consultat')}: <time datetime={consultat}>{dataNumerica(consultat)}</time></span>
   {vigencia && <span>{t('procedencia.valid')}: {vigencia}</span>}
   <span>{t('procedencia.responsable')}: {qui}</span>
 </p>
@@ -36,10 +35,7 @@ const qui = responsable === 'Promotor del prototip' ? t('procedencia.promotor') 
     line-height: 1.45;
     color: var(--tinta-2);
   }
-  .procedencia > .maduresa {
-    display: block;
-  }
-  .procedencia > span:not(.especulativa):not(:last-child)::after {
+  .procedencia > span:not(.maduresa):not(:last-child)::after {
     content: ' ·';
   }
 </style>

@@ -111,7 +111,7 @@ components:
     underline: "3px, color de la façana"
   home-photo:
     image: "foto del poble a tota amplada i neta, alçada clamp(16rem, 31vw, 30rem) amb enquadrament 60% 22%; 16:10 al mòbil (64% 50%)"
-    credit: "dins de la foto, a baix a la dreta, sobre fons tinta 80% només darrere del text; 14 px; dues línies al mòbil"
+    credit: "dins de la foto, a baix a la dreta, sobre fons tinta 80% només darrere del text; 14 px; al mòbil, versió curta en una línia"
   today-summary:
     background: "{colors.calc} (sense franja ni degradat)"
     heading: "«Avui a Súria» ({typography.headline}); salutació i data, {typography.greeting}"
@@ -131,7 +131,7 @@ components:
     borderTop: "4px {colors.teula}"
     state-panel: "{colors.pedra} / {colors.teula-clar} quan hi ha horari comunicat"
   maturity-tag:
-    border: "cap per a «En prova» i «Real» (text de pes 600); marc discontinu de 1.5px per a Idea i Demo"
+    border: "1.5px solid; discontinu per a Idea i Demo"
     rounded: "{rounded.tag}"
     typography: "{typography.label}"
   warning:
@@ -197,8 +197,6 @@ Pàgines de tasca: obertura del color de la seva façana (filet de 6 px a dalt),
 - **A la primera pantalla, el poble, les tasques i el resum d'avui.** La qualitat de la foto té prioritat sobre avançar l'agenda: el títol del resum i el seu primer fet, dins de la primera pantalla; l'agenda, abans d'1,25 pantalles a l'escriptori i d'1,5 al mòbil (provat).
 - **Títol primer, informació secundària a sota.** A totes les obertures: el títol i, a sota i alineada a l'esquerra, l'etiqueta de maduresa amb el període («[En prova] Del dilluns 12 al diumenge 18 d'octubre») o la descripció de la pàgina. «Avui a Súria» porta a sota la salutació i la data, l'únic lloc on apareix la data d'avui. Mai etiquetes centrades verticalment al costat d'un títol gran.
 - **El peu s'enganxa a una franja final.** Si la pàgina acaba amb una franja a tota amplada (`data-tanca-pagina`, com «Cap on anem» a la portada), el peu no hi deixa marge; a la resta de pàgines manté el seu marge superior.
-- **Jerarquia sense ratlles.** La força és per als títols de secció i per al nom de cada activitat o servei. Les dades secundàries (hora, vigència, etiquetes, fonts) van en pes mitjà (500–600), amb contrast complet i sense reduir-ne la mida. Cap ratlla tanca un títol: l'espai agrupa, i només hi ha filets fins entre entrades, no després de l'última. Hi ha més espai entre entrades que entre les dades d'una mateixa entrada.
-- **Ordre d'una entrada:** nom, data i hora, lloc, condicions i acció. A l'agenda, la data és a la finestra ocre de l'esquerra i, a la dreta, el nom, l'hora (en una línia pròpia), el lloc, el requisit i l'acció. A la farmàcia: nom, «Fins…», adreça i telèfon.
 - **Una sola explicació per cosa.** L'avís d'independència, a la franja de servei i al peu. Les fonts a la portada, en una línia curta i comprensible («Font: agenda de suria.cat · consultada el 12/10/2026»). La metodologia, a les pàgines de detall.
 - **Filets, no caixes.** Les llistes s'obren amb un filet de tinta de 2 px i se separen amb filets fins. Només tenen fons el torn de farmàcia, el cartell de pròximament, els avisos i l'estat d'un comerç.
 
@@ -220,7 +218,7 @@ Tinta, a dalt de tot: «Prototip independent, en proves amb veïns. No és una w
 Quatre paraules grans sobre un filet de tinta, cada una amb la mostra de la seva façana. La pàgina actual: subratllat de 3 px del seu color i pes 750. Al mòbil, 2×2 (una columna amb el text ampliat).
 
 ### Capçalera i foto de portada
-«Súria» (h1) gran en tinta sobre calç i les quatre tasques, amb aire entre tots dos. A sota, la foto de Súria a tota amplada i neta, amb aire sobre el campanar i el conjunt de les cases; enquadrament propi a l'escriptori i al mòbil (16:10). El crèdit (autor, any, «retallada», llicència, original) va dins de la foto, a baix a la dreta, sobre un fons fosc translúcid només darrere del text (la foto no s'enfosqueix): una línia a l'escriptori i dues al mòbil, a 14 px, amb els enllaços en línia i una zona tàctil de 44 px.
+«Súria» (h1) gran en tinta sobre calç i les quatre tasques, amb aire entre tots dos. A sota, la foto de Súria a tota amplada i neta, amb aire sobre el campanar i el conjunt de les cases; enquadrament propi a l'escriptori i al mòbil (16:10). El crèdit va dins de la foto, a baix a la dreta, sobre un fons fosc només darrere del text. A l'escriptori, complet (autor, any, «retallada», llicència, original). Al mòbil, en una línia: «Foto: Krzysztof Golik, retallada · CC BY-SA 4.0», amb el nom de l'autor enllaçat a l'original. Sempre a 14 px i amb zona tàctil de 44 px.
 
 ### Avui a Súria
 Resum compost per `src/lib/ara.ts`, provat en tres zones horàries:
@@ -232,7 +230,7 @@ Resum compost per `src/lib/ara.ts`, provat en tres zones horàries:
 Sense JavaScript, el resum enllaça a l'agenda i als torns, sense dependre de l'hora. L'alçada queda reservada perquè la pàgina no salti.
 
 ### Actividad de agenda (E2)
-Finestra de data ocre, títol, hora en negreta · lloc, requisit amb un filet fi del color de la façana, acció «Fitxa a suria.cat». Passada: finestra en pedra i «Ja ha passat».
+Finestra de data ocre, títol, hora en negreta (a la seva línia), lloc (a la línia següent), requisit amb un filet fi del color de la façana, acció «Fitxa a suria.cat». Passada: finestra en pedra i «Ja ha passat».
 
 ### Primers passos (E3) i torn de farmàcia
 Títol, resum i accions (tràmit en línia, trucar). A la portada, la farmàcia només porta l'enllaç «Tots els torns de guàrdia»; el torn vigent ja és al resum d'avui. Cada torn és una fitxa de cel amb «Fins…», el nom i l'adreça, i el telèfon com a acció. Torn acabat: pedra i «Aquest torn ja ha acabat» (a la portada desapareix). Sense torn vigent: avís en teula clara amb la font oficial.
@@ -244,7 +242,7 @@ Cartell ocre (programa de festa major): títol estret, dates, punts essencials, 
 Nom com un rètol amb un filet teula a dalt, ofici i adreça, i l'estat amb paraules i forma: quadrat ple (horari comunicat), buit (sense confirmar), discontinu (avui no), gris (finalitzat). Mai «obert ara». Sense comerços, a la portada: una nota compacta en teula clara al costat dels primers passos, amb la promesa «No direm mai “obert ara”».
 
 ### Etiqueta de maduresa
-«En prova» i «Real», en text de pes moderat sota el títol, seguits del període o la descripció («En prova · Del dilluns 12…»). «Idea» i «Demo», dins d'un marc discontinu, perquè el que encara no existeix es distingeixi sense dubte.
+Text dins d'un marc fi («En prova», «Real»); discontinu per a «Idea» i «Demo». Al costat de cada títol de secció.
 
 ### Línia de procedència
 Sota cada peça al detall, darrere d'un filet discontinu: maduresa, font, consultat, vigència i responsable.

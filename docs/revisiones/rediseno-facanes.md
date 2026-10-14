@@ -150,7 +150,7 @@ El promotor autorizó sustituir Silvinita B por una dirección nueva, conservand
 - Lighthouse: rendimiento 98–100, accesibilidad 100, CLS ≤ 0,021.
 - Capturas en catalán y castellano, a 390, 960, 1024, 1180 y 1440 px.
 
-## Quinta pasada: legibilidad y jerarquía (14/10/2026)
+## Quinta pasada: legibilidad y jerarquía (14/10/2026) — DESCARTADA
 
 **Versión anterior recuperable:** etiqueta `facanes-v4` (commit `2f0457f`).
 
@@ -173,3 +173,25 @@ El promotor autorizó sustituir Silvinita B por una dirección nueva, conservand
 - E2E: 103 de 103.
 - Lighthouse: rendimiento 98–100, accesibilidad 100, CLS ≤ 0,027.
 - Capturas a 390 y 1440 px, en catalán y castellano, de la portada, la agenda y los primeros pasos.
+
+**Resultado:** el promotor la descartó porque la información quedaba suelta sobre el blanco y no se percibía estructura. Además, el crédito ocupaba dos líneas en móvil. Se conserva en la etiqueta `facanes-v5-descartada`.
+
+## Sexta pasada: vuelta a la estructura de la cuarta (14/10/2026)
+
+**Vuelve de la cuarta pasada:**
+- los filetes que abren cada lista;
+- las etiquetas «En prova» con recuadro;
+- los acentos completos de «Avui a Súria»;
+- los pesos tipográficos.
+
+**Se conserva de la quinta:**
+- CA/ES centrado en la franja;
+- el crédito dentro de la foto;
+- la hora y el lugar de cada actividad en líneas separadas;
+- en la farmacia, «Fins…» y la dirección en líneas separadas.
+
+**Crédito en móvil:** cabe en una línea sin reducir la letra (14 px) con la versión corta «Foto: Krzysztof Golik, retallada · CC BY-SA 4.0». El nombre enlaza al original y la licencia a su texto. En escritorio se mantiene el crédito completo.
+
+**Lección:** la estructura de esta portada la aportan los filetes de apertura y los recuadros de las etiquetas. Para reducir peso visual hay que tocar elementos concretos, no quitarlos todos a la vez.
+
+**Comprobaciones:** unitarias en verde; E2E 103 de 103; Lighthouse con rendimiento 98–100, accesibilidad 100 y CLS ≤ 0,024; crédito en una línea a 360 y 390 px.

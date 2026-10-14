@@ -60,8 +60,21 @@ const t = traductor(llengua);
     color: var(--ocre);
     text-decoration: underline;
   }
+  /* L'idioma actual: un fons clar més petit que el botó, perquè no toqui les vores de la franja.
+     La zona tàctil continua sent de 44 px. */
+  a {
+    position: relative;
+    isolation: isolate;
+  }
   a[aria-current] {
-    background: var(--calc);
     color: var(--tinta);
+  }
+  a[aria-current]::before {
+    content: '';
+    position: absolute;
+    inset: 0.4rem 0.15rem;
+    z-index: -1;
+    background: var(--calc);
+    border-radius: 0.3em;
   }
 </style>

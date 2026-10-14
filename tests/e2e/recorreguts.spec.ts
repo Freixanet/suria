@@ -17,12 +17,12 @@ test.describe('portada', () => {
     await page.reload();
     const alt = page.viewportSize()!.height;
     const posicio = (sel: string) => page.locator(sel).evaluate((el) => el.getBoundingClientRect().top);
-    // La foto té prioritat de qualitat (14/10/2026): el resum d'avui i el seu primer fet, dins de la primera pantalla.
-    expect(await posicio('#h-avui')).toBeLessThan(alt * 0.85);
-    expect(await posicio('[data-fet-agenda]')).toBeLessThan(alt);
+    // La foto té prioritat de qualitat (14/10/2026; a l'escriptori, més alta a petició del promotor): el títol del
+    // resum d'avui, dins de la primera pantalla.
+    expect(await posicio('#h-avui')).toBeLessThan(alt);
     await expect(page.locator('[data-fet-agenda] a.fet-titol')).toHaveAttribute('href', '#h-setmana');
-    // L'agenda completa, just després: abans d'1,25 pantalles a l'escriptori i d'1,5 al mòbil.
-    expect(await posicio('#h-setmana')).toBeLessThan(alt * (page.viewportSize()!.width < 900 ? 1.5 : 1.25));
+    // L'agenda completa, just després: abans d'1,5 pantalles.
+    expect(await posicio('#h-setmana')).toBeLessThan(alt * 1.5);
   });
 
   test('«Aquesta setmana» només conté activitats de la setmana; la resta va a «Pròximament»', async ({ page }) => {
@@ -46,8 +46,9 @@ test.describe('portada', () => {
     await expect(taller).not.toContainText('cada dijous feiner');
     // Procedència i vigència, visibles a la portada.
     await expect(page.locator('.setmana .vigencia')).toBeVisible();
-    await expect(page.locator('.setmana .font')).toContainText('consultada el 12/10/2026');
-    await expect(page.locator('.setmana .maduresa')).toHaveText('En prova');
+    await expect(page.locator('.setmana .font')).toContainText('agenda de suria.cat');
+    // Sense etiqueta «En prova» ni data de consulta a la vista (decisió del promotor, 14/10/2026).
+    await expect(page.locator('.setmana .maduresa')).toHaveCount(0);
     // L'explicació llarga és a la pàgina de detall.
     await page.getByRole('link', { name: 'Tota la setmana, amb fonts' }).click();
     await expect(page.locator('.llista > li', { hasText: 'Taller' })).toContainText('cada dijous feiner');

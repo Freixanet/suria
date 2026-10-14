@@ -1,6 +1,6 @@
 ---
-// Navegació persistent (Lentos): poques paraules grans sobre un filet. Cada tasca porta la mostra
-// de la seva façana, sempre amb el nom escrit. L'inici és la marca. Al mòbil, rejilla 2×2.
+// Navegació persistent (Lentos): poques paraules grans. Cada tasca porta una icona del seu tema, del color
+// de la seva façana, sempre amb el nom escrit (la icona és decorativa). L'inici és la marca. Al mòbil, rejilla 2×2.
 import { traductor, type Llengua } from '../i18n/ui.ts';
 import { urlDe, type Pagina } from '../i18n/rutes.ts';
 import { facanaDe } from '../lib/facanes.ts';
@@ -18,6 +18,17 @@ const items: { pagina: Pagina; clau: 'nav.inici' | 'nav.setmana' | 'nav.menjar' 
   { pagina: 'passos', clau: 'nav.passos' },
   { pagina: 'cap', clau: 'nav.cap' },
 ];
+// Icones dibuixades per al lloc (24 × 24, traç de 2 px, extrems arrodonits): totes amb el mateix pes.
+const icones: Partial<Record<Pagina, string>> = {
+  // Calendari: l'agenda de la setmana.
+  setmana: '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
+  // Bossa de la compra: menjar i comprar.
+  menjar: '<path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/>',
+  // Pal indicador: per on començar.
+  passos: '<path d="M12 3v18M12 5h6.5l2 2.5-2 2.5H12M12 12H5.5l-2 2.5 2 2.5H12"/>',
+  // Brúixola: cap on anem.
+  cap: '<circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
+};
 ---
 <nav class="tasques" aria-label={t('nav.etiqueta')}>
   <ul>
@@ -25,7 +36,10 @@ const items: { pagina: Pagina; clau: 'nav.inici' | 'nav.setmana' | 'nav.menjar' 
       items.map(({ pagina, clau }) => (
         <li class:list={{ inici: pagina === 'inici' }} data-facana={facanaDe[pagina]}>
           <a href={urlDe(pagina, llengua)} aria-current={pagina === actual ? 'page' : undefined}>
-            {t(clau)}
+            {icones[pagina] && (
+              <svg class="icona" viewBox="0 0 24 24" aria-hidden="true" focusable="false" set:html={icones[pagina]} />
+            )}
+            <span>{t(clau)}</span>
           </a>
         </li>
       ))
@@ -35,7 +49,6 @@ const items: { pagina: Pagina; clau: 'nav.inici' | 'nav.setmana' | 'nav.menjar' 
 
 <style>
   .tasques {
-    border-top: var(--filet-fort);
     margin-bottom: var(--s-1);
   }
   /* Cada tasca ocupa el que necessita i el seu nom no es parteix; si no hi caben totes, passen a una altra fila. */
@@ -64,22 +77,24 @@ const items: { pagina: Pagina; clau: 'nav.inici' | 'nav.setmana' | 'nav.menjar' 
     white-space: nowrap;
   }
   /* Mostra de façana: un rectangle vertical, com una finestra. */
-  a::before {
-    content: '';
+  .icona {
     flex: none;
-    width: 0.55em;
-    height: 0.8em;
-    background: var(--f);
-    border-radius: 1px;
-    transition: height 0.3s var(--ease);
+    width: 1.15em;
+    height: 1.15em;
+    fill: none;
+    stroke: var(--f);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.3s var(--ease);
   }
   a:hover {
     color: var(--tinta);
     text-decoration: underline;
     text-decoration-thickness: 2px;
   }
-  a:hover::before {
-    height: 1.05em;
+  a:hover .icona {
+    transform: translateY(-0.08em);
   }
   a[aria-current] {
     font-weight: 750;
@@ -87,9 +102,6 @@ const items: { pagina: Pagina; clau: 'nav.inici' | 'nav.setmana' | 'nav.menjar' 
     text-decoration-thickness: 3px;
     text-decoration-color: var(--f);
     text-underline-offset: 0.3em;
-  }
-  a[aria-current]::before {
-    height: 1.05em;
   }
   @media (max-width: 56.25rem) {
     /* Dues columnes a mida normal; una sola si el text s'amplia (la mida mínima va en rem). */
@@ -103,6 +115,22 @@ const items: { pagina: Pagina; clau: 'nav.inici' | 'nav.setmana' | 'nav.menjar' 
       white-space: normal;
       font-size: var(--t-meta);
       border-bottom: var(--filet-fi);
+    }
+    /* Al mòbil, el filet separa la marca de la rejilla de tasques; a l'escriptori no cal (14/10/2026). */
+    .tasques {
+      container-type: inline-size;
+      border-top: var(--filet-fort);
+    }
+    /* L'última fila no porta filet a sota: amb una sola columna, només l'últim enllaç. */
+    li:last-child a {
+      border-bottom: 0;
+    }
+  }
+  /* Amb dues columnes (2 × 9.5rem + espai), els dos últims enllaços formen l'última fila. Per posició, no pel
+     text: val per a qualsevol llengua. */
+  @container (min-width: 19.75rem) and (max-width: 56.25rem) {
+    li:nth-last-child(-n + 2) a {
+      border-bottom: 0;
     }
   }
 </style>

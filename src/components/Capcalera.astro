@@ -29,7 +29,7 @@ const esInici = pagina === 'inici';
     {
       esInici ? (
         <h1 class="marca">
-          {t('lloc.nom')}
+          {t('lloc.salutacio')}
           <span class="visually-hidden"> ({t('avis.fort').toLowerCase()})</span>
         </h1>
       ) : (
@@ -55,10 +55,10 @@ const esInici = pagina === 'inici';
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
     column-gap: var(--s-4);
-    padding-block: var(--s-1);
   }
+  /* Franja de servei compacta: l'alçada la marquen els botons d'idioma (44 px, zona tàctil mínima). */
   .avis {
-    padding-block: var(--s-2);
+    padding-block: var(--s-1);
   }
   .avis strong {
     font-weight: 700;
@@ -78,8 +78,10 @@ const esInici = pagina === 'inici';
     row-gap: var(--s-2);
     padding-top: var(--s-4);
   }
+  /* La marca es pot partir en dues línies si no hi cap (text ampliat): mai surt de la pantalla. */
   .marca {
-    flex: none;
+    flex: 0 1 auto;
+    min-width: 0;
     display: block;
     font-family: var(--display);
     font-weight: 700;
@@ -107,22 +109,30 @@ const esInici = pagina === 'inici';
   /* Crèdit de la foto: dins de la imatge, a baix a la dreta, sobre un fons fosc només darrere del text
      (la foto no s'enfosqueix). Una línia a l'escriptori; dues al mòbil si cal. Els enllaços conserven
      la zona tàctil de 44 px amb farciment en línia, sense fer més alta la franja. */
+  /* La foto, a tota amplada i sense cantonades pròpies: el contingut de la pàgina la cobreix per sota amb les
+     cantonades superiors corbes (vegeu --solapa a global.css). */
   .capcalera :global(.escena) {
     position: relative;
     margin-top: var(--s-2);
   }
+  /* Crèdit: una etiqueta flotant, per sobre de la zona que cobreix el contingut. */
   .capcalera :global(.escena figcaption) {
     position: absolute;
-    right: 0;
-    bottom: 0;
-    max-width: 100%;
+    right: clamp(1.25rem, 3vw, 2.5rem);
+    bottom: calc(var(--solapa) + clamp(0.5rem, 1vw, 0.75rem));
+    max-width: calc(100% - 2.5rem);
     padding: 0.3rem var(--s-3) 0.35rem;
     background: rgb(29 37 50 / 0.8);
     color: var(--calc);
-    border-top-left-radius: 0.5rem;
+    border-radius: 0.6rem;
     font-size: 0.875rem;
     line-height: 1.5;
     text-align: left;
+  }
+  /* TEMPORAL (prova del 14/10/2026): crèdit amagat a petició del promotor. La llicència CC BY-SA 4.0 exigeix
+     l'atribució: s'ha de tornar a mostrar abans d'ensenyar el lloc a ningú més. */
+  .capcalera :global(.escena figcaption) {
+    display: none;
   }
   .capcalera :global(.escena figcaption a) {
     display: inline;
@@ -143,10 +153,19 @@ const esInici = pagina === 'inici';
     .mast {
       padding-top: var(--s-3);
     }
+    /* Al mòbil, el crèdit en una sola línia: la versió curta, a la mateixa mida de lletra. */
     .capcalera :global(.escena figcaption) {
-      padding-inline: var(--pad) var(--s-3);
-      border-top-left-radius: 0;
-      width: 100%;
+      right: 1rem;
+      bottom: calc(var(--solapa) + 0.5rem);
+      max-width: calc(100% - 2rem);
+      padding-inline: var(--s-2);
+      font-family: var(--display);
+    }
+    .capcalera :global(.escena .credit) {
+      display: none;
+    }
+    .capcalera :global(.escena .credit-curt) {
+      display: inline;
     }
     /* Al mòbil, les tasques sempre a la seva fila (2×2), sota la marca. */
     .mast > :global(.tasques) {

@@ -18,14 +18,16 @@ interface Props {
 }
 const { id, titol, maduresa, llengua, nivell = 2, compacte = false, detall, classeDetall } = Astro.props;
 const Titol = nivell === 1 ? 'h1' : 'h2';
+const especulativa = maduresa === 'Idea' || maduresa === 'Demo';
 const t = traductor(llengua);
 ---
 <div class="obertura">
   <Titol id={id} class:list={['titol-gran', 'titol-seccio', `n${nivell}`, { compacte }]}>{titol}</Titol>
-  <p class="meta">
-    <span class:list={['maduresa', { especulativa: maduresa === 'Idea' || maduresa === 'Demo' }]}>{t(`maduresa.${maduresa}`)}</span>
+  {(especulativa || detall) && <p class="meta">
+    {/* Només es marca el que no és real (Idea, Demo); «En prova» ja no es mostra (14/10/2026). */}
+    {especulativa && <span class="maduresa especulativa">{t(`maduresa.${maduresa}`)}</span>}
     {detall && <span class={classeDetall}>{detall}</span>}
-  </p>
+  </p>}
 </div>
 
 <style>
@@ -45,35 +47,17 @@ const t = traductor(llengua);
   .compacte {
     font-size: clamp(1.75rem, 2.6vw, 2.375rem);
   }
-  /* Maduresa i detall com un sol text: si no hi cap, el detall continua a la línia següent de manera natural. */
+  /* Maduresa i detall a la mateixa línia mentre hi caben; al mòbil, el detall continua a sota. */
   .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--s-1) var(--s-3);
     font-family: var(--display);
-    font-weight: 500;
+    font-weight: 600;
     font-size: var(--t-small);
     line-height: 1.35;
     color: var(--tinta-2);
-  }
-  /* «En prova · Del dilluns…»: el punt separa l'etiqueta del detall (Idea i Demo ja tenen el seu marc). */
-  .meta > .maduresa {
-    display: inline;
-    margin-right: 0.3em;
-    font-size: inherit;
-  }
-  .meta > .maduresa.especulativa {
-    display: inline-block;
-  }
-  .meta > .maduresa:not(.especulativa) + span::before {
-    content: '· ';
-    font-weight: 500;
-    color: var(--tinta-2);
-  }
-  /* La descripció d'una pàgina, a la línia següent de l'etiqueta: és un paràgraf, no una dada. */
-  .meta .entrada {
-    display: block;
-    margin-top: var(--s-2);
-  }
-  .meta > .maduresa:not(.especulativa) + .entrada::before {
-    content: none;
   }
   .meta .entrada {
     font-family: var(--text);

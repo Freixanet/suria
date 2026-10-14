@@ -4,7 +4,8 @@
 // Després, «Avui a Súria» (Belle Isle) sobre el fons clar: títol fix, salutació i data en segon pla, i dos fets
 // per llegir d'un cop d'ull, l'agenda (d'avui o la pròxima, amb data) i la farmàcia de guàrdia.
 // Després, el que és útil (Lentos): l'agenda amb el cartell de pròximament a sota i, al costat, primers passos
-// i comerços (compacte si encara no n'hi ha). Al final, «Cap on anem» en el verd del turó.
+// i comerços (compacte si encara no n'hi ha). Al final, «Cap on anem» en el verd del turó (sense la llista
+// d'idees, retirada de la portada el 14/10/2026).
 // Mòbil: marca i tasques, foto, avui, agenda, primers passos, pròximament, comerços.
 import Base from '../layouts/Base.astro';
 import CapcaleraSeccio from '../components/CapcaleraSeccio.astro';
@@ -14,8 +15,8 @@ import ComercosAvui from '../components/ComercosAvui.astro';
 import PrimersPassos from '../components/PrimersPassos.astro';
 import { traductor, type Llengua } from '../i18n/ui.ts';
 import { urlDe } from '../i18n/rutes.ts';
-import { agenda, comercos, consultaMesRecent, idees, passos } from '../lib/dades.ts';
-import { dataNumerica, rangSetmana } from '../lib/format.ts';
+import { agenda, comercos, passos } from '../lib/dades.ts';
+import { rangSetmana } from '../lib/format.ts';
 import type { DadesAra } from '../lib/ara.ts';
 
 interface Props {
@@ -26,15 +27,11 @@ const t = traductor(llengua);
 const { setmana, aquestaSetmana, proximament } = await agenda();
 const llistaPassos = await passos();
 const llistaComercos = await comercos();
-const llistaIdees = await idees();
-const consultaAgenda = dataNumerica(consultaMesRecent(aquestaSetmana));
-const consultaPassos = dataNumerica(consultaMesRecent(llistaPassos));
 const senseComercos = llistaComercos.length === 0;
 const rang = rangSetmana(setmana.inici, setmana.fi, llengua);
 const vigencia = rang.charAt(0).toUpperCase() + rang.slice(1);
 
 const farmacia = llistaPassos.find((p) => p.guardies.length > 0);
-const consultaAvui = dataNumerica(consultaMesRecent([...aquestaSetmana, ...(farmacia ? [farmacia] : [])]));
 const dadesAra: DadesAra = {
   setmana,
   activitats: [
@@ -64,21 +61,21 @@ const textosAra = {
       <p class="fet-etiqueta">{farmacia?.titol[llengua]}</p>
       <a class="fet-titol" href={`${urlDe('passos', llengua)}#farmacia`}>{t('ara.senseJs.farmacia')}</a>
     </div>
-    <p class="font avui-font"><b>{t('procedencia.font')}:</b> {t('ara.font', { data: consultaAvui })}</p>
+    <p class="font avui-font"><b>{t('procedencia.font')}:</b> {t('ara.font')}</p>
   </section>
 
   <div class:list={['ample', 'util', { 'amb-comercos': !senseComercos }]}>
     <section class="setmana" data-facana="ocre" aria-labelledby="h-setmana">
       <CapcaleraSeccio id="h-setmana" titol={t('setmana.titol')} maduresa="En prova" llengua={llengua} detall={vigencia} classeDetall="vigencia" />
       <Agenda llengua={llengua} setmana={setmana} activitats={aquestaSetmana} senseVigencia />
-      <p class="font peu-seccio"><b>{t('procedencia.font')}:</b> {t('setmana.fontResum', { data: consultaAgenda })}</p>
+      <p class="font peu-seccio"><b>{t('procedencia.font')}:</b> {t('setmana.fontResum')}</p>
       <a class="accio" href={urlDe('setmana', llengua)}>{t('tasca.veureSetmana')}</a>
     </section>
 
     <section class="passos" data-facana="cel" aria-labelledby="h-passos">
       <CapcaleraSeccio id="h-passos" titol={t('passos.titol')} maduresa="En prova" llengua={llengua} compacte />
       <PrimersPassos llengua={llengua} passos={llistaPassos} />
-      <p class="font peu-seccio"><b>{t('procedencia.font')}:</b> {t('passos.fontResum', { data: consultaPassos })}</p>
+      <p class="font peu-seccio"><b>{t('procedencia.font')}:</b> {t('passos.fontResum')}</p>
       <a class="accio" href={urlDe('passos', llengua)}>{t('tasca.veurePassos')}</a>
     </section>
 
@@ -105,12 +102,6 @@ const textosAra = {
         <p class="font-identitat">{t('identitat.font')}</p>
         <p class="cap-intro">{t('cap.intro')}</p>
         <a class="accio" href={urlDe('cap', llengua)}>{t('nav.cap')}</a>
-      </div>
-      <div>
-        <p class="idea" id="idees-etiqueta">{t('cap.idees')}</p>
-        <ul class="idees" aria-labelledby="idees-etiqueta">
-          {llistaIdees.map((i) => <li>{i.text[llengua]}</li>)}
-        </ul>
         <p class="provant">{t('provant.descripcio')} <a class="accio" href={urlDe('provant', llengua)}>{t('nav.provant')}</a></p>
       </div>
     </div>
@@ -129,7 +120,8 @@ const textosAra = {
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
     column-gap: clamp(1.5rem, 5vw, 5rem);
     row-gap: var(--s-4);
-    padding-top: var(--s-5);
+    /* Més espai lliure a dalt de la zona clara, sota la corba (prova del 14/10/2026). */
+    padding-top: clamp(2.5rem, 4.5vw, 4.5rem);
     align-items: start;
   }
   .avui-cap {
@@ -159,19 +151,12 @@ const textosAra = {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.15rem;
-  }
-  /* Acent de color lligat al contingut: un traç curt sobre l'etiqueta, no una ratlla que tanqui el títol. */
-  .fet::before {
-    content: '';
-    width: 2.5rem;
-    height: 4px;
-    margin-bottom: var(--s-2);
-    background: var(--f);
-    border-radius: 2px;
+    padding-top: var(--s-2);
+    border-top: 4px solid var(--f);
   }
   .fet :global(.fet-etiqueta) {
     font-family: var(--display);
-    font-weight: 500;
+    font-weight: 650;
     font-size: var(--t-tag);
     color: var(--tinta-2);
   }
@@ -202,9 +187,8 @@ const textosAra = {
   }
   .fet :global(.fet-quan) {
     font-family: var(--display);
-    font-weight: 550;
+    font-weight: 700;
     font-size: var(--t-small);
-    font-variant-numeric: lining-nums tabular-nums;
     margin-top: var(--s-1);
   }
   .fet :global(.fet-lloc) {
@@ -214,8 +198,8 @@ const textosAra = {
   .fet[data-facana='ocre'] :global(.fet-avis) {
     font-size: clamp(1.5rem, 2.4vw, 2.125rem);
   }
-  .fet[data-facana='cel']::before {
-    background: var(--cel-tinta);
+  .fet[data-facana='cel'] {
+    border-top-color: var(--cel-tinta);
   }
   .avui-font {
     grid-column: 1 / -1;
@@ -273,7 +257,7 @@ const textosAra = {
     font-size: var(--t-small);
   }
 
-  /* Cap on anem: la façana verda del turó. Les idees, amb filets discontinus i l'etiqueta explícita. */
+  /* Cap on anem: la façana verda del turó, amb la identitat del poble i els enllaços a la visió i a les proves. */
   .cap {
     margin-top: var(--s-9);
     background: var(--turo);
@@ -281,7 +265,7 @@ const textosAra = {
   }
   .cap-dins {
     display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--s-6) clamp(1.5rem, 5vw, 5rem);
     padding-block: clamp(2.5rem, 6vw, 5rem);
   }
@@ -305,26 +289,8 @@ const textosAra = {
     max-width: 30em;
     margin-bottom: var(--s-2);
   }
-  .idea {
-    display: inline-block;
-    padding: 0.05em 0.5em 0.1em;
-    border: 1.5px dashed currentColor;
-    border-radius: 0.3em;
-    font-family: var(--display);
-    font-weight: 700;
-    font-size: var(--t-small);
-  }
-  .idees {
-    list-style: none;
-    margin: var(--s-3) 0 var(--s-5);
-    border-top: 1px dashed var(--sobre-turo-2);
-  }
-  .idees li {
-    padding: var(--s-2) 0;
-    border-bottom: 1px dashed var(--sobre-turo-2);
-    color: var(--sobre-turo-2);
-  }
   .provant {
+    margin-top: var(--s-5);
     color: var(--sobre-turo-2);
     max-width: 36em;
   }
@@ -341,11 +307,8 @@ const textosAra = {
   @media (max-width: 56.25rem) {
     .avui {
       grid-template-columns: minmax(0, 1fr);
-      row-gap: var(--s-5);
-      padding-top: var(--s-3);
-    }
-    .avui-cap {
-      margin-bottom: calc(-1 * var(--s-2));
+      row-gap: var(--s-3);
+      padding-top: var(--s-7);
     }
     .avui-cap h2 {
       font-size: 1.875rem;

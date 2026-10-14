@@ -63,6 +63,9 @@
   --filet-fi: 1px solid var(--filet);
   --filet-fort: 2px solid var(--tinta);
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Portada: el contingut puja sobre la foto amb les cantonades superiors corbes (squircle, radis base
+     d'america.gov: 40 px al mòbil, 58 px des de 768 px). */
+  --solapa: 40px;
 
   color-scheme: light;
 }
@@ -218,11 +221,10 @@ dd {
   min-height: var(--tap);
   column-gap: 0.4em;
   font-family: var(--display);
-  font-weight: 600;
+  font-weight: 650;
   font-size: var(--t-small);
   text-decoration-line: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.28em;
+  text-decoration-thickness: 1.5px;
 }
 .accio::after {
   content: '';
@@ -241,23 +243,23 @@ dd {
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3.2 1.2 4.6 3.6 3.6 4.7c.5 1.4 2.2 3.1 3.6 3.6l1.1-1 2.4 1.4-.6 1.9c-4.4.2-8.9-4.3-8.7-8.7z' fill='none' stroke='%23000' stroke-width='1.4' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 
-/* Maduresa: text de pes moderat («En prova», «Real»). Idea i Demo, dins d'un marc discontinu: el que encara
-   no existeix es distingeix sense dubte del que funciona. */
+/* Maduresa: text dins d'un marc fi (com les etiquetes de Lentos). Idea i Demo, amb marc discontinu. */
 .maduresa {
   display: inline-flex;
   align-items: center;
   width: fit-content;
+  padding: 0.05em 0.5em 0.1em;
+  border: 1.5px solid currentColor;
+  border-radius: 0.3em;
   font-family: var(--display);
-  font-weight: 600;
+  font-weight: 650;
   font-size: var(--t-tag);
   line-height: 1.4;
   color: var(--tinta);
   white-space: nowrap;
 }
 .maduresa.especulativa {
-  padding: 0.05em 0.5em 0.1em;
-  border: 1.5px dashed currentColor;
-  border-radius: 0.3em;
+  border-style: dashed;
 }
 
 /* Línia de font: discreta però sempre llegible (contrast ≥ 7:1). */
@@ -268,7 +270,7 @@ dd {
 }
 .font b {
   color: var(--tinta);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -290,4 +292,19 @@ dd {
    el marge superior del peu només separa el peu del contingut normal. */
 main:has(> [data-tanca-pagina]:last-child) + .peu {
   margin-top: 0;
+}
+
+/* Portada: la zona clara del contingut comença sobre la part baixa de la foto, amb les cantonades superiors
+   corbes; la foto es veu darrere de les corbes. */
+@media (min-width: 48rem) {
+  :root {
+    --solapa: 58px;
+  }
+}
+.capcalera.inici + main {
+  position: relative;
+  margin-top: calc(-1 * var(--solapa));
+  background: var(--calc);
+  border-radius: var(--solapa) var(--solapa) 0 0;
+  corner-shape: superellipse(1.3);
 }

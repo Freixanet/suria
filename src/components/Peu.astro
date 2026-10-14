@@ -16,7 +16,6 @@ const t = traductor(llengua);
     <p class="marca-peu" aria-hidden="true">{t('lloc.nom')}</p>
     <div class="columna">
       <p><strong>{t('avis.fort')}</strong>{t('avis.resta')}</p>
-      <p>{t('peu.errades')}</p>
     </div>
     <div class="columna">
       <ul>
@@ -24,7 +23,6 @@ const t = traductor(llengua);
         {pagina !== 'inici' && pagina !== 'provant' && <li><a href={urlDe('provant', llengua)}>{t('nav.provant')}</a></li>}
         <li><a href="https://www.suria.cat/" hreflang="ca">{t('peu.oficials')}</a></li>
       </ul>
-      <p class="privacitat">{t('peu.privacitat')}</p>
     </div>
   </div>
 </footer>

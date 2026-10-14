@@ -6,7 +6,7 @@ import TextHores from './TextHores.astro';
 import type { Activitat } from '../lib/dades.ts';
 import { traductor, type Llengua } from '../i18n/ui.ts';
 import { urlDe } from '../i18n/rutes.ts';
-import { dataNumerica, diaMes } from '../lib/format.ts';
+import { diaMes } from '../lib/format.ts';
 
 interface Props {
   llengua: Llengua;
@@ -55,7 +55,7 @@ const id = `proximament-${detall ? 'detall' : 'portada'}`;
             )}
             {!detall && (
               <p class="font">
-                <b>{t('procedencia.font')}:</b> {a.fonts.map((f) => f.nom[llengua]).join('; ')}, {t('procedencia.consultadaEl', { data: dataNumerica(a.consultat) })}.
+                <b>{t('procedencia.font')}:</b> {a.fonts.map((f) => f.nom[llengua]).join('; ')}.
               </p>
             )}
             {detall && (
@@ -106,18 +106,17 @@ const id = `proximament-${detall ? 'detall' : 'portada'}`;
     margin-top: var(--s-2);
     font-variation-settings: 'wdth' 100;
     font-size: var(--t-body);
-    font-weight: 500;
+    font-weight: 650;
     letter-spacing: 0;
   }
   ul {
     list-style: none;
-    margin-top: var(--s-3);
+    margin-top: var(--s-4);
+    border-top: 1.5px solid var(--tinta);
   }
   li {
     padding-block: var(--s-2);
-  }
-  li + li {
-    border-top: 1px solid rgb(29 37 50 / 0.3);
+    border-bottom: 1px solid rgb(29 37 50 / 0.3);
   }
   strong {
     font-family: var(--display);

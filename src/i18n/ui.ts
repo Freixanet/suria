@@ -5,6 +5,7 @@ export const llenguaPerDefecte: Llengua = 'ca';
 
 const ca = {
   'lloc.nom': 'Súria',
+  'lloc.salutacio': 'Ep, Súria!',
   'lloc.nomComplet': 'Súria (prototip)',
   'lloc.descripcio': 'Prototip independent per viure Súria: agenda de la setmana, comerços i primers passos, amb la font de cada dada.',
   'lloc.inici': 'Súria, inici',
@@ -23,12 +24,12 @@ const ca = {
   'saltar': 'Ves al contingut',
 
   'ara.titol': 'Avui a Súria',
-  'ara.font': 'agenda i farmàcies de guàrdia de suria.cat · consultat el {data}',
+  'ara.font': 'agenda i farmàcies de guàrdia de suria.cat',
   'ara.senseJs.agenda': 'Aquesta setmana hi ha {n} activitats a l’agenda.',
   'ara.senseJs.farmacia': 'Consulta el torn vigent a «Primers passos».',
 
   'identitat.text': 'Vila del Bages a la vall del Cardener: el Poble Vell, les Caramelles i la mina de potassa.',
-  'identitat.font': 'Text: turismesuria.cat · consultat el 12/10/2026',
+  'identitat.font': 'Text: turismesuria.cat',
 
   'setmana.titol': 'Aquesta setmana a Súria',
   'setmana.descripcio': 'Activitats i serveis d’aquesta setmana a Súria, amb hora, lloc i font.',
@@ -38,7 +39,7 @@ const ca = {
   'setmana.passada': 'Ja ha passat',
   'setmana.buida': 'Encara no tenim activitats verificades per a aquesta setmana. Mentrestant, pots consultar l’agenda municipal.',
   'setmana.agendaMunicipal': 'Agenda de suria.cat',
-  'setmana.fontResum': 'agenda de suria.cat · consultada el {data}',
+  'setmana.fontResum': 'agenda de suria.cat',
 
   'menjar.titol': 'Menjar i comprar avui',
   'menjar.descripcio': 'Quins negocis participants han comunicat l’horari d’avui i fins quan.',
@@ -65,7 +66,7 @@ const ca = {
   'passos.guardia.senseVigent': 'No tenim el torn de guàrdia actualitzat. Consulta’l a la font oficial.',
   'passos.guardia.fontOficial': 'Farmàcies de guàrdia a suria.cat',
   'passos.guardia.tots': 'Tots els torns de guàrdia',
-  'passos.fontResum': 'suria.cat i la seu electrònica · consultats el {data}',
+  'passos.fontResum': 'suria.cat i la seu electrònica',
 
   'cap.titol': 'Cap on anem',
   'cap.descripcio': 'Idees per al futur d’aquesta plataforma. Encara no existeixen: digues-nos què et faria servei.',
@@ -115,6 +116,7 @@ export type Clau = keyof typeof ca;
 
 const es: Record<Clau, string> = {
   'lloc.nom': 'Súria',
+  'lloc.salutacio': 'Ep, Súria!',
   'lloc.nomComplet': 'Súria (prototipo)',
   'lloc.descripcio': 'Prototipo independiente para vivir Súria: agenda de la semana, comercios y primeros pasos, con la fuente de cada dato.',
   'lloc.inici': 'Súria, inicio',
@@ -133,12 +135,12 @@ const es: Record<Clau, string> = {
   'saltar': 'Ir al contenido',
 
   'ara.titol': 'Hoy en Súria',
-  'ara.font': 'agenda y farmacias de guardia de suria.cat · consultado el {data}',
+  'ara.font': 'agenda y farmacias de guardia de suria.cat',
   'ara.senseJs.agenda': 'Esta semana hay {n} actividades en la agenda.',
   'ara.senseJs.farmacia': 'Consulta el turno vigente en «Primeros pasos».',
 
   'identitat.text': 'Villa del Bages en el valle del Cardener: el Poble Vell, las Caramelles y la mina de potasa.',
-  'identitat.font': 'Texto: turismesuria.cat · consultado el 12/10/2026',
+  'identitat.font': 'Texto: turismesuria.cat',
 
   'setmana.titol': 'Esta semana en Súria',
   'setmana.descripcio': 'Actividades y servicios de esta semana en Súria, con hora, lugar y fuente.',
@@ -148,7 +150,7 @@ const es: Record<Clau, string> = {
   'setmana.passada': 'Ya ha pasado',
   'setmana.buida': 'Todavía no tenemos actividades verificadas para esta semana. Mientras tanto, puedes consultar la agenda municipal.',
   'setmana.agendaMunicipal': 'Agenda de suria.cat',
-  'setmana.fontResum': 'agenda de suria.cat · consultada el {data}',
+  'setmana.fontResum': 'agenda de suria.cat',
 
   'menjar.titol': 'Comer y comprar hoy',
   'menjar.descripcio': 'Qué negocios participantes han comunicado el horario de hoy y hasta cuándo.',
@@ -175,7 +177,7 @@ const es: Record<Clau, string> = {
   'passos.guardia.senseVigent': 'No tenemos el turno de guardia actualizado. Consúltalo en la fuente oficial.',
   'passos.guardia.fontOficial': 'Farmacias de guardia en suria.cat',
   'passos.guardia.tots': 'Todos los turnos de guardia',
-  'passos.fontResum': 'suria.cat y la sede electrónica · consultados el {data}',
+  'passos.fontResum': 'suria.cat y la sede electrónica',
 
   'cap.titol': 'Hacia dónde vamos',
   'cap.descripcio': 'Ideas para el futuro de esta plataforma. Todavía no existen: dinos qué te sería útil.',
