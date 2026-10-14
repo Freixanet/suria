@@ -1,8 +1,11 @@
 ---
 // Capçalera: a dalt, la franja de servei (avís d'independència, data d'avui a Súria i llengua);
-// després la marca —enorme a la portada, compacta a la resta— i les tasques sobre un filet.
+// després, a la portada, la foto del poble a tota amplada amb el nom al cel; a la resta, la marca compacta.
+// Les tasques, sempre sobre un filet.
 import NavTasques from './NavTasques.astro';
 import SelectorLlengua from './SelectorLlengua.astro';
+import FotoSuria from './FotoSuria.astro';
+import { fotos } from '../lib/fotos.ts';
 import { traductor, type Llengua } from '../i18n/ui.ts';
 import { urlDe, type Pagina } from '../i18n/rutes.ts';
 
@@ -25,21 +28,27 @@ const esInici = pagina === 'inici';
       </div>
     </div>
   </div>
-  <div class="ample mast">
-    {
-      esInici ? (
+  {
+    esInici ? (
+      <div class="escena">
         <h1 class="marca">
           {t('lloc.nom')}
           <span class="visually-hidden"> ({t('avis.fort').toLowerCase()})</span>
         </h1>
-      ) : (
+        <FotoSuria foto={fotos.vista} llengua={llengua} format="escena" sizes="100vw" prioritaria />
+        <div class="ample">
+          <NavTasques llengua={llengua} actual={pagina} />
+        </div>
+      </div>
+    ) : (
+      <div class="ample mast">
         <a class="marca" href={urlDe('inici', llengua)} aria-label={t('lloc.inici')}>
           {t('lloc.nom')}
         </a>
-      )
-    }
-    <NavTasques llengua={llengua} actual={pagina} />
-  </div>
+        <NavTasques llengua={llengua} actual={pagina} />
+      </div>
+    )
+  }
 </header>
 
 <script>
@@ -124,17 +133,63 @@ const esInici = pagina === 'inici';
   a.marca:hover {
     color: var(--tinta);
   }
-  .inici .mast {
-    grid-template-columns: minmax(0, 1fr);
-    padding-top: var(--s-2);
+  /* Portada: el nom de Súria al cel de la foto, a tota amplada. */
+  .escena {
+    position: relative;
   }
-  .inici .marca {
-    font-size: var(--t-marca);
+  .escena .marca {
+    position: absolute;
+    z-index: 1;
+    top: clamp(0.75rem, 2.2vw, 2rem);
+    left: max(var(--pad), calc((100% - var(--amplada)) / 2 + var(--pad)));
+    font-size: clamp(4.5rem, 13vw, 12rem);
     font-variation-settings: 'wdth' 90;
-    line-height: 0.78;
-    letter-spacing: -0.055em;
+    line-height: 0.8;
+    letter-spacing: -0.05em;
     margin-left: -0.04em;
-    padding-bottom: 0.04em;
+    padding: 0;
+    pointer-events: none;
+  }
+  /* Crèdit de la foto: a sota al mòbil; a l'escriptori, sobre la part baixa de la foto, sense tapar el nom. */
+  .escena :global(figcaption) {
+    padding: 0 var(--pad);
+  }
+  @media (max-width: 56.25rem) {
+    .escena .marca {
+      font-size: clamp(4rem, 18vw, 6rem);
+      top: 0.5rem;
+    }
+    .escena :global(figcaption) {
+      padding-top: var(--s-1);
+    }
+  }
+  @media (min-width: 56.3rem) {
+    .escena :global(.foto) {
+      position: relative;
+    }
+    .escena :global(figcaption) {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      padding: 0 var(--s-4);
+      background: rgb(29 37 50 / 0.78);
+      color: var(--calc);
+      border-top-left-radius: var(--radi);
+    }
+    .escena :global(figcaption a) {
+      color: var(--calc);
+      padding-block: 0.7rem;
+    }
+    .escena :global(figcaption a:hover) {
+      color: var(--ocre);
+    }
+    .escena :global(figcaption a:focus-visible) {
+      outline-color: var(--ocre);
+      outline-offset: -3px;
+    }
+  }
+  .escena :global(.tasques) {
+    margin-top: var(--s-3);
   }
   @media (max-width: 56.25rem) {
     .mast {

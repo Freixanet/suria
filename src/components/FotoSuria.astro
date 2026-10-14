@@ -7,8 +7,8 @@ import type { Llengua } from '../i18n/ui.ts';
 interface Props {
   foto: Foto;
   llengua: Llengua;
-  /** Proporció del retall: 'panoramica' (portada), 'ampla' (pàgina de visió) o 'alta' (columna de la portada a l'escriptori). */
-  format?: 'panoramica' | 'ampla' | 'alta';
+  /** Retall: 'escena' (portada, a tota amplada amb el nom al cel), 'panoramica' o 'ampla' (pàgina de visió). */
+  format?: 'escena' | 'panoramica' | 'ampla';
   sizes: string;
   /** La foto és l'element principal de la pàgina: es carrega de seguida i amb prioritat. */
   prioritaria?: boolean;
@@ -32,8 +32,9 @@ const credit = {
     decoding="async"
   />
   <figcaption>
-    <span>{credit.foto}: {foto.autor}, {foto.data.slice(0, 4)}{foto.retallada && ` (${credit.retall})`}.</span>{' '}
-    <span class="junts"><a href={foto.llicenciaUrl} rel="license">{foto.llicencia}</a> ·</span>{' '}<a href={foto.original} hreflang="en">{credit.original}</a>
+    <slot />
+    <span class="credit"><span>{credit.foto}: {foto.autor}, {foto.data.slice(0, 4)}{foto.retallada && ` (${credit.retall})`}.</span>{' '}
+    <span class="junts"><a href={foto.llicenciaUrl} rel="license">{foto.llicencia}</a> ·</span>{' '}<a href={foto.original} hreflang="en">{credit.original}</a></span>
   </figcaption>
 </figure>
 
@@ -51,9 +52,17 @@ const credit = {
     aspect-ratio: 21 / 8;
     object-position: 62% 50%;
   }
-  .alta :global(img) {
-    aspect-ratio: 4 / 5;
-    object-position: 64% 50%;
+  /* Portada: a tota amplada, alçada continguda, el cel a dalt (hi va el nom) i el campanar dins del quadre. */
+  .escena :global(img) {
+    height: clamp(14rem, 28vw, 26rem);
+    object-position: 62% 8%;
+    border-radius: 0;
+  }
+  @media (max-width: 56.25rem) {
+    .escena :global(img) {
+      height: auto;
+      aspect-ratio: 2 / 1;
+    }
   }
   .ampla :global(img) {
     aspect-ratio: 16 / 9;

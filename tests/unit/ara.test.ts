@@ -1,59 +1,76 @@
-// «Avui a Súria»: la frase de la portada només diu el que les dades permeten dir, en hora de Súria.
+// «Avui a Súria»: el resum de la portada només diu el que les dades permeten dir, en hora de Súria.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { composaAra, momentDe, type DadesAra } from '../../src/lib/ara.ts';
+import { composaResum, momentDe, type DadesAra } from '../../src/lib/ara.ts';
 
 const dades: DadesAra = {
   setmana: { inici: '2026-10-12', fi: '2026-10-18' },
   activitats: [
-    { titol: 'Deixalleria mòbil', inici: '2026-10-14', hores: [{ inici: '16:15', fi: '17:15' }] },
-    { titol: 'Exposició', inici: '2026-10-16', fi: '2026-10-18', hores: [] },
+    { titol: 'Exposició', inici: '2026-10-16', fi: '2026-10-18', hores: [], ancora: '#h-setmana' },
+    { titol: 'Deixalleria mòbil', inici: '2026-10-14', hores: [{ inici: '16:15', fi: '17:15' }], lloc: 'Escoles', ancora: '#h-setmana' },
+    { titol: 'Taller', inici: '2026-10-15', hores: [{ inici: '15:30', fi: '16:45' }], ancora: '#h-setmana' },
+    { titol: 'Setmana de la Gent Gran', inici: '2026-10-19', fi: '2026-11-08', hores: [], ancora: '#h-proximament' },
   ],
   guardies: [
-    { farmacia: 'Farmàcia Massó', desDe: { data: '2026-10-08', hora: '09:00' }, finsA: { data: '2026-10-15', hora: '09:00' } },
-    { farmacia: 'Farmàcia Ripoll', desDe: { data: '2026-10-15', hora: '09:00' }, finsA: { data: '2026-10-22', hora: '09:00' } },
+    { farmacia: 'Farmàcia Massó', adreca: 'c. Pompeu Fabra, 1', telefon: '+34938682289', desDe: { data: '2026-10-08', hora: '09:00' }, finsA: { data: '2026-10-15', hora: '09:00' } },
+    { farmacia: 'Farmàcia Ripoll', adreca: 'c. Salvador Vancell, 8', telefon: '+34938694163', desDe: { data: '2026-10-15', hora: '09:00' }, finsA: { data: '2026-10-22', hora: '09:00' } },
   ],
 };
-const text = (iso: string, ll: 'ca' | 'es' = 'ca') => composaAra(dades, new Date(iso), ll).trossos.map((t) => t.text).join(' ');
+const resum = (iso: string, ll: 'ca' | 'es' = 'ca') => composaResum(dades, new Date(iso), ll);
 
-test('matí: salutació, data, activitat pendent i farmàcia fins demà', () => {
-  assert.equal(
-    text('2026-10-14T11:20:00+02:00'),
-    'Bon dia. Avui és dimecres 14 d’octubre. A l’agenda d’avui: Deixalleria mòbil (16.15–17.15 h). La farmàcia de guàrdia és la Farmàcia Massó, fins demà a les 9.00 h.',
-  );
+test('matí: salutació, data, activitat d’avui i farmàcia fins demà', () => {
+  const r = resum('2026-10-14T11:20:00+02:00');
+  assert.equal(r.salutacio, 'Bon dia');
+  assert.equal(r.data, 'Dimecres 14 d’octubre');
+  assert.deepEqual(r.agenda, { tipus: 'activitat', etiqueta: 'Avui a l’agenda', titol: 'Deixalleria mòbil', ancora: '#h-setmana', quan: 'Avui · 16.15–17.15 h', lloc: 'Escoles', mes: undefined });
+  assert.deepEqual(r.farmacia, { tipus: 'torn', etiqueta: 'Farmàcia de guàrdia', nom: 'Farmàcia Massó', detall: 'c. Pompeu Fabra, 1 · fins demà a les 9.00 h', telefon: '+34938682289' });
 });
 
-test('quan l’activitat ja ha acabat, ho diu en lloc d’anunciar-la', () => {
-  assert.match(text('2026-10-14T18:00:00+02:00'), /^Bona tarda\..*Les activitats d’avui ja han passat\./);
+test('activitats d’avui acabades: protagonisme per a la pròxima, amb la seva data, i una nota discreta', () => {
+  const r = resum('2026-10-14T18:00:00+02:00');
+  assert.equal(r.salutacio, 'Bona tarda');
+  assert.equal(r.agenda.tipus, 'activitat');
+  if (r.agenda.tipus !== 'activitat') return;
+  assert.equal(r.agenda.etiqueta, 'Pròxima activitat');
+  assert.equal(r.agenda.nota, 'Les d’avui ja han passat.');
+  assert.equal(r.agenda.titol, 'Taller');
+  assert.equal(r.agenda.quan, 'Dijous 15 d’octubre · 15.30–16.45 h');
 });
 
-test('dia sense activitats i canvi de torn a les 9.00 h', () => {
-  const t = text('2026-10-15T08:30:00+02:00');
-  assert.match(t, /Avui l’agenda no té cap activitat\./);
-  assert.match(t, /Farmàcia Massó, fins avui a les 9\.00 h\./);
-  assert.match(text('2026-10-15T09:00:00+02:00'), /Farmàcia Ripoll, fins al dijous 22 d’octubre a les 9\.00 h\./);
+test('canvi de torn a les 9.00 h: fins avui i, després, el torn nou', () => {
+  const abans = resum('2026-10-15T08:30:00+02:00').farmacia;
+  assert.equal(abans.tipus === 'torn' && abans.detall, 'c. Pompeu Fabra, 1 · fins avui a les 9.00 h');
+  const despres = resum('2026-10-15T09:00:00+02:00').farmacia;
+  assert.equal(despres.tipus === 'torn' && despres.nom, 'Farmàcia Ripoll');
 });
 
-test('activitat de diversos dies sense hores: surt cada dia', () => {
-  assert.match(text('2026-10-17T12:00:00+02:00'), /A l’agenda d’avui: Exposició\./);
+test('activitat de diversos dies sense hores: compta tot el dia i diu fins quan', () => {
+  const r = resum('2026-10-17T20:00:00+02:00').agenda;
+  assert.equal(r.tipus === 'activitat' && `${r.etiqueta}: ${r.titol} (${r.quan})`, 'Avui a l’agenda: Exposició (Avui · fins al diumenge 18 d’octubre)');
 });
 
-test('fora de la setmana declarada i sense torn vigent: avisos honestos', () => {
-  const t = composaAra(dades, new Date('2026-10-23T10:00:00+02:00'), 'ca').trossos;
-  assert.deepEqual(
-    t.slice(2).map((x) => [x.text, x.enllac]),
-    [
-      ['No tenim l’agenda d’aquesta setmana.', 'agenda-oficial'],
-      ['No tenim el torn de la farmàcia de guàrdia actualitzat.', 'farmacia-oficial'],
-    ],
-  );
+test('última activitat de la setmana acabada: la pròxima és la de pròximament', () => {
+  const dissabte = { ...dades, activitats: dades.activitats.filter((a) => a.titol !== 'Exposició') };
+  const r = composaResum(dissabte, new Date('2026-10-17T12:00:00+02:00'), 'ca').agenda;
+  assert.equal(r.tipus === 'activitat' && `${r.titol} · ${r.quan} · ${r.ancora}`, 'Setmana de la Gent Gran · Dilluns 19 d’octubre – 8 de novembre · #h-proximament');
+});
+
+test('setmana caducada: l’activitat verificada en curs mana i l’absència és una nota amb l’agenda oficial', () => {
+  const r = resum('2026-10-23T10:00:00+02:00');
+  assert.deepEqual(r.agenda, { tipus: 'activitat', etiqueta: 'Avui a l’agenda', titol: 'Setmana de la Gent Gran', ancora: '#h-proximament', quan: 'Avui · fins al diumenge 8 de novembre', lloc: undefined, nota: 'No tenim l’agenda d’aquesta setmana.', oficial: true });
+  assert.deepEqual(r.farmacia, { tipus: 'avis', etiqueta: 'Farmàcia de guàrdia' });
+});
+
+test('sense cap activitat verificada per davant: l’avís, sol', () => {
+  const r = resum('2026-11-20T10:00:00+01:00').agenda;
+  assert.deepEqual(r, { tipus: 'avis', etiqueta: 'Agenda', text: 'No tenim l’agenda d’aquesta setmana.' });
 });
 
 test('castellà complet', () => {
-  assert.equal(
-    text('2026-10-14T21:30:00+02:00', 'es'),
-    'Buenas noches. Hoy es miércoles 14 de octubre. Las actividades de hoy ya han pasado. La farmacia de guardia es la Farmàcia Massó, hasta mañana a las 9:00 h.',
-  );
+  const r = resum('2026-10-14T21:30:00+02:00', 'es');
+  assert.equal(`${r.salutacio} · ${r.data}`, 'Buenas noches · Miércoles 14 de octubre');
+  assert.equal(r.agenda.tipus === 'activitat' && `${r.agenda.etiqueta} | ${r.agenda.nota} | ${r.agenda.quan}`, 'Próxima actividad | Las de hoy ya han pasado. | Jueves 15 de octubre · 15:30–16:45 h');
+  assert.equal(r.farmacia.tipus === 'torn' && r.farmacia.detall, 'c. Pompeu Fabra, 1 · hasta mañana a las 9:00 h');
 });
 
 test('el moment del dia és el de Súria, sigui quina sigui la zona del navegador', () => {

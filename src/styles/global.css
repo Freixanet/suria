@@ -35,7 +35,6 @@
   /* Tipografia */
   --display: var(--font-display), system-ui, sans-serif;
   --text: var(--font-text), system-ui, sans-serif;
-  --t-marca: clamp(4.75rem, 21vw, 17rem);
   --t-salutacio: clamp(1.75rem, 4vw, 3.5rem);
   --t-h1: clamp(2.5rem, 6.2vw, 5.25rem);
   --t-h2: clamp(2rem, 3.8vw, 3.25rem);

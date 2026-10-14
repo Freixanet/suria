@@ -12,15 +12,16 @@ test.describe('portada', () => {
     for (const nom of ['Aquesta setmana', 'Menjar i comprar', 'Primers passos', 'Cap on anem']) {
       await expect(nav.getByRole('link', { name: nom })).toBeVisible();
     }
-    // «Façanes»: dins de la primera pantalla hi ha les tasques i el resum d'avui (agenda i farmàcia, enllaçats).
+    // «Façanes»: a la primera pantalla, la foto amb el nom, les tasques i el resum d'avui (agenda i farmàcia).
+    await rellotge(page, '2026-10-14T11:20:00+02:00');
+    await page.reload();
     const alt = page.viewportSize()!.height;
-    const salutacio = page.locator('.salutacio');
-    expect(await salutacio.evaluate((el) => el.getBoundingClientRect().top)).toBeLessThan(alt * 0.6);
-    await expect(salutacio.locator('a[href="#h-setmana"]')).toBeVisible();
-    await expect(salutacio.locator('a[href="#farmacia"]')).toBeVisible();
-    // L'agenda completa: a la primera pantalla a l'escriptori; al mòbil, just després del resum (≤ 1,3 pantalles).
-    const top = await page.locator('#h-setmana').evaluate((el) => el.getBoundingClientRect().top);
-    expect(top).toBeLessThan(alt * (page.viewportSize()!.width < 900 ? 1.3 : 1));
+    const posicio = (sel: string) => page.locator(sel).evaluate((el) => el.getBoundingClientRect().top);
+    expect(await posicio('#h-avui')).toBeLessThan(alt * 0.67);
+    expect(await posicio('[data-fet-agenda]')).toBeLessThan(alt * 0.75);
+    await expect(page.locator('[data-fet-agenda] a.fet-titol')).toHaveAttribute('href', '#h-setmana');
+    // L'agenda completa: a la primera pantalla a l'escriptori; al mòbil, abans d'1,3 pantalles.
+    expect(await posicio('#h-setmana')).toBeLessThan(alt * (page.viewportSize()!.width < 900 ? 1.3 : 1));
   });
 
   test('«Aquesta setmana» només conté activitats de la setmana; la resta va a «Pròximament»', async ({ page }) => {
@@ -44,7 +45,7 @@ test.describe('portada', () => {
     await expect(taller).not.toContainText('cada dijous feiner');
     // Procedència i vigència, visibles a la portada.
     await expect(page.locator('.setmana .vigencia')).toBeVisible();
-    await expect(page.locator('.setmana .font')).toContainText('consultades el 12/10/2026');
+    await expect(page.locator('.setmana .font')).toContainText('consultada el 12/10/2026');
     await expect(page.locator('.setmana .maduresa')).toHaveText('En prova');
     // L'explicació llarga és a la pàgina de detall.
     await page.getByRole('link', { name: 'Tota la setmana, amb fonts' }).click();
@@ -66,11 +67,36 @@ test.describe('portada', () => {
     await expect(page.locator('#proximament')).toContainText('Caminada de la Gent Gran');
   });
 
-  test('farmàcia de guàrdia a la portada: el torn acabat deixa lloc al vigent', async ({ page }) => {
+  test('farmàcia de guàrdia a la portada: el resum mostra només el torn vigent', async ({ page }) => {
     await rellotge(page, '2026-10-15T10:00:00+02:00');
     await page.goto(`${BASE}/`);
-    await expect(page.locator('.guardies li', { hasText: 'Farmàcia Massó' })).toBeHidden();
-    await expect(page.locator('.guardies li', { hasText: 'Farmàcia Ripoll' })).toBeVisible();
+    const farmacia = page.locator('[data-fet-farmacia]');
+    await expect(farmacia).toContainText('Farmàcia Ripoll');
+    await expect(farmacia).toContainText('fins al dijous 22 d’octubre a les 9.00 h');
+    await expect(farmacia).not.toContainText('Massó');
+    await expect(farmacia.getByRole('link', { name: /Ripoll/ })).toHaveAttribute('href', 'tel:+34938694163');
+  });
+
+  test('resum d’avui: si les activitats d’avui ja han passat, la pròxima amb la seva data', async ({ page }) => {
+    await rellotge(page, '2026-10-14T21:30:00+02:00');
+    await page.goto(`${BASE}/`);
+    const agenda = page.locator('[data-fet-agenda]');
+    await expect(agenda).toContainText('Pròxima activitat');
+    await expect(agenda).toContainText('Les d’avui ja han passat.');
+    await expect(agenda).toContainText('Unitat Mòbil d’Informació al Consumidor');
+    await expect(agenda).toContainText('Dijous 15 d’octubre · 10.30–11.30 h');
+    await expect(page.locator('#h-avui')).toContainText('Bon vespre');
+  });
+
+  test('resum d’avui: setmana caducada, l’activitat verificada en curs i la nota amb l’agenda municipal (en castellà)', async ({ page }) => {
+    await rellotge(page, '2026-10-23T10:00:00+02:00');
+    await page.goto(`${BASE}/es/`);
+    const agenda = page.locator('[data-fet-agenda]');
+    await expect(agenda.locator('.fet-titol')).toContainText('Setmana de la Gent Gran');
+    await expect(agenda).toContainText('Hoy · hasta el domingo 8 de noviembre');
+    await expect(agenda.locator('.fet-nota')).toHaveText('No tenemos la agenda de esta semana.');
+    await expect(agenda.getByRole('link', { name: 'Agenda de suria.cat' })).toHaveAttribute('href', 'https://www.suria.cat/agenda');
+    await expect(page.locator('[data-fet-farmacia]')).toContainText('No tenemos el turno de guardia actualizado.');
   });
 
   test('farmàcia sense cap torn vigent: ho diu i porta a la font oficial (portada i detall)', async ({ page }) => {
@@ -87,7 +113,7 @@ test.describe('portada', () => {
     await rellotge(page, '2026-10-21T10:00:00+02:00');
     await page.goto(`${BASE}/`);
     await expect(page.getByText('No tenim el torn de guàrdia actualitzat.', { exact: false })).toBeHidden();
-    await expect(page.locator('.guardies li', { hasText: 'Farmàcia Ripoll' })).toBeVisible();
+    await expect(page.locator('[data-fet-farmacia]')).toContainText('Farmàcia Ripoll');
   });
 
   test('les hores dins del text es componen en la lletra de dades', async ({ page }) => {

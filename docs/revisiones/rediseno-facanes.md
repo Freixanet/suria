@@ -58,3 +58,37 @@ El promotor autorizó sustituir Silvinita B por una dirección nueva, conservand
   - revisión humana del castellano;
   - acceso privado (D3/T5) y canal de comentarios (DT4) antes de las pruebas con vecinos.
 - **Referencias para más adelante:** Domino Park («Cómo llegar y normas», historia y uso actual) y Life Stories (memoria de los vecinos). Sin contenido verificado no se construyen.
+
+## Segunda pasada de la portada (14/10/2026)
+
+**Versión anterior recuperable:** etiqueta `facanes-v1` (commit `755b271`).
+
+**Cambios:**
+- **Escena:** la foto del pueblo a todo el ancho, con «Súria» sobre el cielo. El crédito va sobre la foto en escritorio y debajo en móvil. La frase de identidad y su fuente pasan a «Cap on anem».
+- **«Avui a Súria»:**
+  - El párrafo se sustituye por un saludo breve y dos datos: agenda y farmacia.
+  - Si las actividades del día ya han pasado, manda la próxima confirmada, con su fecha.
+  - Con la semana caducada, manda la actividad verificada en curso o la próxima, y la ausencia queda como nota, con el enlace a la agenda municipal.
+  - Una sola línea de fuente.
+  - La altura queda reservada (CLS de 0,04 o menos).
+- **Repeticiones eliminadas:**
+  - El aviso de independencia queda solo en la franja superior y el pie.
+  - La nota de cálculo desaparece.
+  - Las líneas de fuente se acortan: «Font: agenda de suria.cat · consultada el 12/10/2026».
+  - En la portada, la farmacia ya no se repite en «Primers passos», que enlaza a todos los turnos.
+- **Ritmo:**
+  - Agenda con el cartel de «Pròximament» debajo.
+  - Al lado, primeros pasos y una nota compacta de comercios mientras no haya ninguno.
+  - «Què estem provant» se integra en la franja verde.
+
+**Comprobaciones:**
+- Unitarias en verde, incluidos 10 casos del resumen, también con las zonas horarias de Auckland y Nueva York.
+- 103 E2E de 103, con tres nuevos de la portada: torno vigente, actividades del día terminadas y semana caducada en castellano.
+- Lighthouse: rendimiento 97–100 y accesibilidad 100.
+- Capturas a 1440 y 360/390 px, en catalán y castellano, por la mañana, por la noche y con los datos caducados.
+
+**Contrato de la primera pantalla:** el título del resumen, dentro de los 2/3 superiores; el primer dato, dentro de los 3/4; la agenda, dentro de la primera pantalla en escritorio y antes de 1,3 pantallas en móvil.
+
+**Pendiente:**
+- En móvil, la foto y los créditos ocupan unos 250 px antes de las tareas.
+- Si en las pruebas con vecinos se ve que retrasan el resumen, la foto puede bajar a 5:2.

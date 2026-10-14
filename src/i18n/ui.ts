@@ -23,8 +23,9 @@ const ca = {
   'saltar': 'Ves al contingut',
 
   'ara.titol': 'Avui a Súria',
-  'ara.sensejs': 'Et donem la benvinguda a Súria. Aquí tens l’agenda d’aquesta setmana, els primers passos per viure-hi i la farmàcia de guàrdia, amb la font de cada dada.',
-  'ara.font': 'Calculat amb l’hora de Súria a partir de l’agenda i dels torns de farmàcia d’aquesta pàgina.',
+  'ara.font': 'agenda i farmàcies de guàrdia de suria.cat · consultat el {data}',
+  'ara.senseJs.agenda': 'Aquesta setmana hi ha {n} activitats a l’agenda.',
+  'ara.senseJs.farmacia': 'Consulta el torn vigent a «Primers passos».',
 
   'identitat.text': 'Vila del Bages a la vall del Cardener: el Poble Vell, les Caramelles i la mina de potassa.',
   'identitat.font': 'Text: turismesuria.cat · consultat el 12/10/2026',
@@ -37,7 +38,7 @@ const ca = {
   'setmana.passada': 'Ja ha passat',
   'setmana.buida': 'Encara no tenim activitats verificades per a aquesta setmana. Mentrestant, pots consultar l’agenda municipal.',
   'setmana.agendaMunicipal': 'Agenda de suria.cat',
-  'setmana.fontResum': 'fitxes de l’agenda de suria.cat, consultades el {data}.',
+  'setmana.fontResum': 'agenda de suria.cat · consultada el {data}',
 
   'menjar.titol': 'Menjar i comprar avui',
   'menjar.descripcio': 'Quins negocis participants han comunicat l’horari d’avui i fins quan.',
@@ -63,7 +64,8 @@ const ca = {
   'passos.guardia.caducada': 'Aquest torn ja ha acabat.',
   'passos.guardia.senseVigent': 'No tenim el torn de guàrdia actualitzat. Consulta’l a la font oficial.',
   'passos.guardia.fontOficial': 'Farmàcies de guàrdia a suria.cat',
-  'passos.fontResum': 'Seu electrònica de Súria i suria.cat (OAC, voluminosos, farmàcies), consultats el {data}.',
+  'passos.guardia.tots': 'Tots els torns de guàrdia',
+  'passos.fontResum': 'suria.cat i la seu electrònica · consultats el {data}',
 
   'cap.titol': 'Cap on anem',
   'cap.descripcio': 'Idees per al futur d’aquesta plataforma. Encara no existeixen: digues-nos què et faria servei.',
@@ -131,8 +133,9 @@ const es: Record<Clau, string> = {
   'saltar': 'Ir al contenido',
 
   'ara.titol': 'Hoy en Súria',
-  'ara.sensejs': 'Te damos la bienvenida a Súria. Aquí tienes la agenda de esta semana, los primeros pasos para vivir aquí y la farmacia de guardia, con la fuente de cada dato.',
-  'ara.font': 'Calculado con la hora de Súria a partir de la agenda y de los turnos de farmacia de esta página.',
+  'ara.font': 'agenda y farmacias de guardia de suria.cat · consultado el {data}',
+  'ara.senseJs.agenda': 'Esta semana hay {n} actividades en la agenda.',
+  'ara.senseJs.farmacia': 'Consulta el turno vigente en «Primeros pasos».',
 
   'identitat.text': 'Villa del Bages en el valle del Cardener: el Poble Vell, las Caramelles y la mina de potasa.',
   'identitat.font': 'Texto: turismesuria.cat · consultado el 12/10/2026',
@@ -145,7 +148,7 @@ const es: Record<Clau, string> = {
   'setmana.passada': 'Ya ha pasado',
   'setmana.buida': 'Todavía no tenemos actividades verificadas para esta semana. Mientras tanto, puedes consultar la agenda municipal.',
   'setmana.agendaMunicipal': 'Agenda de suria.cat',
-  'setmana.fontResum': 'fichas de la agenda de suria.cat, consultadas el {data}.',
+  'setmana.fontResum': 'agenda de suria.cat · consultada el {data}',
 
   'menjar.titol': 'Comer y comprar hoy',
   'menjar.descripcio': 'Qué negocios participantes han comunicado el horario de hoy y hasta cuándo.',
@@ -171,7 +174,8 @@ const es: Record<Clau, string> = {
   'passos.guardia.caducada': 'Este turno ya ha terminado.',
   'passos.guardia.senseVigent': 'No tenemos el turno de guardia actualizado. Consúltalo en la fuente oficial.',
   'passos.guardia.fontOficial': 'Farmacias de guardia en suria.cat',
-  'passos.fontResum': 'Sede electrónica de Súria y suria.cat (OAC, voluminosos, farmacias), consultados el {data}.',
+  'passos.guardia.tots': 'Todos los turnos de guardia',
+  'passos.fontResum': 'suria.cat y la sede electrónica · consultados el {data}',
 
   'cap.titol': 'Hacia dónde vamos',
   'cap.descripcio': 'Ideas para el futuro de esta plataforma. Todavía no existen: dinos qué te sería útil.',

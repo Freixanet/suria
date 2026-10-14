@@ -24,11 +24,11 @@ colors:
 typography:
   brand-home:
     fontFamily: "Bricolage Grotesque, system-ui, sans-serif"
-    fontSize: "clamp(4.75rem, 21vw, 17rem)"
+    fontSize: "clamp(4.5rem, 13vw, 12rem) (mòbil: clamp(4rem, 18vw, 6rem))"
     fontWeight: 700
     fontVariation: "wdth 90"
-    lineHeight: 0.78
-    letterSpacing: "-0.055em"
+    lineHeight: 0.8
+    letterSpacing: "-0.05em"
   brand:
     fontFamily: "Bricolage Grotesque, system-ui, sans-serif"
     fontSize: "clamp(2.75rem, 6vw, 4.25rem)"
@@ -38,10 +38,15 @@ typography:
     letterSpacing: "-0.045em"
   greeting:
     fontFamily: "Bricolage Grotesque, system-ui, sans-serif"
-    fontSize: "clamp(1.75rem, 4vw, 3.5rem)"
-    fontWeight: 500
-    lineHeight: 1.12
-    letterSpacing: "-0.025em"
+    fontSize: "clamp(1.75rem, 3.4vw, 3rem) (mòbil: 1.5rem)"
+    fontWeight: 600
+    lineHeight: 1.02
+    letterSpacing: "-0.03em"
+  fact:
+    fontFamily: "Bricolage Grotesque, system-ui, sans-serif"
+    fontSize: "clamp(1.3125rem, 1.9vw, 1.75rem)"
+    fontWeight: 650
+    lineHeight: 1.15
   display:
     fontFamily: "Bricolage Grotesque, system-ui, sans-serif"
     fontSize: "clamp(2.5rem, 6.2vw, 5.25rem)"
@@ -102,9 +107,14 @@ components:
   nav-task-active:
     fontWeight: 750
     underline: "3px, color de la façana"
-  greeting-band:
+  home-scene:
+    image: "foto del poble a tota amplada, alçada clamp(14rem, 28vw, 26rem); 2:1 al mòbil"
+    brand: "{typography.brand-home}, en tinta sobre el cel de la foto"
+    credit: "sobre la foto a baix a la dreta (escriptori); a sota (mòbil)"
+  today-summary:
     background: "linear-gradient(cel → llum càlida), segons matí / tarda / vespre"
     typography: "{typography.greeting}"
+    facts: "agenda (filet ocre) i farmàcia (filet cel), {typography.fact}"
   date-window:
     backgroundColor: "{colors.ocre-clar}"
     borderTop: "4px {colors.ocre}"
@@ -146,8 +156,8 @@ components:
 Substitueix Silvinita B (sal i carbó, serif editorial). La versió anterior es pot recuperar amb l'etiqueta git `silvinita-b-2026-10-14` i es pot obrir construïda a `archiu/silvinita-b-2026-10-14/dist/`.
 
 Tres gestos fan la identitat:
-1. **El nom de Súria a tota amplada** a la portada, com fa Lentos amb el seu nom; compacte a la resta de pàgines.
-2. **«Avui a Súria»**: una frase gran feta amb les dades d'avui (agenda i farmàcia de guàrdia), sobre un cel que canvia amb el moment del dia, com la salutació de Belle Isle. Si una dada falta o ha caducat, la frase ho diu.
+1. **El poble i el seu nom, junts**: a la portada, la foto de Súria a tota amplada amb «Súria» escrit al cel (segona passada, 14/10/2026). A la resta de pàgines, la marca compacta.
+2. **«Avui a Súria»**: una salutació breu i dos fets per llegir d'un cop d'ull (agenda i farmàcia de guàrdia), sobre un cel que canvia amb el moment del dia, com fa Belle Isle. Si les activitats d'avui ja han passat, mana la pròxima confirmada amb la seva data; una absència és una nota petita, no el missatge principal.
 3. **Cada mena de contingut té la seva façana**: agenda ocre, primers passos cel, comerços teula, cap on anem verd turó. El color s'acompanya sempre del nom; mai és l'únic senyal.
 
 Mode: Read per a la portada (consulta ràpida i identitat) i Operate/Read per a les pàgines de tasca.
@@ -178,12 +188,13 @@ Marca de portada 76–272 px · títol de pàgina 40–84 px · títol de secci�
 
 ## Layout
 
-Contenidor de 90rem amb marge lateral `clamp(1rem, 4vw, 3.5rem)`. Portada: franja de servei → nom → tasques sobre un filet de 2 px → «Avui a Súria» (7/12 frase, 5/12 foto) → agenda amb pròximament a sota (7/12) i primers passos al costat (5/12) → comerços a tota amplada → cap on anem en la franja verda → què estem provant → peu. Mòbil: avui, agenda, primers passos, pròximament, comerços.
+Contenidor de 90rem amb marge lateral `clamp(1rem, 4vw, 3.5rem)`. Portada: franja de servei → foto a tota amplada amb el nom al cel → tasques sobre un filet de 2 px → «Avui a Súria» (salutació 4/13, agenda 5/13, farmàcia 4/13) → agenda amb el cartell de pròximament a sota (7/12) i, al costat, primers passos i comerços (5/12; nota compacta si no n'hi ha; a tota amplada si n'hi ha) → cap on anem en la franja verda, amb la frase d'identitat i l'enllaç a «Què estem provant» → peu. Mòbil: foto i nom, tasques, avui, agenda, primers passos, pròximament, comerços.
 
 Pàgines de tasca: obertura del color de la seva façana (filet de 6 px a dalt), cos de lectura de 48rem màxim i lateral enganxós amb fonts oficials i altres tasques.
 
 ### Named Rules
-- **A la primera pantalla, les tasques i el resum d'avui.** A l'escriptori també el títol de l'agenda; al mòbil, l'agenda comença abans d'1,3 pantalles (provat).
+- **A la primera pantalla, el poble, les tasques i el resum d'avui.** El títol del resum, dins dels 2/3 superiors; el primer fet, dins dels 3/4. A l'escriptori també hi ha el títol de l'agenda; al mòbil, l'agenda comença abans d'1,3 pantalles (provat).
+- **Una sola explicació per cosa.** L'avís d'independència, a la franja de servei i al peu. Les fonts a la portada, en una línia curta i comprensible («Font: agenda de suria.cat · consultada el 12/10/2026»). La metodologia, a les pàgines de detall.
 - **Filets, no caixes.** Les llistes s'obren amb un filet de tinta de 2 px i se separen amb filets fins. Només tenen fons el torn de farmàcia, el cartell de pròximament, els avisos i l'estat d'un comerç.
 
 ## Elevation & Depth
@@ -203,20 +214,29 @@ Tinta, a dalt de tot: «Prototip independent, en proves amb veïns. No és una w
 ### Navegació de tasques
 Quatre paraules grans sobre un filet de tinta, cada una amb la mostra de la seva façana. La pàgina actual: subratllat de 3 px del seu color i pes 750. Al mòbil, 2×2 (una columna amb el text ampliat).
 
+### Escena de portada
+La foto de Súria a tota amplada, retallada perquè el cel quedi a dalt i el campanar dins del quadre, amb «Súria» (h1) en tinta sobre el cel. El crèdit (autor, any, «retallada», llicència, original) va sobre la foto a l'escriptori i a sota al mòbil, amb objectius de 44 px.
+
 ### Avui a Súria
-Frase composta per `src/lib/ara.ts` (provada en tres zones horàries): salutació, data, activitats d'avui que encara no han acabat o «ja han passat», farmàcia de guàrdia vigent amb l'hora de canvi, o els avisos «No tenim l'agenda d'aquesta setmana» / «No tenim el torn… actualitzat». Cada tros enllaça al detall o a la font oficial. Sense JavaScript, una benvinguda que no depèn de l'hora.
+Resum compost per `src/lib/ara.ts`, provat en tres zones horàries:
+- **Salutació i data** («Bon vespre · Dimecres 14 d'octubre»).
+- **Agenda:** l'activitat d'avui que encara no ha acabat, amb «I 1 activitat més avui» si n'hi ha més. Si ja han passat, «Pròxima activitat» amb la seva data i la nota «Les d'avui ja han passat.». Amb la setmana caducada, l'activitat verificada en curs o la pròxima, amb la nota «No tenim l'agenda d'aquesta setmana.» i l'enllaç a l'agenda de suria.cat.
+- **Farmàcia:** el torn vigent, amb l'adreça, fins quan i el telèfon com a acció. Sense torn vigent, l'avís i la font oficial.
+- **Font:** una sola línia per a tot el resum.
+
+Sense JavaScript, el resum enllaça a l'agenda i als torns, sense dependre de l'hora. L'alçada queda reservada perquè la pàgina no salti.
 
 ### Actividad de agenda (E2)
 Finestra de data ocre, títol, hora en negreta · lloc, requisit amb un filet fi del color de la façana, acció «Fitxa a suria.cat». Passada: finestra en pedra i «Ja ha passat».
 
 ### Primers passos (E3) i torn de farmàcia
-Títol, resum i accions (tràmit en línia, trucar). Cada torn és una fitxa de cel amb «Fins…», el nom i l'adreça, i el telèfon com a acció. Torn acabat: pedra i «Aquest torn ja ha acabat» (a la portada desapareix). Sense torn vigent: avís en teula clara amb la font oficial.
+Títol, resum i accions (tràmit en línia, trucar). A la portada, la farmàcia només porta l'enllaç «Tots els torns de guàrdia»; el torn vigent ja és al resum d'avui. Cada torn és una fitxa de cel amb «Fins…», el nom i l'adreça, i el telèfon com a acció. Torn acabat: pedra i «Aquest torn ja ha acabat» (a la portada desapareix). Sense torn vigent: avís en teula clara amb la font oficial.
 
 ### Pròximament
 Cartell ocre (programa de festa major): títol estret, dates, punts essencials, enllaç al programa i font.
 
 ### Ficha de comercio (E1)
-Nom com un rètol amb un filet teula a dalt, ofici i adreça, i l'estat amb paraules i forma: quadrat ple (horari comunicat), buit (sense confirmar), discontinu (avui no), gris (finalitzat). Mai «obert ara». Sense comerços: una frase gran i honesta i la promesa «No direm mai “obert ara”».
+Nom com un rètol amb un filet teula a dalt, ofici i adreça, i l'estat amb paraules i forma: quadrat ple (horari comunicat), buit (sense confirmar), discontinu (avui no), gris (finalitzat). Mai «obert ara». Sense comerços, a la portada: una nota compacta en teula clara al costat dels primers passos, amb la promesa «No direm mai “obert ara”».
 
 ### Etiqueta de maduresa
 Text dins d'un marc fi («En prova», «Real»); discontinu per a «Idea» i «Demo». Al costat de cada títol de secció.
@@ -225,7 +245,7 @@ Text dins d'un marc fi («En prova», «Real»); discontinu per a «Idea» i «D
 Sota cada peça al detall, darrere d'un filet discontinu: maduresa, font, consultat, vigència i responsable.
 
 ### Cap on anem
-Franja verda del turó amb el text d'identitat i la seva font, i les idees amb etiqueta «Idees · encara no existeixen» i filets discontinus. Mai semblen funcions disponibles.
+Franja verda del turó amb la frase d'identitat i la seva font, la introducció, les idees amb l'etiqueta «Idees · encara no existeixen» i filets discontinus (mai semblen funcions disponibles), i l'enllaç a «Què estem provant».
 
 ### Peu
 Bloc de tinta amb el nom, l'avís d'independència, la fe d'errades, l'enllaç a les fonts oficials i la nota de privacitat.

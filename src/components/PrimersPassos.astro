@@ -5,6 +5,7 @@ import LiniaProcedencia from './LiniaProcedencia.astro';
 import TextHores from './TextHores.astro';
 import type { Pas } from '../lib/dades.ts';
 import { traductor, type Llengua } from '../i18n/ui.ts';
+import { urlDe } from '../i18n/rutes.ts';
 import { diaLlarg, hora, telefonVisible } from '../lib/format.ts';
 import { instantMadrid } from '../lib/hora-local.ts';
 
@@ -36,7 +37,7 @@ const fiDarrerTorn = (p: Pas) =>
           <div>
             <Titol class="titol-peca">{p.titol[llengua]}</Titol>
             {text && <p><TextHores text={text[llengua]} /></p>}
-            {p.guardies.length > 0 && (
+            {detall && p.guardies.length > 0 && (
               <ul class="guardies">
                 {p.guardies.map((g, i) => (
                   <li data-caduca={instantMadrid(g.finsA.data, g.finsA.hora).toISOString()}>
@@ -54,12 +55,18 @@ const fiDarrerTorn = (p: Pas) =>
                 ))}
               </ul>
             )}
-            {p.guardies.length > 0 && (
+            {detall && p.guardies.length > 0 && (
               <div class="sense-torn" data-caduca={fiDarrerTorn(p)}>
                 <p data-avis-caducat hidden role="status">
                   <strong>{t('passos.guardia.senseVigent')}</strong>
                   <a class="accio" href={p.fonts[0].url} hreflang="ca">{t('passos.guardia.fontOficial')}</a>
                 </p>
+              </div>
+            )}
+            {/* A la portada, el torn vigent és al resum d'avui; aquí, l'enllaç a tots els torns. */}
+            {!detall && p.guardies.length > 0 && (
+              <div class="accions">
+                <a class="accio" href={`${urlDe('passos', llengua)}#farmacia`}>{t('passos.guardia.tots')}</a>
               </div>
             )}
             {p.accions.length > 0 && (
