@@ -2,24 +2,52 @@
 
 Para comprobar a mano lo que las pruebas automáticas no pueden garantizar. **No sustituye** a los pendientes de lector de pantalla, móvil real ni revisión humana del castellano: esos se marcan como hechos solo cuando los haga una persona.
 
-**Cómo abrirlo:** en el proyecto, `npm run build` y después `npm run preview`. Abre <http://localhost:4329/>.
+El guion tiene tres partes:
+1. **Preparación**, solo para quien observa.
+2. **Tareas para participantes**: lo único que se enseña o se lee a quien prueba. No lleva respuestas.
+3. **Respuestas y criterios**, solo para quien observa: qué debe pasar, dónde parar y en qué fijarse.
 
-**Antes de empezar:**
+## 1. Preparación (solo para quien observa)
+
+**Cómo abrirlo:** la vista previa local está en <http://127.0.0.1:4329/> (solo en este ordenador). Si no responde: en el proyecto, `npm run build` y después `npm run preview`.
+
+**Fechas del contenido:**
 - La agenda es de la semana del 12 al 18 de octubre de 2026. A partir del 19, la página avisa de que está caducada; eso es lo esperado.
 - La farmacia de guardia tiene turnos publicados hasta el 22/10 a las 9.00 h.
 
+**Nada real, en ningún caso:**
+- No se hace ninguna llamada. Si alguien pulsa un teléfono y se abre la app de llamadas (en el Mac, FaceTime o Teléfono; en el móvil, el marcador), se cancela antes de llamar. Basta con que diga «aquí llamaría».
+- No se envía ningún trámite. Si un enlace abre la sede electrónica del Ayuntamiento u otra web oficial, no se inicia sesión ni se rellena ni se envía nada. Basta con llegar a la página y decir «aquí lo haría».
+- No se escriben datos personales en ninguna web.
+- Díselo a quien pruebe antes de empezar (la frase está al principio de la parte 2).
+
+**Cómo observar:**
+- Lee cada tarea tal cual, sin pistas. Si alguien se bloquea más de dos minutos, apunta «no» y pasa a la siguiente.
+- No enseñes la parte 3 a quien prueba.
+
 **Cómo anotar:** para cada tarea, apunta si se ha podido hacer (sí / con dudas / no), cuánto ha costado y qué ha confundido. No anotes datos personales de nadie.
 
-## Tareas
+## 2. Tareas para participantes
 
-| # | Tarea (dila tal cual a quien pruebe) | Qué debe pasar | Fíjate en |
+> Esto es un prototipo y todo pasa en este ordenador. **No hace falta llamar a nadie ni hacer ningún trámite de verdad:** cuando llegues al sitio donde lo harías, dímelo y paramos ahí. No se evalúa a ti, sino a la web.
+
+1. Busca qué actividad hay el jueves por la tarde y quién puede ir.
+2. ¿Qué farmacia está de guardia hoy? Enséñame dónde encontrarías su teléfono para llamarla (sin llamar).
+3. Acabas de llegar a Súria: ¿cómo te empadronarías? Llega hasta donde lo harías, sin enviar nada.
+4. Cambia la web a castellano y vuelve al catalán.
+5. ¿Qué cosas de esta web funcionan ya y cuáles son solo ideas?
+6. Mira qué hay más adelante, después de esta semana.
+
+## 3. Respuestas y criterios (solo para quien observa)
+
+| # | Respuesta esperada | Se da por hecha cuando… | Fíjate en |
 |---|---|---|---|
-| 1 | «Busca qué actividad hay el jueves por la tarde y quién puede ir.» | Encuentra el «Taller d'estimulació cognitiva» (Dj 15, 15.30–16.45 h, EMFA aula 9) y lee «Més de 60 anys… inscripció a l'OAC» sin abrir otra página. | ¿Ha tenido que bajar mucho? ¿Ha entendido «Fitxa a suria.cat»? |
-| 2 | «¿Qué farmacia está de guardia hoy y cómo la llamas?» | Encuentra el turno vigente con la dirección y pulsa el teléfono. A partir del 22/10 a las 9.00 h debe ver el aviso «No tenim el torn… actualitzat» y el enlace oficial. | ¿Entiende el cambio de turno a las 9.00 h? ¿Confunde un turno pasado con el vigente? |
-| 3 | «Acabas de llegar a Súria: ¿cómo te empadronas?» | Llega a «Empadronar-te». Ve que puede hacerlo en línea («Tràmit d'alta en línia», que abre la sede electrónica) o en la OAC, con su horario. | ¿Distingue el trámite en línea de la llamada? ¿Echa en falta algo para hacerlo? |
-| 4 | «Cambia la web a castellano y vuelve al catalán.» | Con CA/ES se queda en la misma sección y en el otro idioma. Si cierra y vuelve a entrar, recuerda el idioma elegido. | ¿Encuentra el selector? ¿Se pierde al cambiar? |
-| 5 | «¿Qué cosas de esta web funcionan ya y cuáles son solo ideas?» | Distingue «En prova» (funciona y se está probando) de «Idees · encara no existeixen» (en «Cap on anem»). Entiende que todavía no hay comercios participantes. | ¿Cree que alguna idea ya existe? ¿Entiende «En prova»? ¿Ve de dónde sale cada dato («Font», fecha de consulta)? |
-| 6 | «Mira qué hay más adelante, después de esta semana.» | Encuentra «Pròximament» (Setmana de la Gent Gran), el plazo de inscripción del 23/10 y «Programa i detalls». | ¿Lo confunde con esta semana? |
+| 1 | El «Taller d'estimulació cognitiva» (Dj 15, 15.30–16.45 h, EMFA aula 9). Lee «Més de 60 anys… inscripció a l'OAC» sin abrir otra página. | Dice la actividad y quién puede ir. | ¿Ha tenido que bajar mucho? ¿Ha entendido «Fitxa a suria.cat»? |
+| 2 | El turno vigente, con la dirección y el teléfono. A partir del 22/10 a las 9.00 h debe ver el aviso «No tenim el torn… actualitzat» y el enlace a la fuente oficial. | Señala el teléfono del turno vigente (o, sin turno, el aviso y el enlace oficial). **No se llama:** si se abre la app de llamadas, se cancela. | ¿Entiende el cambio de turno a las 9.00 h? ¿Confunde un turno pasado con el vigente? |
+| 3 | Llega a «Empadronar-te». Ve que puede hacerlo en línea («Tràmit d'alta en línia», que abre la sede electrónica) o en la OAC, con su horario. | Elige una de las dos vías y sabe qué necesita. **No se envía nada:** si abre la sede electrónica, para ahí sin iniciar sesión. | ¿Distingue el trámite en línea de la llamada? ¿Echa en falta algo para hacerlo? |
+| 4 | Con CA/ES se queda en la misma sección y en el otro idioma. Si cierra y vuelve a entrar, recuerda el idioma elegido. | Ha cambiado de idioma y ha vuelto sin perder la sección. | ¿Encuentra el selector? ¿Se pierde al cambiar? |
+| 5 | Distingue «En prova» (funciona y se está probando) de «Idees · encara no existeixen» (en «Cap on anem»). Entiende que todavía no hay comercios participantes. | Nombra al menos una cosa que funciona y una que es solo idea, sin confundirlas. | ¿Cree que alguna idea ya existe? ¿Entiende «En prova»? ¿Ve de dónde sale cada dato («Font», fecha de consulta)? |
+| 6 | Encuentra «Pròximament» (Setmana de la Gent Gran), el plazo de inscripción del 23/10 y «Programa i detalls». | Dice qué hay y hasta cuándo se puede inscribir. No hace falta inscribirse. | ¿Lo confunde con esta semana? |
 
 ## Qué puedes probar tú ahora (en este ordenador)
 
