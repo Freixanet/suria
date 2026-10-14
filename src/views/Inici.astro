@@ -45,6 +45,7 @@ const textosAra = {
   fontOficial: t('passos.guardia.fontOficial'),
   fontUrl: farmacia?.fonts[0]?.url ?? 'https://www.suria.cat/',
   agendaOficial: t('setmana.agendaMunicipal'),
+  veureAgenda: t('ara.veureAgenda'),
 };
 ---
 <Base llengua={llengua} pagina="inici">
@@ -241,20 +242,19 @@ const textosAra = {
   .peu-seccio {
     margin-top: var(--s-4);
   }
-  /* Sense comerços: una nota breu i honesta, no una secció sencera. */
-  .buida {
-    padding: var(--s-4) var(--s-4) var(--s-3);
-    background: var(--teula-clar);
-    border-radius: var(--radi);
-  }
+  /* Sense comerços: una línia breu i honesta, sense fons de color (no ha de pesar més que l'agenda). */
   .buida :global(.buit) {
     padding-top: 0;
   }
   .buida :global(.buit-titol) {
-    font-size: var(--t-h3);
+    font-size: var(--t-body);
+    font-weight: 600;
+    letter-spacing: 0;
+    margin-bottom: var(--s-1);
   }
   .buida :global(.buit p:not(.buit-titol)) {
     font-size: var(--t-small);
+    color: var(--tinta-2);
   }
 
   /* Cap on anem: la façana verda del turó, amb la identitat del poble i els enllaços a la visió i a les proves. */
@@ -323,7 +323,7 @@ const textosAra = {
     .util {
       grid-template-rows: none;
       row-gap: var(--s-7);
-      padding-top: var(--s-4);
+      padding-top: var(--s-7);
     }
     .setmana,
     .passos,
