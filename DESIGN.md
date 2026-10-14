@@ -230,7 +230,7 @@ Resum compost per `src/lib/ara.ts`, provat en tres zones horàries:
 Sense JavaScript, el resum enllaça a l'agenda i als torns, sense dependre de l'hora. L'alçada queda reservada perquè la pàgina no salti.
 
 ### Actividad de agenda (E2)
-Finestra de data ocre, títol, hora en negreta (a la seva línia), lloc (a la línia següent), requisit amb un filet fi del color de la façana, acció «Fitxa a suria.cat». Passada: finestra en pedra i «Ja ha passat».
+Finestra de data ocre amb el dia sencer («Dimecres 14»), nom, hora (a la seva línia), lloc a mida de lectura, requisit en una nota del color clar de la façana (sense ratlla lateral), descripció en segon pla i acció «Fitxa a suria.cat». Es marca «Ja ha passat» quan acaba l'última franja horària, no a mitjanit. Passada: finestra en pedra i «Ja ha passat».
 
 ### Primers passos (E3) i torn de farmàcia
 Títol, resum i accions (tràmit en línia, trucar). A la portada, la farmàcia només porta l'enllaç «Tots els torns de guàrdia»; el torn vigent ja és al resum d'avui. Cada torn és una fitxa de cel amb «Fins…», el nom i l'adreça, i el telèfon com a acció. Torn acabat: pedra i «Aquest torn ja ha acabat» (a la portada desapareix). Sense torn vigent: avís en teula clara amb la font oficial.

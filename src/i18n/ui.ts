@@ -25,6 +25,7 @@ const ca = {
 
   'ara.titol': 'Avui a Súria',
   'ara.font': 'agenda i farmàcies de guàrdia de suria.cat',
+  'ara.veureAgenda': 'Veure-la a l’agenda',
   'ara.senseJs.agenda': 'Aquesta setmana hi ha {n} activitats a l’agenda.',
   'ara.senseJs.farmacia': 'Consulta el torn vigent a «Primers passos».',
 
@@ -136,6 +137,7 @@ const es: Record<Clau, string> = {
 
   'ara.titol': 'Hoy en Súria',
   'ara.font': 'agenda y farmacias de guardia de suria.cat',
+  'ara.veureAgenda': 'Verla en la agenda',
   'ara.senseJs.agenda': 'Esta semana hay {n} actividades en la agenda.',
   'ara.senseJs.farmacia': 'Consulta el turno vigente en «Primeros pasos».',
 

@@ -3,7 +3,7 @@
 import { composaResum, type DadesAra } from '../lib/ara.ts';
 import { telefonVisible } from '../lib/format.ts';
 
-type Textos = { senseVigent: string; fontOficial: string; fontUrl: string; agendaOficial: string };
+type Textos = { senseVigent: string; fontOficial: string; fontUrl: string; agendaOficial: string; veureAgenda: string };
 
 function el<K extends keyof HTMLElementTagNameMap>(tag: K, classe: string, text?: string, attrs: Record<string, string> = {}) {
   const node = document.createElement(tag);
@@ -29,10 +29,11 @@ function pinta() {
       const fills: HTMLElement[] = [el('p', 'fet-etiqueta', a.etiqueta)];
       if (a.tipus === 'activitat') {
         if (a.nota) fills.push(el('p', 'fet-nota', a.nota));
-        fills.push(el('a', 'fet-titol', a.titol, { href: a.ancora }));
+        fills.push(el('p', 'fet-titol', a.titol));
         fills.push(el('p', 'fet-quan', a.quan));
         if (a.lloc) fills.push(el('p', 'fet-lloc', a.lloc));
-        if (a.mes) fills.push(el('a', 'accio', a.mes, { href: '#h-setmana' }));
+        if (a.mes) fills.push(el('p', 'fet-nota', a.mes));
+        fills.push(el('a', 'accio', textos.veureAgenda, { href: a.ancora }));
         if (a.oficial) fills.push(el('a', 'accio', textos.agendaOficial, { href: 'https://www.suria.cat/agenda', hreflang: 'ca' }));
       } else {
         fills.push(el('p', 'fet-avis', a.text));
@@ -49,8 +50,10 @@ function pinta() {
         fills.push(el('p', 'fet-titol', f.nom));
         fills.push(el('p', 'fet-quan', f.fins));
         fills.push(el('p', 'fet-lloc', f.adreca));
-        const trucar = el('a', 'accio', `${f.nom.replace(/^Farmàcia /, '')}: `, { href: `tel:${f.telefon}` });
-        trucar.append(el('span', 'xifres', telefonVisible(f.telefon)));
+        const trucar = el('a', 'accio', undefined, { href: `tel:${f.telefon}` });
+        const text = el('span', '', `${f.nom.replace(/^Farmàcia /, '')}: `);
+        text.append(el('span', 'xifres', telefonVisible(f.telefon)));
+        trucar.append(text);
         fills.push(trucar);
       } else {
         fills.push(el('p', 'fet-avis', textos.senseVigent));

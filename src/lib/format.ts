@@ -23,6 +23,18 @@ export function diaCurt(data: string, ll: Llengua): string {
   return `${diesCurts[ll][diaSetmana(data)]} ${parts(data)[2]}`;
 }
 
+/** 'Dimecres 14' / 'Miércoles 14': el dia sencer, per a la finestra de data de l'agenda. */
+export function diaNumero(data: string, ll: Llengua): string {
+  const nom = diesLlargs[ll][diaSetmana(data)];
+  return `${nom.charAt(0).toUpperCase()}${nom.slice(1)} ${parts(data)[2]}`;
+}
+
+/** 'Divendres 16 – diumenge 18' / 'Viernes 16 – domingo 18' */
+export function rangDies(inici: string, fi: string | undefined, ll: Llengua): string {
+  if (!fi || fi === inici) return diaNumero(inici, ll);
+  return `${diaNumero(inici, ll)} – ${diesLlargs[ll][diaSetmana(fi)]} ${parts(fi)[2]}`;
+}
+
 /** 'Dv 16–dg 18' / 'Vie 16–dom 18' */
 export function rangCurt(inici: string, fi: string | undefined, ll: Llengua): string {
   if (!fi || fi === inici) return diaCurt(inici, ll);

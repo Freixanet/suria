@@ -20,7 +20,7 @@ test.describe('portada', () => {
     // La foto té prioritat de qualitat (14/10/2026; a l'escriptori, més alta a petició del promotor): el títol del
     // resum d'avui, dins de la primera pantalla.
     expect(await posicio('#h-avui')).toBeLessThan(alt);
-    await expect(page.locator('[data-fet-agenda] a.fet-titol')).toHaveAttribute('href', '#h-setmana');
+    await expect(page.locator('[data-fet-agenda] a.accio')).toHaveAttribute('href', '#h-setmana');
     // L'agenda completa, just després: abans d'1,5 pantalles.
     expect(await posicio('#h-setmana')).toBeLessThan(alt * 1.5);
   });
@@ -38,7 +38,7 @@ test.describe('portada', () => {
   test('portada densa: per actuar n’hi ha prou amb el que es veu; les explicacions, al detall', async ({ page }) => {
     await page.goto(`${BASE}/`);
     const taller = page.locator('.setmana .llista > li', { hasText: 'Taller d’estimulació cognitiva' });
-    await expect(taller.locator('.dia')).toHaveText('Dj 15');
+    await expect(taller.locator('.dia')).toHaveText('Dijous 15');
     await expect(taller.locator('.hores')).toHaveText('15.30–16.45 h');
     await expect(taller).toContainText('Escola Municipal de Formació d’Adults');
     await expect(taller).toContainText('Més de 60 anys');
@@ -202,6 +202,16 @@ test.describe('vigència', () => {
     await expect(deixalleria.getByText('Ja ha passat')).toBeVisible();
     const exposicio = page.locator('.llista > li', { hasText: 'Diversitat' });
     await expect(exposicio.getByText('Ja ha passat')).toBeHidden();
+  });
+
+  test('una activitat es marca com a passada quan acaba la seva hora, no a mitjanit', async ({ page }) => {
+    await rellotge(page, '2026-10-14T18:30:00+02:00');
+    await page.goto(`${BASE}/`);
+    const deixalleria = page.locator('.setmana .llista > li', { hasText: 'Deixalleria mòbil' });
+    await expect(deixalleria.getByText('Ja ha passat')).toBeVisible();
+    await rellotge(page, '2026-10-14T17:00:00+02:00');
+    await page.reload();
+    await expect(deixalleria.getByText('Ja ha passat')).toBeHidden();
   });
 
   test('acabada la setmana, l’agenda avisa que és antiga i porta a la municipal', async ({ page }) => {

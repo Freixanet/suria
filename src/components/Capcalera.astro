@@ -146,6 +146,34 @@ const esInici = pagina === 'inici';
     outline-color: var(--ocre);
     outline-offset: 1px;
   }
+  /* Escriptori (des de 72rem): marca i tasques sempre a la mateixa línia, centrades verticalment.
+     Mides fluides perquè hi càpiguen sense partir cap nom, també en castellà. */
+  @media (min-width: 72rem) {
+    .mast {
+      flex-wrap: nowrap;
+      align-items: center;
+      column-gap: clamp(2rem, 3.5vw, 4rem);
+      padding-bottom: var(--s-2);
+    }
+    .marca,
+    .inici .marca {
+      padding-bottom: 0;
+    }
+    .inici .marca {
+      font-size: clamp(3.5rem, 5vw, 5rem);
+    }
+    .mast > :global(.tasques) {
+      flex: 1 1 auto;
+      margin-bottom: 0;
+    }
+    .mast > :global(.tasques ul) {
+      justify-content: flex-end;
+      column-gap: clamp(1rem, 2vw, 2.5rem);
+    }
+    .mast > :global(.tasques a) {
+      font-size: clamp(1.0625rem, 1.35vw, 1.375rem);
+    }
+  }
   @media (max-width: 56.25rem) {
     .barra-dins {
       font-size: var(--t-tag);
