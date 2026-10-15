@@ -160,7 +160,7 @@
         "bus": "cel (blue)",
         "pharmacy": "turo (green)"
       },
-      "weather": "Open-Meteo current model data, fixed Suria coordinates, icon + temperature as noninteractive image;15min refresh/45min expiry; provider in accessible help and data, no footer link; no geolocation",
+      "weather": "MET Norway hourly model estimate, fixed Suria coordinates, icon + temperature noninteractive without adjacent info link; credit in Fonts i crèdits; refresh respects Expires; no geolocation",
       "usefulServices": "10 verified destinations; horizontal square208–272px cards with hidden scrollbar across homepage width; eight muted backgrounds with text/icons",
       "agendaLinks": "Titles of weekly and Avui events link to original records without underline; no Avui source line or homepage agenda footer; no upcoming provenance; structured sources retained",
       "homepageSections": "Summary, weekly agenda, useful services, upcoming, vision. Steps and commerce only on their own pages.",

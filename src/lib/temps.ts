@@ -1,30 +1,41 @@
-// Condicions actuals estimades: Open-Meteo, dades de model cada 15 minuts.
-// Coordenades fixes del nucli de Súria (Idescat), mai la ubicació del visitant.
-export const TEMPS_URL = 'https://api.open-meteo.com/v1/forecast?latitude=41.835&longitude=1.7533&current=temperature_2m,weather_code,is_day&timeformat=unixtime&timezone=Europe%2FMadrid';
+// Estimació horària de MET Norway. Coordenades fixes de Súria, no del visitant.
+export const TEMPS_URL = 'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=41.835&lon=1.7533';
 export const REFRESC = 15 * 60_000;
-export const VIGENCIA = 45 * 60_000;
-export type MostraTemps = { temperatura: number; codi: number; dia: boolean; instant: number };
+export const VIGENCIA = 60 * 60_000;
+export const EDAT_MODEL = 12 * 60 * 60_000;
+export type MostraTemps = { temperatura: number; simbol: string; instant: number; actualitzat: number };
+type PuntMet = { time?: unknown; data?: { instant?: { details?: { air_temperature?: unknown } }; next_1_hours?: { summary?: { symbol_code?: unknown } } } };
+type RespostaMet = { properties?: { meta?: { updated_at?: unknown; units?: { air_temperature?: unknown } }; timeseries?: PuntMet[] } };
 export function llegeixTemps(raw: unknown, ara = Date.now()): MostraTemps | null {
   if (!raw || typeof raw !== 'object') return null;
-  const r = raw as { current?: Record<string, unknown>; current_units?: Record<string, unknown> };
-  const c = r.current;
-  if (!c || r.current_units?.temperature_2m !== '°C') return null;
-  const { temperature_2m: t, weather_code: code, is_day: day, time } = c;
-  if (typeof t !== 'number' || !Number.isFinite(t) || t < -80 || t > 60 ||
-      typeof code !== 'number' || !Number.isInteger(code) || code < 0 || code > 99 ||
-      (day !== 0 && day !== 1) || typeof time !== 'number' || !Number.isFinite(time)) return null;
-  const instant = time * 1000;
-  if (ara - instant > VIGENCIA || instant - ara > 5 * 60_000) return null;
-  return { temperatura: t, codi: code, dia: day === 1, instant };
+  const props = (raw as RespostaMet).properties;
+  if (props?.meta?.units?.air_temperature !== 'celsius' || !Array.isArray(props?.timeseries)) return null;
+  if (typeof props.meta.updated_at !== 'string') return null;
+  const actualitzat = Date.parse(props.meta.updated_at);
+  if (!Number.isFinite(actualitzat) || ara - actualitzat > EDAT_MODEL || actualitzat - ara > 5 * 60_000) return null;
+  // No avancem una hora futura ni convertim una previsió antiga en una observació actual.
+  const punts = props.timeseries.filter((p): p is PuntMet & { time: string } => typeof p?.time === 'string' && Number.isFinite(Date.parse(p.time)) && Date.parse(p.time) <= ara)
+    .sort((a, b) => Date.parse(b.time) - Date.parse(a.time));
+  const punt = punts[0];
+  if (!punt) return null;
+  const instant = Date.parse(punt.time);
+  if (ara - instant >= VIGENCIA) return null;
+  const temperatura = punt.data?.instant?.details?.air_temperature;
+  const simbol = punt.data?.next_1_hours?.summary?.symbol_code;
+  if (typeof temperatura !== 'number' || !Number.isFinite(temperatura) || temperatura < -80 || temperatura > 60 ||
+      typeof simbol !== 'string' || !/^[a-z_]{1,80}$/.test(simbol)) return null;
+  return { temperatura, simbol, instant, actualitzat };
 }
-export function condicio(codi: number, dia: boolean) {
-  if (codi === 0 || codi === 1) return dia ? 'sol' : 'nit';
-  if (codi === 2) return dia ? 'clarianes' : 'clarianesNit';
-  if (codi === 3) return 'nuvols';
-  if (codi === 45 || codi === 48) return 'boira';
-  if ([51,53,55,56,57,61,63,65,66,67,80,81,82].includes(codi)) return 'pluja';
-  if ([71,73,75,77,85,86].includes(codi)) return 'neu';
-  if ([95,96,97,99].includes(codi)) return 'tempesta';
+export function condicio(simbol: string) {
+  const base = simbol.replace(/_(day|night|polartwilight)$/, '');
+  const nit = simbol.endsWith('_night');
+  if (base === 'clearsky' || base === 'fair') return nit ? 'nit' : 'sol';
+  if (base === 'partlycloudy') return nit ? 'clarianesNit' : 'clarianes';
+  if (base === 'cloudy') return 'nuvols';
+  if (base === 'fog') return 'boira';
+  if (base.includes('thunder')) return 'tempesta';
+  if (base.includes('snow') || base.includes('sleet')) return 'neu';
+  if (base.includes('rain')) return 'pluja';
   return 'desconegut';
 }
 export const iconesTemps = {

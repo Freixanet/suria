@@ -1,21 +1,14 @@
 ---
 import type { Llengua } from '../i18n/ui.ts';
 const { llengua } = Astro.props as { llengua: Llengua };
-const missatge = llengua === 'ca' ? 'Temps a Súria no disponible · Open-Meteo' : 'Tiempo en Súria no disponible · Open-Meteo';
+const missatge = llengua === 'ca' ? 'Temps a Súria no disponible · MET Norway' : 'Tiempo en Súria no disponible · MET Norway';
 ---
-<span class="temps-grup">
 <span class="temps" role="img" data-temps data-llengua={llengua} aria-label={missatge} title={missatge}>
   <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" data-temps-icona></svg>
   <span data-temps-valor>— °C</span>
 </span>
-<a class="temps-font" href="https://open-meteo.com/" aria-label={llengua === 'ca' ? 'Font meteorològica: Open-Meteo' : 'Fuente meteorológica: Open-Meteo'} title="Open-Meteo"><span aria-hidden="true">ⓘ</span></a>
-</span>
 <script>import '../scripts/temps.ts';</script>
 <style>
-  .temps-grup { display:inline-flex; align-items:center; flex:none; }
-  .temps-font { display:inline-flex; align-items:center; justify-content:center; min-width:var(--tap); min-height:var(--tap); color:var(--calc); text-decoration:none; }
-  .temps-font:hover { color:var(--ocre); }
-  .temps-font:focus-visible { outline-color:var(--ocre); }
   .temps { display: inline-flex; align-items: center; justify-content: flex-end; gap: .4rem; min-height: var(--tap); min-width: 5.25rem; color: var(--calc); font: 600 var(--t-meta)/1.2 var(--display); white-space: nowrap; text-decoration: none; }
   svg { width: 1.4rem; height: 1.4rem; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
   svg:empty { visibility: hidden; }

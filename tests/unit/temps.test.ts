@@ -1,16 +1,26 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import { llegeixTemps, condicio, VIGENCIA } from '../../src/lib/temps.ts';
-const ara=Date.parse('2026-10-15T08:00:00Z');
-const mostra=(overrides={})=>({current_units:{temperature_2m:'°C'},current:{temperature_2m:0,weather_code:0,is_day:1,time:ara/1000,...overrides}});
-test('zero graus és una temperatura vàlida; no es tracta com una absència',()=>{assert.equal(llegeixTemps(mostra(),ara)?.temperatura,0)});
-test('dades caducades o massa futures no es mostren com a temps actual',()=>{
- assert.equal(llegeixTemps(mostra({time:(ara-VIGENCIA-1)/1000}),ara),null);
- assert.equal(llegeixTemps(mostra({time:(ara+360_000)/1000}),ara),null);
+import {llegeixTemps,condicio,VIGENCIA,EDAT_MODEL} from '../../src/lib/temps.ts';
+const ara=Date.parse('2026-10-15T08:30:00Z');
+const punt=(time=ara-30*60_000,temp:unknown=0,simbol='clearsky_day')=>({time:new Date(time).toISOString(),data:{instant:{details:{air_temperature:temp}},next_1_hours:{summary:{symbol_code:simbol}}}});
+const mostra=(punts=[punt()],updated=ara-3*60*60_000)=>({properties:{meta:{updated_at:new Date(updated).toISOString(),units:{air_temperature:'celsius'}},timeseries:punts}});
+test('zero graus és vàlid i la data del model no es confon amb l’hora vigent',()=>{
+ const r=llegeixTemps(mostra(),ara);assert.equal(r?.temperatura,0);assert.equal(r?.instant,ara-30*60_000);assert.equal(r?.actualitzat,ara-3*60*60_000);
 });
-test('respostes incompletes i unitats incorrectes es rebutgen',()=>{
- for(const x of [null,{}, {current:mostra().current}, {...mostra(),current_units:{temperature_2m:'°F'}},mostra({temperature_2m:null}),mostra({temperature_2m:NaN}),mostra({is_day:3}),mostra({weather_code:'61'})])assert.equal(llegeixTemps(x,ara),null);
+test('selecciona l’última hora vigent encara que no vingui ordenada; no mostra el futur',()=>{
+ const raw=mostra([punt(ara+30*60_000,10),punt(ara-90*60_000,3),punt(ara-30*60_000,7)]);
+ assert.equal(llegeixTemps(raw,ara)?.temperatura,7);assert.equal(llegeixTemps(raw,ara+31*60_000)?.temperatura,10);
+ assert.equal(llegeixTemps(mostra([punt(ara+30*60_000)]),ara),null);
 });
-test('icona correcta per al codi WMO, incloent dia, nit i casos desconeguts',()=>{
- assert.equal(condicio(0,true),'sol');assert.equal(condicio(0,false),'nit');assert.equal(condicio(2,true),'clarianes');assert.equal(condicio(2,false),'clarianesNit');assert.equal(condicio(3,true),'nuvols');assert.equal(condicio(45,true),'boira');assert.equal(condicio(61,true),'pluja');assert.equal(condicio(73,true),'neu');assert.equal(condicio(95,true),'tempesta');assert.equal(condicio(10,true),'desconegut');
+test('rebutja models antics o futurs i hores que ja no corresponen al moment actual',()=>{
+ assert.equal(llegeixTemps(mostra([punt(ara-VIGENCIA)]),ara),null);
+ assert.equal(llegeixTemps(mostra([punt()],ara-EDAT_MODEL-1),ara),null);
+ assert.equal(llegeixTemps(mostra([punt()],ara+360_000),ara),null);
+});
+test('rebutja formats incomplets, unitats incorrectes i valors no finits',()=>{
+ const wrong=mostra();wrong.properties.meta.units.air_temperature='fahrenheit';
+ for(const x of [null,{}, {properties:{}},wrong,mostra([]),mostra([punt(ara,null)]),mostra([punt(ara,NaN)]),mostra([punt(ara,99)]),mostra([punt(ara,8,'<script>')])])assert.equal(llegeixTemps(x,ara),null);
+});
+test('símbols de MET: dia, nit, boira, precipitació i tempesta',()=>{
+ for(const [s,c] of Object.entries({clearsky_day:'sol',clearsky_night:'nit',partlycloudy_day:'clarianes',partlycloudy_night:'clarianesNit',cloudy:'nuvols',fog:'boira',lightrainshowers_day:'pluja',sleet:'neu',snow:'neu',heavysnowandthunder:'tempesta',unknown:'desconegut'}))assert.equal(condicio(s),c);
 });

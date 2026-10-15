@@ -1,22 +1,24 @@
-# Temps actual a Súria · 15/10/2026
+# Tiempo de Súria — MET Norway
 
-Funció demanada pel promotor: icona i temperatura a la dreta de la barra, actualitzades segons el temps. Consulta en navegador amb fetch natiu; sense dependències noves, geolocalització del visitant, clau ni backend. Credencials omeses i sense referent. Memòria de sessió només per evitar consultes repetides; cap identificador personal.
+Decisión posterior del promotor: sustituir Open-Meteo para retirar el enlaceⓘ junto al dato, conservando atribución en Fonts i crèdits. Icono y temperatura siguen como información sin enlace ni parada de teclado.
 
-## Procedència i contracte
+## Fuente y licencia
 
-- Font: [Open-Meteo Forecast API](https://open-meteo.com/en/docs). Condicions actuals estimades a partir de models cada quinze minuts, no una estació municipal ni una observació en directe. Temperatura a2m, weather_code WMO i is_day.
-- Coordenades fixes41.835,1.7533: conversió aproximada de la posició de Súria publicada per [Idescat](https://www.idescat.cat/pub/?by=mun&id=inddt&n=4699), lat41°50′5.42″N/lon1°45′11.79″E. El proveïdor selecciona la cel·la de model adequada; les coordenades de resposta poden diferir.
-- API: https://api.open-meteo.com/v1/forecast?latitude=41.835&longitude=1.7533&current=temperature_2m,weather_code,is_day&timeformat=unixtime&timezone=Europe%2FMadrid
-- Consulta real comprovada en implementació: resposta200, Celsius, interval900s, dades numèriques i timestamps UNIX. No s'exporta una temperatura fixa al build.
-- API pública per al prototip no comercial. Si es publica amb ús comercial, revisar el pla/condicions del proveïdor; aquesta passada no publica.
-- Widget informatiu sense enllaç i sense atribució al peu, retirats per petició expressa posterior del promotor. Títol/nom accessible conserva font, condició, temperatura, hora local i estimació. Font documentada aquí; ubicació comuna de fonts a decidir abans de publicar.
+- MET Norway, Norwegian Meteorological Institute. Locationforecast2.0 con cobertura mundial: https://api.met.no/weatherapi/locationforecast/2.0/documentation
+- Condiciones: https://api.met.no/doc/TermsOfService y https://www.met.no/en/free-meteorological-data/Licensing-and-crediting
+- CC BY4.0: crédito y enlace de licencia en Què estem provant#fonts-credits. No exige enlace junto al dato. Se indica adaptación (grados enteros) y que son estimaciones de modelo, no estación municipal.
+- Coordenadas fijas41.835/1.7533 del núcleo de Súria (fuente original Idescat), sin geolocalización del visitante.
 
-## Comportament
+## Contrato
 
-Consulta inicial i refresc cada quinze minuts mentre la pàgina és visible; també en tornar a la pestanya o recuperar connexió. Hora de consulta i dades en cache de sessió; persistència opcional, no necessària per funcionar. Timeout8s. Dades de més de45min o més de5min futures no es mostren com a actuals; igualment, valors absents, no numèrics o unitats incorrectes. Error: «— °C» amb nom accessible «Temps a Súria no disponible». Mai temperatura d'exemple ni mostra caducada silenciosa. Sense JS queda el mateix estat explícit i l'enllaç al proveïdor.
+`properties.meta.units.air_temperature=celsius`, `updated_at` válido, modelo máximo12h de edad, tolerancia futura5min. Selección de la última timeseries con fecha≤ahora y edad<1h. Se exige temperatura finita entre−80 y60°C y símbolo next_1_hours válido. No se adelanta el siguiente punto futuro. El símbolo describe la previsión de esa hora. Se mantiene la fecha de generación del modelo en ayuda accesible, presentada Europe/Madrid.
 
-Icones SVG locals per sol, nit, clarianes, núvols, boira, pluja, neu i tempesta; codi desconegut usa termòmetre i nom genèric. La temperatura zero és vàlida. Sense animacions ni canvis d'alçada del widget. Textos CA/ES.
+Símbolos locales: día/noche, nubosidad, niebla, lluvia, nieve/aguanieve y tormenta. Desconocido usa termómetro, nunca se inventa cielo despejado. Cambio de hora recalculado cada minuto sobre los datos disponibles en memoria.
 
-Responsable de la integració: promotor del prototip. Font de dades: Open-Meteo. Canvis sense alterar els altres serveis.
+Petición simple GET HTTPS sin claves ni cabeceras custom: el navegador envía Origin como identificación del sitio de bajo tráfico, conforme a condiciones. Sin credenciales ni referer ni ubicación personal. CORS permitido por proveedor en respuesta real comprobada. Si aumenta mucho el tráfico, migrar a proxy con caché compartida antes de escalar.
 
-Publicació autoritzada el14/10/2026: font i llicència centralitzades a Què estem provant#fonts-credits, més enllaçⓘ separat al costat del widget (exigit pel proveïdor, https://open-meteo.com/en/licence). Icona i temperatura continuen sense enllaç, sense atribució del proveïdor al peu. Ús del prototip no comercial, sense geolocalització.
+Cache HTTP normal del navegador, con revalidación automática. Nuevas consultas como pronto15min y nunca antes de Expires (más pequeño margen aleatorio). Nada de preflight ni HEAD. No se consulta en segundo plano en el intervalo; revisión al recuperar pestaña/pageshow/online respetando espera. Timeout8s y reintento no antes de15min en fallo. Cache opcional sessionStorage con clave propia del proveedor; no reutiliza muestras Open-Meteo. Si faltan datos vigentes muestra —°C, nunca un número inventado.
+
+## Verificación
+
+Respuesta real MET para Súria200 con Expires y CORS; pruebas de cero grados, unidades/formato, selección horaria sin adelantar futuro, modelo antiguo/futuro, cambio de hora, símbolos día/noche y fallos. Navegador comprueba refresco, respeto de Expires y cambio de punto en memoria. Ver estado compartido/local y GitHub Actions para resultados de la entrega. Sin nuevas dependencias ni backend ni cuenta API.

@@ -308,3 +308,7 @@ Ordre vigent de portada: Avui, agenda setmanal, Pròximament i Serveis útils. P
 ## Publicació a GitHub Pages autoritzada
 
 Repositori públic Freixanet/suria i web pública freixanet.github.io/suria, autoritzats expressament pel promotor. Desenvolupament local sense prefix; Pages amb /suria/. Fonts i crèdits centralitzats a Què estem provant#fonts-credits (foto: Krzysztof Golik, CC BY-SA4.0, retall; dades meteorològiques: Open-Meteo, CC BY4.0). No es restaura el crèdit damunt la foto. Dada del temps no clicable, amb un enllaçⓘ separat al proveïdor al costat: atribució necessària de la versió pública. Enllaç del peu només Fonts i crèdits. Noindex i avís de prototip conservats.
+
+## Meteorologia · última decisió vigent
+
+MET Norway substitueix Open-Meteo. Es retira completamentⓘ i el seu enllaç; només icona i graus no clicables. Atribució MET Norway/CC BY4.0 exclusivament a Fonts i crèdits. Estimació de la franja horària actual, no observació d’estació. Refresc mínim15min respectant Expires, selecció de punt recalculada cada minut; error —°C si no hi ha dades vigents. Contracte actual a docs/revisiones/temps-suria.md, substitueix les regles anteriors d’Open-Meteo i la seva atribució adjacent.

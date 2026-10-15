@@ -30,3 +30,5 @@ Agenda: títols enllaçats a les fitxes originals, sense acció Fitxa per peça;
 Portada sense seccions Primers passos i Menjar i comprar (pàgines pròpies conservades). Serveis útils ocupa amplada completa amb vuit variants de fons. Enllaços de títols sense subratllat; hores amb espais als guions. Boira amb núvol i dues línies baixes.
 
 Vigente: ocultar días de agenda pasados por fecha final Europe/Madrid; conservar actividades de hoy y de varios días vigentes. Avui sin fuente separada y título enlazado a ficha. Pròximament sin procedencia visible. Tiempo informativo sin enlace ni atribución en pie. Serveis útils mantiene desplazamiento sin barra visible. Fuentes estructuradas conservadas.
+
+Temps vigent: MET Norway, icona i temperatura senseⓘ ni enllaços en cabecera; atribució només a Fonts i crèdits. Contracte a docs/revisiones/temps-suria.md.

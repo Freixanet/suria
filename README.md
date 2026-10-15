@@ -23,4 +23,4 @@ Las fechas de commits locales existentes se conservan al subir el historial. El 
 
 ## Créditos
 
-La sección «Fonts i crèdits» de «Què estem provant» reúne autoría/licencia de la fotografía, Open-Meteo y fuentes de agenda/servicios. Se conserva el aviso de independencia y `noindex`. GitHub Pages es público; `noindex` no restringe el acceso.
+La sección «Fonts i crèdits» de «Què estem provant» reúne autoría/licencia de la fotografía, MET Norway y fuentes de agenda/servicios. Se conserva el aviso de independencia y `noindex`. GitHub Pages es público; `noindex` no restringe el acceso.
