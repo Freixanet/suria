@@ -70,15 +70,19 @@ for (const ruta of ['/', '/aquesta-setmana/', '/es/primeros-pasos/']) {
 test('teclat: canviar de llengua i entrar en una tasca només amb el teclat', async ({ page }) => {
   await page.goto(`${BASE}/`);
   // Tab fins a «ES» i Retorn.
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 15; i++) {
     await page.keyboard.press('Tab');
+    if ((await page.evaluate(() => document.activeElement?.getAttribute('aria-expanded'))) === 'false') await page.keyboard.press('Enter');
     if ((await page.evaluate(() => document.activeElement?.getAttribute('lang'))) === 'es') break;
   }
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(`${BASE}/es/`);
+  // Al mòbil, les tasques són dins del botó «Menú»: Retorn l'obre i el Tab següent entra a les tasques.
   for (let i = 0; i < 15; i++) {
     await page.keyboard.press('Tab');
-    if ((await page.evaluate(() => document.activeElement?.textContent?.trim())) === 'Primeros pasos') break;
+    const actiu = await page.evaluate(() => ({ text: document.activeElement?.textContent?.trim(), menu: document.activeElement?.getAttribute('aria-expanded') }));
+    if (actiu.menu === 'false') await page.keyboard.press('Enter');
+    if (actiu.text === 'Primeros pasos') break;
   }
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(`${BASE}/es/primeros-pasos/`);

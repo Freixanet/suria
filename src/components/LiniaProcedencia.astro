@@ -10,8 +10,9 @@ interface Props {
   consultat: string;
   responsable: string;
   vigencia?: string;
+  mostraResponsable?: boolean;
 }
-const { llengua, maduresa, fonts, consultat, responsable, vigencia } = Astro.props;
+const { llengua, maduresa, fonts, consultat, responsable, vigencia, mostraResponsable = true } = Astro.props;
 const t = traductor(llengua);
 const qui = responsable === 'Promotor del prototip' ? t('procedencia.promotor') : responsable;
 ---
@@ -19,7 +20,7 @@ const qui = responsable === 'Promotor del prototip' ? t('procedencia.promotor') 
   {(maduresa === 'Idea' || maduresa === 'Demo') && <span class="maduresa especulativa">{t(`maduresa.${maduresa}`)}</span>}
   <span>{t('procedencia.font')}: {fonts.map((f) => f.nom[llengua]).join('; ')}</span>
   {vigencia && <span>{t('procedencia.valid')}: {vigencia}</span>}
-  <span>{t('procedencia.responsable')}: {qui}</span>
+  {mostraResponsable && <span>{t('procedencia.responsable')}: {qui}</span>}
 </p>
 
 <style>

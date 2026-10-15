@@ -11,12 +11,13 @@ interface Props {
 const { llengua } = Astro.props;
 const t = traductor(llengua);
 const { setmana, aquestaSetmana, proximament } = await agenda();
-const fonts = [
-  ...setmana.fonts,
-  ...[...aquestaSetmana, ...proximament].flatMap((a) => a.fonts.map((f) => ({ ...f, peca: a.titol }))),
-];
+const responsables = [...new Set([...aquestaSetmana, ...proximament].map(a => a.responsable))];
+const responsableComu = responsables.length === 1 ? responsables[0] : undefined;
+const qui = responsableComu === 'Promotor del prototip' ? t('procedencia.promotor') : responsableComu;
 ---
-<PaginaTasca llengua={llengua} pagina="setmana" titol={t('setmana.titol')} descripcio={t('setmana.descripcio')} maduresa="En prova" fonts={fonts}>
-  <Agenda llengua={llengua} setmana={setmana} activitats={aquestaSetmana} detall />
-  <Proximament llengua={llengua} activitats={proximament} detall nivell={2} />
+<PaginaTasca llengua={llengua} pagina="setmana" titol={t('setmana.titol')} descripcio={t('setmana.descripcio')} maduresa="En prova">
+  <Agenda llengua={llengua} setmana={setmana} activitats={aquestaSetmana} font={{ nom: 'suria.cat', url: setmana.fonts[0].url }} detall />
+  <Proximament llengua={llengua} activitats={proximament} responsableComu={responsableComu} detall nivell={2} />
+  {qui && <p class="font responsable-comu">{t('procedencia.responsable')}: {qui}</p>}
 </PaginaTasca>
+<style> .responsable-comu { margin-top: var(--s-6); padding-top: var(--s-4); border-top: var(--filet-fi); } </style>

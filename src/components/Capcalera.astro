@@ -1,7 +1,10 @@
 ---
-// Capçalera: a dalt, la franja de servei (avís d'independència i CA/ES); després la marca i les tasques sobre fons
-// clar (la marca més gran a la portada), amb les tasques a una altra fila quan no hi caben còmodament; i, a la portada,
-// la foto del poble a tota amplada, neta, amb el seu crèdit a sota. La data només és al resum «Avui a Súria».
+// Capçalera: avís d’independència; marca centrada i tasques. CA/ES al final de les tasques, mai a la barra.
+// Després, sobre fons clar,
+// la marca (més gran a la portada) i les tasques. A l'escriptori (des de 80rem), marca, tasques i CA/ES en una
+// sola línia. Per sota, les tasques es despleguen amb el botó «Menú» (sense JavaScript, es veuen sempre).
+// A la portada, la foto del poble a tota amplada. La data només és al resum «Avui a Súria».
+import TempsActual from './TempsActual.astro';
 import NavTasques from './NavTasques.astro';
 import SelectorLlengua from './SelectorLlengua.astro';
 import FotoSuria from './FotoSuria.astro';
@@ -20,12 +23,12 @@ const esInici = pagina === 'inici';
 ---
 <header class:list={['capcalera', { inici: esInici }]}>
   <div class="barra">
-    <div class="ample barra-dins">
-      <p class="avis"><strong>{t('avis.fort')}</strong>{t('avis.resta')}</p>
-      <SelectorLlengua llengua={llengua} urls={urlsLlengua} />
+    <div class="ample composicio barra-dins">
+      <p class="avis"><strong>{t('avis.fort')}</strong><span class="avis-curt">{llengua === 'ca' ? ' · En proves' : ' · En pruebas'}</span><span class="avis-complet">{t('avis.resta')}</span></p>
+      <TempsActual llengua={llengua} />
     </div>
   </div>
-  <div class="ample mast">
+  <div class="ample composicio mast">
     {
       esInici ? (
         <h1 class="marca">
@@ -34,16 +37,48 @@ const esInici = pagina === 'inici';
         </h1>
       ) : (
         <a class="marca" href={urlDe('inici', llengua)} aria-label={t('lloc.inici')}>
-          {t('lloc.nom')}
+          {t('lloc.salutacio')}
         </a>
       )
     }
-    <NavTasques llengua={llengua} actual={pagina} />
+    <button type="button" class="menu-boto" aria-expanded="false" aria-controls="menu-tasques" hidden data-menu-boto>
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path class="ic-obrir" d="M4 7h16M4 12h16M4 17h16" />
+        <path class="ic-tancar" d="M6 6l12 12M18 6 6 18" />
+      </svg>
+      <span>{t('nav.menu')}</span>
+    </button>
+    <div class="menu-contingut" id="menu-tasques">
+      <NavTasques llengua={llengua} actual={pagina} />
+      <div class="llengua-mast"><SelectorLlengua llengua={llengua} urls={urlsLlengua} lloc="mast" /></div>
+    </div>
   </div>
+  <script is:inline>
+    /* En línia, just després del menú: el plega abans que es pinti, perquè la pàgina no salti. */
+    (() => {
+      const boto = document.querySelector('[data-menu-boto]');
+      const capcalera = boto && boto.closest('.capcalera');
+      if (!capcalera) return;
+      const posa = (obert) => {
+        capcalera.dataset.menu = obert ? 'obert' : 'tancat';
+        boto.setAttribute('aria-expanded', String(obert));
+      };
+      posa(false);
+      boto.hidden = false;
+      boto.addEventListener('click', () => posa(boto.getAttribute('aria-expanded') !== 'true'));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && boto.getAttribute('aria-expanded') === 'true') {
+          posa(false);
+          boto.focus();
+        }
+      });
+    })();
+  </script>
   {esInici && <FotoSuria foto={fotos.vista} llengua={llengua} format="escena" sizes="100vw" prioritaria />}
 </header>
 
 <style>
+  .capcalera { container: capcalera / inline-size; }
   .barra {
     background: var(--tinta);
     color: var(--calc);
@@ -60,6 +95,7 @@ const esInici = pagina === 'inici';
   .avis {
     padding-block: var(--s-1);
   }
+  .avis-curt { display: none; }
   .avis strong {
     font-weight: 700;
     color: var(--ocre);
@@ -73,35 +109,37 @@ const esInici = pagina === 'inici';
   .mast {
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-end;
+    align-items: center;
     column-gap: clamp(2.5rem, 6vw, 6rem);
     row-gap: var(--s-2);
-    padding-top: var(--s-4);
+    padding-block: var(--s-4);
   }
-  /* La marca es pot partir en dues línies si no hi cap (text ampliat): mai surt de la pantalla. */
+  /* La marca no es comprimeix; la navegació canvia al menú abans que deixi de cabre. */
   .marca {
-    flex: 0 1 auto;
+    flex: 0 0 auto;
     min-width: 0;
-    display: block;
+    white-space: nowrap;
+    min-height: var(--tap);
+    display: flex;
+    align-items: center;
     font-family: var(--display);
     font-weight: 700;
     font-variation-settings: 'wdth' 82;
     font-size: clamp(2.75rem, 6vw, 4.25rem);
-    line-height: 0.82;
+    line-height: 1;
     letter-spacing: -0.045em;
     text-decoration: none;
     color: var(--tinta);
-    padding-bottom: var(--s-3);
+    padding-bottom: 0;
   }
   a.marca:hover {
     color: var(--tinta);
   }
-  .mast > :global(.tasques) {
-    flex: 1 1 auto;
-  }
+  .menu-contingut { display: flex; align-items: center; gap: 2rem; flex: 1 1 auto; min-width: 0; }
+  .menu-contingut > :global(.tasques) { flex: 1 1 auto; margin-bottom: 0; }
   /* Portada: el nom més gran. */
   .inici .marca {
-    font-size: clamp(3.25rem, 7.5vw, 7rem);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
     font-variation-settings: 'wdth' 88;
     letter-spacing: -0.05em;
     margin-left: -0.03em;
@@ -113,7 +151,7 @@ const esInici = pagina === 'inici';
      cantonades superiors corbes (vegeu --solapa a global.css). */
   .capcalera :global(.escena) {
     position: relative;
-    margin-top: var(--s-2);
+    margin-top: 0;
   }
   /* Crèdit: una etiqueta flotant, per sobre de la zona que cobreix el contingut. */
   .capcalera :global(.escena figcaption) {
@@ -146,12 +184,128 @@ const esInici = pagina === 'inici';
     outline-color: var(--ocre);
     outline-offset: 1px;
   }
+  /* Botó «Menú»: només per sota de 80rem i amb JavaScript (sense, les tasques es veuen sempre). */
+  .menu-boto {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    min-height: var(--tap);
+    padding: 0 var(--s-4) 0 var(--s-3);
+    font: 650 1.0625rem/1 var(--display);
+    color: var(--tinta);
+    background: transparent;
+    border: 2px solid var(--tinta);
+    border-radius: var(--radi);
+    cursor: pointer;
+  }
+  .menu-boto[hidden] {
+    display: none;
+  }
+  .menu-boto:hover {
+    background: var(--pedra);
+  }
+  .menu-boto[aria-expanded='true'] {
+    color: var(--calc);
+    background: var(--tinta);
+  }
+  .menu-boto svg {
+    width: 1.35em;
+    height: 1.35em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.25;
+    stroke-linecap: round;
+  }
+  .menu-boto .ic-tancar,
+  .menu-boto[aria-expanded='true'] .ic-obrir {
+    display: none;
+  }
+  .menu-boto[aria-expanded='true'] .ic-tancar {
+    display: inline;
+  }
+
+  /* Per sota de 80rem: marca i botó a la mateixa fila; les tasques, desplegades a sota en una columna. */
+  @container capcalera (max-width: 79.99rem) {
+    .mast {
+      align-items: center;
+    }
+    .marca {
+      flex: 1 1 auto;
+    }
+    .llengua-mast { padding-block: var(--s-3); border-top: var(--filet-fi); }
+    .menu-contingut { display: flex; flex-direction: column; align-items: stretch; flex-basis: 100%; gap: 0; }
+    .capcalera[data-menu='tancat'] .menu-contingut {
+      display: none;
+    }
+    .capcalera[data-menu] .menu-contingut > :global(.tasques) {
+      margin-top: var(--s-2);
+      border-top: var(--filet-fort);
+    }
+    .capcalera[data-menu] .menu-contingut > :global(.tasques ul) {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .capcalera[data-menu] .menu-contingut > :global(.tasques a) {
+      min-height: 3.5rem;
+      font-size: 1.25rem;
+      white-space: normal;
+      border-bottom: var(--filet-fi);
+    }
+    .capcalera[data-menu] .menu-contingut > :global(.tasques li:last-child a) {
+      border-bottom: 0;
+    }
+  }
+
+  /* Escriptori (des de 80rem): marca, tasques i CA/ES sempre a la mateixa línia, centrats verticalment.
+     Mides fluides perquè hi càpiguen sense partir cap nom, també en castellà. */
+  @container capcalera (min-width: 80rem) {
+    .menu-boto {
+      display: none;
+    }
+    .mast {
+      flex-wrap: nowrap;
+      align-items: center;
+      column-gap: 2rem;
+      padding-block: var(--s-4);
+    }
+    .marca,
+    .inici .marca {
+      padding-bottom: 0;
+    }
+    .marca, .inici .marca {
+      font-size: 3.75rem;
+    }
+    .menu-contingut > :global(.tasques) {
+      flex: 1 1 auto;
+      margin-bottom: 0;
+    }
+    .menu-contingut > :global(.tasques ul) {
+      justify-content: flex-end;
+      flex-wrap: nowrap;
+      column-gap: 1.5rem;
+    }
+    .menu-contingut > :global(.tasques a) {
+      font-size: 1.125rem;
+    }
+    /* CA/ES, separat de les tasques per un filet vertical. */
+    .llengua-mast {
+      flex: none;
+      padding-left: 1rem;
+      border-left: var(--filet-fi);
+    }
+  }
+  @media (max-width: 24rem) {
+    .mast { column-gap: var(--s-3); }
+    .inici .marca, .marca { font-size: 2.5rem; }
+  }
   @media (max-width: 56.25rem) {
+    .avis-complet { display: none; }
+    .avis-curt { display: none; }
     .barra-dins {
       font-size: var(--t-tag);
     }
     .mast {
-      padding-top: var(--s-3);
+      padding-block: var(--s-3);
     }
     /* Al mòbil, el crèdit en una sola línia: la versió curta, a la mateixa mida de lletra. */
     .capcalera :global(.escena figcaption) {
@@ -166,10 +320,6 @@ const esInici = pagina === 'inici';
     }
     .capcalera :global(.escena .credit-curt) {
       display: inline;
-    }
-    /* Al mòbil, les tasques sempre a la seva fila (2×2), sota la marca. */
-    .mast > :global(.tasques) {
-      flex-basis: 100%;
     }
   }
 </style>

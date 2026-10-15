@@ -12,7 +12,7 @@
     "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
     "build:proves": "ASTRO_TELEMETRY_DISABLED=1 SURIA_PROVES=1 astro build --outDir dist-proves",
     "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
-    "test:unit": "node --test --disable-warning=ExperimentalWarning 'tests/unit/*.test.ts' && TZ=Pacific/Auckland node --test --disable-warning=ExperimentalWarning tests/unit/estat-servei.test.ts tests/unit/ara.test.ts && TZ=America/New_York node --test --disable-warning=ExperimentalWarning tests/unit/estat-servei.test.ts tests/unit/ara.test.ts",
+    "test:unit": "node --test --disable-warning=ExperimentalWarning 'tests/unit/*.test.ts' && TZ=Pacific/Auckland node --test --disable-warning=ExperimentalWarning tests/unit/estat-servei.test.ts tests/unit/ara.test.ts tests/unit/bus.test.ts && TZ=America/New_York node --test --disable-warning=ExperimentalWarning tests/unit/estat-servei.test.ts tests/unit/ara.test.ts tests/unit/bus.test.ts",
     "test:e2e": "playwright test",
     "test:lighthouse": "node scripts/lighthouse.mjs http://127.0.0.1:4329 portada",
     "test": "npm run test:unit && npm run build && npm run build:proves && npm run test:e2e"

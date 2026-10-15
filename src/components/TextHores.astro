@@ -8,12 +8,12 @@ const { text } = Astro.props;
 const HORA = /(\d{1,2}[.:]\d{2}(?:\s?[–-]\s?\d{1,2}[.:]\d{2})?(?:\s?h)?)/g;
 const trossos = text.split(HORA);
 ---
-{trossos.map((t, i) => (i % 2 === 1 ? <span class="hora">{t}</span> : t))}
+{trossos.map((t, i) => (i % 2 === 1 ? <span class="hora">{t.replace(/\s*[–-]\s*/g, ' – ')}</span> : t))}
 
 <style>
   .hora {
     font-family: var(--display);
-    font-weight: 600;
+    font-weight: 500;
     white-space: nowrap;
   }
 </style>

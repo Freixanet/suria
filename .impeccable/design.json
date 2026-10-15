@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-14T00:00:00Z",
+  "generatedAt": "2026-10-15T01:10:37.097683+00:00",
   "title": "Design System: Súria (prototip)",
   "extensions": {
     "colorMeta": {
@@ -83,7 +83,7 @@
     "typographyMeta": {
       "brand-home": {
         "family": "Bricolage Grotesque",
-        "use": "Nom a la portada, a tota amplada (wdth 90)"
+        "use": "Ep, Súria! sense partir; 3.75rem a escriptori, wdth 88"
       },
       "display": {
         "family": "Bricolage Grotesque",
@@ -103,22 +103,19 @@
       }
     },
     "shadows": [],
-    "motion": [
-      {
-        "name": "cel del moment del dia",
-        "duration": "1.6s",
-        "easing": "cubic-bezier(0.16, 1, 0.3, 1)",
-        "reducedMotion": "desactivat"
-      }
-    ],
+    "motion": [],
     "breakpoints": [
       {
         "name": "una-columna",
         "value": "56.25rem"
       },
       {
-        "name": "escala-madurez",
+        "name": "data-sobre-titol",
         "value": "30rem"
+      },
+      {
+        "name": "capcalera-en-linia",
+        "value": "80rem (consulta de contenidor, respecta ampliació de text)"
       }
     ],
     "focus": {
@@ -137,13 +134,38 @@
     "pending": [
       "Lectura real amb persones grans (lletres i 19 px)",
       "Fotos pròpies o cedides de vida quotidiana i comerços",
-      "Lector de pantalla, mòbil real i revisió del castellà"
+      "Lector de pantalla, mòbil real i revisió del castellà",
+      "Crèdit de foto ocult deliberadament pel promotor; no restaurat en aquesta passada"
     ],
     "facanes": {
       "setmana": "ocre",
       "passos": "cel",
       "menjar": "teula",
       "cap": "turo"
+    },
+    "layout": {
+      "compositionMax": "180rem",
+      "readingPageMax": "90rem",
+      "gutter": "clamp(1rem, 2.5vw, 4rem)",
+      "readingBodyMax": "48rem",
+      "serviceRadius": "24px",
+      "surfacePadding": "max(16px, calc(var(--radius) * 0.75))",
+      "nestedRadius": "max(0px, calc(var(--radius) - var(--padding) - var(--border-width)))",
+      "languages": "one copy, after task links; horizontal desktop or bottom of vertical menu",
+      "serviceButtonRadius": "12px; independent controls, authorized exception to nested surface formula",
+      "busBadgeRadius": "12px; independent badge matching service buttons",
+      "pharmacyHours": "Current local day intersection with verified duty period; hours only, no visible dates",
+      "servicePhone": "Hide visual number below 24rem card content; keep accessible phone; whole controls reflow below12rem",
+      "serviceColors": {
+        "bus": "cel (blue)",
+        "pharmacy": "turo (green)"
+      },
+      "weather": "Open-Meteo current model data, fixed Suria coordinates, icon + temperature as noninteractive image;15min refresh/45min expiry; provider in accessible help and data, no footer link; no geolocation",
+      "usefulServices": "10 verified destinations; horizontal square208–272px cards with hidden scrollbar across homepage width; eight muted backgrounds with text/icons",
+      "agendaLinks": "Titles of weekly and Avui events link to original records without underline; no Avui source line or homepage agenda footer; no upcoming provenance; structured sources retained",
+      "homepageSections": "Summary, weekly agenda, useful services, upcoming, vision. Steps and commerce only on their own pages.",
+      "timeRanges": "Spaces around time dash in generated hours and TextHores",
+      "agendaVisibility": "Hide events whose final date precedes today in Europe/Madrid; retain today and ongoing multiday entries; refresh every minute and on visibility/pageshow"
     }
   },
   "components": [
@@ -183,45 +205,33 @@
   ],
   "narrative": {
     "northStar": "Façanes de Súria",
-    "overview": "Direcció «Façanes» (14/10/2026): surt de la foto real del poble (façanes ocre, teula, rosa i calç sota un cel de pissarra). Nom de Súria a tota amplada (Lentos), frase «Avui a Súria» amb les dades del dia sobre el cel del moment (Belle Isle), agenda en files amb la data en una finestra ocre, comerços com a rètols amb l'estat en paraules (Union Boulangerie), i cada mena de contingut amb la seva façana de color, sempre amb el nom escrit. Substitueix Silvinita B (etiqueta silvinita-b-2026-10-14).",
+    "overview": "Identitat del poble real. Marca Ep, Súria!, foto neta, resum fix Avui a Súria i serveis verificats. Agenda ocre, serveis cel/verd, comerços teula i visió verd turó. Composició fluida i lectura acotada. Sense animació decorativa.",
     "keyCharacteristics": [
-      "Nom a tota amplada a la portada",
-      "Salutació amb dades verificades del dia",
-      "Color de façana per tasca, mai sol",
+      "Ep, Súria! consistent en capçalera i peu",
+      "Navegació acotada i menú quan no hi cap",
+      "Agenda directament sota el resum en escriptori",
+      "Horaris programats, mai temps real",
       "Bricolage Grotesque + Atkinson Hyperlegible Next",
-      "Filets en lloc de caixes",
-      "Avisos honestos quan falta o caduca una dada",
-      "Clar per defecte, sense ombres"
+      "Fonts específiques i responsabilitat editorial sense repeticions"
     ],
     "rules": [
-      "Color amb nom",
-      "Avís en teula clara amb la font oficial",
-      "Cap text sota 15 px",
-      "Hores en la lletra de dades",
-      "Filets, no caixes",
-      "Mai «obert ara»",
-      "Idees amb marc discontinu",
-      "Un sol moviment: el cel",
-      "Independent, mai municipal",
-      "Només fotos reals de Súria amb permís"
+      "Color sempre amb nom",
+      "Text de lectura a 19px; objectius de 44px",
+      "Sense scroll horitzontal, també amb text al 200%",
+      "Idea i Demo explícites; consulta conservada a les dades",
+      "Només fotos reals de Súria amb permís",
+      "Cap publicació sense confirmació"
     ],
     "dos": [
-      "**Do** mantener todos los objetivos táctiles a 44 px como mínimo (`--tap`, 2.75rem), incluidos los enlaces dentro de pies de foto.",
-      "**Do** usar el anillo de foco de 3 px con separación de 3 px: rojo sobre claro, salmón sobre carbón.",
-      "**Do** escribir siempre el estado y la madurez en texto; el color y la muestra solo acompañan.",
-      "**Do** abrir cada lista con el filete de 2 px carbón y separar piezas con el filete fino.",
-      "**Do** componer las horas del texto corrido en la grotesca (provisional).",
-      "**Do** respetar `prefers-reduced-motion`: el desplazamiento suave solo se activa sin esa preferencia.",
-      "**Do** mostrar la fuente, la fecha de consulta y la vigencia junto a cada dato."
+      "Separar amplada de composició i mesura de lectura",
+      "Preservar dades, vigència i avisos",
+      "Veure DESIGN.md i work/CONTINUITY-suria.md"
     ],
     "donts": [
-      "**Don't** usar Gloock por debajo de 28 px ni en interfaz, fechas, horas o etiquetas (provisional).",
-      "**Don't** repetir los estratos fuera de la banda de la cabecera.",
-      "**Don't** añadir sombras de elevación, radios ni tarjetas.",
-      "**Don't** añadir animaciones que retrasen la aparición del contenido.",
-      "**Don't** usar el rojo de estrato (red) para texto pequeño; el texto rojo es red-ink o salmón.",
-      "**Don't** mezclar ideas con datos reales: van con una sola etiqueta y filetes discontinuos.",
-      "**Don't** poner explicaciones largas en la portada; van a la página de detalle."
+      "No partir marca ni deixar una tasca òrfena",
+      "No omplir buits amb dades inventades",
+      "No tornar al disseny antic per satisfer un detector",
+      "No canviar crèdits ocults com a efecte secundari"
     ]
   }
 }

@@ -23,6 +23,12 @@ export async function rellotge(page: Page, isoAmbZona: string) {
   await page.clock.install({ time: new Date(isoAmbZona) });
 }
 
+/** Per sota de 72rem les tasques van dins del botó «Menú»: l'obre si es veu (a l'escriptori no hi és). */
+export async function obreMenu(page: Page) {
+  const boto = page.locator('[data-menu-boto]');
+  if ((await boto.isVisible()) && (await boto.getAttribute('aria-expanded')) !== 'true') await boto.click();
+}
+
 /** Mida i tipus de cada element interactiu visible. */
 export async function objectius(page: Page) {
   return page.evaluate(() =>

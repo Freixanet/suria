@@ -1,0 +1,61 @@
+# Bus interurbà Súria ⇄ Manresa (línia d'Alsa Solsona – Manresa – Barcelona).
+# Hores de pas per Súria (cap a Manresa) i de sortida de Manresa (cap a Súria), segons les dades d'horaris que
+# Alsa publica a les seves pàgines de ruta. No hi ha horari oficial de 2026 en PDF ni de la Generalitat; el quadre
+# de març de 2024 no quadra del tot (vegeu docs/revisiones/bus-suria.md). Alsa no diu com tracta els festius:
+# en un dia de `festius`, la targeta no ensenya cap hora i remet a l'operador.
+operador: Alsa
+linia:
+  ca: Solsona – Manresa – Barcelona
+  es: Solsona – Manresa – Barcelona
+parada:
+  ca: Estació d’autobusos de Súria (C-1410)
+  es: Estación de autobuses de Súria (C-1410)
+sentits:
+  - id: suria-manresa
+    etiqueta: { ca: Cap a Manresa, es: Hacia Manresa }
+    horaris:
+      - dies: [dl, dt, dc, dj, dv]
+        sortides: ['06:53', '07:55', '08:36', '09:55', '10:55', '12:05', '13:05', '14:50', '15:13', '16:25', '17:20', '17:21', '18:45', '19:45']
+      - dies: [ds]
+        sortides: ['07:55', '08:36', '17:21']
+      - dies: [dg]
+        sortides: ['08:36', '15:10', '17:21']
+  - id: manresa-suria
+    etiqueta: { ca: Des de Manresa, es: Desde Manresa }
+    horaris:
+      - dies: [dl, dt, dc, dj, dv]
+        sortides:
+          - '07:22'
+          - '08:30'
+          - '09:30'
+          - '10:30'
+          - '11:30'
+          - '12:15'
+          - '12:50'
+          - '14:00'
+          - '15:00'
+          - '15:57'
+          - '17:20'
+          - '18:20'
+          - '19:30'
+          - { hora: '20:00', des: 2026-10-01, fins: 2026-12-21 }
+          - '21:20'
+      - dies: [ds]
+        sortides: ['07:22', '12:50', '15:57']
+      - dies: [dg]
+        sortides: ['07:22', '15:57', '21:00']
+# Festius oficials a Súria des d'avui (calendari laboral de Catalunya 2026 i 2027; festes locals de Súria 2026,
+# Ordre EMT/208/2025). Les festes locals de Súria del 2027 encara no s'han publicat.
+festius: [2026-12-08, 2026-12-25, 2026-12-26, 2027-01-01, 2027-01-06, 2027-03-26, 2027-03-29, 2027-05-01, 2027-06-24, 2027-09-11, 2027-10-12, 2027-11-01, 2027-12-06, 2027-12-08, 2027-12-25]
+enllac: https://www.alsa.es/ca/ruta/cardona-manresa
+fonts:
+  - nom: { ca: 'alsa.es, horaris Cardona – Manresa', es: 'alsa.es, horarios Cardona – Manresa' }
+    url: https://www.alsa.es/ca/ruta/cardona-manresa
+  - nom: { ca: 'alsa.es, horaris Manresa – Súria', es: 'alsa.es, horarios Manresa – Súria' }
+    url: https://www.alsa.es/ca/ruta/manresa-suria
+  - nom: { ca: 'suria.cat, transport interurbà', es: 'suria.cat, transporte interurbano' }
+    url: https://www.suria.cat/el-municipi/serveis/transport-public/825-transport-interurba/
+  - nom: { ca: 'Generalitat, calendari de festes laborals', es: 'Generalitat, calendario de fiestas laborales' }
+    url: https://treball.gencat.cat/ca/ambits/relacions_laborals/ci/calendari_laboral/calendari-festes-2027/
+consultat: 2026-10-14
+responsable: Promotor del prototip

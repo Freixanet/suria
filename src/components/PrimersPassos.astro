@@ -29,10 +29,11 @@ const fiDarrerTorn = (p: Pas) =>
 ---
 <ol class:list={['passos', { portada: !detall }]}>
   {
-    passos.map((p) => {
+    // A la portada, la farmàcia de guàrdia ja és al resum «Avui a Súria»: aquí no es repeteix.
+    passos.filter((p) => detall || p.guardies.length === 0).map((p) => {
       const text = detall ? p.text : p.resum;
       return (
-        <li class="pas" id={p.guardies.length > 0 ? 'farmacia' : undefined}>
+        <li class="pas" id={p.guardies.length > 0 ? 'farmacia' : p.ordre === 1 ? 'empadronament' : p.ordre === 2 ? 'mobles-i-poda' : undefined}>
           <span class="n" aria-hidden="true">{p.ordre}</span>
           <div>
             <Titol class="titol-peca">{p.titol[llengua]}</Titol>
@@ -49,7 +50,7 @@ const fiDarrerTorn = (p: Pas) =>
                     <strong>{g.farmacia}</strong>, {g.adreca}.
                     <span class="acabat" data-avis-caducat hidden>{t('passos.guardia.caducada')}</span>
                     <a class="accio" href={`tel:${g.telefon}`}>
-                      {`${g.farmacia.replace(/^Farmàcia /, '')}: `}<span class="xifres">{telefonVisible(g.telefon)}</span>
+                      <span>{`${g.farmacia.replace(/^Farmàcia /, '')}: `}<span class="xifres">{telefonVisible(g.telefon)}</span></span>
                     </a>
                   </li>
                 ))}
@@ -63,12 +64,6 @@ const fiDarrerTorn = (p: Pas) =>
                 </p>
               </div>
             )}
-            {/* A la portada, el torn vigent és al resum d'avui; aquí, l'enllaç a tots els torns. */}
-            {!detall && p.guardies.length > 0 && (
-              <div class="accions">
-                <a class="accio" href={`${urlDe('passos', llengua)}#farmacia`}>{t('passos.guardia.tots')}</a>
-              </div>
-            )}
             {p.accions.length > 0 && (
               <div class="accions">
                 {p.accions.map((a) =>
@@ -76,7 +71,7 @@ const fiDarrerTorn = (p: Pas) =>
                     <a class="accio" href={a.url} hreflang="ca">{a.text[llengua]}</a>
                   ) : (
                     <a class="accio" href={`tel:${a.telefon}`}>
-                      {`${a.text[llengua]}: `}<span class="xifres">{telefonVisible(a.telefon)}</span>
+                      <span>{`${a.text[llengua]}: `}<span class="xifres">{telefonVisible(a.telefon)}</span></span>
                     </a>
                   ),
                 )}
@@ -128,9 +123,12 @@ const fiDarrerTorn = (p: Pas) =>
   }
   /* Torn de guàrdia: una fitxa del color del cel, amb el telèfon com a acció principal. */
   .guardies li {
-    padding: var(--s-3) var(--s-4) var(--s-2);
+    --radius: var(--radi);
+    --border-width: 0px;
+    --padding: max(16px, calc(var(--radius) * 0.75));
+    padding: var(--padding);
     background: var(--cel);
-    border-radius: var(--radi);
+    border-radius: var(--radius);
   }
   .quan {
     display: block;
@@ -167,9 +165,12 @@ const fiDarrerTorn = (p: Pas) =>
   }
   .sense-torn p {
     margin-top: var(--s-3);
-    padding: var(--s-3) var(--s-4);
+    --radius: var(--radi);
+    --border-width: 0px;
+    --padding: max(16px, calc(var(--radius) * 0.75));
+    padding: var(--padding);
     background: var(--teula-clar);
-    border-radius: var(--radi);
+    border-radius: var(--radius);
   }
   .sense-torn strong {
     display: block;

@@ -2,6 +2,19 @@
 
 Instrucciones compartidas para todos los agentes (Claude Code, Codex, etc.).
 
+## Continuidad entre Codex y Claude Code
+
+- Al iniciar o retomar trabajo, lee `work/CONTINUITY-suria.md` si existe (estado local); en un clon nuevo usa `docs/ESTADO.md`, contrasta `git status --short` y el diff actual, y consulta `PRODUCT.md` y `DESIGN.md` según la tarea. La memoria de un chat no se transfiere automáticamente al otro agente.
+- Mantén un único estado compartido en ese archivo: objetivo, decisiones vigentes, cambios pendientes, verificaciones con evidencia y siguiente paso. Actualízalo al terminar o interrumpir trabajo; sustituye información obsoleta, sin acumular diarios.
+- Los cambios sin commit y los archivos nuevos son trabajo existente que debe conservarse. No hagas reset, limpieza, stash, checkout ni restauraciones masivas para cambiar de agente. No consideres HEAD la única versión válida ni crees commits de trabajo ajeno automáticamente.
+- Un solo agente debe editar el checkout a la vez. Antes de tomar el relevo, comprueba si hay otra sesión editando; si la hay, coordina la pausa con el usuario. Un servidor de desarrollo abierto no significa que un agente esté editando.
+- Las instrucciones más recientes del usuario prevalecen sobre documentos antiguos. Si encuentras una contradicción cuya decisión no consta, regístrala y aclárala antes de cambiar el comportamiento afectado; no reviertas silenciosamente el diseño.
+- Impeccable tiene una sola copia en `.claude/skills/impeccable/`; `.agents/skills/impeccable` enlaza a ella para Codex. Lee su `SKILL.md` cuando corresponda usarla. No dupliques ni actualices la skill al cambiar de agente. Los agentes auxiliares de Claude no están instalados automáticamente en Codex.
+- La configuración `.claude/settings.json` no se carga automáticamente en Codex. Para invocaciones de Impeccable desde Codex, conserva `IMPECCABLE_HOME="$PWD/.impeccable/home"`, `IMPECCABLE_NO_TELEMETRY=1` y `DO_NOT_TRACK=1` en el entorno del comando. No copies permisos ni hooks globales de un agente a otro.
+- No instales runtimes, dependencias, navegadores o hooks por el mero cambio de agente. Usa el lockfile y el entorno existente; consulta los comandos y precauciones en el estado compartido.
+- Las comprobaciones locales de navegador y QA necesarias para el trabajo solicitado están autorizadas por el promotor. Esto no autoriza activar hooks, Team Mode, ejecutar setup de gstack ni publicar o desplegar.
+
+
 ## Estado actual
 
 Prototipo v0 en construcción local (pedido por el usuario el 12/10/2026): web estática con Astro, en catalán y castellano, dirección visual **«Façanes»** (rediseño autorizado por el promotor el 14/10/2026). Las direcciones anteriores se conservan recuperables: Silvinita B en la etiqueta git `silvinita-b-2026-10-14` y en `archiu/silvinita-b-2026-10-14/`; la v3 en `archiu/v3-astro-2026-10-13/`. Nada se publica ni se despliega sin confirmación.

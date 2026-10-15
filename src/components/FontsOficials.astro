@@ -27,9 +27,12 @@ const uniques = [...new Map(fonts.map((f) => [f.url, f])).values()];
 
 <style>
   .fonts {
-    padding: var(--s-4);
+    --radius: var(--radi);
+    --border-width: 0px;
+    --padding: max(16px, calc(var(--radius) * 0.75));
+    padding: var(--padding);
     background: var(--pedra);
-    border-radius: var(--radi);
+    border-radius: var(--radius);
   }
   h2 {
     font-size: var(--t-small);

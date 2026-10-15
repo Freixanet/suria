@@ -1,23 +1,16 @@
 ---
-// Portada «Façanes», tercera passada. La capçalera porta la marca i les tasques sobre fons clar i, a sota,
-// la foto del poble a tota amplada, neta.
-// Després, «Avui a Súria» (Belle Isle) sobre el fons clar: títol fix, salutació i data en segon pla, i dos fets
-// per llegir d'un cop d'ull, l'agenda (d'avui o la pròxima, amb data) i la farmàcia de guàrdia.
-// Després, el que és útil (Lentos): l'agenda amb el cartell de pròximament a sota i, al costat, primers passos
-// i comerços (compacte si encara no n'hi ha). Al final, «Cap on anem» en el verd del turó (sense la llista
-// d'idees, retirada de la portada el 14/10/2026).
-// Mòbil: marca i tasques, foto, avui, agenda, primers passos, pròximament, comerços.
+// Portada: resum, agenda, serveis útils i pròximament.
+import ServeisUtils from '../components/ServeisUtils.astro';
 import Base from '../layouts/Base.astro';
 import CapcaleraSeccio from '../components/CapcaleraSeccio.astro';
 import Agenda from '../components/Agenda.astro';
 import Proximament from '../components/Proximament.astro';
-import ComercosAvui from '../components/ComercosAvui.astro';
-import PrimersPassos from '../components/PrimersPassos.astro';
 import { traductor, type Llengua } from '../i18n/ui.ts';
 import { urlDe } from '../i18n/rutes.ts';
-import { agenda, comercos, passos } from '../lib/dades.ts';
+import { agenda, bus, passos } from '../lib/dades.ts';
 import { rangSetmana } from '../lib/format.ts';
 import type { DadesAra } from '../lib/ara.ts';
+import type { DadesBus } from '../lib/bus.ts';
 
 interface Props {
   llengua: Llengua;
@@ -26,8 +19,6 @@ const { llengua } = Astro.props;
 const t = traductor(llengua);
 const { setmana, aquestaSetmana, proximament } = await agenda();
 const llistaPassos = await passos();
-const llistaComercos = await comercos();
-const senseComercos = llistaComercos.length === 0;
 const rang = rangSetmana(setmana.inici, setmana.fi, llengua);
 const vigencia = rang.charAt(0).toUpperCase() + rang.slice(1);
 
@@ -35,48 +26,91 @@ const farmacia = llistaPassos.find((p) => p.guardies.length > 0);
 const dadesAra: DadesAra = {
   setmana,
   activitats: [
-    ...aquestaSetmana.map((a) => ({ titol: a.titol[llengua], inici: a.dies.inici, fi: a.dies.fi, hores: a.hores, lloc: a.lloc?.[llengua], ancora: '#h-setmana' })),
-    ...proximament.map((a) => ({ titol: a.titol[llengua], inici: a.dies.inici, fi: a.dies.fi, hores: a.hores, lloc: a.lloc?.[llengua], ancora: '#h-proximament' })),
+    ...aquestaSetmana.map((a) => ({ titol: a.titol[llengua], inici: a.dies.inici, fi: a.dies.fi, hores: a.hores, lloc: a.lloc?.[llengua], ancora: '#h-setmana', enllac: a.enllac.url })),
+    ...proximament.map((a) => ({ titol: a.titol[llengua], inici: a.dies.inici, fi: a.dies.fi, hores: a.hores, lloc: a.lloc?.[llengua], ancora: '#h-proximament', enllac: a.enllac.url })),
   ],
   guardies: farmacia?.guardies.map((g) => ({ farmacia: g.farmacia, adreca: g.adreca, telefon: g.telefon, desDe: g.desDe, finsA: g.finsA })) ?? [],
+};
+const linia = await bus();
+const dadesBus: DadesBus | undefined = linia && {
+  sentits: linia.sentits.map((s) => ({ id: s.id, etiqueta: s.etiqueta[llengua], horaris: s.horaris })),
+  festius: linia.festius,
+};
+const textosBus = {
+  propera: t('bus.propera'),
+  minuts: t('bus.minuts'),
+  despres: t('bus.despres'),
+  acabat: t('bus.acabat'),
+  primer: t('bus.primer'),
+  senseConfirmar: t('bus.senseConfirmar'),
+  festiu: t('bus.festiu'),
+  festiuText: t('bus.festiuText'),
 };
 const textosAra = {
   senseVigent: t('passos.guardia.senseVigent'),
   fontOficial: t('passos.guardia.fontOficial'),
   fontUrl: farmacia?.fonts[0]?.url ?? 'https://www.suria.cat/',
   agendaOficial: t('setmana.agendaMunicipal'),
+  veureAgenda: t('ara.veureAgenda'),
+  trucar: t('ara.trucar'),
+  comArribar: t('ara.comArribar'),
+  seguentTorn: t('ara.seguentTorn'),
 };
 ---
 <Base llengua={llengua} pagina="inici">
-  <section class="ample avui" aria-labelledby="h-avui" data-avui-resum={JSON.stringify(dadesAra)} data-textos={JSON.stringify(textosAra)} data-llengua={llengua}>
+  <div class="ample composicio portada-grid">
+  <section class="avui" aria-labelledby="h-avui" data-avui-resum={JSON.stringify(dadesAra)} data-textos={JSON.stringify(textosAra)} data-llengua={llengua}>
+    <div class="avui-esquerra">
     <div class="avui-cap">
       <h2 id="h-avui" class="titol-gran">{t('ara.titol')}</h2>
-      <p class="avui-salutacio" data-salutacio></p>
+      <p class="avui-data" data-data-avui></p>
     </div>
-    <div class="fet" data-facana="ocre" data-fet-agenda>
-      <p class="fet-etiqueta">{t('nav.setmana')}</p>
-      <a class="fet-titol" href="#h-setmana">{t('ara.senseJs.agenda', { n: String(aquestaSetmana.length) })}</a>
+    <div class="avui-agenda">
+      <div class="fet" data-facana="ocre" data-fet-agenda>
+        <a class="fet-titol" href="#h-setmana">{t('ara.senseJs.agenda', { n: String(aquestaSetmana.length) })}</a>
+      </div>
     </div>
-    <div class="fet" data-facana="cel" data-fet-farmacia>
-      <p class="fet-etiqueta">{farmacia?.titol[llengua]}</p>
-      <a class="fet-titol" href={`${urlDe('passos', llengua)}#farmacia`}>{t('ara.senseJs.farmacia')}</a>
     </div>
-    <p class="font avui-font"><b>{t('procedencia.font')}:</b> {t('ara.font')}</p>
+    <div class="avui-targetes">
+      {
+        linia && (
+          <article class="targeta targeta-bus" data-facana="cel" aria-labelledby="h-bus-avui" data-bus={JSON.stringify(dadesBus)} data-textos-bus={JSON.stringify(textosBus)}>
+            <div class="bus-cap">
+              <span class="bus-insignia" aria-hidden="true">
+                <svg class="ic" viewBox="0 0 24 24" focusable="false"><rect x="5" y="3.5" width="14" height="14" rx="2.5" /><path d="M5 11h14M8.5 14.5h.01M15.5 14.5h.01M7.5 17.5v2.5M16.5 17.5v2.5" /></svg>
+              </span>
+              <div>
+                <p class="bus-operador">{linia.operador} · {t('bus.tipus')}</p>
+                <h3 id="h-bus-avui" class="bus-trajecte">Súria <span aria-hidden="true">⇄</span><span class="visually-hidden">–</span> Manresa</h3>
+              </div>
+            </div>
+            <div class="targeta-cos bus-cos" data-bus-cos>
+              <a class="fet-titol" href={linia.enllac} hreflang="ca">{t('bus.senseJs')}</a>
+            </div>
+            <a class="boto boto-buit bus-horaris" href={linia.enllac} hreflang="ca">{t('bus.horaris')}</a>
+          </article>
+        )
+      }
+      {
+        farmacia && (
+          <article class="targeta" data-facana="turo" aria-labelledby="h-farmacia-avui">
+            <h3 id="h-farmacia-avui" class="targeta-cap">
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path class="ple" d="M9.5 3.5h5v6h6v5h-6v6h-5v-6h-6v-5h6z" /></svg>
+              {farmacia.titol[llengua]}
+            </h3>
+            <div class="targeta-cos" data-fet-farmacia>
+              <a class="fet-titol" href={`${urlDe('passos', llengua)}#farmacia`}>{t('ara.senseJs.farmacia')}</a>
+            </div>
+          </article>
+        )
+      }
+    </div>
   </section>
 
-  <div class:list={['ample', 'util', { 'amb-comercos': !senseComercos }]}>
+  <div class="util">
     <section class="setmana" data-facana="ocre" aria-labelledby="h-setmana">
       <CapcaleraSeccio id="h-setmana" titol={t('setmana.titol')} maduresa="En prova" llengua={llengua} detall={vigencia} classeDetall="vigencia" />
       <Agenda llengua={llengua} setmana={setmana} activitats={aquestaSetmana} senseVigencia />
-      <p class="font peu-seccio"><b>{t('procedencia.font')}:</b> {t('setmana.fontResum')}</p>
-      <a class="accio" href={urlDe('setmana', llengua)}>{t('tasca.veureSetmana')}</a>
-    </section>
-
-    <section class="passos" data-facana="cel" aria-labelledby="h-passos">
-      <CapcaleraSeccio id="h-passos" titol={t('passos.titol')} maduresa="En prova" llengua={llengua} compacte />
-      <PrimersPassos llengua={llengua} passos={llistaPassos} />
-      <p class="font peu-seccio"><b>{t('procedencia.font')}:</b> {t('passos.fontResum')}</p>
-      <a class="accio" href={urlDe('passos', llengua)}>{t('tasca.veurePassos')}</a>
     </section>
 
     {
@@ -88,20 +122,22 @@ const textosAra = {
       )
     }
 
-    <section class:list={['menjar', { buida: senseComercos }]} data-facana="teula" aria-labelledby="h-menjar">
-      <CapcaleraSeccio id="h-menjar" titol={t('menjar.titol')} maduresa="En prova" llengua={llengua} compacte />
-      <ComercosAvui llengua={llengua} comercos={llistaComercos} />
-    </section>
+    <div class="serveis-util"><ServeisUtils llengua={llengua} busUrl={linia?.enllac} /></div>
+
+  </div>
+
   </div>
 
   <section class="cap" data-facana="turo" data-tanca-pagina aria-labelledby="h-cap">
-    <div class="ample cap-dins">
+    <div class="ample composicio cap-dins">
       <div>
         <h2 id="h-cap" class="titol-gran">{t('cap.titol')}</h2>
         <p class="identitat">{t('identitat.text')}</p>
         <p class="font-identitat">{t('identitat.font')}</p>
         <p class="cap-intro">{t('cap.intro')}</p>
         <a class="accio" href={urlDe('cap', llengua)}>{t('nav.cap')}</a>
+      </div>
+      <div class="participacio">
         <p class="provant">{t('provant.descripcio')} <a class="accio" href={urlDe('provant', llengua)}>{t('nav.provant')}</a></p>
       </div>
     </div>
@@ -113,19 +149,28 @@ const textosAra = {
 </script>
 
 <style>
-  /* «Avui a Súria»: sobre el fons clar del contingut, amb la mateixa reixa que l'agenda i els primers passos.
+  /* «Avui a Súria»: sobre el fons clar del contingut, amb la mateixa reixa que l’agenda i els serveis.
      El color, només als filets d'accent de cada fet. */
-  .avui {
+  .portada-grid {
     display: grid;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    column-gap: clamp(1.5rem, 5vw, 5rem);
-    row-gap: var(--s-4);
-    /* Més espai lliure a dalt de la zona clara, sota la corba (prova del 14/10/2026). */
-    padding-top: clamp(2.5rem, 4.5vw, 4.5rem);
-    align-items: start;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    grid-template-rows: min-content auto auto auto;
+    gap: var(--s-7) clamp(2rem, 4vw, 4rem);
+    --radius: var(--solapa);
+    --border-width: 0px;
+    --padding: max(16px, calc(var(--radius) * 0.75));
+    padding-top: var(--padding);
+  }
+  /* Les dues seccions comparteixen la reixa sense duplicar contingut ni alterar el DOM. */
+  .avui, .util { display: contents; }
+  .avui-esquerra { grid-column: 1; grid-row: 1; }
+  .avui-targetes { grid-column: 2; grid-row: 1 / 3; }
+  .avui-esquerra {
+    display: grid;
+    gap: var(--s-4);
+    align-content: start;
   }
   .avui-cap {
-    grid-column: 1 / -1;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -134,13 +179,13 @@ const textosAra = {
   .avui-cap h2 {
     font-size: var(--t-h2);
   }
-  .avui-salutacio {
+  .avui-data {
     font-family: var(--display);
     font-weight: 500;
     font-size: clamp(1.0625rem, 1.5vw, 1.375rem);
     color: var(--tinta-2);
   }
-  .avui-salutacio:empty {
+  .avui-data:empty {
     display: none;
   }
   /* Un fet: filet d'accent de la seva façana, etiqueta, el què en gran i el quan i on a sota. L'agenda mana;
@@ -177,6 +222,7 @@ const textosAra = {
     display: inline-flex;
     align-items: center;
     min-height: var(--tap);
+    text-decoration: none;
     text-decoration-thickness: 1.5px;
     text-underline-offset: 0.16em;
     text-decoration-color: rgb(29 37 50 / 0.35);
@@ -198,64 +244,270 @@ const textosAra = {
   .fet[data-facana='ocre'] :global(.fet-avis) {
     font-size: clamp(1.5rem, 2.4vw, 2.125rem);
   }
-  .fet[data-facana='cel'] {
-    border-top-color: var(--cel-tinta);
+  .avui-agenda {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-4);
   }
-  .avui-font {
-    grid-column: 1 / -1;
+  .avui-targetes {
+    align-self: start;
+    align-content: start;
+    max-width: 44rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-5);
   }
 
-  /* Útil (Lentos): agenda i, a sota, el cartell de pròximament; al costat, primers passos i comerços. */
-  .util {
-    display: grid;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    grid-template-rows: auto 1fr auto;
-    column-gap: clamp(1.5rem, 5vw, 5rem);
-    row-gap: var(--s-7);
-    padding-top: clamp(2rem, 3.5vw, 3rem);
-    align-items: start;
+  /* Targeta d'avui (farmàcia, bus): fons clar de la seva façana, capçalera amb icona i etiqueta en versaletes,
+     el fet en gran, accions com a botons i, a sota d'un filet, la nota i la font. */
+  .targeta {
+    container: servei / inline-size;
+    --radius: 24px;
+    --border-width: 0px;
+    --padding: max(16px, calc(var(--radius) * 0.75));
+    padding: var(--padding);
+    background: var(--f-clar);
+    border-radius: var(--radius);
+    corner-shape: superellipse(1.3);
+    color: var(--tinta);
   }
-  .setmana {
-    grid-column: 1;
-    grid-row: 1 / 3;
+  .targeta-cap {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    padding-bottom: var(--s-4);
+    border-bottom: 1px solid color-mix(in srgb, var(--f-tinta) 22%, transparent);
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: var(--t-tag);
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--f-tinta);
   }
-  .passos {
-    grid-column: 2;
-    grid-row: 1;
+  .targeta :global(.ic) {
+    flex: none;
+    width: 1.35em;
+    height: 1.35em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
-  .menjar {
-    grid-column: 2;
-    grid-row: 2 / 4;
+  .targeta-cap .ic {
+    width: 1.6em;
+    height: 1.6em;
   }
-  .proxim {
-    grid-column: 1;
-    grid-row: 3;
+  .targeta :global(.ic .ple) {
+    fill: currentColor;
+    stroke-width: 1.5;
   }
-  /* Amb comerços participants, les fitxes ocupen tota l'amplada sota la resta. */
-  .amb-comercos .menjar {
-    grid-column: 1 / -1;
-    grid-row: 4;
-    padding-top: var(--s-5);
-    border-top: 6px solid var(--teula);
+  .targeta-cos {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+    padding-block: var(--s-4) 0;
   }
-  .peu-seccio {
+  .targeta :global(.targeta-nom),
+  .targeta :global(.fet-titol),
+  .targeta :global(.fet-avis) {
+    font-family: var(--display);
+    font-weight: 650;
+    font-size: clamp(1.375rem, 2vw, 1.75rem);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  .targeta :global(.fet-avis) {
+    font-size: var(--t-body);
+  }
+  .targeta :global(.targeta-adreca) {
+    color: var(--tinta-2);
+  }
+  .targeta :global(.targeta-hora) {
+    display: flex;
+    align-items: center;
+    gap: 0.45em;
+    margin-top: var(--s-2);
+    font-family: var(--display);
+    font-weight: 650;
+    color: var(--f-tinta);
+  }
+  .targeta :global(.targeta-botons) {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: var(--s-3);
     margin-top: var(--s-4);
   }
-  /* Sense comerços: una nota breu i honesta, no una secció sencera. */
-  .buida {
-    padding: var(--s-4) var(--s-4) var(--s-3);
-    background: var(--teula-clar);
-    border-radius: var(--radi);
+  .targeta :global(.boto) {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    max-width: 100%;
+    gap: 0.5em;
+    min-height: 3rem;
+    padding: 0.4rem 1.1rem;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: var(--t-small);
+    text-decoration: none;
+    border: 2px solid var(--f-tinta);
+    --border-width: 2px;
+    /* Control independent: radi comú, no superfície concèntrica amb la targeta. */
+    border-radius: 12px;
   }
-  .buida :global(.buit) {
-    padding-top: 0;
+  .targeta :global(.boto-mapa) { justify-content: center; width: 3rem; padding: 0; flex: none; }
+  .targeta :global(.boto-ple) {
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    color: var(--calc);
+    background: var(--f-tinta);
   }
-  .buida :global(.buit-titol) {
-    font-size: var(--t-h3);
+  .targeta :global(.boto-ple:hover) {
+    color: var(--calc);
+    background: var(--tinta);
+    border-color: var(--tinta);
   }
-  .buida :global(.buit p:not(.buit-titol)) {
+  .targeta :global(.boto-buit) {
+    color: var(--f-tinta);
+  }
+  .targeta :global(.boto-buit:hover) {
+    color: var(--tinta);
+    border-color: var(--tinta);
+  }
+  .targeta :global(.boto .xifres) {
+    font-weight: 700;
+  }
+  .targeta :global(.targeta-seguent) {
+    align-self: stretch;
+    margin-top: var(--s-5);
+    padding-top: var(--s-4);
+    border-top: 1px solid color-mix(in srgb, var(--f-tinta) 22%, transparent);
     font-size: var(--t-small);
   }
+  .targeta :global(.targeta-seguent b) {
+    display: block;
+    font-family: var(--display);
+    font-weight: 650;
+    font-size: var(--t-tag);
+    color: var(--f-tinta);
+  }
+  /* Bus: insígnia fosca i trajecte, com un rètol de parada; els dos sentits, de costat si hi caben. */
+  .bus-cap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-4);
+    padding-bottom: var(--s-4);
+    border-bottom: 1px solid color-mix(in srgb, var(--f-tinta) 22%, transparent);
+  }
+  /* Amb el text molt ampliat, el rètol baixa sota la insígnia en lloc de sortir de la targeta. */
+  .bus-cap > div {
+    flex: 1 1 9rem;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .bus-insignia {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    color: var(--calc);
+    background: var(--tinta);
+    /* Insígnia independent, amb el mateix radi que els controls. */
+    border-radius: 12px;
+  }
+  .bus-insignia .ic {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+  .bus-operador {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: var(--t-tag);
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--f-tinta);
+  }
+  .bus-trajecte {
+    font-family: var(--display);
+    font-weight: 650;
+    font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+    line-height: 1.2;
+  }
+  .bus-cos {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    gap: var(--s-5);
+  }
+  .bus-cos :global(.fet-titol),
+  .bus-cos :global(.bus-festiu) {
+    grid-column: 1 / -1;
+  }
+  .bus-cos :global(.bus-sentit) { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: var(--s-1) var(--s-3); }
+  .bus-cos :global(.bus-info) { min-width: 0; }
+  .bus-cos :global(.bus-hora) { justify-content: flex-end; text-align: right; }
+  .bus-cos :global(.bus-etiqueta) {
+    font-family: var(--display);
+    font-weight: 650;
+    font-size: var(--t-tag);
+    color: var(--f-tinta);
+  }
+  .bus-cos :global(.bus-hora) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 0.5em;
+    margin-top: 0.1rem;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(1.75rem, 2.6vw, 2.25rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .bus-cos :global(.bus-minuts) {
+    font-size: var(--t-small);
+    font-weight: 650;
+    letter-spacing: 0;
+    color: var(--f-tinta);
+  }
+  .bus-cos :global(.bus-fora) {
+    grid-column: 1 / -1;
+    font-family: var(--display);
+    font-weight: 650;
+    font-size: var(--t-body);
+    line-height: 1.25;
+  }
+  .bus-cos :global(.bus-despres) {
+    margin-top: var(--s-1);
+    font-size: var(--t-small);
+    color: var(--tinta-2);
+  }
+  .bus-cos :global(.bus-festiu) {
+    display: grid;
+    gap: var(--s-1);
+  }
+  .bus-horaris {
+    justify-self: start;
+    margin-top: var(--s-4);
+  }
+
+  .targeta-peu {
+    display: grid;
+    gap: var(--s-2);
+    padding-top: var(--s-4);
+    border-top: 1px solid color-mix(in srgb, var(--f-tinta) 22%, transparent);
+    font-size: var(--t-meta);
+    color: var(--tinta-2);
+  }
+
+  .setmana { grid-column: 1; grid-row: 2; }
+  .serveis-util { grid-column: 1 / -1; grid-row: 4; min-width:0; margin-top:var(--s-4); }
+  .proxim { grid-column: 1; grid-row: 3; }
 
   /* Cap on anem: la façana verda del turó, amb la identitat del poble i els enllaços a la visió i a les proves. */
   .cap {
@@ -265,8 +517,9 @@ const textosAra = {
   }
   .cap-dins {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--s-6) clamp(1.5rem, 5vw, 5rem);
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    align-items: start;
+    gap: var(--s-6) clamp(2rem, 4vw, 4rem);
     padding-block: clamp(2.5rem, 6vw, 5rem);
   }
   .cap h2 {
@@ -290,7 +543,6 @@ const textosAra = {
     margin-bottom: var(--s-2);
   }
   .provant {
-    margin-top: var(--s-5);
     color: var(--sobre-turo-2);
     max-width: 36em;
   }
@@ -304,34 +556,42 @@ const textosAra = {
     outline-color: var(--ocre);
   }
 
+  .avui-agenda { max-width: 65ch; }
+  /* La quantitat de text depèn de l’espai real de la targeta, no de la finestra. */
+  @container servei (max-width: 24rem) {
+    :global(.boto-ple .xifres) { display: none; }
+    .targeta :global(.bus-cos .bus-hora) { flex-direction: column; align-items: flex-end; font-size: 1.75rem; }
+  }
+  @container servei (max-width: 12rem) {
+    .targeta :global(.targeta-botons) { flex-wrap: wrap; }
+    .targeta :global(.bus-cos .bus-sentit) { grid-template-columns: minmax(0, 1fr); }
+    .targeta :global(.bus-cos .bus-hora) { align-items: flex-start; text-align: left; }
+  }
   @media (max-width: 56.25rem) {
-    .avui {
+    .portada-grid {
       grid-template-columns: minmax(0, 1fr);
-      row-gap: var(--s-3);
-      padding-top: var(--s-7);
-    }
-    .avui-cap h2 {
-      font-size: 1.875rem;
-    }
-    .fet {
-      min-height: 9rem;
-    }
-    .util,
-    .cap-dins {
-      grid-template-columns: minmax(0, 1fr);
-    }
-    .util {
       grid-template-rows: none;
-      row-gap: var(--s-7);
-      padding-top: var(--s-4);
+      row-gap: var(--s-6);
+      padding-top: var(--padding);
     }
-    .setmana,
-    .passos,
-    .menjar,
-    .proxim,
-    .amb-comercos .menjar {
-      grid-column: 1;
-      grid-row: auto;
+    .avui-esquerra, .avui-targetes, .setmana, .proxim, .serveis-util { grid-column: 1; grid-row: auto; }
+    .avui-cap h2 { font-size: 1.875rem; }
+    .fet { min-height: 0; }
+    .avui-targetes { gap: var(--s-4); }
+    .targeta-cap, .bus-cap { padding-bottom: var(--s-3); }
+    .targeta-cos { padding-top: var(--s-3); }
+    .bus-cos { grid-template-columns: minmax(0, 1fr); gap: var(--s-3); }
+    .bus-cos :global(.bus-sentit) {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      column-gap: var(--s-3);
     }
+
+    .bus-cos :global(.bus-hora) { font-size: 1.75rem; flex-direction: column; align-items: flex-end; }
+    .bus-cos :global(.bus-minuts) { font-size: var(--t-meta); font-weight: 500; }
+
+    .targeta :global(.targeta-botons) { gap: var(--s-3); }
+    .cap-dins { grid-template-columns: minmax(0, 1fr); }
   }
 </style>

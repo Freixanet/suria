@@ -44,6 +44,6 @@ test.describe('sense JavaScript', () => {
     await page.goto('/menjar-i-comprar/');
     const a = fitxa(page, 'Restaurant de mostra A');
     await expect(a.locator('[data-estat-principal]')).toHaveText('Sense confirmar');
-    await expect(a.locator('[data-sense-js]')).toContainText('Dl 12, 20.00–23.00 h (13.05)');
+    await expect(a.locator('[data-sense-js]')).toContainText('Dl 12, 20.00 – 23.00 h (13.05)');
   });
 });

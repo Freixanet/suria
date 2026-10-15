@@ -40,3 +40,14 @@ informes/
 
 # Còpia recuperable de la v3: es conserva al disc, fora del control de versions (duplica el codi).
 archiu/
+
+# Builds alternatius i credencials locals; mai es publiquen.
+dist-pages/
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# Estado local, registros, capturas y entregables de trabajo no públicos.
+work/
+outputs/

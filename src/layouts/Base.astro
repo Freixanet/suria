@@ -31,7 +31,7 @@ const urlsLlengua: Record<Llengua, string> = {
     <!-- Complementari, no és seguretat: l'accés real es protegirà amb contrasenya al servidor (D3). -->
     <meta name="robots" content="noindex, nofollow" />
     <meta name="theme-color" content="#fdfcfa" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml" />
     {pagina && <link rel="alternate" hreflang="ca" href={urlsLlengua.ca} />}
     {pagina && <link rel="alternate" hreflang="es" href={urlsLlengua.es} />}
     <Font cssVariable="--font-display" preload />

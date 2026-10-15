@@ -8,8 +8,9 @@ import { facanaDe } from '../lib/facanes.ts';
 interface Props {
   llengua: Llengua;
   actual: Pagina | null;
+  id?: string;
 }
-const { llengua, actual } = Astro.props;
+const { llengua, actual, id } = Astro.props;
 const t = traductor(llengua);
 const items: { pagina: Pagina; clau: 'nav.inici' | 'nav.setmana' | 'nav.menjar' | 'nav.passos' | 'nav.cap' }[] = [
   { pagina: 'inici', clau: 'nav.inici' },
@@ -30,7 +31,7 @@ const icones: Partial<Record<Pagina, string>> = {
   cap: '<circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
 };
 ---
-<nav class="tasques" aria-label={t('nav.etiqueta')}>
+<nav class="tasques" id={id} aria-label={t('nav.etiqueta')}>
   <ul>
     {
       items.map(({ pagina, clau }) => (

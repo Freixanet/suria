@@ -128,3 +128,25 @@ export const esquemaIdea = z.object({
   text: bilingue,
   maduresa: z.enum(['Idea', 'Demo']),
 });
+
+/** Bus interurbà: sortides per dies de la setmana. Una sortida pot tenir vigència pròpia (reforç temporal).
+ *  Els `festius` són els dies en què l'horari no està confirmat: la targeta no hi mostra cap hora. */
+export const diaSetmana = z.enum(['dl', 'dt', 'dc', 'dj', 'dv', 'ds', 'dg']);
+const sortidaBus = z.union([hora, z.object({ hora, des: dataISO.optional(), fins: dataISO.optional() })]);
+export const esquemaBus = z.object({
+  operador: z.string().min(1),
+  linia: bilingue,
+  parada: bilingue,
+  sentits: z
+    .array(
+      z.object({
+        id: z.string().min(1),
+        etiqueta: bilingue,
+        horaris: z.array(z.object({ dies: z.array(diaSetmana).min(1), sortides: z.array(sortidaBus).min(1) })).min(1),
+      }),
+    )
+    .min(1),
+  festius: z.array(dataISO).default([]),
+  enllac: z.url({ protocol: /^https$/ }),
+  ...procedencia,
+});

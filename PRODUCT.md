@@ -1,5 +1,7 @@
 # Product
 
+> Decisión posterior del promotor (14/10/2026): publicar el prototipo y su código en GitHub Pages / Freixanet/suria, de acceso público sin contraseña. Sustituye la restricción anterior de acceso privado para esta publicación. Se mantienen el aviso de independencia, noindex y los avisos de vigencia; noindex no restringe el acceso.
+
 <!-- impeccable:product-schema 1 -->
 
 Fuentes: `AGENTS.md`, `docs/designs/primera-ronda-validacion-prototipo-v0.md` (APPROVED), `docs/revisiones/eng-review-prototipo-v0.md`, `docs/designs/especificacion-ux-v0.md`. Este archivo resume la verdad de producto; el detalle vive en esos documentos.

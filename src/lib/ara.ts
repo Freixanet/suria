@@ -14,6 +14,8 @@ export interface ActivitatAra {
   lloc?: string;
   /** On és el detall a la mateixa pàgina (agenda o pròximament). */
   ancora: string;
+  /** Fitxa original verificada de l’activitat. */
+  enllac?: string;
 }
 
 export interface GuardiaAra {
@@ -38,10 +40,10 @@ export interface ResumAra {
   salutacio: string;
   data: string;
   agenda:
-    | { tipus: 'activitat'; etiqueta: string; titol: string; ancora: string; quan: string; lloc?: string; nota?: string; mes?: string; oficial?: boolean }
+    | { tipus: 'activitat'; etiqueta: string; titol: string; ancora: string; enllac?: string; quan: string; lloc?: string; nota?: string; mes?: string; oficial?: boolean }
     | { tipus: 'avis'; etiqueta: string; text: string };
   farmacia:
-    | { tipus: 'torn'; etiqueta: string; nom: string; fins: string; adreca: string; telefon: string }
+    | { tipus: 'torn'; etiqueta: string; nom: string; fins: string; horari: string; adreca: string; telefon: string; seguent?: { nom: string; desDe: string } }
     | { tipus: 'avis'; etiqueta: string };
 }
 
@@ -50,13 +52,13 @@ const textos = {
     mati: 'Bon dia',
     tarda: 'Bona tarda',
     vespre: 'Bon vespre',
-    avuiAgenda: 'Avui a l’agenda',
+    avuiAgenda: 'Agenda',
     proxima: 'Pròxima activitat',
     agenda: 'Agenda',
     avui: 'Avui',
     jaPassades: 'Les d’avui ja han passat.',
-    mesUna: 'I 1 activitat més avui',
-    mesVaries: 'I {n} activitats més avui',
+    mesUna: '1 activitat més',
+    mesVaries: '{n} activitats més',
     senseAgenda: 'No tenim l’agenda d’aquesta setmana.',
     senseProxima: 'No tenim més activitats confirmades.',
     farmacia: 'Farmàcia de guàrdia',
@@ -64,18 +66,21 @@ const textos = {
     finsDema: 'fins demà a les {hora} h',
     finsDia: 'fins al {dia} a les {hora} h',
     finsAl: 'fins al {dia}',
+    desDeAvui: 'des d’avui a les {hora} h',
+    desDeDema: 'des de demà a les {hora} h',
+    desDeDia: 'des del {dia} a les {hora} h',
   },
   es: {
     mati: 'Buenos días',
     tarda: 'Buenas tardes',
     vespre: 'Buenas noches',
-    avuiAgenda: 'Hoy en la agenda',
+    avuiAgenda: 'Agenda',
     proxima: 'Próxima actividad',
     agenda: 'Agenda',
     avui: 'Hoy',
     jaPassades: 'Las de hoy ya han pasado.',
-    mesUna: 'Y 1 actividad más hoy',
-    mesVaries: 'Y {n} actividades más hoy',
+    mesUna: '1 actividad más',
+    mesVaries: '{n} actividades más',
     senseAgenda: 'No tenemos la agenda de esta semana.',
     senseProxima: 'No tenemos más actividades confirmadas.',
     farmacia: 'Farmacia de guardia',
@@ -83,6 +88,9 @@ const textos = {
     finsDema: 'hasta mañana a las {hora} h',
     finsDia: 'hasta el {dia} a las {hora} h',
     finsAl: 'hasta el {dia}',
+    desDeAvui: 'desde hoy a las {hora} h',
+    desDeDema: 'desde mañana a las {hora} h',
+    desDeDia: 'desde el {dia} a las {hora} h',
   },
 } as const;
 
@@ -117,11 +125,13 @@ export function composaResum(dades: DadesAra, ara: Date, ll: Llengua): ResumAra 
   const ordenades = [...dades.activitats].sort((a, b) => a.inici.localeCompare(b.inici));
   const actiu = (a: ActivitatAra) => a.inici <= avui && avui <= (a.fi ?? a.inici);
   /** Avui, dins d'una activitat de diversos dies: «Avui · fins al diumenge 18 d'octubre». */
-  const quanAvui = (a: ActivitatAra) => ambHores(a.fi && a.fi !== avui ? `${x.avui} · ${omple(x.finsAl, { dia: diaLlarg(a.fi, ll) })}` : x.avui, a);
+  const quanAvui = (a: ActivitatAra) => a.fi && a.fi !== avui
+    ? ambHores(majuscula(omple(x.finsAl, { dia: diaLlarg(a.fi, ll) })), a)
+    : a.hores.length > 0 ? hores(a) : x.avui;
   const quanDia = (a: ActivitatAra) =>
     ambHores(majuscula(a.fi ? `${diaLlarg(a.inici, ll)} – ${diaMes(a.fi, ll)}` : diaLlarg(a.inici, ll)), a);
   const fitxa = (a: ActivitatAra, etiqueta: string, quan: string) =>
-    ({ tipus: 'activitat', etiqueta, titol: a.titol, ancora: a.ancora, quan, lloc: a.lloc }) as const;
+    ({ tipus: 'activitat', etiqueta, titol: a.titol, ancora: a.ancora, ...(a.enllac ? { enllac: a.enllac } : {}), quan, lloc: a.lloc }) as const;
 
   // Agenda: avui (el que encara no ha acabat) o, si no, la pròxima confirmada amb la seva data.
   // Una absència (setmana caducada, activitats ja passades) és una nota, no el missatge principal.
@@ -157,16 +167,34 @@ export function composaResum(dades: DadesAra, ara: Date, ll: Llengua): ResumAra 
   const vigent = dades.guardies.find(
     (g) => instantMadrid(g.desDe.data, g.desDe.hora) <= ara && ara < instantMadrid(g.finsA.data, g.finsA.hora),
   );
+  // I el torn que el segueix, si el tenim: «des de demà a les 9.00 h».
+  const quan = (moment: { data: string; hora: string }, avuiT: string, demaT: string, diaT: string) => {
+    const h = hora(moment.hora, ll);
+    return moment.data === avui
+      ? omple(avuiT, { hora: h })
+      : moment.data === sumaDies(avui, 1)
+        ? omple(demaT, { hora: h })
+        : omple(diaT, { dia: diaLlarg(moment.data, ll), hora: h });
+  };
   let farmacia: ResumAra['farmacia'] = { tipus: 'avis', etiqueta: x.farmacia };
   if (vigent) {
-    const h = hora(vigent.finsA.hora, ll);
-    const fins =
-      vigent.finsA.data === avui
-        ? omple(x.finsAvui, { hora: h })
-        : vigent.finsA.data === sumaDies(avui, 1)
-          ? omple(x.finsDema, { hora: h })
-          : omple(x.finsDia, { dia: diaLlarg(vigent.finsA.data, ll), hora: h });
-    farmacia = { tipus: 'torn', etiqueta: x.farmacia, nom: vigent.farmacia, fins: majuscula(fins), adreca: vigent.adreca, telefon: vigent.telefon };
+    const fi = instantMadrid(vigent.finsA.data, vigent.finsA.hora);
+    // Només el tram de guàrdia d'avui, retallat pels límits del dia local (també amb canvi d'hora).
+    const iniciAvui = vigent.desDe.data === avui ? vigent.desDe.hora : '00:00';
+    const fiAvui = vigent.finsA.data === avui ? vigent.finsA.hora : '24:00';
+    const seguent = dades.guardies
+      .filter((g) => instantMadrid(g.desDe.data, g.desDe.hora) >= fi)
+      .sort((a, b) => `${a.desDe.data}${a.desDe.hora}`.localeCompare(`${b.desDe.data}${b.desDe.hora}`))[0];
+    farmacia = {
+      tipus: 'torn',
+      etiqueta: x.farmacia,
+      nom: vigent.farmacia,
+      fins: majuscula(quan(vigent.finsA, x.finsAvui, x.finsDema, x.finsDia)),
+      horari: franja(iniciAvui, fiAvui, ll),
+      adreca: vigent.adreca.replace(/^c\.\s*/i, 'c/ '),
+      telefon: vigent.telefon,
+      ...(seguent && { seguent: { nom: seguent.farmacia, desDe: majuscula(quan(seguent.desDe, x.desDeAvui, x.desDeDema, x.desDeDia)) } }),
+    };
   }
 
   return { moment, salutacio: x[moment], data: majuscula(diaLlarg(avui, ll)), agenda, farmacia };

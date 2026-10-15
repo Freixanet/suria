@@ -55,7 +55,8 @@
   --s-7: 3rem;
   --s-8: 4.5rem;
   --s-9: 6.5rem;
-  --pad: clamp(1rem, 4vw, 3.5rem);
+  --pad: clamp(1rem, 2.5vw, 4rem);
+  --amplada-composicio: 180rem;
   --amplada: 90rem;
 
   --tap: 2.75rem;
@@ -213,6 +214,9 @@ dd {
   margin-inline: auto;
   padding-inline: var(--pad);
 }
+
+/* Composició ampla; les pàgines de lectura conserven --amplada. */
+.composicio { max-width: var(--amplada-composicio); }
 
 /* Acció: enllaç que fa una cosa (fitxa, tràmit, trucar). Sempre ≥ 44 px d'alçada, amb fletxa dibuixada. */
 .accio {

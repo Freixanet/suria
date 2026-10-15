@@ -12,10 +12,11 @@ interface Props {
   setmana: { inici: string; fi: string };
   activitats: Activitat[];
   detall?: boolean;
+  font?: { nom: string; url: string };
   /** El període el mostra l'obertura de la secció (portada): aquí no es repeteix. */
   senseVigencia?: boolean;
 }
-const { llengua, setmana, activitats, detall = false, senseVigencia = false } = Astro.props;
+const { llengua, setmana, activitats, detall = false, senseVigencia = false, font } = Astro.props;
 const nivell = detall ? 2 : 3;
 const t = traductor(llengua);
 const rang = rangSetmana(setmana.inici, setmana.fi, llengua);
@@ -31,7 +32,7 @@ const caduca = instantMadrid(sumaDies(setmana.fi, 1), '00:00').toISOString();
     activitats.length > 0 ? (
       <ul class:list={['llista', { obre: senseVigencia }]}>
         {activitats.map((a) => (
-          <ActivitatAgenda activitat={a} llengua={llengua} detall={detall} maduresaSeccio="En prova" nivell={nivell} />
+          <ActivitatAgenda activitat={a} llengua={llengua} detall={detall} nivell={nivell} />
         ))}
       </ul>
     ) : (
@@ -40,9 +41,13 @@ const caduca = instantMadrid(sumaDies(setmana.fi, 1), '00:00').toISOString();
       </EstatBuit>
     )
   }
+  {activitats.length > 0 && <p data-agenda-esgotada hidden>{llengua === 'ca' ? 'No queden activitats per als dies vinents d’aquesta setmana.' : 'No quedan actividades para los próximos días de esta semana.'}</p>}
+  {font && <footer class="agenda-font"><a href={font.url} hreflang="ca" aria-label={`${t('procedencia.font')}: ${font.nom}`}>{font.nom}</a></footer>}
 </div>
 
 <style>
+  .agenda-font { display:flex; justify-content:flex-end; padding-top: var(--s-2); font-size:var(--t-meta); color:var(--tinta-2); }
+  .agenda-font a { display:inline-flex; align-items:center; min-height:var(--tap); }
   .vigencia {
     font-family: var(--display);
     font-weight: 600;
@@ -53,9 +58,12 @@ const caduca = instantMadrid(sumaDies(setmana.fi, 1), '00:00').toISOString();
   }
   .caducada {
     margin-top: var(--s-4);
-    padding: var(--s-4);
+    --radius: var(--radi);
+    --border-width: 0px;
+    --padding: max(16px, calc(var(--radius) * 0.75));
+    padding: var(--padding);
     background: var(--teula-clar);
-    border-radius: var(--radi);
+    border-radius: var(--radius);
   }
   .caducada p {
     font-weight: 700;

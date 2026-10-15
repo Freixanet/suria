@@ -5,11 +5,13 @@ import { llengues, traductor, type Llengua } from '../i18n/ui.ts';
 interface Props {
   llengua: Llengua;
   urls: Record<Llengua, string>;
+  /** A la franja fosca (mòbil i tauleta) o al costat de les tasques (escriptori). */
+  lloc?: 'barra' | 'mast';
 }
-const { llengua, urls } = Astro.props;
+const { llengua, urls, lloc = 'barra' } = Astro.props;
 const t = traductor(llengua);
 ---
-<nav class="llengua" aria-label={t('llengua.etiqueta')}>
+<nav class:list={['llengua', lloc]} aria-label={t('llengua.etiqueta')}>
   {
     (Object.keys(llengues) as Llengua[]).map((ll) => (
       <a
@@ -39,7 +41,8 @@ const t = traductor(llengua);
 </script>
 
 <style>
-  /* A la franja de servei, al costat de l'avís d'independència. */
+  /* Només text, en majúscules espaiades: l'actual en color i negreta, amb el mateix subratllat que la tasca
+     actual; les altres, en gris. La zona tàctil és de 44 px. */
   .llengua {
     display: flex;
     gap: var(--s-1);
@@ -51,30 +54,40 @@ const t = traductor(llengua);
     min-width: var(--tap);
     min-height: var(--tap);
     font-family: var(--display);
-    font-weight: 650;
+    font-weight: 600;
+    letter-spacing: 0.06em;
     text-decoration: none;
-    color: var(--calc);
     border-radius: 0.3em;
-  }
-  a:hover {
-    color: var(--ocre);
-    text-decoration: underline;
-  }
-  /* L'idioma actual: un fons clar més petit que el botó, perquè no toqui les vores de la franja.
-     La zona tàctil continua sent de 44 px. */
-  a {
-    position: relative;
-    isolation: isolate;
   }
   a[aria-current] {
+    font-weight: 800;
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 0.35em;
+  }
+  a:not([aria-current]):hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.35em;
+  }
+  /* Franja fosca. */
+  .barra a {
+    color: rgb(253 252 250 / 0.78);
+  }
+  .barra a:hover,
+  .barra a[aria-current] {
+    color: var(--ocre);
+  }
+  /* Al costat de les tasques, sobre fons clar. */
+  .mast a {
+    font-size: 1.125rem;
+    color: var(--tinta-2);
+  }
+  .mast a:hover {
     color: var(--tinta);
   }
-  a[aria-current]::before {
-    content: '';
-    position: absolute;
-    inset: 0.4rem 0.15rem;
-    z-index: -1;
-    background: var(--calc);
-    border-radius: 0.3em;
+  .mast a[aria-current] {
+    color: var(--teula-tinta);
+    text-decoration-color: var(--teula);
   }
 </style>

@@ -12,8 +12,8 @@ const { llengua, pagina } = Astro.props;
 const t = traductor(llengua);
 ---
 <footer class="peu">
-  <div class="ample peu-dins">
-    <p class="marca-peu" aria-hidden="true">{t('lloc.nom')}</p>
+  <div class="ample composicio peu-dins">
+    <p class="marca-peu" aria-hidden="true">{t('lloc.salutacio')}</p>
     <div class="columna">
       <p><strong>{t('avis.fort')}</strong>{t('avis.resta')}</p>
     </div>
@@ -21,7 +21,7 @@ const t = traductor(llengua);
       <ul>
         {/* A la portada ja hi ha l'enllaç just abans del peu: no es repeteix en l'ordre del focus. */}
         {pagina !== 'inici' && pagina !== 'provant' && <li><a href={urlDe('provant', llengua)}>{t('nav.provant')}</a></li>}
-        <li><a href="https://www.suria.cat/" hreflang="ca">{t('peu.oficials')}</a></li>
+        <li><a href={`${urlDe('provant', llengua)}#fonts-credits`}>{llengua === 'ca' ? 'Fonts i crèdits' : 'Fuentes y créditos'}</a></li>
       </ul>
     </div>
   </div>
@@ -45,7 +45,7 @@ const t = traductor(llengua);
     font-family: var(--display);
     font-weight: 700;
     font-variation-settings: 'wdth' 82;
-    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-size: clamp(2.5rem, 5vw, 4rem);
     line-height: 0.8;
     letter-spacing: -0.05em;
   }

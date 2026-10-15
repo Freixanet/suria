@@ -1,52 +1,49 @@
 ---
 // Una activitat de l'agenda. A la portada: dia, títol, hora · lloc, requisit essencial i acció.
 // A la pàgina de detall, a més, l'explicació llarga i la línia de procedència.
-import LiniaProcedencia from './LiniaProcedencia.astro';
 import TextHores from './TextHores.astro';
 import type { Activitat } from '../lib/dades.ts';
 import { traductor, type Llengua } from '../i18n/ui.ts';
-import { franja, rangCurt } from '../lib/format.ts';
-import { instantMadrid, sumaDies } from '../lib/hora-local.ts';
+import { franja, diaNumero, dataCompleta } from '../lib/format.ts';
+import { instantMadrid, sumaDies, dataMadrid } from '../lib/hora-local.ts';
 
 interface Props {
   activitat: Activitat;
   llengua: Llengua;
   /** A la pàgina de tasca: explicació llarga i línia de procedència. */
   detall?: boolean;
-  maduresaSeccio: 'Real' | 'En prova';
   /** Nivell del títol de la peça: 3 a la portada (sota un h2), 2 a la pàgina de tasca (sota l'h1). */
   nivell?: 2 | 3;
 }
-const { activitat: a, llengua, detall = false, maduresaSeccio, nivell = 3 } = Astro.props;
+const { activitat: a, llengua, detall = false, nivell = 3 } = Astro.props;
 const Titol = nivell === 2 ? 'h2' : 'h3';
 const t = traductor(llengua);
 const ultimDia = a.dies.fi ?? a.dies.inici;
-const caduca = instantMadrid(sumaDies(ultimDia, 1), '00:00').toISOString();
+// Passada quan acaba l'última franja de l'últim dia; sense hora de final, a mitjanit.
+const finals = a.hores.map((h) => h.fi);
+const caduca = (
+  finals.length > 0 && finals.every((f): f is string => !!f)
+    ? instantMadrid(ultimDia, [...finals].sort().at(-1)!)
+    : instantMadrid(sumaDies(ultimDia, 1), '00:00')
+).toISOString();
 const hores = a.hores.map((h) => franja(h.inici, h.fi, llengua)).join(', ');
 ---
-<li class="activitat" data-caduca={caduca}>
-  <time class="dia" datetime={a.dies.inici}>{rangCurt(a.dies.inici, a.dies.fi, llengua)}</time>
+<li class="activitat" data-caduca={caduca} data-ultim-dia={ultimDia} hidden={ultimDia < dataMadrid(new Date())}>
+  <div class="dia">
+    <span class="visually-hidden">{dataCompleta(a.dies.inici, llengua)}{a.dies.fi && a.dies.fi !== a.dies.inici ? ` – ${dataCompleta(a.dies.fi, llengua)}` : ''}</span>
+    <span class="dates-visibles" aria-hidden="true">
+      <time datetime={a.dies.inici}>{diaNumero(a.dies.inici, llengua)}</time>
+      {a.dies.fi && a.dies.fi !== a.dies.inici && <><span>–</span><time datetime={a.dies.fi}>{diaNumero(a.dies.fi, llengua)}</time></>}
+    </span>
+  </div>
   <div class="cos">
-    <Titol class="titol-peca">{a.titol[llengua]}</Titol>
+    <Titol class="titol-peca"><a href={a.enllac.url} hreflang="ca">{a.titol[llengua]}</a></Titol>
     {hores && <p class="quan"><span class="hores">{hores}</span></p>}
     {a.lloc && <p class="lloc">{a.lloc[llengua]}</p>}
     {a.requisit && <p class="requisit"><TextHores text={a.requisit[llengua]} /></p>}
     {detall && a.nota && <p class="nota"><TextHores text={a.nota[llengua]} /></p>}
     <p class="passat" data-avis-caducat hidden>{t('setmana.passada')}</p>
-    <a class="accio" href={a.enllac.url} hreflang="ca">
-      {a.enllac.text[llengua]}<span class="visually-hidden">: {a.titol[llengua]}</span>
-    </a>
-    {
-      detall && (
-        <LiniaProcedencia
-          llengua={llengua}
-          maduresa={a.maduresa ?? maduresaSeccio}
-          fonts={a.fonts}
-          consultat={a.consultat}
-          responsable={a.responsable}
-        />
-      )
-    }
+
   </div>
 </li>
 
@@ -54,7 +51,7 @@ const hores = a.hores.map((h) => franja(h.inici, h.fi, llengua)).join(', ');
   /* Fila de l'agenda (Lentos): la data en una «finestra» del color de la façana, i al costat què, quan i on. */
   .activitat {
     display: grid;
-    grid-template-columns: 6.5rem minmax(0, 1fr);
+    grid-template-columns: 10rem minmax(0, 1fr);
     gap: var(--s-1) var(--s-5);
     padding-block: var(--s-5);
     border-bottom: var(--filet-fi);
@@ -67,12 +64,16 @@ const hores = a.hores.map((h) => franja(h.inici, h.fi, llengua)).join(', ');
     border-top: 4px solid var(--f);
     border-radius: 0 0 0.4rem 0.4rem;
     font-family: var(--display);
-    font-weight: 700;
-    font-size: 1.375rem;
-    line-height: 1.1;
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 1.15;
     letter-spacing: -0.01em;
     font-variant-numeric: lining-nums tabular-nums;
+    /* El nom del dia no es parteix per la meitat: si no hi cap, el número baixa a la línia següent. */
+    overflow-wrap: normal;
   }
+  .dates-visibles { display: flex; flex-wrap: wrap; gap: 0.2em 0.35em; }
+  .dates-visibles time { white-space: nowrap; }
   .cos {
     display: flex;
     flex-direction: column;
@@ -85,24 +86,31 @@ const hores = a.hores.map((h) => franja(h.inici, h.fi, llengua)).join(', ');
     font-weight: 650;
     line-height: 1.2;
   }
+  .titol-peca a { display: inline-block; min-height: var(--tap); padding-block: var(--s-2); color: inherit; text-decoration: none; }
+  .titol-peca a:hover { color: var(--f-tinta); }
   .quan {
     font-family: var(--display);
     font-weight: 500;
     font-size: var(--t-small);
   }
   /* L'hora i el lloc, cadascun a la seva línia: es llegeixen més de pressa que junts. */
+  /* El lloc, a mida de lectura: pesa més que la descripció. */
   .lloc {
-    font-size: var(--t-small);
+    font-size: var(--t-body);
   }
   .hores {
-    font-weight: 700;
+    font-weight: 650;
     font-variant-numeric: lining-nums tabular-nums;
   }
+  /* Condició essencial (edat, inscripció, horari especial): una nota del color clar de la façana, sense ratlla lateral. */
   .requisit {
-    padding-left: var(--s-3);
-    border-left: 1px solid var(--f);
+    margin-top: var(--s-1);
+    padding: 0.3em 0.65em;
+    background: var(--f-clar);
+    border-radius: 0.4rem;
   }
   .nota {
+    font-size: var(--t-small);
     color: var(--tinta-2);
   }
   .passat {

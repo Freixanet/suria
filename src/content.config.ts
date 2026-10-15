@@ -1,6 +1,6 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
-import { esquemaActivitat, esquemaComerc, esquemaIdea, esquemaPas, esquemaSetmana } from './lib/esquemes.ts';
+import { esquemaActivitat, esquemaBus, esquemaComerc, esquemaIdea, esquemaPas, esquemaSetmana } from './lib/esquemes.ts';
 
 // Les dades de prova (comerços de mostra) només entren en el build de proves (SURIA_PROVES=1),
 // mai en el que es publica: una Demo no es barreja amb dades reals.
@@ -14,4 +14,5 @@ export const collections = {
   passos: defineCollection({ loader: yaml('./src/content/passos'), schema: esquemaPas }),
   comercos: defineCollection({ loader: yaml(baseComercos), schema: esquemaComerc }),
   idees: defineCollection({ loader: yaml('./src/content/idees'), schema: esquemaIdea }),
+  bus: defineCollection({ loader: yaml('./src/content/bus'), schema: esquemaBus }),
 };

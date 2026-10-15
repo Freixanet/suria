@@ -1,7 +1,6 @@
 ---
 // Activitats que comencen després de la setmana declarada: separades, mai barrejades amb «Aquesta setmana».
 // A la portada, compacte: títol, dates, el que cal fer aviat (punts marcats com a portada) i l'enllaç al detall.
-import LiniaProcedencia from './LiniaProcedencia.astro';
 import TextHores from './TextHores.astro';
 import type { Activitat } from '../lib/dades.ts';
 import { traductor, type Llengua } from '../i18n/ui.ts';
@@ -12,11 +11,12 @@ interface Props {
   llengua: Llengua;
   activitats: Activitat[];
   detall?: boolean;
+  responsableComu?: string;
   nivell?: 2 | 3;
   /** A la portada el títol de secció el posa CapcaleraSeccio (amb la maduresa). */
   ambTitol?: boolean;
 }
-const { llengua, activitats, detall = false, nivell = 3, ambTitol = true } = Astro.props;
+const { llengua, activitats, detall = false, nivell = 3, ambTitol = true, responsableComu } = Astro.props;
 const t = traductor(llengua);
 const Titol = nivell === 2 ? 'h2' : 'h3';
 const Peca = nivell === 2 ? 'h3' : 'h4';
@@ -53,20 +53,6 @@ const id = `proximament-${detall ? 'detall' : 'portada'}`;
             ) : (
               <a class="accio" href={`${urlDe('setmana', llengua)}#proximament`}>{t('setmana.proximamentDetall')}</a>
             )}
-            {!detall && (
-              <p class="font">
-                <b>{t('procedencia.font')}:</b> {a.fonts.map((f) => f.nom[llengua]).join('; ')}.
-              </p>
-            )}
-            {detall && (
-              <LiniaProcedencia
-                llengua={llengua}
-                maduresa={a.maduresa ?? 'En prova'}
-                fonts={a.fonts}
-                consultat={a.consultat}
-                responsable={a.responsable}
-              />
-            )}
           </article>
         );
       })}
@@ -86,10 +72,13 @@ const id = `proximament-${detall ? 'detall' : 'portada'}`;
     margin-top: var(--s-7);
   }
   .peca {
-    padding: var(--s-5) clamp(1rem, 3vw, 2rem) var(--s-4);
+    --radius: var(--radi);
+    --border-width: 0px;
+    --padding: max(16px, calc(var(--radius) * 0.75));
+    padding: var(--padding);
     background: var(--ocre);
     color: var(--tinta);
-    border-radius: var(--radi);
+    border-radius: var(--radius);
   }
   .titol-peca {
     font-variation-settings: 'wdth' 85;
@@ -115,6 +104,7 @@ const id = `proximament-${detall ? 'detall' : 'portada'}`;
     border-top: 1.5px solid var(--tinta);
   }
   li {
+    max-width: 65ch;
     padding-block: var(--s-2);
     border-bottom: 1px solid rgb(29 37 50 / 0.3);
   }
@@ -124,16 +114,6 @@ const id = `proximament-${detall ? 'detall' : 'portada'}`;
   }
   .accio:hover {
     color: var(--tinta);
-  }
-  .font {
-    color: var(--tinta);
-  }
-  .peca :global(.procedencia) {
-    color: var(--tinta);
-    border-top-color: rgb(29 37 50 / 0.4);
-  }
-  .peca :global(.procedencia .maduresa) {
-    border-color: var(--tinta);
   }
   .peca :global(:focus-visible) {
     outline-color: var(--tinta);

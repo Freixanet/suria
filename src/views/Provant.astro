@@ -1,4 +1,5 @@
 ---
+import { fotos } from '../lib/fotos.ts';
 import PaginaTasca from './PaginaTasca.astro';
 import { traductor, type Llengua } from '../i18n/ui.ts';
 import { provant } from '../i18n/textos-pagines.ts';
@@ -35,6 +36,13 @@ const nomTasca = { setmana: t('nav.setmana'), menjar: t('nav.menjar'), passos: t
     <h2 id="h-opinar" class="titol-gran">{x.opinarTitol}</h2>
     <p>{x.opinar}</p>
   </section>
+  <section id="fonts-credits" aria-labelledby="h-fonts-credits">
+    <h2 id="h-fonts-credits" class="titol-gran">{llengua === 'ca' ? 'Fonts i crèdits' : 'Fuentes y créditos'}</h2>
+    <p>{llengua === 'ca' ? 'Foto de Súria:' : 'Foto de Súria:'} <a href={fotos.vista.original}>Krzysztof Golik, 2022 · Wikimedia Commons</a>. <a href={fotos.vista.llicenciaUrl} rel="license">CC BY-SA 4.0</a>. {llengua === 'ca' ? 'Imatge retallada per adaptar-la a la portada.' : 'Imagen recortada para adaptarla a la portada.'}</p>
+    <p>{llengua === 'ca' ? 'Dades meteorològiques:' : 'Datos meteorológicos:'} <a href="https://open-meteo.com/">Open-Meteo</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. {llengua === 'ca' ? 'Estimacions de model, no una estació municipal.' : 'Estimaciones de modelo, no una estación municipal.'}</p>
+    <p>{llengua === 'ca' ? 'Agenda i serveis municipals:' : 'Agenda y servicios municipales:'} <a href="https://www.suria.cat/" hreflang="ca">Ajuntament de Súria</a>. {llengua === 'ca' ? 'Cada activitat enllaça a la seva fitxa original; els serveis enllacen a les fonts oficials.' : 'Cada actividad enlaza a su ficha original; los servicios enlazan a las fuentes oficiales.'}</p>
+    <p>{llengua === 'ca' ? 'Horaris interurbans:' : 'Horarios interurbanos:'} <a href="https://www.alsa.es/">ALSA</a>. {llengua === 'ca' ? 'Horaris programats, no seguiment en directe. La vigència es conserva a les dades del projecte.' : 'Horarios programados, no seguimiento en directo. La vigencia se conserva en los datos del proyecto.'}</p>
+  </section>
 </PaginaTasca>
 
 <style>
@@ -49,6 +57,7 @@ const nomTasca = { setmana: t('nav.setmana'), menjar: t('nav.menjar'), passos: t
     font-size: var(--t-h2);
     margin-bottom: var(--s-4);
   }
+  #fonts-credits p + p { margin-top: var(--s-4); }
   section > p {
     max-width: 40rem;
   }

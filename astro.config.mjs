@@ -5,6 +5,9 @@ import { defineConfig, fontProviders } from 'astro/config';
 // Les fonts es serveixen des del propi lloc: cap petició a tercers en temps d'ús.
 export default defineConfig({
   output: 'static',
+  // Pages uses /suria/; local development keeps / unless explicitly configured.
+  site: process.env.SURIA_SITE || undefined,
+  base: process.env.SURIA_BASE || '/',
   trailingSlash: 'always',
   build: { format: 'directory' },
   i18n: {

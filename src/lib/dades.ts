@@ -33,6 +33,10 @@ export async function comercos() {
   return (await getCollection('comercos')).map((e) => e.data).sort((a, b) => a.nom.localeCompare(b.nom, 'ca'));
 }
 
+export async function bus() {
+  return (await getCollection('bus')).map((e) => e.data)[0];
+}
+
 export async function idees() {
   return (await getCollection('idees')).map((e) => e.data).sort((a, b) => a.ordre - b.ordre);
 }
