@@ -1,0 +1,47 @@
+{
+  "ordre": 14,
+  "titol": {
+    "ca": "Via pública i mascotes",
+    "es": "Vía pública y mascotas"
+  },
+  "descripcio": {
+    "ca": "Comunica desperfectes amb Línia Verda i consulta les gestions per a animals de companyia.",
+    "es": "Comunica desperfectos con Línia Verda y consulta las gestiones para animales de compañía."
+  },
+  "icona": "street",
+  "color": "turo",
+  "enllacos": [
+    {
+      "text": {
+        "ca": "Comunica una incidència",
+        "es": "Comunica una incidencia"
+      },
+      "url": "https://www.suria.cat/liniaverda"
+    },
+    {
+      "text": {
+        "ca": "Mascotes",
+        "es": "Mascotas"
+      },
+      "url": "https://www.suria.cat/mascotes"
+    }
+  ],
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/liniaverda"
+    },
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/mascotes"
+    }
+  ],
+  "consultat": "2026-10-18",
+  "responsable": "Promotor del prototip"
+}

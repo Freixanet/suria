@@ -49,7 +49,7 @@ const urlsLlengua: Record<Llengua, string> = {
   </head>
   <body>
     <a class="saltar" href="#contingut">{t('saltar')}</a>
-    <Capcalera llengua={llengua} pagina={pagina} urlsLlengua={urlsLlengua} />
+    <Capcalera llengua={llengua} pagina={pagina} urlsLlengua={urlsLlengua}><slot name="serveis-hero" slot="serveis-hero" /></Capcalera>
     <main id="contingut" tabindex="-1">
       <slot />
     </main>

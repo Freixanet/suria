@@ -1,0 +1,44 @@
+{
+  "titol": {
+    "ca": "Ball de la Gent Gran",
+    "es": "Baile de la Gent Gran"
+  },
+  "dies": {
+    "inici": "2026-10-30"
+  },
+  "hores": [
+    {
+      "inici": "17:30"
+    }
+  ],
+  "lloc": {
+    "ca": "L’Esplai",
+    "es": "L’Esplai"
+  },
+  "enllac": {
+    "url": "https://www.suria.cat/actualitat/agenda/setmana-de-la-gent-gran-ball",
+    "text": {
+      "ca": "Fitxa a suria.cat",
+      "es": "Ficha en suria.cat"
+    }
+  },
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Agenda municipal de Súria",
+        "es": "Agenda municipal de Súria"
+      },
+      "url": "https://www.suria.cat/actualitat/agenda/setmana-de-la-gent-gran-ball"
+    }
+  ],
+  "consultat": "2026-10-17",
+  "responsable": "Promotor del prototip",
+  "imatge": {
+    "src": "/imatges/agenda/gent-gran-2026.jpg",
+    "alt": {
+      "ca": "Imatge de difusió de la Setmana de la Gent Gran 2026",
+      "es": "Imagen de difusión de la Setmana de la Gent Gran 2026"
+    },
+    "font": "https://www.suria.cat/actualitat/agenda/setmana-de-la-gent-gran-ball"
+  }
+}

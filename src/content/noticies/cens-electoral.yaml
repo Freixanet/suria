@@ -1,0 +1,35 @@
+{
+  "titol": {
+    "ca": "Consulta del cens electoral del 12 al 19 d’octubre",
+    "es": "Consulta del censo electoral del 12 al 19 de octubre"
+  },
+  "resum": {
+    "ca": "L’avís municipal explica com consultar les dades del cens i demanar-ne la rectificació durant el període establert.",
+    "es": "El aviso municipal explica cómo consultar los datos del censo y solicitar su rectificación durante el periodo establecido."
+  },
+  "categoria": {
+    "ca": "Serveis municipals",
+    "es": "Servicios municipales"
+  },
+  "publicat": "2026-10-09",
+  "imatge": {
+    "src": "/imatges/noticies/cens-electoral.jpg",
+    "alt": {
+      "ca": "Imatge d’avís municipal",
+      "es": "Imagen de aviso municipal"
+    },
+    "original": "https://www.suria.cat/media/repository/baners_destacats/destacats/destacats_de_noticies/Destacat_de_noticies_-_Avis1.jpg"
+  },
+  "enllac": "https://www.suria.cat/actualitat/noticies/avis-sobre-el-periode-de-consulta-del-cens-electoral",
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Ajuntament de Súria",
+        "es": "Ayuntamiento de Súria"
+      },
+      "url": "https://www.suria.cat/actualitat/noticies/avis-sobre-el-periode-de-consulta-del-cens-electoral"
+    }
+  ],
+  "consultat": "2026-10-18",
+  "responsable": "Promotor del prototip"
+}

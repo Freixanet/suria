@@ -1,85 +1,40 @@
 ---
 import { traductor, type Llengua } from '../i18n/ui.ts';
-import { urlDe } from '../i18n/rutes.ts';
-
 import type { Pagina } from '../i18n/rutes.ts';
-
 interface Props {
   llengua: Llengua;
   pagina: Pagina | null;
 }
-const { llengua, pagina } = Astro.props;
+const { llengua } = Astro.props;
 const t = traductor(llengua);
 ---
 <footer class="peu">
   <div class="ample composicio peu-dins">
-    <p class="marca-peu" aria-hidden="true">{t('lloc.salutacio')}</p>
-    <div class="columna">
-      <p><strong>{t('avis.fort')}</strong>{t('avis.resta')}</p>
-    </div>
-    <div class="columna">
-      <ul>
-        {/* A la portada ja hi ha l'enllaç just abans del peu: no es repeteix en l'ordre del focus. */}
-        {pagina !== 'inici' && pagina !== 'provant' && <li><a href={urlDe('provant', llengua)}>{t('nav.provant')}</a></li>}
-        <li><a href={`${urlDe('provant', llengua)}#fonts-credits`}>{llengua === 'ca' ? 'Fonts i crèdits' : 'Fuentes y créditos'}</a></li>
-      </ul>
-    </div>
+    <p class="marca-peu">{t('lloc.salutacio')}</p>
+    <!-- Contorn exterior traçat sobre suria-vista-golik-2022.jpg; sense detalls de façana.
+         Referència: docs/referencias-visuales.md, fotografia de Krzysztof Golik (CC BY-SA 4.0). -->
+    <svg class="skyline-peu" viewBox="420 140 1160 280" fill="none" aria-hidden="true" focusable="false">
+      <path stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"
+        d="M440 390 469 377 519 375 550 365 580 349 599 344 611 336 627 336 638 328 651 331 674 320 695 316 716 319 720 303 751 302 779 296 799 294 812 290 829 292 840 286 852 291 873 292 884 298 901 302 920 300 932 304 950 299 972 302 992 305 1011 306 1026 311 1051 307 1072 311 1091 308 1112 316 1140 311 1160 310 1180 309 1180 280 1221 279 1223 260 1343 260 1343 202 1340 201 1340 191 1352 190 1352 165 Q1359 149 1366 165 L1366 186 1375 186 1375 198 1372 201 1377 292 1398 296 1398 347 1408 344 1434 334 1481 346 1481 376 1497 365 1521 382 1521 397 1555 399" />
+    </svg>
   </div>
 </footer>
 
 <style>
-  /* Peu (Lentos): bloc de tinta, la marca i el que cal saber de qui fa el lloc. */
   .peu {
-    margin-top: var(--s-9);
+    margin-top: var(--espai-seccions);
     background: var(--tinta);
     color: var(--calc);
-    font-size: var(--t-small);
   }
-  .peu-dins {
-    display: grid;
-    grid-template-columns: minmax(0, 4fr) minmax(0, 4fr) minmax(0, 4fr);
-    gap: var(--s-5) clamp(1.5rem, 4vw, 4rem);
-    padding-block: var(--s-7) var(--s-8);
-  }
+  .peu-dins { display: flex; align-items: center; justify-content: space-between; gap: var(--s-5); min-height: 10rem; padding-block: var(--s-7); }
+  .skyline-peu { display: block; width: min(46%, 28rem); height: auto; flex: none; color: var(--calc); opacity: .6; }
   .marca-peu {
+    flex: none;
     font-family: var(--display);
     font-weight: 700;
     font-variation-settings: 'wdth' 82;
     font-size: clamp(2.5rem, 5vw, 4rem);
     line-height: 0.8;
     letter-spacing: -0.05em;
-  }
-  .columna {
-    display: grid;
-    align-content: start;
-    gap: var(--s-3);
-    max-width: 30rem;
-  }
-  strong {
-    color: var(--ocre);
-  }
-  ul {
-    list-style: none;
-  }
-  a {
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--tap);
-    font-family: var(--display);
-    font-weight: 600;
-  }
-  a:hover {
-    color: var(--ocre);
-  }
-  a:focus-visible {
-    outline-color: var(--ocre);
-  }
-  .privacitat {
-    color: #c9cdd4;
-  }
-  @media (max-width: 56.25rem) {
-    .peu-dins {
-      grid-template-columns: minmax(0, 1fr);
-    }
   }
 </style>

@@ -1,0 +1,35 @@
+{
+  "titol": {
+    "ca": "La Miranda, protagonista de les Jornades Europees de Patrimoni",
+    "es": "La Miranda, protagonista de las Jornadas Europeas de Patrimonio"
+  },
+  "resum": {
+    "ca": "La visita del 10 d’octubre va apropar el jaciment medieval del Samuntà a veïns i veïnes, amb el guiatge de l’arqueòloga Jenifer Montaño.",
+    "es": "La visita del 10 de octubre acercó el yacimiento medieval del Samuntà a los vecinos, con la guía de la arqueóloga Jenifer Montaño."
+  },
+  "categoria": {
+    "ca": "Patrimoni",
+    "es": "Patrimonio"
+  },
+  "publicat": "2026-10-14",
+  "imatge": {
+    "src": "/imatges/noticies/la-miranda.jpg",
+    "alt": {
+      "ca": "Restes del mas La Miranda durant la visita de patrimoni",
+      "es": "Restos de la masía La Miranda durante la visita de patrimonio"
+    },
+    "original": "https://www.suria.cat/media/repository/noticies/fotos_de_noticies/2026_10_fotos_de_noticies/2026_10_10_Jornades_Europees_de_Patrimoni_-_La_Miranda__1_.jpg"
+  },
+  "enllac": "https://www.suria.cat/actualitat/noticies/les-restes-del-mas-medieval-la-miranda-protagonitzen-les-jornades-europees-de-patrimoni-a-suria",
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Ajuntament de Súria",
+        "es": "Ayuntamiento de Súria"
+      },
+      "url": "https://www.suria.cat/actualitat/noticies/les-restes-del-mas-medieval-la-miranda-protagonitzen-les-jornades-europees-de-patrimoni-a-suria"
+    }
+  ],
+  "consultat": "2026-10-18",
+  "responsable": "Promotor del prototip"
+}

@@ -12,23 +12,32 @@ const { llengua, urls, lloc = 'barra' } = Astro.props;
 const t = traductor(llengua);
 ---
 <nav class:list={['llengua', lloc]} aria-label={t('llengua.etiqueta')}>
-  {
-    (Object.keys(llengues) as Llengua[]).map((ll) => (
-      <a
-        href={urls[ll]}
-        lang={ll}
-        hreflang={ll}
-        aria-current={ll === llengua ? 'true' : undefined}
-        data-tria-llengua={ll}
-      >
-        <span aria-hidden="true">{ll.toUpperCase()}</span>
-        <span class="visually-hidden">{llengues[ll]}</span>
-      </a>
-    ))
-  }
+  <details data-selector-llengua>
+    <summary aria-label={`${t('llengua.etiqueta')}: ${llengues[llengua]}`}>
+      <span>{llengua.toUpperCase()}</span>
+      <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="m4 6 4 4 4-4" /></svg>
+    </summary>
+    <div class="opcions">
+      {(Object.keys(llengues) as Llengua[]).map((ll) => (
+        <a href={urls[ll]} lang={ll} hreflang={ll} aria-current={ll === llengua ? 'true' : undefined} data-tria-llengua={ll}>{llengues[ll]}</a>
+      ))}
+    </div>
+  </details>
 </nav>
 
 <script>
+  document.querySelectorAll<HTMLDetailsElement>('[data-selector-llengua]').forEach((selector) => {
+    selector.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && selector.open) {
+        event.stopPropagation();
+        selector.open = false;
+        selector.querySelector('summary')?.focus();
+      }
+    });
+    document.addEventListener('click', (event) => {
+      if (event.target instanceof Node && !selector.contains(event.target)) selector.open = false;
+    });
+  });
   for (const enllac of document.querySelectorAll<HTMLAnchorElement>('[data-tria-llengua]')) {
     enllac.addEventListener('click', () => {
       try {
@@ -41,53 +50,39 @@ const t = traductor(llengua);
 </script>
 
 <style>
-  /* Només text, en majúscules espaiades: l'actual en color i negreta, amb el mateix subratllat que la tasca
-     actual; les altres, en gris. La zona tàctil és de 44 px. */
-  .llengua {
-    display: flex;
-    gap: var(--s-1);
-  }
-  a {
+  .llengua { position: relative; z-index: 20; display: inline-flex; }
+  details { position: relative; }
+  summary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: var(--tap);
+    gap: var(--s-2);
     min-height: var(--tap);
-    font-family: var(--display);
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-decoration: none;
-    border-radius: 0.3em;
-  }
-  a[aria-current] {
-    font-weight: 800;
-    text-decoration: underline;
-    text-decoration-thickness: 3px;
-    text-underline-offset: 0.35em;
-  }
-  a:not([aria-current]):hover {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 0.35em;
-  }
-  /* Franja fosca. */
-  .barra a {
-    color: rgb(253 252 250 / 0.78);
-  }
-  .barra a:hover,
-  .barra a[aria-current] {
-    color: var(--ocre);
-  }
-  /* Al costat de les tasques, sobre fons clar. */
-  .mast a {
-    font-size: 1.125rem;
+    padding-inline: var(--s-3);
+    font: 700 1.125rem/1 var(--display);
     color: var(--tinta-2);
+    cursor: pointer;
+    list-style: none;
+    border-radius: .3em;
   }
-  .mast a:hover {
+  summary::-webkit-details-marker { display: none; }
+  summary:hover { color: var(--tinta); }
+  svg { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+  .opcions {
+    position: absolute;
+    top: calc(100% + var(--s-1));
+    right: 0;
+    min-width: 10rem;
+    padding: var(--s-2);
+    border: 1px solid var(--filet);
+    border-radius: var(--radi);
+    background: var(--calc);
     color: var(--tinta);
+    box-shadow: 0 8px 24px rgb(29 37 50 / .12);
   }
-  .mast a[aria-current] {
-    color: var(--teula-tinta);
-    text-decoration-color: var(--teula);
-  }
+  a { display: flex; align-items: center; min-height: var(--tap); padding-inline: var(--s-3); border-radius: .3em; font: 600 1rem/1.3 var(--display); text-decoration: none; }
+  a[aria-current] { color: var(--teula-tinta); font-weight: 800; }
+  a:hover { background: var(--pedra); color: var(--tinta); }
+  .barra summary { color: var(--calc); }
+  @media (max-width: 79.999rem) { .opcions { left: 0; right: auto; } }
 </style>

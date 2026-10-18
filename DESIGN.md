@@ -110,7 +110,7 @@ components:
     fontWeight: 750
     underline: "3px, color de la façana"
   home-photo:
-    image: "foto del poble a tota amplada i neta, alçada clamp(16rem, 31vw, 30rem) amb enquadrament 60% 22%; 16:10 al mòbil (64% 50%)"
+    image: "foto del poble a tota amplada i neta, alçada 45.625rem (730px) a escriptori amb enquadrament 60% 22%; mínim 41rem fins a 900px (64% 50%); variants fins a 2400px i sizes segons la mida efectiva amb object-fit:cover"
     credit: "dins de la foto, a baix a la dreta, sobre fons tinta 80% només darrere del text; 14 px; al mòbil, versió curta en una línia"
   today-summary:
     background: "{colors.calc} (sense franja ni degradat)"
@@ -312,3 +312,95 @@ Repositori públic Freixanet/suria i web pública freixanet.github.io/suria, aut
 ## Meteorologia · última decisió vigent
 
 MET Norway substitueix Open-Meteo. Es retira completamentⓘ i el seu enllaç; només icona i graus no clicables. Atribució MET Norway/CC BY4.0 exclusivament a Fonts i crèdits. Estimació de la franja horària actual, no observació d’estació. Refresc mínim15min respectant Expires, selecció de punt recalculada cada minut; error —°C si no hi ha dades vigents. Contracte actual a docs/revisiones/temps-suria.md, substitueix les regles anteriors d’Open-Meteo i la seva atribució adjacent.
+
+## Hero amb composer · prototip visual
+
+Petició del promotor: títol sobre la fotografia, composer immediatament a sota amb els dos extrems rodons i botó de pregunta dins a la dreta. «El teu pròxim pla comença aquí.» / «Tu próximo plan empieza aquí.». Placeholder: «Explica’ns què necessites…» / «Cuéntanos qué necesitas…». Bricolage blanca sense ombra, en una sola línia amb mida proporcional al contenidor (clamp(1rem,7.8cqi,4rem)); foto reenquadrada40px amunt, ampliant lleument la cobertura i retallant el cel sense reduir el hero; composer a l’alçada anterior al canvi d’una línia; títol d’una línia just a sobre, sense pujar tot el grup, per correcció del promotor; vel tinta lleu4–18% (reduït per petició del promotor per deixar visible la fotografia); composer calç, text tinta, botó ocre només amb text (sense fletxa), hover lleugerament més clar (88% ocre +12% calç), sense arribar a ocre-clar. Radi999px intencional i específic d’aquests controls, autoritzat pel promotor; ombra tinta16% amb desplaçament12px i blur32px. Alçada mínima730px escriptori/656px mòbil, creixement amb contingut i zoom. Separació títol/composer24px escriptori/16px mòbil; títol8px més a prop sense moure el composer. Botó amb el mateix espai superior, inferior i dret (4px de padding +2px de vora). Composer més baix per petició del promotor:64px escriptori/60px mòbil a mida normal; botó52px escriptori/48px mòbil amb nom accessible; text del botó visible també al mòbil. Etiqueta accessible independent del placeholder, focus visible i validació de camp buit/espais. Sense assistent connectat. Per petició posterior: sense nota visible inicial de prototip, sense rectangle interior de focus; clic sense contorn ni vora groga; contorn exterior clar només en navegar amb Tab. Enviar mostra només «Les preguntes encara no estan disponibles.» / «Las preguntas aún no están disponibles.» com a estat anunciat; no transmet ni desa preguntes. Sense JavaScript enllaça a Què estem provant sense incloure el text. Aprovat pel promotor com a prototip visual; no publicat.
+
+### Sugerencias del composer
+
+Cuatro chips discretos bajo el composer (12px de separación), CA/ES: planes para hoy, próximo autobús, farmacia de guardia, trámites y gestiones. Sus textos visibles son preguntas breves (qué hacer hoy, cuándo sale el bus, qué farmacia está de guardia cómo empadronarse), según corrección del promotor; al pulsarlos insertan una pregunta completa y enfocan el campo, sin enviarla ni simular una respuesta. Fondo calç78%, texto tinta14px, sin sombra/acento ocre y altura compacta32px por línea (petición explícita). Preguntas naturales más completas; flujo flexible por todo el ancho del composer con8px entre chips y filas, sin columnas forzadas ni ancho central reducido; apiladas en móvil. Hero móvil656px con112px reservados debajo para conservar la posición del título/composer. Posición del título/composer conservada; espacio reservado antes del aviso de envío para evitar solaparlo con los chips. Ocultos sin JavaScript. La decisión vigente sigue siendo prototipo visual sin IA conectada.
+
+La secció clara immediatament sota el hero té les cantonades rectes, provisionalment per petició del promotor; conserva la posició i el solapament actuals.
+
+Prova vigent: bloc de títol, composer i suggeriments alineat a l’esquerra del hero, amb marge lateral fluid clamp(1rem,5vw,6rem); ample màxim576px i mateixa posició vertical. Títol equilibrat en dues línies en escriptori per reduir l’ocupació horitzontal. Xips amb flux alineat a l’inici, també en mòbil.
+
+Contrast actual del hero: degradat horitzontal tinta58% a l’esquerra,46% al32%,16% al58% i4% des del78%, per reforçar el contingut esquerre i conservar la fotografia clara a la dreta.
+
+Prova corregida: les targetes reals de bus i farmàcia passen de la secció Avui al costat dret del hero, en columna, amb dades i accions conservades i sense duplicats. Els quatre xips tornen sota el composer. Fins a1024px les targetes flueixen sota el bloc esquerre; el hero creix amb el contingut.
+
+Petició posterior: retirada provisionalment la targeta de bus del hero; només hi queda la de farmàcia. Els quatre xips de preguntes es conserven.
+
+Estat vigent: retirada també provisionalment la targeta de farmàcia del hero. El hero només mostra el bloc esquerre de títol, composer i quatre suggeriments.
+
+Avui a Súria: només activitats (bus/farmàcia continuen ocults per confirmació del promotor). Fins a3 targetes vigents/pròximes, amb dates i enllaços originals, en fila horitzontal; fons ocre clar, radi24px, padding24px, gap24px. En mòbil targetes86% i scroll intern. Selecció amb les mateixes regles de composaResum; sense repetir activitats ni inventar-ne per omplir.
+
+Data de les targetes Avui: quadrat64×64px a dalt a l’esquerra dins la targeta, fons calç, radi12px, dia gran i mes abreujat; sense data general sota el títol de secció. Activitats en curs mostren el dia actual Europe/Madrid; futures el dia d’inici. Es conserven els rangs complets quan pertoqui.
+
+Tarjetas Avui: sin raya superior; imagen oficial del evento a sangre en la parte superior, esquinas recortadas por el radio de la tarjeta y fecha sobre la imagen arriba izquierda. Fuente y texto alternativo asociados a la actividad; carga diferida.
+
+Tamaño vigente de tarjetas Avui: máximo352px de ancho, imágenes208px de alto; la fila no estira las tarjetas para llenar el espacio. En móvil86% hasta352px.
+
+Proporción vigente de tarjetas Avui: cuadrada1:1 a tamaño normal (352×352px en escritorio), imagen144px y padding18px; título22px. Se permite crecer con contenido/zoom en pantallas estrechas.
+
+Ajuste vigente: recuadro de fecha sin borde; imagen192px de alto. Tarjeta conserva ancho máximo352px y mínimo352px de alto, con altura libre para no recortar contenido tras ampliar la imagen.
+
+Sección Avui: panel fluido sin ancho máximo, con96px constantes a cada lateral en escritorio (>1024px), ancho de contenedor en tablet/móvil, con padding20–40px y esquinas superiores redondeadas32px, por petición posterior. Sube64px sobre la base del hero,32px en móvil; el resto del main ya no se superpone a la fotografía.
+
+Acción Veure l’agenda alineada al pie de cada tarjeta, con espacio flexible sobre ella para mantener la misma altura independientemente de la longitud del contenido.
+
+Barra azul: fecha actual completa a la izquierda del clima, en idioma de página y zona Europe/Madrid, actualizada en navegador al cambiar el día. En móvil se permite una segunda fila para mantener legibilidad.
+
+Prueba actual: Avui muestra hasta6 actividades verificadas, tarjetas352px sin encoger con desplazamiento horizontal interno cuando no caben.
+
+Avui sin scroll: muestra solo las tarjetas completas que caben en una fila. Ancho orientativo288–352px, una tarjeta adaptable si el contenedor es menor. ResizeObserver adapta cantidad al espacio real y oculta excedentes, disponibles mediante agenda.
+
+Distribución vigente: Avui solo muestra una actividad del día actual. Las actividades futuras pasan como tarjetas a Aquesta setmana a Súria, sin duplicarlas en Pròximament. Se mantiene cantidad visible según espacio, sin scroll; fechas explícitas y enlaces a fuentes/agenda conservados.
+
+Tarjeta de hoy diferenciada: sin fecha ni título visible de sección (nombre accesible y ancla conservados). Rectángulo horizontal hasta608px, imagen50% izquierda y cuerpo50%; en móvil se apilan para conservar lectura. Las tarjetas próximas mantienen diseño anterior.
+
+Panel Avui: componente de farmacia a la derecha de la tarjeta de actividad de hoy, máximo416px, datos/acciones originales; en móvil debajo. Tarjeta de hoy mantiene máximo608px e imagen/texto50/50. Bus sigue oculto.
+
+Prueba provisional vigente del panel Avui: contenido retirado; tres superficies vacías horizontales2:1:1, primera rectangular2:1 y otras dos cuadradas1:1. Colores ocre claro, turo claro y cel; radio24px. Mantiene panel y solapamiento.
+
+Panel Avui: padding interior reducido a clamp(16px,1.5vw,24px).
+
+Prueba provisional: tarjetas de Aquesta setmana vacías salvo su recuadro de fecha; contenido fuente conservado, sin imágenes ni botones renderizados.
+
+Footer vigente: único pie global de tinta, solo logo Ep, Súria!, sin enlaces/avisos/columnas. Retirada franja verde Cap on anem del final de portada; sus páginas se conservan.
+
+Selector de idioma: desplegable con solo código actual CA/ES y chevron abajo; al abrir muestra Català/Castellano. Details/summary nativo y enlaces reales, cierre Escape/clic externo, misma página y preferencia recordada.
+
+Informació pràctica: nueva sección tras Serveis útils con16 ámbitos verificados y38 accesos, CA/ES. Cuadrícula4/3/2/1 columnas, tarjetas pastel24px de radio y24px de padding, títulos h3, descripción y enlaces44px. Todo el contenido visible sin scroll horizontal. Fuentes/consulta/responsable en colección informacioPractica; detalle editorial en docs/revisiones/informacio-practica.md.
+
+Informació pràctica se sitúa antes de Serveis útils. Portada con6 tarjetas prioritarias en3/2/1 columnas y enlace Veure tot / Ver todo a página dedicada con16 categorías. Prioridad: trámites/padrón, movilidad, salud, emergencias, residuos y educación. Rutas CA/ES conservan idioma y estructura.
+
+Serveis útils retirado provisionalmente de la portada por petición del promotor; Informació pràctica y sus páginas completas se mantienen.
+
+Chips del hero: sin sangría inicial; alineados al borde izquierdo del composer. Prueba de alineación con la curva revertida por el promotor.
+
+Actualitat al final de la home, tras Informació pràctica y antes del footer. Tres noticias municipales con imagen16:9, fecha/categoría, titular h3, resumen y enlace; atribución visible. Cuadrícula3/2/1 columnas y enlace a todas las noticias. Contenido bilingüe con procedencia en colección noticies. Selección editorial local, no feed automático.
+
+Las tarjetas de información práctica y noticias tienen ancho máximo de26rem; las de agenda conservan22rem. En el ensayo Avui, cuadrados de hasta18rem y rectángulo de36rem, con proporción2:1:1 y panel exterior fluido. Los límites no fuerzan altura ni recortan texto.
+
+Composición centrada: contenedor compartido de máximo87rem con márgenes automáticos y padding adaptable; sustituye el ancho ilimitado y los márgenes fijos de Avui. Fondos hero/footer a toda anchura; contenido alineado al contenedor.
+
+Footer: skyline decorativo de Súria dibujado en SVG con trazo calç discreto a la derecha del logo; casas escalonadas y campanario, hasta28rem de ancho y adaptación móvil sin desplazar el logo.
+
+Corrección del skyline: únicamente el contorno exterior trazado de la foto real de Súria, respetando alturas relativas; sin puertas, ventanas, líneas de suelo ni fachadas. Adaptación CC BY-SA4.0 acreditada en Fonts i crèdits.
+
+Actualitat compacta: máximo352px por tarjeta, sección centrada ajustada a3/2/1 columnas; padding20px, gap8px, títulos20px y resumen15px. Contenido íntegro.
+
+Actualitat vigente: mismo ancho de sección que el resto de portada; cinco noticias en una fila de escritorio y5/4/3/2/1 columnas adaptables. Tarjetas máximo288px, imagen y metadatos, titular18px y enlace; sin resumen en la vista compacta. Sustituye el estrechamiento de la sección anterior.
+
+Actualitat unificada con agenda semanal: misma reja adaptable (mínimo orientativo288px, máximo352px), altura mínima352px, radio24px y separación24px/16px móvil. Misma cantidad visible según espacio, una fila sin scroll, resto mediante archivo municipal. Sustituye la rejilla de cinco columnas más pequeñas.
+
+Avui: tarjetas llenan el panel en proporción2:1:1 sin límite interior independiente; padding24px (16px móvil), gap24px (8px móvil). Gutter compartido se limita a2.175rem al alcanzar el ancho máximo del contenedor.
+
+Ritmo vertical: --espai-seccions compartido72px escritorio y48px hasta900px entre bloques de portada y antes del footer. Sin fila vacía ni márgenes acumulados.
+
+Jerarquía confirmada por el promotor: Aquesta setmana tiene mayor relevancia y mantiene su título de mayor tamaño. La diferencia respecto a práctica/actualidad es intencionada. Limpieza de estilos obsoletos de portada sin cambio visual.
+
+Noticias: todas las piezas seleccionadas aparecen en filas adicionales sin ocultación ni scroll horizontal, manteniendo tamaño de tarjeta de agenda. Imagen enlazada con nombre accesible; carteles identificados en datos usan contain sobre piedra y fotografías conservan cover.
+
+Decisión posterior del promotor: Actualitat vuelve a una sola fila con la cantidad que cabe; no desplegar noticias adicionales. Todas las imágenes cover sin fondos especiales, enlaces de imagen conservados. El recorte homogéneo se prioriza sobre mostrar carteles completos con bandas.

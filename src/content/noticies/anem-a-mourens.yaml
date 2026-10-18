@@ -1,0 +1,35 @@
+{
+  "titol": {
+    "ca": "Anem a moure’ns: inscripcions del 26 al 30 d’octubre",
+    "es": "Anem a moure’ns: inscripciones del 26 al 30 de octubre"
+  },
+  "resum": {
+    "ca": "El programa d’activitat física per a persones grans començarà al novembre. L’Ajuntament ha anunciat el període d’inscripció a l’OAC.",
+    "es": "El programa de actividad física para personas mayores empezará en noviembre. El Ayuntamiento ha anunciado el periodo de inscripción en la OAC."
+  },
+  "categoria": {
+    "ca": "Vida activa",
+    "es": "Vida activa"
+  },
+  "publicat": "2026-10-16",
+  "imatge": {
+    "src": "/imatges/noticies/anem-a-mourens.jpg",
+    "alt": {
+      "ca": "Imatge del programa Anem a moure’ns",
+      "es": "Imagen del programa Anem a moure’ns"
+    },
+    "original": "https://www.suria.cat/media/repository/baners_destacats/destacats/destacats_de_noticies/2022_02_Destacat_de_noticies_Programa_Anem_a_moure_ns_per_a_la_gent_gran.jpg"
+  },
+  "enllac": "https://www.suria.cat/actualitat/noticies/les-inscripcions-del-programa-anem-a-mourens-per-a-persones-grans-romandran-obertes-del-26-al-30-doctubre",
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Ajuntament de Súria",
+        "es": "Ayuntamiento de Súria"
+      },
+      "url": "https://www.suria.cat/actualitat/noticies/les-inscripcions-del-programa-anem-a-mourens-per-a-persones-grans-romandran-obertes-del-26-al-30-doctubre"
+    }
+  ],
+  "consultat": "2026-10-18",
+  "responsable": "Promotor del prototip"
+}

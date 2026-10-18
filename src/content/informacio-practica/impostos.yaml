@@ -1,0 +1,47 @@
+{
+  "ordre": 15,
+  "titol": {
+    "ca": "Impostos i obres",
+    "es": "Impuestos y obras"
+  },
+  "descripcio": {
+    "ca": "Informació sobre tributs municipals, llicències i gestions urbanístiques.",
+    "es": "Información sobre tributos municipales, licencias y gestiones urbanísticas."
+  },
+  "icona": "building",
+  "color": "pedra",
+  "enllacos": [
+    {
+      "text": {
+        "ca": "Impostos i taxes",
+        "es": "Impuestos y tasas"
+      },
+      "url": "https://www.suria.cat/economia-hisenda"
+    },
+    {
+      "text": {
+        "ca": "Urbanisme i llicències",
+        "es": "Urbanismo y licencias"
+      },
+      "url": "https://www.suria.cat/urbanisme"
+    }
+  ],
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/economia-hisenda"
+    },
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/urbanisme"
+    }
+  ],
+  "consultat": "2026-10-18",
+  "responsable": "Promotor del prototip"
+}

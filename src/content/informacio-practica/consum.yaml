@@ -1,0 +1,47 @@
+{
+  "ordre": 10,
+  "titol": {
+    "ca": "Consum i reclamacions",
+    "es": "Consumo y reclamaciones"
+  },
+  "descripcio": {
+    "ca": "Resol dubtes sobre els teus drets com a consumidor i consulta les visites de la UMIC.",
+    "es": "Resuelve dudas sobre tus derechos como consumidor y consulta las visitas de la UMIC."
+  },
+  "icona": "receipt",
+  "color": "ocre",
+  "enllacos": [
+    {
+      "text": {
+        "ca": "Calendari de la UMIC",
+        "es": "Calendario de la UMIC"
+      },
+      "url": "https://www.suria.cat/umic-calendari"
+    },
+    {
+      "text": {
+        "ca": "Gestions a l’OAC",
+        "es": "Gestiones en la OAC"
+      },
+      "url": "https://www.suria.cat/oac"
+    }
+  ],
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/umic-calendari"
+    },
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/oac"
+    }
+  ],
+  "consultat": "2026-10-18",
+  "responsable": "Promotor del prototip"
+}

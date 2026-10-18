@@ -1,0 +1,35 @@
+{
+  "titol": {
+    "ca": "Rosa Santamaria exposa «Diversitat» a Cal Balaguer",
+    "es": "Rosa Santamaria expone «Diversitat» en Cal Balaguer"
+  },
+  "resum": {
+    "ca": "La mostra es pot visitar a Cal Balaguer del Porxo fins al 31 de desembre.",
+    "es": "La muestra se puede visitar en Cal Balaguer del Porxo hasta el 31 de diciembre."
+  },
+  "categoria": {
+    "ca": "Cultura",
+    "es": "Cultura"
+  },
+  "publicat": "2026-10-05",
+  "imatge": {
+    "src": "/imatges/noticies/diversitat.jpg",
+    "alt": {
+      "ca": "Inauguració de l’exposició Diversitat de Rosa Santamaria",
+      "es": "Inauguración de la exposición Diversitat de Rosa Santamaria"
+    },
+    "original": "https://www.suria.cat/media/repository/noticies/fotos_de_noticies/2026_10_fotos_de_noticies/2026_10_02_Inauguracio_de_l_exposicio_Diversitat__1_.jpg"
+  },
+  "enllac": "https://www.suria.cat/actualitat/noticies/lartista-surienca-rosa-santamaria-inaugura-la-seva-exposicio-diversitat-a-la-sala-cal-balaguer-del-porxo",
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Ajuntament de Súria",
+        "es": "Ayuntamiento de Súria"
+      },
+      "url": "https://www.suria.cat/actualitat/noticies/lartista-surienca-rosa-santamaria-inaugura-la-seva-exposicio-diversitat-a-la-sala-cal-balaguer-del-porxo"
+    }
+  ],
+  "consultat": "2026-10-18",
+  "responsable": "Promotor del prototip"
+}

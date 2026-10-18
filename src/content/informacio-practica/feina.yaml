@@ -1,0 +1,47 @@
+{
+  "ordre": 9,
+  "titol": {
+    "ca": "Feina i formació",
+    "es": "Empleo y formación"
+  },
+  "descripcio": {
+    "ca": "Acompanyament per buscar feina, orientació laboral i formació per a l’ocupació.",
+    "es": "Acompañamiento para buscar empleo, orientación laboral y formación para el empleo."
+  },
+  "icona": "work",
+  "color": "cel",
+  "enllacos": [
+    {
+      "text": {
+        "ca": "Servei Local d’Ocupació",
+        "es": "Servicio Local de Empleo"
+      },
+      "url": "https://www.suria.cat/serveilocaldocupacio"
+    },
+    {
+      "text": {
+        "ca": "Formació per a l’ocupació",
+        "es": "Formación para el empleo"
+      },
+      "url": "https://www.suria.cat/formacio"
+    }
+  ],
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/serveilocaldocupacio"
+    },
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/formacio"
+    }
+  ],
+  "consultat": "2026-10-18",
+  "responsable": "Promotor del prototip"
+}

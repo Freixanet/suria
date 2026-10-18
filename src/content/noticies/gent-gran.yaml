@@ -1,0 +1,35 @@
+{
+  "titol": {
+    "ca": "La Setmana de la Gent Gran comença el 19 d’octubre",
+    "es": "La Semana de las Personas Mayores empieza el 19 de octubre"
+  },
+  "resum": {
+    "ca": "Activitats per fomentar la participació i el benestar del 19 d’octubre al 8 de novembre.",
+    "es": "Actividades para fomentar la participación y el bienestar del 19 de octubre al 8 de noviembre."
+  },
+  "categoria": {
+    "ca": "Gent gran",
+    "es": "Personas mayores"
+  },
+  "publicat": "2026-10-07",
+  "imatge": {
+    "src": "/imatges/noticies/gent-gran.jpg",
+    "alt": {
+      "ca": "Imatge de la Setmana de la Gent Gran 2026",
+      "es": "Imagen de la Semana de las Personas Mayores 2026"
+    },
+    "original": "https://www.suria.cat/media/repository/baners_destacats/destacats/2026_destacats_de_noticies/2026_10_19_Destacat_de_noticies_Setmana_de_la_Gent_Gran.jpg"
+  },
+  "enllac": "https://www.suria.cat/actualitat/noticies/suria-celebrara-una-nova-edicio-de-la-setmana-de-la-gent-gran-a-partir-del-19-doctubre",
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Ajuntament de Súria",
+        "es": "Ayuntamiento de Súria"
+      },
+      "url": "https://www.suria.cat/actualitat/noticies/suria-celebrara-una-nova-edicio-de-la-setmana-de-la-gent-gran-a-partir-del-19-doctubre"
+    }
+  ],
+  "consultat": "2026-10-18",
+  "responsable": "Promotor del prototip"
+}

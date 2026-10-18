@@ -4,6 +4,7 @@ import type { Llengua } from './ui.ts';
 
 export const rutes = {
   inici: { ca: '', es: '' },
+  practica: { ca: 'informacio-practica', es: 'informacion-practica' },
   setmana: { ca: 'aquesta-setmana', es: 'esta-semana' },
   menjar: { ca: 'menjar-i-comprar', es: 'comer-y-comprar' },
   passos: { ca: 'primers-passos', es: 'primeros-pasos' },

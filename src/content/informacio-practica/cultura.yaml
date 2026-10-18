@@ -1,0 +1,61 @@
+{
+  "ordre": 12,
+  "titol": {
+    "ca": "Cultura i esport",
+    "es": "Cultura y deporte"
+  },
+  "descripcio": {
+    "ca": "Biblioteca, Escola Municipal de Música i equipaments per practicar esport.",
+    "es": "Biblioteca, Escola Municipal de Música y equipamientos para practicar deporte."
+  },
+  "icona": "book",
+  "color": "rosa",
+  "enllacos": [
+    {
+      "text": {
+        "ca": "Biblioteca de Súria",
+        "es": "Biblioteca de Súria"
+      },
+      "url": "https://www.suria.cat/biblioteca"
+    },
+    {
+      "text": {
+        "ca": "Escola de Música",
+        "es": "Escuela de Música"
+      },
+      "url": "https://www.suria.cat/escolademusica"
+    },
+    {
+      "text": {
+        "ca": "Espais esportius",
+        "es": "Espacios deportivos"
+      },
+      "url": "https://www.suria.cat/espaismunicipals/espais-esportius-i-de-salut"
+    }
+  ],
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/biblioteca"
+    },
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/escolademusica"
+    },
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/espaismunicipals/espais-esportius-i-de-salut"
+    }
+  ],
+  "consultat": "2026-10-18",
+  "responsable": "Promotor del prototip"
+}

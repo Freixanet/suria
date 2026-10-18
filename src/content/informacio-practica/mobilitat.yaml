@@ -1,0 +1,61 @@
+{
+  "ordre": 2,
+  "titol": {
+    "ca": "Mobilitat i aparcament",
+    "es": "Movilidad y aparcamiento"
+  },
+  "descripcio": {
+    "ca": "Mou-te amb la Guagua, consulta els autobusos interurbans i troba on aparcar.",
+    "es": "Muévete con la Guagua, consulta los autobuses interurbanos y encuentra dónde aparcar."
+  },
+  "icona": "bus",
+  "color": "cel",
+  "enllacos": [
+    {
+      "text": {
+        "ca": "Bus urbà · la Guagua",
+        "es": "Bus urbano · la Guagua"
+      },
+      "url": "https://www.suria.cat/guagua"
+    },
+    {
+      "text": {
+        "ca": "Autobusos interurbans",
+        "es": "Autobuses interurbanos"
+      },
+      "url": "https://www.suria.cat/el-municipi/serveis/transport-public/825-transport-interurba/"
+    },
+    {
+      "text": {
+        "ca": "Aparcaments",
+        "es": "Aparcamientos"
+      },
+      "url": "https://www.suria.cat/parquings"
+    }
+  ],
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/guagua"
+    },
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/el-municipi/serveis/transport-public/825-transport-interurba/"
+    },
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/parquings"
+    }
+  ],
+  "consultat": "2026-10-18",
+  "responsable": "Promotor del prototip"
+}

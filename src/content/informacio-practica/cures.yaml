@@ -1,0 +1,47 @@
+{
+  "ordre": 8,
+  "titol": {
+    "ca": "Ajuts i cures",
+    "es": "Ayudas y cuidados"
+  },
+  "descripcio": {
+    "ca": "Suport a persones i famílies, orientació sobre prestacions i ajuda a domicili.",
+    "es": "Apoyo a personas y familias, orientación sobre prestaciones y ayuda a domicilio."
+  },
+  "icona": "care",
+  "color": "rosa",
+  "enllacos": [
+    {
+      "text": {
+        "ca": "Serveis Socials",
+        "es": "Servicios Sociales"
+      },
+      "url": "https://www.suria.cat/dretssocials-solidaritat/informacio2/"
+    },
+    {
+      "text": {
+        "ca": "Ajuda a domicili · SAD",
+        "es": "Ayuda a domicilio · SAD"
+      },
+      "url": "https://www.suria.cat/sad"
+    }
+  ],
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/dretssocials-solidaritat/informacio2/"
+    },
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/sad"
+    }
+  ],
+  "consultat": "2026-10-18",
+  "responsable": "Promotor del prototip"
+}

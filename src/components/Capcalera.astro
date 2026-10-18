@@ -5,9 +5,11 @@
 // sola línia. Per sota, les tasques es despleguen amb el botó «Menú» (sense JavaScript, es veuen sempre).
 // A la portada, la foto del poble a tota amplada. La data només és al resum «Avui a Súria».
 import TempsActual from './TempsActual.astro';
+import { dataMadrid } from '../lib/hora-local.ts';
 import NavTasques from './NavTasques.astro';
 import SelectorLlengua from './SelectorLlengua.astro';
 import FotoSuria from './FotoSuria.astro';
+import HeroPreguntes from './HeroPreguntes.astro';
 import { fotos } from '../lib/fotos.ts';
 import { traductor, type Llengua } from '../i18n/ui.ts';
 import { urlDe, type Pagina } from '../i18n/rutes.ts';
@@ -20,12 +22,17 @@ interface Props {
 const { llengua, pagina, urlsLlengua } = Astro.props;
 const t = traductor(llengua);
 const esInici = pagina === 'inici';
+const ara = new Date();
+const dataBarra = new Intl.DateTimeFormat(llengua === 'ca' ? 'ca-ES' : 'es-ES', { dateStyle: 'full', timeZone: 'Europe/Madrid' }).format(ara);
 ---
 <header class:list={['capcalera', { inici: esInici }]}>
   <div class="barra">
     <div class="ample composicio barra-dins">
       <p class="avis"><strong>{t('avis.fort')}</strong><span class="avis-curt">{llengua === 'ca' ? ' · En proves' : ' · En pruebas'}</span><span class="avis-complet">{t('avis.resta')}</span></p>
-      <TempsActual llengua={llengua} />
+      <div class="barra-actualitat">
+        <time class="data-actual" datetime={dataMadrid(ara)} data-data-actual data-llengua={llengua}>{dataBarra.charAt(0).toUpperCase() + dataBarra.slice(1)}</time>
+        <TempsActual llengua={llengua} />
+      </div>
     </div>
   </div>
   <div class="ample composicio mast">
@@ -74,8 +81,24 @@ const esInici = pagina === 'inici';
       });
     })();
   </script>
-  {esInici && <FotoSuria foto={fotos.vista} llengua={llengua} format="escena" sizes="100vw" prioritaria />}
+  {esInici && <FotoSuria foto={fotos.vista} llengua={llengua} format="escena" sizes="(max-width: 900px) max(156.56vw, 102.16rem), max(100vw, 113.02rem)" prioritaria><HeroPreguntes slot="sobre" llengua={llengua}><slot name="serveis-hero" slot="serveis" /></HeroPreguntes></FotoSuria>}
 </header>
+
+<script>
+  import { dataMadrid } from '../lib/hora-local.ts';
+  function actualitzaData() {
+    const ara = new Date();
+    document.querySelectorAll<HTMLTimeElement>('[data-data-actual]').forEach((node) => {
+      const text = new Intl.DateTimeFormat(node.dataset.llengua === 'es' ? 'es-ES' : 'ca-ES', { dateStyle: 'full', timeZone: 'Europe/Madrid' }).format(ara);
+      node.textContent = text.charAt(0).toUpperCase() + text.slice(1);
+      node.dateTime = dataMadrid(ara);
+    });
+  }
+  actualitzaData();
+  setInterval(actualitzaData, 60_000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) actualitzaData(); });
+  window.addEventListener('pageshow', actualitzaData);
+</script>
 
 <style>
   .capcalera { container: capcalera / inline-size; }
@@ -90,6 +113,13 @@ const esInici = pagina === 'inici';
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
     column-gap: var(--s-4);
+  }
+  .barra-actualitat { display: flex; align-items: center; gap: var(--s-4); min-width: 0; }
+  .data-actual { font-size: var(--t-meta); line-height: 1.4; }
+  @media (max-width: 40rem) {
+    .barra-dins { grid-template-columns: minmax(0, 1fr); }
+    .barra-actualitat { justify-content: space-between; }
+    .data-actual { font-size: var(--t-tag); }
   }
   /* Franja de servei compacta: l'alçada la marquen els botons d'idioma (44 px, zona tàctil mínima). */
   .avis {

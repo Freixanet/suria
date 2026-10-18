@@ -1,0 +1,57 @@
+---
+import { getCollection } from 'astro:content';
+import type { Llengua } from '../i18n/ui.ts';
+const { llengua } = Astro.props as { llengua: Llengua };
+const es = llengua === 'es';
+const noticies = (await getCollection('noticies')).map((entrada) => entrada.data).sort((a, b) => b.publicat.localeCompare(a.publicat)).slice(0, 5);
+const data = (dia: string) => new Intl.DateTimeFormat(es ? 'es-ES' : 'ca-ES', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Madrid' }).format(new Date(`${dia}T12:00:00Z`));
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<section class="actualitat" aria-labelledby="h-actualitat">
+  <header class="actualitat-cap">
+    <div>
+      <h2 id="h-actualitat" class="titol-gran">{es ? 'Actualidad' : 'Actualitat'}</h2>
+      <p>{es ? 'Noticias del pueblo, para estar al día.' : 'Notícies del poble, per estar al dia.'}</p>
+    </div>
+    <a class="totes" href="https://www.suria.cat/actualitat/noticies">{es ? 'Ver todas las noticias' : 'Veure totes les notícies'} <span aria-hidden="true">→</span></a>
+  </header>
+  <ul class="noticies" data-targetes-fila>
+    {noticies.map((noticia) => (
+      <li>
+        <article class="noticia">
+          <a class="noticia-imatge" href={noticia.enllac} aria-label={`${es ? 'Leer noticia' : 'Llegir notícia'}: ${noticia.titol[llengua]}`}>
+          <img src={`${base}${noticia.imatge.src}`} alt={noticia.imatge.alt[llengua]} width="800" height="450" loading="lazy" decoding="async" />
+          </a>
+          <div class="noticia-cos">
+            <div class="noticia-meta"><span>{noticia.categoria[llengua]}</span><time datetime={noticia.publicat}>{data(noticia.publicat)}</time></div>
+            <h3><a href={noticia.enllac}>{noticia.titol[llengua]}</a></h3>
+            <a class="llegir" href={noticia.enllac} aria-label={`${es ? 'Leer noticia' : 'Llegir notícia'}: ${noticia.titol[llengua]}`}>{es ? 'Leer noticia' : 'Llegir notícia'} <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .actualitat { min-width: 0; width: 100%; }
+  .actualitat-cap { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: var(--s-4) var(--s-6); margin-bottom: var(--s-6); }
+  h2 { font-size: clamp(1.75rem, 2.6vw, 2.375rem); margin-bottom: var(--s-3); }
+  .actualitat-cap p { color: var(--tinta-2); font-size: var(--t-small); }
+  .totes { display: inline-flex; align-items: center; gap: var(--s-3); min-height: var(--tap); font-size: 1rem; font-weight: 600; text-decoration: none; }
+  .totes:hover { text-decoration: underline; }
+  .noticies { display: grid; grid-template-columns: repeat(var(--targetes-visibles, 1), minmax(0, 22rem)); gap: var(--s-5); list-style: none; }
+  li { min-width: 0; width: 100%;  }
+  .noticia { display: flex; flex-direction: column; height: 100%; min-height: 22rem; border-radius: 24px; background: var(--pedra); }
+  .noticia-imatge { display: block; flex: none; border-radius: 24px 24px 0 0; }
+  img { display: block; width: 100%; height: 10rem; object-fit: cover; border-radius: 24px 24px 0 0; }
+  .noticia-cos { display: flex; flex: 1; flex-direction: column; align-items: flex-start; gap: var(--s-2); padding: 1rem; }
+  .noticia-meta { display: flex; flex-wrap: wrap; gap: var(--s-1) var(--s-3); font-size: .8125rem; color: var(--tinta-2); }
+  .noticia-meta > span { font-weight: 600; }
+  h3 { font-size: 1.125rem; line-height: 1.2; letter-spacing: -.015em; }
+  h3 a { display: inline-flex; align-items: center; min-height: var(--tap); text-decoration: none; }
+  h3 a:hover { text-decoration: underline; }
+  .llegir { display: inline-flex; align-items: center; gap: var(--s-3); min-height: var(--tap); margin-top: auto; font-size: .9375rem; font-weight: 600; }
+  .noticies > li[hidden] { display: none; }
+  @media (max-width: 40rem) { .noticies { gap: var(--s-4); } }
+</style>

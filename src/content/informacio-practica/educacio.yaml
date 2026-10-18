@@ -1,0 +1,61 @@
+{
+  "ordre": 6,
+  "titol": {
+    "ca": "Educació",
+    "es": "Educación"
+  },
+  "descripcio": {
+    "ca": "Escola bressol Petit Estel, centres educatius i formació per a persones adultes.",
+    "es": "Escuela infantil Petit Estel, centros educativos y formación para personas adultas."
+  },
+  "icona": "school",
+  "color": "cel",
+  "enllacos": [
+    {
+      "text": {
+        "ca": "Escola bressol Petit Estel",
+        "es": "Escuela infantil Petit Estel"
+      },
+      "url": "https://www.suria.cat/petitestel"
+    },
+    {
+      "text": {
+        "ca": "Educació a Súria",
+        "es": "Educación en Súria"
+      },
+      "url": "https://www.suria.cat/educacio"
+    },
+    {
+      "text": {
+        "ca": "Escola d’Adults",
+        "es": "Escuela de Adultos"
+      },
+      "url": "https://www.suria.cat/escolaformaciodadults"
+    }
+  ],
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/petitestel"
+    },
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/educacio"
+    },
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/escolaformaciodadults"
+    }
+  ],
+  "consultat": "2026-10-18",
+  "responsable": "Promotor del prototip"
+}

@@ -1,0 +1,47 @@
+{
+  "ordre": 11,
+  "titol": {
+    "ca": "Joventut",
+    "es": "Juventud"
+  },
+  "descripcio": {
+    "ca": "Assessorament sobre estudis, feina i emancipació, i activitats al Casal de Joves.",
+    "es": "Asesoramiento sobre estudios, empleo y emancipación, y actividades en el Casal de Joves."
+  },
+  "icona": "people",
+  "color": "lavanda",
+  "enllacos": [
+    {
+      "text": {
+        "ca": "Punt d’Informació Jove",
+        "es": "Punto de Información Juvenil"
+      },
+      "url": "https://www.suria.cat/joventut/punt-dinformacio-jove"
+    },
+    {
+      "text": {
+        "ca": "Casal de Joves",
+        "es": "Casal de Joves"
+      },
+      "url": "https://www.suria.cat/casaldejoves"
+    }
+  ],
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/joventut/punt-dinformacio-jove"
+    },
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/casaldejoves"
+    }
+  ],
+  "consultat": "2026-10-18",
+  "responsable": "Promotor del prototip"
+}

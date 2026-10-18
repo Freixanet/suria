@@ -1,0 +1,44 @@
+{
+  "titol": {
+    "ca": "Tertúlia del Book Club",
+    "es": "Tertulia del Book Club"
+  },
+  "dies": {
+    "inici": "2026-10-30"
+  },
+  "hores": [
+    {
+      "inici": "19:00"
+    }
+  ],
+  "lloc": {
+    "ca": "Casal de la Dona",
+    "es": "Casal de la Dona"
+  },
+  "enllac": {
+    "url": "https://www.suria.cat/actualitat/agenda/tertulia-del-club-de-lectura-book-club-de-la-biblioteca-duplicat",
+    "text": {
+      "ca": "Fitxa a suria.cat",
+      "es": "Ficha en suria.cat"
+    }
+  },
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Agenda municipal de Súria",
+        "es": "Agenda municipal de Súria"
+      },
+      "url": "https://www.suria.cat/actualitat/agenda/tertulia-del-club-de-lectura-book-club-de-la-biblioteca-duplicat"
+    }
+  ],
+  "consultat": "2026-10-17",
+  "responsable": "Promotor del prototip",
+  "imatge": {
+    "src": "/imatges/agenda/book-club-2026.jpg",
+    "alt": {
+      "ca": "Cartell del Book Club de la Biblioteca de Súria",
+      "es": "Cartel del Book Club de la Biblioteca de Súria"
+    },
+    "font": "https://www.suria.cat/actualitat/agenda/tertulia-del-club-de-lectura-book-club-de-la-biblioteca-duplicat"
+  }
+}

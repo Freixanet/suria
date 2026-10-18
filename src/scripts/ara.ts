@@ -3,6 +3,7 @@
 import { composaResum, type DadesAra } from '../lib/ara.ts';
 import { composaBus, type DadesBus } from '../lib/bus.ts';
 import { telefonVisible } from '../lib/format.ts';
+import { dataMadrid } from '../lib/hora-local.ts';
 
 type Textos = {
   senseVigent: string;
@@ -38,9 +39,23 @@ function el<K extends keyof HTMLElementTagNameMap>(tag: K, classe: string, text?
   return node;
 }
 
+function ajustaTargetes(agenda: HTMLElement) {
+  const gap = parseFloat(getComputedStyle(agenda).columnGap) || 0;
+  const capacitat = Math.max(1, Math.floor((agenda.clientWidth + gap) / (288 + gap)));
+  const targetes = Array.from(agenda.children) as HTMLElement[];
+  agenda.style.setProperty('--targetes-visibles', String(Math.min(capacitat, targetes.length) || 1));
+  targetes.forEach((targeta, index) => { targeta.hidden = index >= capacitat; });
+}
+
 function pinta() {
   for (const bloc of document.querySelectorAll<HTMLElement>('[data-avui-resum]')) {
-    const dades = JSON.parse(bloc.dataset.avuiResum ?? '{}') as DadesAra;
+    const dadesBase = JSON.parse(bloc.dataset.avuiResum ?? '{}') as DadesAra;
+    const avui = dataMadrid(new Date());
+    const mode = bloc.dataset.agendaMode;
+    const dades = { ...dadesBase, activitats: dadesBase.activitats.filter((activitat) =>
+      mode === 'avui' ? activitat.inici <= avui && (activitat.fi ?? activitat.inici) >= avui :
+      mode === 'properes' ? activitat.inici > avui : true,
+    ) };
     const textos = JSON.parse(bloc.dataset.textos ?? '{}') as Textos;
     const llengua = bloc.dataset.llengua === 'es' ? 'es' : 'ca';
     const r = composaResum(dades, new Date(), llengua);
@@ -48,23 +63,67 @@ function pinta() {
     const titol = bloc.querySelector<HTMLElement>('[data-data-avui]');
     if (titol) titol.textContent = r.data;
 
-    const agenda = bloc.querySelector<HTMLElement>('[data-fet-agenda]');
+    const agenda = bloc.querySelector<HTMLElement>('[data-agenda-targetes]');
     if (agenda) {
-      const a = r.agenda;
+      const plantilla = agenda.querySelector<HTMLElement>('[data-fet-agenda]');
+      let disponibles = [...dades.activitats];
+      const targetes: HTMLElement[] = [];
+      for (let i = 0; i < (mode === 'avui' ? 1 : 6); i++) {
+        const a = i === 0 ? r.agenda : composaResum({ ...dades, activitats: disponibles }, new Date(), llengua).agenda;
+        if (i > 0 && a.tipus !== 'activitat') break;
+        const targeta = plantilla ? plantilla.cloneNode(false) as HTMLElement : el('article', 'fet', undefined, { 'data-facana': 'ocre' });
+        targeta.removeAttribute('data-fet-agenda');
+        targeta.classList.remove('fet-amb-imatge');
+        if (i === 0) targeta.setAttribute('data-fet-agenda', '');
       const fills: HTMLElement[] = a.etiqueta === 'Agenda' ? [] : [el('p', 'fet-etiqueta', a.etiqueta)];
       if (a.tipus === 'activitat') {
+        const original = disponibles.find((activitat) => activitat.titol === a.titol && activitat.enllac === a.enllac);
+        if (original?.imatge) {
+          const imatge = el('img', 'fet-imatge', undefined, { src: original.imatge.src, alt: original.imatge.alt, loading: 'lazy', decoding: 'async', width: '800', height: '450' });
+          fills.unshift(imatge);
+          targeta.classList.add('fet-amb-imatge');
+        }
+        if (original && mode !== 'avui') {
+          const avui = dataMadrid(new Date());
+          const dia = original.inici <= avui && avui <= (original.fi ?? original.inici) ? avui : original.inici;
+          const instant = new Date(`${dia}T12:00:00Z`);
+          const data = el('time', 'fet-data', undefined, {
+            datetime: dia,
+            'aria-label': new Intl.DateTimeFormat(llengua, { dateStyle: 'full', timeZone: 'Europe/Madrid' }).format(instant),
+          });
+          data.append(
+            el('span', 'fet-dia', String(Number(dia.slice(8)))),
+            el('span', 'fet-mes', new Intl.DateTimeFormat(llengua, { month: 'short', timeZone: 'Europe/Madrid' }).format(instant).replace(/\.$/, '')),
+          );
+          fills.unshift(data);
+        }
         if (a.nota) fills.push(el('p', 'fet-nota', a.nota));
         fills.push(a.enllac ? el('a', 'fet-titol', a.titol, { href: a.enllac, hreflang: 'ca' }) : el('p', 'fet-titol', a.titol));
         fills.push(el('p', 'fet-quan', a.quan));
         if (a.lloc) fills.push(el('p', 'fet-lloc', a.lloc));
-        if (a.mes) fills.push(el('p', 'fet-nota', a.mes));
-        fills.push(el('a', 'accio', textos.veureAgenda, { href: a.ancora }));
         if (a.oficial) fills.push(el('a', 'accio', textos.agendaOficial, { href: 'https://www.suria.cat/agenda', hreflang: 'ca' }));
+        fills.push(el('a', 'accio fet-accio', textos.veureAgenda, { href: mode === 'properes' ? (bloc.dataset.agendaUrl ?? '#h-setmana') : '#h-setmana' }));
       } else {
         fills.push(el('p', 'fet-avis', a.text));
         fills.push(el('a', 'accio', textos.agendaOficial, { href: 'https://www.suria.cat/agenda', hreflang: 'ca' }));
       }
-      agenda.replaceChildren(...fills);
+        if (mode === 'avui' && a.tipus === 'activitat') {
+          const imatge = fills.find((node) => node.tagName === 'IMG');
+          const cos = el('div', 'fet-cos');
+          cos.append(...fills.filter((node) => node !== imatge));
+          targeta.replaceChildren(...(imatge ? [imatge, cos] : [cos]));
+        } else if (mode === 'properes') {
+          targeta.classList.remove('fet-amb-imatge');
+          targeta.replaceChildren(...fills.filter((node) => node.classList.contains('fet-data')));
+        } else {
+          targeta.replaceChildren(...fills);
+        }
+        targetes.push(targeta);
+        if (a.tipus !== 'activitat') break;
+        disponibles = disponibles.filter((activitat) => activitat.titol !== a.titol || activitat.enllac !== a.enllac);
+      }
+      agenda.replaceChildren(...targetes);
+      ajustaTargetes(agenda);
     }
 
     const farmacia = bloc.querySelector<HTMLElement>('[data-fet-farmacia]');
@@ -149,6 +208,11 @@ function tot() {
   pinta();
   pintaBus();
 }
+
+const observadorTargetes = new ResizeObserver((entries) => {
+  entries.forEach(({ target }) => ajustaTargetes(target as HTMLElement));
+});
+document.querySelectorAll<HTMLElement>('[data-agenda-targetes], [data-targetes-fila]').forEach((agenda) => observadorTargetes.observe(agenda));
 
 tot();
 setInterval(tot, 60_000);

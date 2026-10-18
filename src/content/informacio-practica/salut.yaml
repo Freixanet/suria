@@ -1,0 +1,61 @@
+{
+  "ordre": 3,
+  "titol": {
+    "ca": "Salut",
+    "es": "Salud"
+  },
+  "descripcio": {
+    "ca": "Contacta amb el CAP Goretti Badia i accedeix a les teves gestions de salut.",
+    "es": "Contacta con el CAP Goretti Badia y accede a tus gestiones de salud."
+  },
+  "icona": "health",
+  "color": "turo",
+  "enllacos": [
+    {
+      "text": {
+        "ca": "CAP Goretti Badia",
+        "es": "CAP Goretti Badia"
+      },
+      "url": "https://www.suria.cat/cap"
+    },
+    {
+      "text": {
+        "ca": "La Meva Salut",
+        "es": "La Meva Salut"
+      },
+      "url": "https://lamevasalut.gencat.cat/"
+    },
+    {
+      "text": {
+        "ca": "061 Salut Respon",
+        "es": "061 Salut Respon"
+      },
+      "url": "https://sem.gencat.cat/ca/061-salut-respon/"
+    }
+  ],
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/cap"
+    },
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://lamevasalut.gencat.cat/"
+    },
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://sem.gencat.cat/ca/061-salut-respon/"
+    }
+  ],
+  "consultat": "2026-10-18",
+  "responsable": "Promotor del prototip"
+}

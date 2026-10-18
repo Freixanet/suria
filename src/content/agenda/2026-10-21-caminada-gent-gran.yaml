@@ -1,0 +1,44 @@
+{
+  "titol": {
+    "ca": "Caminada de la Gent Gran",
+    "es": "Caminata de la Gent Gran"
+  },
+  "dies": {
+    "inici": "2026-10-21"
+  },
+  "hores": [
+    {
+      "inici": "09:15"
+    }
+  ],
+  "lloc": {
+    "ca": "Plaça de la Serradora",
+    "es": "Plaça de la Serradora"
+  },
+  "enllac": {
+    "url": "https://www.suria.cat/actualitat/agenda/setmana-de-la-gent-gran-caminada",
+    "text": {
+      "ca": "Fitxa a suria.cat",
+      "es": "Ficha en suria.cat"
+    }
+  },
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Agenda municipal de Súria",
+        "es": "Agenda municipal de Súria"
+      },
+      "url": "https://www.suria.cat/actualitat/agenda/setmana-de-la-gent-gran-caminada"
+    }
+  ],
+  "consultat": "2026-10-17",
+  "responsable": "Promotor del prototip",
+  "imatge": {
+    "src": "/imatges/agenda/gent-gran-2026.jpg",
+    "alt": {
+      "ca": "Imatge de difusió de la Setmana de la Gent Gran 2026",
+      "es": "Imagen de difusión de la Setmana de la Gent Gran 2026"
+    },
+    "font": "https://www.suria.cat/actualitat/agenda/setmana-de-la-gent-gran-caminada"
+  }
+}

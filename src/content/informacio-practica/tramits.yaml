@@ -1,0 +1,61 @@
+{
+  "ordre": 1,
+  "titol": {
+    "ca": "Tràmits i padró",
+    "es": "Trámites y padrón"
+  },
+  "descripcio": {
+    "ca": "Empadrona’t, presenta una instància o consulta com fer una gestió municipal.",
+    "es": "Empadrónate, presenta una instancia o consulta cómo hacer una gestión municipal."
+  },
+  "icona": "document",
+  "color": "ocre",
+  "enllacos": [
+    {
+      "text": {
+        "ca": "Seu electrònica",
+        "es": "Sede electrónica"
+      },
+      "url": "https://suria.eadministracio.cat/"
+    },
+    {
+      "text": {
+        "ca": "Atenció ciutadana · OAC",
+        "es": "Atención ciudadana · OAC"
+      },
+      "url": "https://www.suria.cat/oac"
+    },
+    {
+      "text": {
+        "ca": "Oficina de Justícia",
+        "es": "Oficina de Justicia"
+      },
+      "url": "https://www.suria.cat/oficinadejusticia"
+    }
+  ],
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://suria.eadministracio.cat/"
+    },
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/oac"
+    },
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/oficinadejusticia"
+    }
+  ],
+  "consultat": "2026-10-18",
+  "responsable": "Promotor del prototip"
+}

@@ -1,0 +1,10 @@
+---
+import Base from '../layouts/Base.astro';
+import InformacioPractica from '../components/InformacioPractica.astro';
+import type { Llengua } from '../i18n/ui.ts';
+const { llengua } = Astro.props as { llengua: Llengua };
+---
+<Base llengua={llengua} pagina="practica" titol={llengua === 'ca' ? 'Informació pràctica' : 'Información práctica'}>
+  <div class="ample composicio pagina-practica"><InformacioPractica llengua={llengua} complet /></div>
+</Base>
+<style>.pagina-practica { padding-block: var(--s-7); }</style>

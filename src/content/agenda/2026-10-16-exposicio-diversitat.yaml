@@ -25,3 +25,10 @@ fonts:
     url: https://www.suria.cat/actualitat/agenda/10138-exposicio-a-cal-balaguer-del-porxo-diversitat-un-recorregut-per-diferents-obres-de-rosa-santamaria-bacardit
 consultat: 2026-10-12
 responsable: Promotor del prototip
+
+imatge:
+  src: /imatges/agenda/diversitat-2026.jpg
+  alt:
+    ca: Inauguració de l’exposició Diversitat a Cal Balaguer del Porxo
+    es: Inauguración de la exposición Diversitat en Cal Balaguer del Porxo
+  font: https://www.suria.cat/actualitat/noticies/lartista-surienca-rosa-santamaria-inaugura-la-seva-exposicio-diversitat-a-la-sala-cal-balaguer-del-porxo

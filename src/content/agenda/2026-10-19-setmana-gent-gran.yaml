@@ -30,3 +30,10 @@ fonts:
     url: https://www.suria.cat/actualitat/noticies/suria-celebrara-una-nova-edicio-de-la-setmana-de-la-gent-gran-a-partir-del-19-doctubre
 consultat: 2026-10-12
 responsable: Promotor del prototip
+
+imatge:
+  src: /imatges/agenda/gent-gran-2026.jpg
+  alt:
+    ca: Imatge de difusió de la Setmana de la Gent Gran 2026
+    es: Imagen de difusión de la Setmana de la Gent Gran 2026
+  font: https://www.suria.cat/actualitat/noticies/suria-celebrara-una-nova-edicio-de-la-setmana-de-la-gent-gran-a-partir-del-19-doctubre

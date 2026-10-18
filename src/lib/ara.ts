@@ -7,6 +7,7 @@ import { diaLlarg, diaMes, franja, hora } from './format.ts';
 import { dataMadrid, horaMadrid, instantMadrid, sumaDies } from './hora-local.ts';
 
 export interface ActivitatAra {
+  imatge?: { src: string; alt: string; font: string };
   titol: string;
   inici: string;
   fi?: string;

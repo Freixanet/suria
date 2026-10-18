@@ -1,0 +1,61 @@
+{
+  "ordre": 5,
+  "titol": {
+    "ca": "Residus i reciclatge",
+    "es": "Residuos y reciclaje"
+  },
+  "descripcio": {
+    "ca": "Consulta la recollida selectiva, demana la retirada de mobles i poda o localitza la deixalleria.",
+    "es": "Consulta la recogida selectiva, solicita la retirada de muebles y poda o localiza el punto limpio."
+  },
+  "icona": "recycle",
+  "color": "turo",
+  "enllacos": [
+    {
+      "text": {
+        "ca": "Contenidors i reciclatge",
+        "es": "Contenedores y reciclaje"
+      },
+      "url": "https://www.suria.cat/recicla"
+    },
+    {
+      "text": {
+        "ca": "Recollida de mobles i poda",
+        "es": "Recogida de muebles y poda"
+      },
+      "url": "https://www.suria.cat/voluminosos"
+    },
+    {
+      "text": {
+        "ca": "Deixalleria municipal",
+        "es": "Punto limpio municipal"
+      },
+      "url": "https://www.suria.cat/deixalleriamunicipal"
+    }
+  ],
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/recicla"
+    },
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/voluminosos"
+    },
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/deixalleriamunicipal"
+    }
+  ],
+  "consultat": "2026-10-18",
+  "responsable": "Promotor del prototip"
+}

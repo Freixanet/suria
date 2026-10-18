@@ -63,6 +63,7 @@ export const esquemaSetmana = z.object({
 
 export const esquemaActivitat = z.object({
   titol: bilingue,
+  imatge: z.object({ src: z.string().startsWith('/imatges/agenda/'), alt: bilingue, font: z.url() }).optional(),
   dies: z.object({ inici: dataISO, fi: dataISO.optional() }),
   hores: z.array(z.object({ inici: hora, fi: hora.optional() })).default([]),
   lloc: bilingue.optional(),
@@ -147,6 +148,26 @@ export const esquemaBus = z.object({
     )
     .min(1),
   festius: z.array(dataISO).default([]),
+  enllac: z.url({ protocol: /^https$/ }),
+  ...procedencia,
+});
+
+export const esquemaInformacioPractica = z.object({
+  ordre: z.number().int().positive(),
+  titol: bilingue,
+  descripcio: bilingue,
+  icona: z.enum(['document','bus','health','shield','recycle','school','home','care','work','receipt','people','book','drop','street','building','welcome']),
+  color: z.enum(['ocre','cel','turo','teula','rosa','lavanda','pedra']),
+  enllacos: z.array(z.object({ text: bilingue, url: z.union([z.url({ protocol: /^https$/ }), z.literal('tel:112')]) })).min(1).max(3),
+  ...procedencia,
+});
+
+export const esquemaNoticia = z.object({
+  titol: bilingue,
+  resum: bilingue,
+  categoria: bilingue,
+  publicat: dataISO,
+  imatge: z.object({ src: z.string().startsWith('/imatges/noticies/'), alt: bilingue, original: z.url({ protocol: /^https$/ }) }),
   enllac: z.url({ protocol: /^https$/ }),
   ...procedencia,
 });

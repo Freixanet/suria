@@ -139,3 +139,11 @@ Pendientes:
 - Faltan fotos propias o cedidas de vida cotidiana actual: mercado, calles con gente sin rostros identificables, Caramelles.
 - La foto en uso muestra el pueblo, pero no muestra actividad.
 - El texto alternativo describe solo lo que se ve; no se afirma qué edificio es el campanario sin comprobarlo.
+
+### Imágenes de tarjetas Avui (prototipo local)
+
+Imágenes municipales localizadas el17/10/2026, reducidas a1200px para la vista local. Procedencia y alt guardados también en cada actividad.
+- `public/imatges/agenda/diversitat-2026.jpg`: fotografía de inauguración de Diversitat. Fuente: https://www.suria.cat/actualitat/noticies/lartista-surienca-rosa-santamaria-inaugura-la-seva-exposicio-diversitat-a-la-sala-cal-balaguer-del-porxo . Original: https://www.suria.cat/media/repository/noticies/fotos_de_noticies/2026_10_fotos_de_noticies/2026_10_02_Inauguracio_de_l_exposicio_Diversitat__1_.jpg
+- `public/imatges/agenda/gent-gran-2026.jpg`: imagen municipal de difusión de Setmana de la Gent Gran. Fuente: https://www.suria.cat/actualitat/noticies/suria-celebrara-una-nova-edicio-de-la-setmana-de-la-gent-gran-a-partir-del-19-doctubre . Original: https://www.suria.cat/media/repository/baners_destacats/destacats/2026_destacats_de_noticies/2026_10_19_Destacat_de_noticies_Setmana_de_la_Gent_Gran.jpg
+
+Book Club: `public/imatges/agenda/book-club-2026.jpg`, cartel municipal reducido1200px; origen https://www.suria.cat/media/repository/noticies/agenda/2026_agenda/2026_10_02_Cartell_Club_de_Lectura_Book_Club_-_Biblioteca.jpg , ficha fuente en YAML correspondiente. Actos de Gent Gran usan la imagen de difusión de la misma campaña ya documentada.

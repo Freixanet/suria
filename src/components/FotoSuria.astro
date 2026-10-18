@@ -23,7 +23,7 @@ const credit = {
   <Picture
     src={foto.imatge}
     alt={foto.alt[llengua]}
-    widths={[480, 800, 1200, 1600, 2000]}
+    widths={[480, 800, 1200, 1600, 2000, 2400]}
     sizes={sizes}
     formats={['avif', 'webp']}
     fallbackFormat="jpg"
@@ -31,6 +31,7 @@ const credit = {
     fetchpriority={prioritaria ? 'high' : 'auto'}
     decoding="async"
   />
+  <slot name="sobre" />
   <figcaption>
     <slot />
     <span class="credit"><span>{credit.foto}: {foto.autor}, {foto.data.slice(0, 4)}{foto.retallada && ` (${credit.retall})`}.</span>{' '}
@@ -56,15 +57,25 @@ const credit = {
   }
   /* Portada: a tota amplada, amb aire sobre el campanar i el conjunt de les cases sencer. L'enquadrament
      es tria per separat a l'escriptori i al mòbil. */
+  .escena {
+    position: relative;
+    display: grid;
+    min-height: 45.625rem;
+    overflow: clip;
+  }
+  .escena :global(picture) {
+    position: absolute;
+    /* Retalla 40px de cel sense reduir l’alçada del hero ni deixar buits a sota. */
+    inset: -2.5rem 0 0;
+  }
   .escena :global(img) {
-    height: clamp(20rem, 43vw, 41rem);
+    height: 100%;
     object-position: 60% 22%;
     border-radius: 0;
   }
   @media (max-width: 56.25rem) {
+    .escena { min-height: 41rem; }
     .escena :global(img) {
-      height: auto;
-      aspect-ratio: 3 / 2;
       object-position: 64% 50%;
     }
   }

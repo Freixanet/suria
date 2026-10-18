@@ -1,0 +1,47 @@
+{
+  "ordre": 4,
+  "titol": {
+    "ca": "Emergències i seguretat",
+    "es": "Emergencias y seguridad"
+  },
+  "descripcio": {
+    "ca": "En una emergència, truca al 112. Per a altres gestions de seguretat, consulta la Policia Local.",
+    "es": "En una emergencia, llama al 112. Para otras gestiones de seguridad, consulta la Policía Local."
+  },
+  "icona": "shield",
+  "color": "teula",
+  "enllacos": [
+    {
+      "text": {
+        "ca": "Truca al 112",
+        "es": "Llama al 112"
+      },
+      "url": "tel:112"
+    },
+    {
+      "text": {
+        "ca": "Policia Local",
+        "es": "Policía Local"
+      },
+      "url": "https://www.suria.cat/policialocal"
+    }
+  ],
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/policialocal"
+    },
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://112.gencat.cat/ca/ajuda/accessibilitat/"
+    }
+  ],
+  "consultat": "2026-10-18",
+  "responsable": "Promotor del prototip"
+}

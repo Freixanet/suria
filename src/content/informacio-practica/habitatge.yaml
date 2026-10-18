@@ -1,0 +1,47 @@
+{
+  "ordre": 7,
+  "titol": {
+    "ca": "Habitatge",
+    "es": "Vivienda"
+  },
+  "descripcio": {
+    "ca": "Informació i assessorament sobre lloguer, rehabilitació i habitatge municipal.",
+    "es": "Información y asesoramiento sobre alquiler, rehabilitación y vivienda municipal."
+  },
+  "icona": "home",
+  "color": "ocre",
+  "enllacos": [
+    {
+      "text": {
+        "ca": "Oficina Local d’Habitatge",
+        "es": "Oficina Local de Vivienda"
+      },
+      "url": "https://www.suria.cat/oficinalocalhabitatge"
+    },
+    {
+      "text": {
+        "ca": "Servei Municipal d’Habitatge",
+        "es": "Servicio Municipal de Vivienda"
+      },
+      "url": "https://www.suria.cat/serveimunicipalhabitatge"
+    }
+  ],
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/oficinalocalhabitatge"
+    },
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/serveimunicipalhabitatge"
+    }
+  ],
+  "consultat": "2026-10-18",
+  "responsable": "Promotor del prototip"
+}

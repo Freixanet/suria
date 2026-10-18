@@ -1,0 +1,47 @@
+{
+  "ordre": 16,
+  "titol": {
+    "ca": "Igualtat i acollida",
+    "es": "Igualdad y acogida"
+  },
+  "descripcio": {
+    "ca": "Recursos d’igualtat i suport social per a famílies i persones nouvingudes.",
+    "es": "Recursos de igualdad y apoyo social para familias y personas recién llegadas."
+  },
+  "icona": "welcome",
+  "color": "lavanda",
+  "enllacos": [
+    {
+      "text": {
+        "ca": "Igualtat",
+        "es": "Igualdad"
+      },
+      "url": "https://www.suria.cat/igualtat"
+    },
+    {
+      "text": {
+        "ca": "Acollida i suport social",
+        "es": "Acogida y apoyo social"
+      },
+      "url": "https://www.suria.cat/dretssocials-solidaritat/informacio2/"
+    }
+  ],
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/igualtat"
+    },
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/dretssocials-solidaritat/informacio2/"
+    }
+  ],
+  "consultat": "2026-10-18",
+  "responsable": "Promotor del prototip"
+}

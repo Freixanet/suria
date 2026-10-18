@@ -1,0 +1,47 @@
+{
+  "ordre": 13,
+  "titol": {
+    "ca": "Aigua i energia",
+    "es": "Agua y energía"
+  },
+  "descripcio": {
+    "ca": "Atenció del servei d’aigua, gestions de subministrament i recursos municipals sobre energia.",
+    "es": "Atención del servicio de agua, gestiones de suministro y recursos municipales sobre energía."
+  },
+  "icona": "drop",
+  "color": "cel",
+  "enllacos": [
+    {
+      "text": {
+        "ca": "Servei municipal d’aigües",
+        "es": "Servicio municipal de aguas"
+      },
+      "url": "https://www.suria.cat/serveimunicipaldaigues"
+    },
+    {
+      "text": {
+        "ca": "Transició energètica",
+        "es": "Transición energética"
+      },
+      "url": "https://www.suria.cat/transicioenergetica"
+    }
+  ],
+  "fonts": [
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/serveimunicipaldaigues"
+    },
+    {
+      "nom": {
+        "ca": "Informació oficial del servei",
+        "es": "Información oficial del servicio"
+      },
+      "url": "https://www.suria.cat/transicioenergetica"
+    }
+  ],
+  "consultat": "2026-10-18",
+  "responsable": "Promotor del prototip"
+}
