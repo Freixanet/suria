@@ -40,6 +40,20 @@ jobs:
           ASTRO_TELEMETRY_DISABLED: '1'
           SURIA_SITE: ${{ steps.pages.outputs.origin }}
           SURIA_BASE: ${{ steps.pages.outputs.base_path }}
+      - name: Checkout mobile preview
+        uses: actions/checkout@v4
+        with:
+          ref: daa8a32d4ee0c4fa220d993d8d4298aa238d7ea1
+          path: .mobile-preview
+      - name: Build mobile preview
+        working-directory: .mobile-preview/prototipo-react-movil
+        run: |
+          npm ci
+          npm run build -- --base="${{ steps.pages.outputs.base_path }}/movil/"
+      - name: Add mobile preview to the Pages site
+        run: |
+          mkdir -p dist/movil
+          cp -R .mobile-preview/prototipo-react-movil/dist/. dist/movil/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
