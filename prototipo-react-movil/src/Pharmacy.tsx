@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { loadDuty, type Duty } from './dutyApi';
+import { getCachedDuty, loadDuty, type Duty } from './dutyApi';
 import { ArrowLeft, ArrowUpRight, MapPin, Phone, ShieldPlus, ChevronDown } from 'lucide-react';
 
 type Props = { lang: 'ca' | 'es'; onBack: () => void };
@@ -15,8 +15,8 @@ const text = {
 
 export function Pharmacy({lang,onBack}: Props) {
  const t=text[lang];
- const [duty,setDuty]=useState<Duty|null>(null);
- const [state,setState]=useState<'loading'|'ready'|'error'>('loading');
+ const [duty,setDuty]=useState<Duty|null>(getCachedDuty);
+ const [state,setState]=useState<'loading'|'ready'|'error'>(()=>duty?'ready':'loading');
  const [retry,setRetry]=useState(0);
  useEffect(()=>{
   let alive=true;

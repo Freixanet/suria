@@ -10,12 +10,23 @@ function dutyDate() {
  return date.toISOString().slice(0,10);
 }
 function valid(duty:Duty) {
+ if (!duty || typeof duty !== 'object') return false;
  const checked=Date.parse(duty.checkedAt);
  return validIds.has(duty.id) && Number.isFinite(checked) && checked<=Date.now()+60000 && Date.now()-checked<300000 && duty.effectiveDate===dutyDate() && /^\d{4}-\d{2}-\d{2}$/.test(duty.through) && duty.through>=duty.effectiveDate;
 }
+export function getCachedDuty(): Duty | null {
+ if (cached && valid(cached)) return cached;
+ cached = null;
+ try {
+  const stored = JSON.parse(sessionStorage.getItem('suria-duty') || 'null') as Duty | null;
+  if (stored && valid(stored)) return cached = stored;
+ } catch { /* Storage may be unavailable or invalid. */ }
+ return null;
+}
 export function loadDuty(): Promise<Duty> {
- if(cached && valid(cached)) return Promise.resolve(cached);
+ const available = getCachedDuty();
+ if(available) return Promise.resolve(available);
  if(pending) return pending;
- pending=fetch('/api/farmacia-guardia',{cache:'no-store'}).then(async r=>{if(!r.ok)throw Error('unavailable');const data:Duty=await r.json();if(!valid(data))throw Error('invalid or outdated duty');cached=data;return data}).finally(()=>{pending=null});
+ pending=fetch('/api/farmacia-guardia',{cache:'no-store'}).then(async r=>{if(!r.ok)throw Error('unavailable');const data:Duty=await r.json();if(!valid(data))throw Error('invalid or outdated duty');cached=data;try{sessionStorage.setItem('suria-duty',JSON.stringify(data))}catch{}return data}).finally(()=>{pending=null});
  return pending;
 }
