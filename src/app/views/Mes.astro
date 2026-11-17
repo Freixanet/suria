@@ -1,0 +1,67 @@
+---
+import AppLayout from '../AppLayout.astro';
+import Icon from '../components/Icon.astro';
+import { comu, href, type Lang, type Ruta } from '../i18n.ts';
+import type { IconName } from '../icons.ts';
+import { fotos } from '../../lib/fotos.ts';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ca = lang === 'ca';
+const t = comu[lang];
+const items: { ruta: Ruta; icona: IconName; f: string; t: string; s: string }[] = [
+  { ruta: 'comerc', icona: 'shop', f: 'teula', t: t.nav.comerc, s: ca ? 'Horaris i ofertes' : 'Horarios y ofertas' },
+  { ruta: 'gestions', icona: 'doc', f: 'turo', t: t.nav.gestions, s: ca ? 'Tràmits i telèfons' : 'Trámites y teléfonos' },
+  { ruta: 'benvinguda', icona: 'wave', f: 'cel', t: t.nav.benvinguda, s: ca ? 'Els primers 30 dies' : 'Los primeros 30 días' },
+  { ruta: 'descobreix', icona: 'compass', f: 'ocre', t: t.nav.descobreix, s: ca ? 'Patrimoni, amb calma' : 'Patrimonio, con calma' },
+  { ruta: 'negocis', icona: 'briefcase', f: 'pissarra', t: t.nav.negocis, s: ca ? 'La teva fitxa' : 'Tu ficha' },
+  { ruta: 'compte', icona: 'user', f: 'rosa', t: t.nav.compte, s: ca ? 'Perfil i ajustos' : 'Perfil y ajustes' },
+];
+const foto = fotos.vista;
+---
+<AppLayout lang={lang} ruta="mes" titol={t.nav.mes}>
+  <div class="wrap pagehead">
+    <p class="kicker">Súria</p>
+    <h1 class="h-page">{ca ? 'Tot el que hi ha' : 'Todo lo que hay'}</h1>
+  </div>
+  <div class="wrap stack" style="--s:2rem">
+    <nav class="menu" aria-label={ca ? 'Seccions' : 'Secciones'}>
+      {items.map((i) => <a href={href(lang, i.ruta)} data-f={i.f}><Icon name={i.icona} class="i-l" /><span><strong>{i.t}</strong><small>{i.s}</small></span></a>)}
+    </nav>
+
+    <section aria-labelledby="lect">
+      <h2 class="h-sec" id="lect" style="margin-bottom:.25rem">{ca ? 'Llegir còmode' : 'Leer cómodo'}</h2>
+      <div class="card" style="padding-block:.25rem">
+        <div class="setting setting--stack">
+          <span class="setting__l"><strong>{ca ? 'Mida del text' : 'Tamaño del texto'}</strong><small>{ca ? 'Sense haver d’entrar al compte' : 'Sin tener que entrar en la cuenta'}</small></span>
+          <div class="seg" role="group" aria-label={ca ? 'Mida del text' : 'Tamaño del texto'}>
+            <button data-set-text="m" aria-pressed="false">A</button>
+            <button data-set-text="l" aria-pressed="false" style="font-size:1.125rem">A</button>
+            <button data-set-text="xl" aria-pressed="false" style="font-size:1.3rem">A</button>
+          </div>
+        </div>
+        <div class="setting setting--stack">
+          <span class="setting__l"><strong>{ca ? 'Tema' : 'Tema'}</strong></span>
+          <div class="seg" role="group" aria-label={ca ? 'Tema' : 'Tema'}>
+            <button data-set-theme="system" aria-pressed="false">{ca ? 'Automàtic' : 'Automático'}</button>
+            <button data-set-theme="light" aria-pressed="false">{ca ? 'Clar' : 'Claro'}</button>
+            <button data-set-theme="dark" aria-pressed="false">{ca ? 'Fosc' : 'Oscuro'}</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sobre" aria-labelledby="sobre-t" class="stack" style="--s:1rem;margin-bottom:2rem">
+      <h2 class="h-sec" id="sobre-t">{ca ? 'Com funciona aquesta plataforma' : 'Cómo funciona esta plataforma'}</h2>
+      <div class="promise">
+        <div><strong>{ca ? 'Independent' : 'Independiente'}</strong><p class="small muted">{t.independencia} {ca ? 'Enllacem els serveis oficials en lloc de copiar-los.' : 'Enlazamos los servicios oficiales en lugar de copiarlos.'}</p></div>
+        <div><strong>{ca ? 'Real o exemple, sempre dit' : 'Real o ejemplo, siempre dicho'}</strong><p class="small muted">{ca ? 'Bus, gestions i telèfons surten de fonts oficials consultades. Activitats, veïns i comerços d’aquest prototip porten l’etiqueta «Exemple».' : 'Bus, gestiones y teléfonos salen de fuentes oficiales consultadas. Actividades, vecinos y comercios de este prototipo llevan la etiqueta «Ejemplo».'}</p></div>
+        <div><strong>{ca ? 'Com ens financem' : 'Cómo nos financiamos'}</strong><p class="small muted">{ca ? 'Els comerços poden pagar per tenir més eines o aparèixer destacats, sempre etiquetat. Mai venem dades ni paguem respostes de l’assistent.' : 'Los comercios pueden pagar por tener más herramientas o aparecer destacados, siempre etiquetado. Nunca vendemos datos ni pagamos respuestas del asistente.'}</p></div>
+      </div>
+      <div class="protonote">
+        <Icon name="info" />
+        <p>{ca ? 'Fonts i crèdits: foto de Súria de' : 'Fuentes y créditos: foto de Súria de'} <a href={foto.original} target="_blank" rel="noopener">{foto.autor}</a> ({foto.llicencia}, {ca ? 'retallada' : 'recortada'}); {ca ? 'temps estimat de' : 'tiempo estimado de'} <a href="https://www.met.no/" target="_blank" rel="noopener">MET Norway</a>; {ca ? 'horaris de bus d’' : 'horarios de bus de '}<a href="https://www.alsa.es/" target="_blank" rel="noopener">Alsa</a>; {ca ? 'gestions de' : 'gestiones de'} <a href="https://www.suria.cat/" target="_blank" rel="noopener">suria.cat</a>. <a href={import.meta.env.BASE_URL}>{ca ? 'Prototip anterior' : 'Prototipo anterior'}</a>.</p>
+      </div>
+    </section>
+  </div>
+</AppLayout>

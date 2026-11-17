@@ -1,0 +1,120 @@
+---
+import AppLayout from '../AppLayout.astro';
+import Icon from '../components/Icon.astro';
+import PostCard from '../components/PostCard.astro';
+import Demo from '../components/Demo.astro';
+import { canals, entitats, publicacions, preguntaSetmana, type Canal } from '../demo.ts';
+import { comu, type Lang } from '../i18n.ts';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ca = lang === 'ca';
+const t = comu[lang];
+const llista = Object.entries(canals) as [Canal, (typeof canals)[Canal]][];
+const canalsJson = JSON.stringify(Object.fromEntries(llista.map(([id, c]) => [id, { nom: c.nom[lang], f: c.facana }])));
+const iniciadors = [
+  { canal: 'benvinguda', icona: 'wave', text: ca ? 'Presenta’t al poble' : 'Preséntate al pueblo', prompt: ca ? 'Hola! Em dic… i fa poc que visc a Súria…' : '¡Hola! Me llamo… y hace poco que vivo en Súria…' },
+  { canal: 'voluntariat', icona: 'hand', text: ca ? 'Ofereix un cop de mà' : 'Ofrece una mano', prompt: ca ? 'Puc ajudar amb…' : 'Puedo ayudar con…' },
+  { canal: 'recomanacions', icona: 'star', text: ca ? 'Recomana un lloc' : 'Recomienda un sitio', prompt: ca ? 'Us recomano…' : 'Os recomiendo…' },
+] as const;
+---
+<AppLayout lang={lang} ruta="comunitat" titol={t.nav.comunitat}>
+  <div class="band" data-f="rosa">
+    <div class="wrap">
+      <p class="kicker">{ca ? 'El poble, connectat' : 'El pueblo, conectado'}</p>
+      <h1 class="h-page">{t.nav.comunitat}</h1>
+      <p class="lead" style="margin-top:.75rem">{ca ? 'Avisos, preguntes i ajuda entre veïns. Amb nom i cognom, amb respecte i revisat per persones del poble.' : 'Avisos, preguntas y ayuda entre vecinos. Con nombre y apellido, con respeto y revisado por personas del pueblo.'}</p>
+    </div>
+  </div>
+
+  <div class="wrap feedgrid">
+    <div class="stack" style="--s:1rem">
+      <button class="composer-cta" data-open="publicar" data-requires-auth>
+        <span class="avatar avatar--guest" data-avatar><Icon name="user" class="i-s" /></span>
+        <span>{ca ? 'Què vols compartir amb el poble?' : '¿Qué quieres compartir con el pueblo?'}</span>
+        <span class="btn btn--s"><Icon name="edit" class="i-s" />{ca ? 'Publica' : 'Publica'}</span>
+      </button>
+
+      <div class="chips" data-filters="feed" role="group" aria-label={ca ? 'Canals' : 'Canales'}>
+        <button class="chip" data-group="canal" data-value="tot" aria-pressed="true">{ca ? 'Tot' : 'Todo'}</button>
+        {llista.map(([id, c]) => <button class="chip" data-group="canal" data-value={id} aria-pressed="false" data-f={c.facana}><span class="chip__dot"></span>{c.nom[lang]}</button>)}
+      </div>
+      <p><Demo lang={lang} llarg /></p>
+
+      <div class="feed" id="feed" data-feed data-canals={canalsJson}>
+        {publicacions.map((p) => <PostCard p={p} lang={lang} />)}
+      </div>
+      <div class="empty card card--sunk" data-empty-for="feed" hidden>
+        <strong>{ca ? 'Aquí encara no hi ha res' : 'Aquí todavía no hay nada'}</strong>
+        <p>{ca ? 'Sigues la primera persona a escriure en aquest canal.' : 'Sé la primera persona en escribir en este canal.'}</p>
+      </div>
+    </div>
+
+    <aside class="feedgrid__side stack" style="--s:1rem">
+      <section class="weekbig" id="setmana" aria-labelledby="setmana-t">
+        <p class="kicker">{ca ? 'La pregunta de la setmana' : 'La pregunta de la semana'}</p>
+        <p class="weekbig__q" id="setmana-t">{preguntaSetmana.text[lang]}</p>
+        <p class="small" style="opacity:.8"><b class="num">{preguntaSetmana.respostes}</b> {ca ? 'respostes' : 'respuestas'}</p>
+        <button class="btn" data-open="publicar" data-requires-auth data-canal="preguntes" data-prompt={preguntaSetmana.text[lang]}><Icon name="chat" class="i-s" />{ca ? 'Respon' : 'Responde'}</button>
+      </section>
+
+      <section class="card" aria-labelledby="start">
+        <h2 class="h-sec" id="start" style="font-size:var(--fs-l)">{ca ? 'Comença una conversa' : 'Empieza una conversación'}</h2>
+        <div class="rows" style="margin-top:.25rem">
+          {iniciadors.map((i) => (
+            <button class="row" style="border-left:0;border-right:0;border-top:0;background:none;width:100%;text-align:left" data-open="publicar" data-requires-auth data-canal={i.canal} data-prompt={i.prompt} data-f={canals[i.canal].facana}>
+              <span class="row__ico"><Icon name={i.icona} /></span><span class="row__body"><span class="row__title">{i.text}</span></span><Icon name="chevron" class="i-s row__end" />
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="grups">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem"><h2 class="h-sec" id="grups" style="font-size:var(--fs-l)">{ca ? 'Grups i entitats' : 'Grupos y entidades'}</h2><Demo lang={lang} /></div>
+        <div class="rows groups">
+          {entitats.map((e) => (
+            <div class="row" data-f={e.facana}>
+              <span class="row__ico"><Icon name={e.icona} /></span>
+              <span class="row__body"><span class="row__title">{e.nom[lang]}</span><span class="row__sub">{e.membres} {ca ? 'membres' : 'miembros'} · {e.que[lang]}</span></span>
+              <button class="btn btn--s btn--ghost" data-save={`g:${e.id}`} aria-pressed="false" data-on={ca ? 'Hi ets' : 'Estás'} data-off={ca ? 'Segueix' : 'Sigue'}><span data-lbl>{ca ? 'Segueix' : 'Sigue'}</span></button>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="card card--sunk" aria-labelledby="normes">
+        <h2 class="h-sec" id="normes" style="font-size:var(--fs-l);margin-bottom:.5rem">{ca ? 'Com ens cuidem aquí' : 'Cómo nos cuidamos aquí'}</h2>
+        <ul class="rules">
+          <li><Icon name="check" class="i-s" />{ca ? 'Nom real i respecte. Critica idees, no persones.' : 'Nombre real y respeto. Critica ideas, no personas.'}</li>
+          <li><Icon name="check" class="i-s" />{ca ? 'Res de dades personals d’altri ni fotos de gent sense permís.' : 'Nada de datos personales ajenos ni fotos de gente sin permiso.'}</li>
+          <li><Icon name="check" class="i-s" />{ca ? 'Sense publicitat: els comerços tenen el seu espai.' : 'Sin publicidad: los comercios tienen su espacio.'}</li>
+          <li><Icon name="check" class="i-s" />{ca ? 'Català o castellà, com et vingui de gust.' : 'Catalán o castellano, como prefieras.'}</li>
+        </ul>
+      </section>
+    </aside>
+  </div>
+
+  <dialog class="sheet" id="publicar" aria-labelledby="publicar-t">
+    <div class="sheet__grab" aria-hidden="true"></div>
+    <form class="sheet__in stack" style="--s:1rem" data-post-form>
+      <div class="sheet__head">
+        <h2 class="h-sec" id="publicar-t">{ca ? 'Nova publicació' : 'Nueva publicación'}</h2>
+        <button type="button" class="iconbtn" data-close aria-label={t.tancar}><Icon name="close" /></button>
+      </div>
+      <fieldset >
+        <legend class="label" style="font:650 var(--fs-s) var(--display);margin-bottom:.5rem">{ca ? 'On ho publiques?' : '¿Dónde lo publicas?'}</legend>
+        <div class="canals">
+          {llista.map(([id, c], i) => (
+            <label class="canal-opt" data-f={c.facana}><input type="radio" name="canal" value={id} checked={id === 'preguntes'} /><span><Icon name={c.icona} class="i-s" />{c.nom[lang]}</span></label>
+          ))}
+        </div>
+      </fieldset>
+      <div class="field">
+        <label for="post-text">{ca ? 'Missatge' : 'Mensaje'}</label>
+        <textarea id="post-text" class="input" rows="5" maxlength="600" placeholder={ca ? 'Escriu com si parlessis amb un veí.' : 'Escribe como si hablaras con un vecino.'}></textarea>
+        <div style="display:flex;justify-content:space-between" class="hint"><span>{ca ? 'Es publica amb el teu nom.' : 'Se publica con tu nombre.'}</span><span data-count class="num">0/600</span></div>
+      </div>
+      <button class="btn btn--l btn--block" type="submit">{ca ? 'Publica' : 'Publica'}</button>
+    </form>
+  </dialog>
+</AppLayout>

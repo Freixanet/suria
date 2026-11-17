@@ -1,0 +1,6 @@
+---
+import { comu, type Lang } from '../i18n.ts';
+interface Props { lang: Lang; llarg?: boolean }
+const { lang, llarg = false } = Astro.props;
+---
+<span class="tag tag--demo" title={comu[lang].exempleLlarg}>{llarg ? comu[lang].exempleLlarg : comu[lang].exemple}</span>

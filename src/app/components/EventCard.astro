@@ -1,0 +1,27 @@
+---
+import Icon from './Icon.astro';
+import { categories, type Activitat } from '../demo.ts';
+import { comu, href, type Lang } from '../i18n.ts';
+import { dataDe, franjaH, quan } from '../dades.ts';
+interface Props { a: Activitat; lang: Lang; variant?: 'mini' | 'full'; dia?: boolean }
+const { a, lang, variant = 'full', dia = false } = Astro.props;
+const c = categories[a.cat];
+const t = comu[lang];
+const data = dataDe(a);
+const url = href(lang, 'agenda', a.id);
+const primera = lang === 'ca' ? 'Ideal per a la primera vegada' : 'Ideal para la primera vez';
+---
+<article class:list={['ev', `ev--${variant}`]} data-f={c.facana} data-item data-cat={`${a.cat} tot`} data-dia={`${data} tot`} data-extra={[a.primeraVegada && 'primera', !a.preu && 'gratuit', 'tot'].filter(Boolean).join(' ')} data-text={`${a.titol[lang]} ${a.lloc[lang]} ${c.nom[lang]}`}>
+  <div class="ev__top">
+    <span class="ev__time num">{dia ? `${quan(data, lang)} · ` : ''}{franjaH(a, lang)}</span>
+    <span class="tag"><Icon name={c.icona} class="i-s" />{c.nom[lang]}</span>
+  </div>
+  <h3 class="ev__title"><a href={url} class="stretch">{a.titol[lang]}</a></h3>
+  <p class="ev__place"><Icon name="pin" class="i-s" />{a.lloc[lang]}</p>
+  {variant === 'full' && <p class="ev__sum">{a.resum[lang]}</p>}
+  {variant === 'full' && a.primeraVegada && <p class="ev__first"><Icon name="wave" class="i-s" />{primera}</p>}
+  <div class="ev__foot">
+    <span class="ev__going small"><span class="ev__faces" aria-hidden="true"><i></i><i></i><i></i></span><b class="num" data-rsvp-count={a.id} data-base={a.hiVan}>{a.hiVan}</b> {t.hiVan}</span>
+    <button class="btn btn--s btn--ghost ev__rsvp" data-rsvp={a.id} aria-pressed="false" data-on={t.hiVas} data-off={t.hiAniré}><Icon name="check" class="i-s" /><span data-lbl>{t.hiAniré}</span></button>
+  </div>
+</article>

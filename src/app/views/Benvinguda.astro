@@ -1,0 +1,99 @@
+---
+import AppLayout from '../AppLayout.astro';
+import Icon from '../components/Icon.astro';
+import EventCard from '../components/EventCard.astro';
+import Demo from '../components/Demo.astro';
+import { comu, href, type Lang } from '../i18n.ts';
+import type { IconName } from '../icons.ts';
+import { activitats } from '../demo.ts';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ca = lang === 'ca';
+const t = comu[lang];
+type Pas = { id: string; icona: IconName; f: string; titol: string; text: string; enllac: { text: string; url: string } };
+const g = (a: string) => href(lang, 'gestions') + a;
+const etapes: { quan: string; passos: Pas[] }[] = [
+  {
+    quan: ca ? 'La primera setmana' : 'La primera semana',
+    passos: [
+      { id: 'padro', icona: 'home2', f: 'cel', titol: ca ? 'Empadrona’t' : 'Empadrónate', text: ca ? 'És la porta de tot: metge, escola, ajuts i votar. Es pot fer en línia.' : 'Es la puerta de todo: médico, escuela, ayudas y votar. Se puede hacer en línea.', enllac: { text: ca ? 'Com fer-ho' : 'Cómo hacerlo', url: g('#empadronar') } },
+      { id: 'cap', icona: 'health', f: 'rosa', titol: ca ? 'Assigna’t el CAP' : 'Asígnate el CAP', text: ca ? 'Amb el padró, demana la targeta sanitària i el metge de capçalera.' : 'Con el padrón, pide la tarjeta sanitaria y el médico de cabecera.', enllac: { text: ca ? 'Salut' : 'Salud', url: g('#salut') } },
+      { id: 'residus', icona: 'recycle', f: 'turo', titol: ca ? 'Aprèn com es recicla aquí' : 'Aprende cómo se recicla aquí', text: ca ? 'Cada poble ho fa diferent. Mira quins dies passa cada fracció.' : 'Cada pueblo lo hace distinto. Mira qué días pasa cada fracción.', enllac: { text: ca ? 'Residus' : 'Residuos', url: g('#residus') } },
+      { id: 'telefons', icona: 'phone', f: 'teula', titol: ca ? 'Desa els telèfons útils' : 'Guarda los teléfonos útiles', text: ca ? 'Emergències, OAC i Salut Respon, a mà.' : 'Emergencias, OAC y Salud Responde, a mano.', enllac: { text: ca ? 'Telèfons' : 'Teléfonos', url: g('') } },
+    ],
+  },
+  {
+    quan: ca ? 'El primer mes' : 'El primer mes',
+    passos: [
+      { id: 'escola', icona: 'school', f: 'ocre', titol: ca ? 'Escola o llar d’infants' : 'Escuela o guardería', text: ca ? 'Si tens criatures, consulta la preinscripció i les places.' : 'Si tienes niños, consulta la preinscripción y las plazas.', enllac: { text: ca ? 'Educació' : 'Educación', url: g('#educacio') } },
+      { id: 'activitat', icona: 'calendar', f: 'ocre', titol: ca ? 'Ves a una activitat' : 'Ve a una actividad', text: ca ? 'Tria’n una marcada com «Primera vegada»: t’expliquem què passarà.' : 'Elige una marcada como «Primera vez»: te explicamos qué pasará.', enllac: { text: 'Agenda', url: href(lang, 'agenda') } },
+      { id: 'presenta', icona: 'wave', f: 'cel', titol: ca ? 'Presenta’t al poble' : 'Preséntate al pueblo', text: ca ? 'Un missatge curt a la comunitat obre moltes portes.' : 'Un mensaje corto en la comunidad abre muchas puertas.', enllac: { text: t.nav.comunitat, url: href(lang, 'comunitat') } },
+    ],
+  },
+  {
+    quan: ca ? 'Quan et vingui de gust' : 'Cuando te apetezca',
+    passos: [
+      { id: 'entitat', icona: 'people', f: 'rosa', titol: ca ? 'Fes-te d’una entitat' : 'Únete a una entidad', text: ca ? 'Coral, caminants, voluntariat… és la manera més ràpida de fer amics.' : 'Coral, caminantes, voluntariado… es la forma más rápida de hacer amigos.', enllac: { text: ca ? 'Grups' : 'Grupos', url: href(lang, 'comunitat') + '#grups' } },
+      { id: 'comerc', icona: 'shop', f: 'teula', titol: ca ? 'Troba el teu forn i la teva ferreteria' : 'Encuentra tu panadería y tu ferretería', text: ca ? 'El comerç de proximitat també és conèixer gent.' : 'El comercio de proximidad también es conocer gente.', enllac: { text: t.nav.comerc, url: href(lang, 'comerc') } },
+    ],
+  },
+];
+const total = etapes.flatMap((e) => e.passos).length;
+const sopar = activitats.find((a) => a.id === 'sopar-benvinguda')!;
+---
+<AppLayout lang={lang} ruta="benvinguda" titol={t.nav.benvinguda}>
+  <div class="band" data-f="cel">
+    <div class="wrap" style="display:flex;gap:1.25rem;align-items:center;justify-content:space-between;flex-wrap:wrap">
+      <div style="flex:1 1 20rem">
+        <p class="kicker">{ca ? 'Benvingut, benvinguda' : 'Te damos la bienvenida'}</p>
+        <h1 class="h-page">{ca ? 'Nou a Súria' : 'Nuevo en Súria'}</h1>
+        <p class="lead" style="margin-top:.75rem">{ca ? 'Una llista curta per sentir-te de casa aviat. Marca el que ja has fet; ho recordem per tu.' : 'Una lista corta para sentirte en casa pronto. Marca lo que ya has hecho; lo recordamos por ti.'}</p>
+      </div>
+      <div class="ring" data-progress data-total={total} role="img" aria-label={ca ? 'Progrés' : 'Progreso'}><span><b data-progress-n>0</b><small>/{total}</small></span></div>
+    </div>
+  </div>
+
+  <div class="wrap stack" style="--s:2rem">
+    {etapes.map((e) => (
+      <section aria-label={e.quan}>
+        <h2 class="h-sec" style="margin-bottom:.75rem">{e.quan}</h2>
+        <ol class="journey">
+          {e.passos.map((p) => (
+            <li class="step" data-f={p.f}>
+              <span class="step__check"><input type="checkbox" id={`pas-${p.id}`} data-step={p.id} /><span><Icon name="check" class="i-s" /></span></span>
+              <div class="step__body">
+                <label for={`pas-${p.id}`} class="row__title">{p.titol}</label>
+                <p class="muted small">{p.text}</p>
+                <div class="step__links"><a class="btn btn--s btn--soft" href={p.enllac.url}>{p.enllac.text}<Icon name="arrow" class="i-s" /></a></div>
+              </div>
+              <span class="row__ico" aria-hidden="true"><Icon name={p.icona} /></span>
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))}
+
+    <section class="buddycard" aria-labelledby="padri">
+      <div class="buddycard__faces" aria-hidden="true">
+        <span class="avatar" data-f="ocre">MR</span><span class="avatar" data-f="cel">JP</span><span class="avatar" data-f="rosa">NC</span><span class="avatar" data-f="turo">TF</span>
+      </div>
+      <p class="kicker">{ca ? 'Padrins de benvinguda' : 'Padrinos de bienvenida'}</p>
+      <h2 class="h-sec" id="padri">{ca ? 'Un veí o veïna et fa de guia el primer mes' : 'Un vecino o vecina te hace de guía el primer mes'}</h2>
+      <p style="opacity:.85">{ca ? 'Un cafè, un passeig pel poble i algú a qui preguntar. Són voluntaris i hi viuen de fa anys.' : 'Un café, un paseo por el pueblo y alguien a quien preguntar. Son voluntarios y viven aquí desde hace años.'}</p>
+      <button class="btn" data-save="padri" aria-pressed="false" data-on={ca ? 'Sol·licitud enviada' : 'Solicitud enviada'} data-off={ca ? 'Vull un padrí o padrina' : 'Quiero un padrino o madrina'}><Icon name="hand" class="i-s" /><span data-lbl>{ca ? 'Vull un padrí o padrina' : 'Quiero un padrino o madrina'}</span></button>
+      <Demo lang={lang} />
+    </section>
+
+    <section aria-labelledby="sopar-t">
+      <h2 class="h-sec" id="sopar-t" style="margin-bottom:.75rem">{ca ? 'La teva primera cita al poble' : 'Tu primera cita en el pueblo'}</h2>
+      <EventCard a={sopar} lang={lang} dia />
+    </section>
+
+    <section class="card card--sunk" aria-labelledby="dubtes" style="margin-bottom:1rem">
+      <h2 class="h-sec" id="dubtes" style="font-size:var(--fs-l)">{ca ? 'Tens un dubte concret?' : '¿Tienes una duda concreta?'}</h2>
+      <p class="muted" style="margin-block:.375rem .875rem">{ca ? 'Pregunta-ho com ho diries. Si no ho sabem, ho preguntem al poble.' : 'Pregúntalo como lo dirías. Si no lo sabemos, lo preguntamos al pueblo.'}</p>
+      <a class="btn" href={href(lang, 'pregunta')}><Icon name="spark" class="i-s" />{ca ? 'Pregunta a Súria' : 'Pregunta a Súria'}</a>
+    </section>
+  </div>
+</AppLayout>

@@ -1,0 +1,87 @@
+---
+import AppLayout from '../AppLayout.astro';
+import Icon from '../components/Icon.astro';
+import { comu, href, type Lang } from '../i18n.ts';
+import type { IconName } from '../icons.ts';
+import { informacio, passos, URL_SEU } from '../dades.ts';
+import { dataNumerica, telefonVisible } from '../../lib/format.ts';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ca = lang === 'ca';
+const t = comu[lang];
+const info = await informacio();
+const llistaPassos = (await passos()).filter((p) => !p.guardies?.length);
+const icona: Record<string, IconName> = { drop: 'drop', receipt: 'bag', street: 'pin', book: 'music', care: 'heart', school: 'school', shield: 'shield', work: 'briefcase', home: 'home2', welcome: 'wave', building: 'euro', people: 'people', bus: 'bus', recycle: 'recycle', health: 'health', document: 'doc' };
+const color = (c: string) => ({ lavanda: 'cel', pedra: 'pissarra' } as Record<string, string>)[c] ?? c;
+const ancora = (id: string) => (id.includes('empadron') ? 'empadronar' : id.includes('mobles') ? 'mobles' : id);
+const externa = (u: string) => u.startsWith('http');
+---
+<AppLayout lang={lang} ruta="gestions" titol={t.nav.gestions}>
+  <div class="band" data-f="turo">
+    <div class="wrap">
+      <p class="kicker">{ca ? 'Sense laberints' : 'Sin laberintos'}</p>
+      <h1 class="h-page">{ca ? 'Què necessites fer?' : '¿Qué necesitas hacer?'}</h1>
+      <p class="lead" style="margin-top:.75rem">{ca ? 'Cada gestió explicada en dues frases, amb l’enllaç oficial i la font. Nosaltres no fem el tràmit: t’hi portem directament.' : 'Cada gestión explicada en dos frases, con el enlace oficial y la fuente. Nosotros no hacemos el trámite: te llevamos directamente.'}</p>
+    </div>
+  </div>
+
+  <div class="wrap stack" style="--s:1.25rem">
+    <section aria-labelledby="sos">
+      <h2 class="sr" id="sos">{ca ? 'Telèfons importants' : 'Teléfonos importantes'}</h2>
+      <div class="sos">
+        <a href="tel:112" data-f="teula"><b>112</b><span>{ca ? 'Emergències' : 'Emergencias'}</span></a>
+        <a href="tel:061" data-f="rosa"><b>061</b><span>Salut Respon</span></a>
+        <a href="tel:+34938682800" data-f="cel"><b class="num" style="font-size:1.25rem">{telefonVisible('+34938682800')}</b><span>{ca ? 'OAC · Ajuntament' : 'OAC · Ayuntamiento'}</span></a>
+        <a href={URL_SEU} target="_blank" rel="noopener" data-f="pissarra"><b style="font-size:1.25rem">{ca ? 'Seu' : 'Sede'}</b><span>{ca ? 'Tràmits en línia' : 'Trámites en línea'} ↗</span></a>
+      </div>
+    </section>
+
+    <div class="search">
+      <Icon name="search" />
+      <label for="cerca-g" class="sr">{t.cercar}</label>
+      <input id="cerca-g" class="input" type="search" placeholder={ca ? 'Padró, escola, aigua, mobles…' : 'Padrón, escuela, agua, muebles…'} data-search-for="gestions" autocomplete="off" />
+    </div>
+
+    <div id="gestions">
+      <p class="kicker" style="margin:.5rem 0 .75rem">{ca ? 'El més demanat' : 'Lo más pedido'}</p>
+      {llistaPassos.map((p) => (
+        <details class="acc" id={ancora(p.id)} data-item data-text={`${p.titol.ca} ${p.titol.es} ${p.text[lang]}`} data-f={ancora(p.id) === 'empadronar' ? 'cel' : 'turo'}>
+          <summary><span class="row__ico"><Icon name={ancora(p.id) === 'empadronar' ? 'home2' : 'recycle'} /></span><span class="row__body"><span class="row__title">{p.titol[lang]}</span><span class="row__sub">{p.resum?.[lang]}</span></span><Icon name="chevronDown" class="i-s chev" /></summary>
+          <div class="acc__body">
+            <p>{p.text[lang]}</p>
+            <div class="links">
+              {p.accions.map((a) => a.tipus === 'web'
+                ? <a href={a.url} target="_blank" rel="noopener"><Icon name="external" class="i-s" />{a.text[lang]}<Icon name="chevron" class="i-s" /></a>
+                : <a href={`tel:${a.telefon}`}><Icon name="phone" class="i-s" />{a.text[lang]} · {telefonVisible(a.telefon)}<Icon name="chevron" class="i-s" /></a>)}
+            </div>
+            <p class="source-line">{ca ? 'Font' : 'Fuente'}: {p.fonts.map((f, i) => <>{i > 0 && ' · '}<a href={f.url} target="_blank" rel="noopener">{f.nom[lang]}</a></>)} · {ca ? 'consultat el' : 'consultado el'} {dataNumerica(p.consultat)}</p>
+          </div>
+        </details>
+      ))}
+
+      <p class="kicker" style="margin:2rem 0 .75rem">{ca ? 'Per temes' : 'Por temas'}</p>
+      {info.map((i) => (
+        <details class="acc" id={i.id} data-item data-text={`${i.titol.ca} ${i.titol.es} ${i.descripcio[lang]} ${i.enllacos.map((e) => e.text[lang]).join(' ')}`} data-f={color(i.color)}>
+          <summary><span class="row__ico"><Icon name={icona[i.icona] ?? 'doc'} /></span><span class="row__body"><span class="row__title">{i.titol[lang]}</span><span class="row__sub">{i.enllacos.length} {ca ? 'enllaços oficials' : 'enlaces oficiales'}</span></span><Icon name="chevronDown" class="i-s chev" /></summary>
+          <div class="acc__body">
+            <p>{i.descripcio[lang]}</p>
+            <div class="links">
+              {i.enllacos.map((e) => <a href={e.url} target={externa(e.url) ? '_blank' : undefined} rel={externa(e.url) ? 'noopener' : undefined}><Icon name={externa(e.url) ? 'external' : 'phone'} class="i-s" />{e.text[lang]}<Icon name="chevron" class="i-s" /></a>)}
+            </div>
+            <p class="source-line">{ca ? 'Font: web oficial del servei · consultat el' : 'Fuente: web oficial del servicio · consultado el'} {dataNumerica(i.consultat)}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+    <div class="empty" data-empty-for="gestions" hidden>
+      <strong>{ca ? 'No ho trobem' : 'No lo encontramos'}</strong>
+      <p>{ca ? 'Pregunta-ho amb les teves paraules:' : 'Pregúntalo con tus palabras:'} <a href={href(lang, 'pregunta')}>{ca ? 'Pregunta a Súria' : 'Pregunta a Súria'}</a></p>
+    </div>
+
+    <div class="protonote section" style="margin-bottom:1rem">
+      <Icon name="info" />
+      <p>{t.independencia} {ca ? 'Si un enllaç ha canviat, avisa’ns i ho corregim.' : 'Si un enlace ha cambiado, avísanos y lo corregimos.'}</p>
+    </div>
+  </div>
+</AppLayout>

@@ -1,0 +1,12 @@
+---
+import Icon from './Icon.astro';
+interface Props { titol: string; id?: string; enllac?: string; text?: string; kicker?: string }
+const { titol, id, enllac, text, kicker } = Astro.props;
+---
+<div class="sechead">
+  <div>
+    {kicker && <p class="kicker">{kicker}</p>}
+    <div class="sechead__t"><h2 class="h-sec" id={id}>{titol}</h2><slot /></div>
+  </div>
+  {enllac && text && <a href={enllac}>{text}<Icon name="chevron" class="i-s" /></a>}
+</div>

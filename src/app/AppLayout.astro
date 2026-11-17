@@ -1,0 +1,185 @@
+---
+import { Font } from 'astro:assets';
+import { ClientRouter } from 'astro:transitions';
+import Icon from './components/Icon.astro';
+import Logo from './components/Logo.astro';
+import { comu, client, href, type Lang, type Ruta } from './i18n.ts';
+import type { IconName } from './icons.ts';
+import './styles/app.css';
+import './styles/screens.css';
+
+interface Props {
+  lang: Lang;
+  ruta: Ruta;
+  titol?: string;
+  /** Títol curt a la barra superior (si no, el de la secció). */
+  barra?: string;
+  /** Enllaç per tornar enrere (pantalles de detall). */
+  enrere?: string;
+  /** Ruta equivalent en l'altra llengua (per defecte, la mateixa secció). */
+  altra?: string;
+  descripcio?: string;
+  inici?: boolean;
+}
+const { lang, ruta, titol, barra, enrere, altra, descripcio, inici = false } = Astro.props;
+const t = comu[lang];
+const altraLang: Lang = lang === 'ca' ? 'es' : 'ca';
+const urlAltra = altra ?? href(altraLang, ruta);
+const titolComplet = titol ? `${titol} · Súria` : 'Súria';
+const nomSeccio = t.nav[ruta as keyof typeof t.nav] ?? '';
+
+const tabs: { ruta: Ruta; icona: IconName; nom: string; ai?: boolean }[] = [
+  { ruta: 'avui', icona: 'home', nom: t.nav.avui },
+  { ruta: 'agenda', icona: 'calendar', nom: t.nav.agenda },
+  { ruta: 'pregunta', icona: 'spark', nom: t.nav.pregunta, ai: true },
+  { ruta: 'comunitat', icona: 'people', nom: t.nav.comunitat },
+  { ruta: 'mes', icona: 'grid', nom: t.nav.mes },
+];
+const dinsMes: Ruta[] = ['mes', 'comerc', 'gestions', 'benvinguda', 'compte', 'negocis', 'descobreix'];
+const tabActiu = dinsMes.includes(ruta) ? 'mes' : ruta;
+
+const lateral: { ruta: Ruta; icona: IconName; nom: string; f: string }[] = [
+  { ruta: 'avui', icona: 'home', nom: t.nav.avui, f: 'pissarra' },
+  { ruta: 'agenda', icona: 'calendar', nom: t.nav.agenda, f: 'ocre' },
+  { ruta: 'comunitat', icona: 'people', nom: t.nav.comunitat, f: 'rosa' },
+  { ruta: 'comerc', icona: 'shop', nom: t.nav.comerc, f: 'teula' },
+  { ruta: 'gestions', icona: 'doc', nom: t.nav.gestions, f: 'turo' },
+  { ruta: 'benvinguda', icona: 'wave', nom: t.nav.benvinguda, f: 'cel' },
+  { ruta: 'descobreix', icona: 'compass', nom: t.nav.descobreix, f: 'ocre' },
+];
+const textosEntrar = {
+  ca: {
+    titol: 'Entra per participar',
+    text: 'Amb un compte pots apuntar-te a activitats, donar les gràcies, publicar a la comunitat i desar el que t’interessa. Llegir-ho tot és lliure.',
+    correu: 'Continua amb el correu',
+    ara: 'Ara no',
+    privat: 'No mostrem el teu correu a ningú.',
+  },
+  es: {
+    titol: 'Entra para participar',
+    text: 'Con una cuenta puedes apuntarte a actividades, dar las gracias, publicar en la comunidad y guardar lo que te interesa. Leerlo todo es libre.',
+    correu: 'Continúa con el correo',
+    ara: 'Ahora no',
+    privat: 'No mostramos tu correo a nadie.',
+  },
+}[lang];
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{titolComplet}</title>
+    <meta name="description" content={descripcio ?? (lang === 'ca' ? 'Súria, cada dia: agenda, comunitat, comerç i gestions del poble.' : 'Súria, cada día: agenda, comunidad, comercio y gestiones del pueblo.')} />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0e131a" media="(prefers-color-scheme: dark)" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Súria" />
+    <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml" />
+    <link rel="alternate" hreflang={altraLang} href={urlAltra} />
+    <Font cssVariable="--font-display" preload />
+    <Font cssVariable="--font-text" preload />
+    <script is:inline>
+      // Preferències de lectura abans de pintar: mida de text i tema.
+      (function () {
+        try {
+          var s = JSON.parse(localStorage.getItem('suria-app') || '{}').settings || {};
+          var d = document.documentElement;
+          if (s.text && s.text !== 'm') d.dataset.text = s.text;
+          var fosc = s.theme === 'dark' || (s.theme !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+          if (fosc) d.dataset.theme = 'dark';
+        } catch (e) {}
+      })();
+    </script>
+    <ClientRouter />
+  </head>
+  <body>
+    <a class="saltar" href="#contingut">{t.saltar}</a>
+    <div class="shell">
+      <aside class="side" aria-label={t.navPrincipal} transition:persist="side">
+        <a class="brand" href={href(lang, 'avui')} aria-label="Súria"><Logo />Súria</a>
+        <a class="side__ask" href={href(lang, 'pregunta')} data-side-link="pregunta">
+          <Icon name="spark" />{lang === 'ca' ? 'Pregunta a Súria' : 'Pregunta a Súria'}<kbd>/</kbd>
+        </a>
+        <nav class="side__nav">
+          {lateral.map((l) => (
+            <a class="side__link" href={href(lang, l.ruta)} data-f={l.f} data-side-link={l.ruta} aria-current={ruta === l.ruta ? 'page' : undefined}>
+              <Icon name={l.icona} />{l.nom}<span class="side__dot" aria-hidden="true"></span>
+            </a>
+          ))}
+          <p class="side__label">{lang === 'ca' ? 'Per a tu' : 'Para ti'}</p>
+          <a class="side__link" href={href(lang, 'negocis')} data-side-link="negocis" aria-current={ruta === 'negocis' ? 'page' : undefined}><Icon name="briefcase" />{t.nav.negocis}</a>
+          <a class="side__link" href={href(lang, 'mes')} data-side-link="mes" aria-current={ruta === 'mes' ? 'page' : undefined}><Icon name="grid" />{lang === 'ca' ? 'Tot el que hi ha' : 'Todo lo que hay'}</a>
+        </nav>
+        <div class="side__foot">
+          <a class="side__me" href={href(lang, 'compte')} data-side-link="compte">
+            <span class="avatar avatar--guest" data-avatar><Icon name="user" class="i-s" /></span>
+            <span><strong data-user-name data-guest-text={t.entrar}>{t.entrar}</strong><small data-user-sub>{lang === 'ca' ? 'Participa a la comunitat' : 'Participa en la comunidad'}</small></span>
+          </a>
+        </div>
+      </aside>
+
+      <div class="col">
+        <header class:list={['top', inici && 'top--home']} data-top>
+          <div class="wrap top__in">
+            {enrere ? (
+              <a class="iconbtn top__back" href={enrere} aria-label={lang === 'ca' ? 'Enrere' : 'Atrás'} data-back><Icon name="back" /></a>
+            ) : (
+              <a class="brand top__brand" href={href(lang, 'avui')} aria-label="Súria"><Logo />{inici ? 'Súria' : ''}</a>
+            )}
+            {!inici && <span class="top__title">{barra ?? nomSeccio}</span>}
+            <div class="top__end">
+              <slot name="accions" />
+              <a class="chipbtn" href={urlAltra} hreflang={altraLang} lang={altraLang} data-lang-switch={altraLang} data-astro-reload>{altraLang.toUpperCase()}<span class="sr">· {t.altraLlengua}</span></a>
+              <a class="avatarlink" href={href(lang, 'compte')} aria-label={t.nav.compte}>
+                <span class="avatar avatar--guest" data-avatar><Icon name="user" class="i-s" /></span>
+              </a>
+            </div>
+          </div>
+        </header>
+
+        <main id="contingut" class="main" tabindex="-1" data-ruta={ruta}>
+          <slot />
+        </main>
+      </div>
+    </div>
+
+    <nav class="tabbar" aria-label={t.navPrincipal} transition:persist="tabbar">
+      <ul class="tabbar__list">
+        {tabs.map((tab) => (
+          <li>
+            <a class:list={['tab', tab.ai && 'tab--ai']} href={href(lang, tab.ruta)} data-tab={tab.ruta} aria-current={tabActiu === tab.ruta ? 'page' : undefined}>
+              <span class="tab__pill"><Icon name={tab.icona} /></span>{tab.nom}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <dialog class="sheet" id="entrar" aria-labelledby="entrar-titol">
+      <div class="sheet__grab" aria-hidden="true"></div>
+      <div class="sheet__in stack" style="--s:1rem">
+        <div class="sheet__head">
+          <h2 id="entrar-titol" class="h-sec">{textosEntrar.titol}</h2>
+          <button class="iconbtn" data-close aria-label={t.tancar}><Icon name="close" /></button>
+        </div>
+        <p class="muted">{textosEntrar.text}</p>
+        <a class="btn btn--block btn--l" href={href(lang, 'compte')} data-entrar-link><Icon name="mail" />{textosEntrar.correu}</a>
+        <button class="btn btn--ghost btn--block" data-close>{textosEntrar.ara}</button>
+        <p class="hint" style="display:flex;gap:.375rem;align-items:center;justify-content:center"><Icon name="lock" class="i-s" /> {textosEntrar.privat}</p>
+      </div>
+    </dialog>
+
+    <div class="toast" role="status" aria-live="polite" data-toast transition:persist="toast"><Icon name="check" /><span data-toast-text></span></div>
+
+    <script type="application/json" id="app-dades" set:html={JSON.stringify({ lang, t: client[lang], compte: href(lang, 'compte'), pregunta: href(lang, 'pregunta') })} />
+    <script>
+      import './client/main.ts';
+    </script>
+  </body>
+</html>
+
+<style>
+  .col { min-width: 0; }
+</style>

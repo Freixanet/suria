@@ -1,0 +1,173 @@
+---
+import { Picture } from 'astro:assets';
+import AppLayout from '../AppLayout.astro';
+import Icon from '../components/Icon.astro';
+import SecHead from '../components/SecHead.astro';
+import EventCard from '../components/EventCard.astro';
+import PostCard from '../components/PostCard.astro';
+import BizCard from '../components/BizCard.astro';
+import Demo from '../components/Demo.astro';
+import { fotos } from '../../lib/fotos.ts';
+import { comu, href, type Lang } from '../i18n.ts';
+import { publicacions, preguntaSetmana, comercos, recollida, activitats as totes } from '../demo.ts';
+import { AVUI, activitatsOrdenades, bus, dataDe, farmaciaAra, h, nomDia, URL_FARMACIES, URL_RECICLA } from '../dades.ts';
+import { diaMes } from '../../lib/format.ts';
+import { diaSetmana } from '../../lib/hora-local.ts';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = comu[lang];
+const ca = lang === 'ca';
+const foto = fotos.vista;
+const avuiEvents = totes.filter((a) => a.dia === 0);
+const properes = activitatsOrdenades().filter((a) => a.dia <= 3).slice(0, 6);
+const dadesBus = await bus();
+const farmacia = await farmaciaAra();
+const dataTxt = `${nomDia(AVUI, lang).replace(/^./, (c) => c.toUpperCase())} ${diaMes(AVUI, lang)}`;
+const obertsPrimer = [...comercos].sort((a, b) => Number(!!b.oferta) - Number(!!a.oferta)).slice(0, 4);
+const suggeriments = ca
+  ? ['Quan passa el pròxim bus a Manresa?', 'Com m’empadrono?', 'Què puc fer aquest cap de setmana?', 'On llenço un sofà vell?']
+  : ['¿Cuándo pasa el próximo bus a Manresa?', '¿Cómo me empadrono?', '¿Qué puedo hacer este fin de semana?', '¿Dónde tiro un sofá viejo?'];
+
+const rapides = [
+  { icona: 'home2', f: 'cel', text: ca ? 'Empadronar-me' : 'Empadronarme', url: href(lang, 'gestions') + '#empadronar' },
+  { icona: 'recycle', f: 'turo', text: ca ? 'Recollida de mobles' : 'Recogida de muebles', url: href(lang, 'gestions') + '#residus' },
+  { icona: 'health', f: 'rosa', text: ca ? 'Salut i CAP' : 'Salud y CAP', url: href(lang, 'gestions') + '#salut' },
+  { icona: 'shield', f: 'teula', text: ca ? 'Emergències' : 'Emergencias', url: href(lang, 'gestions') + '#emergencies' },
+  { icona: 'school', f: 'ocre', text: ca ? 'Escoles' : 'Escuelas', url: href(lang, 'gestions') + '#educacio' },
+  { icona: 'doc', f: 'pissarra', text: ca ? 'Totes les gestions' : 'Todas las gestiones', url: href(lang, 'gestions') },
+] as const;
+const sentits = dadesBus.sentits.map((s) => ({ id: s.id, etiqueta: s.etiqueta[lang] }));
+const busJson = JSON.stringify({ sentits: dadesBus.sentits.map((s) => ({ id: s.id, etiqueta: s.etiqueta[lang], horaris: s.horaris })), festius: dadesBus.festius });
+const dia = diaSetmana(AVUI);
+---
+<AppLayout lang={lang} ruta="avui" inici titol={ca ? 'Avui' : 'Hoy'}>
+  <span slot="accions" class="weather chipbtn" data-weather hidden title={ca ? 'Temps estimat a Súria (MET Norway)' : 'Tiempo estimado en Súria (MET Norway)'}>
+    <svg class="i-s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg><span data-weather-t class="num"></span>
+  </span>
+
+  <section class="hero" data-moment="mati" aria-labelledby="salutacio">
+    <div class="hero__media">
+      <Picture src={foto.imatge} alt={foto.alt[lang]} widths={[640, 960, 1400, 2000]} sizes="(min-width: 64rem) calc(100vw - 17rem), 100vw" formats={['avif', 'webp']} loading="eager" fetchpriority="high" class="hero__img" />
+      <div class="hero__veil" aria-hidden="true"></div>
+      <a class="hero__credit" href={foto.original} target="_blank" rel="noopener">{ca ? 'Foto' : 'Foto'}: {foto.autor} · {foto.llicencia}</a>
+    </div>
+    <div class="wrap hero__in">
+      <p class="hero__date rise">{dataTxt}</p>
+      <h1 class="hero__greet rise" style="--d:1" id="salutacio" data-greet>{ca ? 'Bon dia.' : 'Buenos días.'}</h1>
+      <p class="hero__line rise" style="--d:2"><span data-hero-bus>{ca ? 'Tot el que passa avui a Súria, en un sol lloc.' : 'Todo lo que pasa hoy en Súria, en un solo lugar.'}</span></p>
+    </div>
+  </section>
+
+  <div class="sheetup">
+    <div class="wrap">
+      <form class="ask rise" style="--d:3" action={href(lang, 'pregunta')} method="get" role="search">
+        <label for="ask-q" class="sr">{t.preguntaPlaceholder}</label>
+        <span class="ask__spark" aria-hidden="true"><Icon name="spark" /></span>
+        <input id="ask-q" name="q" class="ask__input" placeholder={t.preguntaPlaceholder} autocomplete="off" enterkeyhint="send" />
+        <button class="ask__go" aria-label={ca ? 'Pregunta' : 'Pregunta'}><Icon name="arrowUp" /></button>
+      </form>
+      <div class="chips ask__chips" aria-label={ca ? 'Preguntes suggerides' : 'Preguntas sugeridas'}>
+        {suggeriments.map((s) => <a class="chip" href={`${href(lang, 'pregunta')}?q=${encodeURIComponent(s)}`}>{s}</a>)}
+      </div>
+
+      <section class="section" aria-labelledby="ara">
+        <SecHead titol={ca ? 'Ara mateix' : 'Ahora mismo'} id="ara" />
+        <div class="now">
+          <article class="now__card now__bus" data-f="pissarra" data-bus>
+            <script type="application/json" set:html={busJson} />
+            <header class="now__head"><span class="now__ico"><Icon name="bus" /></span><span>{ca ? 'Bus' : 'Bus'}</span><span class="tag tag--line">{ca ? 'Horari oficial' : 'Horario oficial'}</span></header>
+            <div class="now__bus-rows">
+              {sentits.map((s) => (
+                <div class="now__bus-row" data-sentit={s.id}>
+                  <span class="small muted">{s.etiqueta}</span>
+                  <strong class="now__big num" data-gran>—</strong>
+                  <span class="small" data-sub>&nbsp;</span>
+                </div>
+              ))}
+            </div>
+            <p class="now__foot small muted">Alsa · {ca ? 'horari programat, no en directe' : 'horario programado, no en directo'}</p>
+          </article>
+
+          <article class="now__card" data-f="rosa">
+            <header class="now__head"><span class="now__ico"><Icon name="pill" /></span><span>{ca ? 'Farmàcia de guàrdia' : 'Farmacia de guardia'}</span></header>
+            {farmacia ? (
+              <>
+                <strong class="now__mid">{farmacia.farmacia}</strong>
+                <p class="small">{farmacia.adreca}</p>
+                <a class="btn btn--s btn--soft now__cta" href={`tel:${farmacia.telefon}`}><Icon name="phone" class="i-s" />{ca ? 'Truca' : 'Llama'}</a>
+              </>
+            ) : (
+              <>
+                <p class="now__mid">{ca ? 'Consulta el torn oficial d’avui' : 'Consulta el turno oficial de hoy'}</p>
+                <p class="small muted">{ca ? 'No el mostrem si no el tenim verificat.' : 'No lo mostramos si no lo tenemos verificado.'}</p>
+                <a class="btn btn--s btn--soft now__cta" href={URL_FARMACIES} target="_blank" rel="noopener">suria.cat<Icon name="external" class="i-s" /></a>
+              </>
+            )}
+          </article>
+
+          <article class="now__card" data-f="turo">
+            <header class="now__head"><span class="now__ico"><Icon name="recycle" /></span><span>{ca ? 'Recollida d’avui' : 'Recogida de hoy'}</span><Demo lang={lang} /></header>
+            <strong class="now__mid">{recollida[dia][lang]}</strong>
+            <p class="small muted">{ca ? 'Treu el cubell a partir de les 20 h.' : 'Saca el cubo a partir de las 20 h.'}</p>
+            <a class="btn btn--s btn--soft now__cta" href={URL_RECICLA} target="_blank" rel="noopener">{ca ? 'Calendari oficial' : 'Calendario oficial'}<Icon name="external" class="i-s" /></a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="agenda-avui">
+        <SecHead titol={ca ? 'Avui i aquests dies' : 'Hoy y estos días'} id="agenda-avui" enllac={href(lang, 'agenda')} text={t.veureTot}><Demo lang={lang} /></SecHead>
+        <div class="strip">
+          {properes.map((a) => <EventCard a={a} lang={lang} variant="mini" dia />)}
+        </div>
+      </section>
+
+      <section class="section welcome" data-f="cel" aria-labelledby="nou">
+        <div class="welcome__art" aria-hidden="true">
+          <span style="--h:62%;--c:var(--ocre)"></span><span style="--h:88%;--c:var(--teula)"></span><span style="--h:54%;--c:var(--rosa)"></span><span style="--h:74%;--c:var(--cel)"></span>
+        </div>
+        <div class="welcome__body">
+          <p class="kicker">{ca ? 'Fa poc que hi vius?' : '¿Hace poco que vives aquí?'}</p>
+          <h2 class="h-sec" id="nou">{ca ? 'Els teus primers 30 dies a Súria, pas a pas' : 'Tus primeros 30 días en Súria, paso a paso'}</h2>
+          <p class="muted">{ca ? 'Padró, metge, escola, escombraries… i com conèixer gent sense haver de fer el primer pas tot sol.' : 'Padrón, médico, escuela, basura… y cómo conocer gente sin tener que dar el primer paso a solas.'}</p>
+          <a class="btn btn--f" href={href(lang, 'benvinguda')}>{ca ? 'Comença' : 'Empieza'}<Icon name="arrow" class="i-s" /></a>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="parla">
+        <SecHead titol={ca ? 'Al poble se’n parla' : 'En el pueblo se habla de'} id="parla" enllac={href(lang, 'comunitat')} text={ca ? 'Comunitat' : 'Comunidad'}><Demo lang={lang} /></SecHead>
+        <div class="talk">
+          <a class="weekq card card--ink" href={href(lang, 'comunitat') + '#setmana'}>
+            <p class="kicker">{ca ? 'La pregunta de la setmana' : 'La pregunta de la semana'}</p>
+            <p class="weekq__q">{preguntaSetmana.text[lang]}</p>
+            <p class="weekq__n small"><b class="num">{preguntaSetmana.respostes}</b> {ca ? 'veïns han respost' : 'vecinos han respondido'} <Icon name="arrow" class="i-s" /></p>
+          </a>
+          {publicacions.slice(0, 2).map((p) => <PostCard p={p} lang={lang} compacte />)}
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="botigues">
+        <SecHead titol={ca ? 'Compra al poble' : 'Compra en el pueblo'} id="botigues" enllac={href(lang, 'comerc')} text={t.veureTot}><Demo lang={lang} /></SecHead>
+        <div class="strip strip--biz">
+          {obertsPrimer.map((c) => <BizCard c={c} lang={lang} />)}
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="rapid">
+        <SecHead titol={ca ? 'Gestions en un toc' : 'Gestiones en un toque'} id="rapid" />
+        <ul class="tiles">
+          {rapides.map((r) => (
+            <li><a class="tile" data-f={r.f} href={r.url}><Icon name={r.icona} class="i-l" /><span>{r.text}</span></a></li>
+          ))}
+        </ul>
+      </section>
+
+      <footer class="section foot">
+        <div class="protonote">
+          <Icon name="info" />
+          <p>{t.independencia} {ca ? 'Les dades oficials porten el seu enllaç; el contingut marcat com a «Exemple» és de mostra.' : 'Los datos oficiales llevan su enlace; el contenido marcado como «Ejemplo» es de muestra.'} <a href={href(lang, 'mes') + '#sobre'}>{ca ? 'Com funciona' : 'Cómo funciona'}</a></p>
+        </div>
+      </footer>
+    </div>
+  </div>
+</AppLayout>

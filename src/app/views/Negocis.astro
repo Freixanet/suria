@@ -1,0 +1,67 @@
+---
+import AppLayout from '../AppLayout.astro';
+import Icon from '../components/Icon.astro';
+import { comu, href, type Lang } from '../i18n.ts';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ca = lang === 'ca';
+const t = comu[lang];
+const plans = [
+  {
+    nom: ca ? 'Fitxa' : 'Ficha', preu: '0 €', per: '', hi: false,
+    desc: ca ? 'Perquè et trobin. Per sempre gratuïta.' : 'Para que te encuentren. Gratis para siempre.',
+    punts: ca ? ['Fitxa amb ofici, serveis i horari', 'Canvia l’horari amb un WhatsApp', 'Apareixes al cercador i a «Pregunta a Súria»', 'Avís si un veí detecta una dada errònia'] : ['Ficha con oficio, servicios y horario', 'Cambia el horario con un WhatsApp', 'Apareces en el buscador y en «Pregunta a Súria»', 'Aviso si un vecino detecta un dato erróneo'],
+    cta: ca ? 'Crea la fitxa' : 'Crea la ficha',
+  },
+  {
+    nom: ca ? 'Botiga viva' : 'Tienda viva', preu: '12 €', per: ca ? '/mes' : '/mes', hi: true,
+    desc: ca ? 'Per als que volen que el poble torni.' : 'Para los que quieren que el pueblo vuelva.',
+    punts: ca ? ['Tot el de la Fitxa', 'Ofertes setmanals a la portada de Comerç', '«Cuina oberta» i estat del dia en directe', 'Estadístiques: visites, desats i seguidors', 'Publica tallers i activitats a l’agenda'] : ['Todo lo de la Ficha', 'Ofertas semanales en la portada de Comercio', '«Cocina abierta» y estado del día en directo', 'Estadísticas: visitas, guardados y seguidores', 'Publica talleres y actividades en la agenda'],
+    cta: ca ? 'Prova-ho 3 mesos gratis' : 'Pruébalo 3 meses gratis',
+  },
+  {
+    nom: ca ? 'Destacat' : 'Destacado', preu: '29 €', per: ca ? '/mes' : '/mes', hi: false,
+    desc: ca ? 'Més visibilitat, sempre etiquetada.' : 'Más visibilidad, siempre etiquetada.',
+    punts: ca ? ['Tot el de Botiga viva', 'Primer lloc a la teva categoria, amb l’etiqueta «Destacat»', 'Un missatge al mes als teus seguidors', 'Suport per fer fotos i textos de la fitxa'] : ['Todo lo de Tienda viva', 'Primer lugar en tu categoría, con la etiqueta «Destacado»', 'Un mensaje al mes a tus seguidores', 'Apoyo para hacer fotos y textos de la ficha'],
+    cta: ca ? 'Parlem-ne' : 'Hablemos',
+  },
+];
+---
+<AppLayout lang={lang} ruta="negocis" titol={t.nav.negocis}>
+  <div class="band" data-f="pissarra">
+    <div class="wrap">
+      <p class="kicker">{ca ? 'Per a comerços i professionals' : 'Para comercios y profesionales'}</p>
+      <h1 class="h-page">{ca ? 'Que el poble et trobi, cada dia' : 'Que el pueblo te encuentre, cada día'}</h1>
+      <p class="lead" style="margin-top:.75rem">{ca ? 'La gent de Súria obre l’app per mirar el bus, l’agenda o la farmàcia. Que també hi vegi que avui tens pa de pagès o que la cuina és oberta fins a les onze.' : 'La gente de Súria abre la app para mirar el bus, la agenda o la farmacia. Que también vea que hoy tienes pan de payés o que la cocina está abierta hasta las once.'}</p>
+    </div>
+  </div>
+  <div class="wrap stack" style="--s:2.5rem">
+    <section aria-labelledby="plans-t">
+      <h2 class="sr" id="plans-t">{ca ? 'Plans' : 'Planes'}</h2>
+      <div class="plans">
+        {plans.map((p) => (
+          <article class:list={['plan', p.hi && 'plan--hi']}>
+            <div>
+              <h3 style="font-size:var(--fs-l)">{p.nom}</h3>
+              <p class="muted small">{p.desc}</p>
+            </div>
+            <p class="plan__price num">{p.preu}<small>{p.per}</small></p>
+            <ul>{p.punts.map((x) => <li><Icon name="check" class="i-s" />{x}</li>)}</ul>
+            <a class:list={['btn', 'btn--block', !p.hi && 'btn--ghost']} href={href(lang, 'compte')}>{p.cta}</a>
+          </article>
+        ))}
+      </div>
+      <p class="hint" style="margin-top:.75rem">{ca ? 'Preus orientatius, en validació amb comerços del poble. IVA no inclòs. Sense permanència.' : 'Precios orientativos, en validación con comercios del pueblo. IVA no incluido. Sin permanencia.'}</p>
+    </section>
+
+    <section aria-labelledby="promesa" class="stack" style="--s:1rem;margin-bottom:2rem">
+      <h2 class="h-sec" id="promesa">{ca ? 'El que no farem mai' : 'Lo que no haremos nunca'}</h2>
+      <div class="promise">
+        <div><strong>{ca ? 'Vendre’t dades de veïns' : 'Venderte datos de vecinos'}</strong><p class="small muted">{ca ? 'Les estadístiques són sempre agregades i anònimes.' : 'Las estadísticas son siempre agregadas y anónimas.'}</p></div>
+        <div><strong>{ca ? 'Cobrar per respostes' : 'Cobrar por respuestas'}</strong><p class="small muted">{ca ? 'L’assistent recomana per proximitat i horari, no per qui paga.' : 'El asistente recomienda por proximidad y horario, no por quien paga.'}</p></div>
+        <div><strong>{ca ? 'Amagar què és publicitat' : 'Esconder qué es publicidad'}</strong><p class="small muted">{ca ? 'Tot el que és pagat porta l’etiqueta «Destacat».' : 'Todo lo pagado lleva la etiqueta «Destacado».'}</p></div>
+      </div>
+    </section>
+  </div>
+</AppLayout>

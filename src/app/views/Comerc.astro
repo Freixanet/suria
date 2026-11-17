@@ -1,0 +1,67 @@
+---
+import AppLayout from '../AppLayout.astro';
+import Icon from '../components/Icon.astro';
+import BizCard from '../components/BizCard.astro';
+import Demo from '../components/Demo.astro';
+import { comercos, tipusComerc, type TipusComerc } from '../demo.ts';
+import { comu, href, type Lang } from '../i18n.ts';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ca = lang === 'ca';
+const t = comu[lang];
+const tipus = Object.entries(tipusComerc) as [TipusComerc, (typeof tipusComerc)[TipusComerc]][];
+const ordenats = [...comercos].sort((a, b) => Number(!!b.destacat) - Number(!!a.destacat) || a.nom.localeCompare(b.nom, 'ca'));
+const ofertes = comercos.filter((c) => c.oferta);
+---
+<AppLayout lang={lang} ruta="comerc" titol={t.nav.comerc}>
+  <div class="band" data-f="teula">
+    <div class="wrap">
+      <p class="kicker">{ca ? 'Compra a prop, viu el poble' : 'Compra cerca, vive el pueblo'}</p>
+      <h1 class="h-page">{ca ? 'Comerç de Súria' : 'Comercio de Súria'}</h1>
+      <p class="lead" style="margin-top:.75rem">{ca ? 'Horaris que diu el mateix negoci, ofertes de la setmana i el que fa cadascú. Si la cuina tanca abans que el bar, t’ho diem.' : 'Horarios que dice el propio negocio, ofertas de la semana y lo que hace cada uno. Si la cocina cierra antes que el bar, te lo decimos.'}</p>
+    </div>
+  </div>
+
+  <div class="wrap stack" style="--s:1rem">
+    <div class="search">
+      <Icon name="search" />
+      <label for="cerca-comerc" class="sr">{t.cercar}</label>
+      <input id="cerca-comerc" class="input" type="search" placeholder={ca ? 'Pa, claus, tapes, perruqueria…' : 'Pan, llaves, tapas, peluquería…'} data-search-for="comercos" autocomplete="off" />
+    </div>
+    <div class="chips" data-filters="comercos" role="group" aria-label={ca ? 'Filtres' : 'Filtros'}>
+      <button class="chip" data-group="ara" data-value="obert" aria-pressed="false" data-f="turo"><span class="chip__dot" style="background:var(--ok);border-radius:99px;height:.5rem"></span>{ca ? 'Obert ara' : 'Abierto ahora'}</button>
+      <button class="sr" data-group="ara" data-value="tot" aria-pressed="true" tabindex="-1">·</button>
+      <button class="chip" data-group="tipus" data-value="tot" aria-pressed="true">{ca ? 'Tot' : 'Todo'}</button>
+      {tipus.map(([id, x]) => <button class="chip" data-group="tipus" data-value={id} aria-pressed="false"><Icon name={x.icona} class="i-s" />{x.nom[lang]}</button>)}
+    </div>
+    <p><Demo lang={lang} llarg /></p>
+
+    <div class="bizgrid" id="comercos">
+      {ordenats.map((c) => <BizCard c={c} lang={lang} />)}
+    </div>
+    <div class="empty" data-empty-for="comercos" hidden>
+      <strong>{ca ? 'Cap comerç coincideix' : 'Ningún comercio coincide'}</strong>
+      <p>{ca ? 'Prova una altra paraula o treu el filtre «Obert ara».' : 'Prueba otra palabra o quita el filtro «Abierto ahora».'}</p>
+    </div>
+
+    <section class="section" aria-labelledby="ofertes">
+      <h2 class="h-sec" id="ofertes" style="margin-bottom:.875rem">{ca ? 'Ofertes d’aquesta setmana' : 'Ofertas de esta semana'}</h2>
+      <div class="rows card">
+        {ofertes.map((c) => (
+          <a class="row" href={href(lang, 'comerc', c.id)} data-f={c.facana}>
+            <span class="row__ico"><Icon name="ticket" /></span>
+            <span class="row__body"><span class="row__title">{c.oferta![lang]}</span><span class="row__sub">{c.nom} · {c.zona[lang]}</span></span>
+            <Icon name="chevron" class="i-s row__end" />
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="section card card--ink" style="display:grid;gap:.75rem;margin-bottom:2rem" aria-labelledby="teu">
+      <p class="kicker" style="color:var(--ocre)">{ca ? 'Tens un negoci a Súria?' : '¿Tienes un negocio en Súria?'}</p>
+      <h2 class="h-sec" id="teu">{ca ? 'La teva fitxa és gratuïta. Actualitzar l’horari costa un missatge.' : 'Tu ficha es gratuita. Actualizar el horario cuesta un mensaje.'}</h2>
+      <a class="btn" style="--bg-b:var(--ocre);--fg-b:#1d2532;justify-self:start" href={href(lang, 'negocis')}>{ca ? 'Com funciona' : 'Cómo funciona'}<Icon name="arrow" class="i-s" /></a>
+    </section>
+  </div>
+</AppLayout>

@@ -1,0 +1,47 @@
+---
+import AppLayout from '../AppLayout.astro';
+import Icon from '../components/Icon.astro';
+import { comu, type Lang } from '../i18n.ts';
+import type { IconName } from '../icons.ts';
+import { URL_PARQUINGS } from '../dades.ts';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ca = lang === 'ca';
+const t = comu[lang];
+const llocs: { icona: IconName; f: string; t: string; text: string; font: { nom: string; url: string } }[] = [
+  { icona: 'castle', f: 'ocre', t: 'Poble Vell', text: ca ? 'El nucli antic, enfilat al turó, és on va començar Súria. És un barri on viu gent: visita’l a peu i en silenci.' : 'El núcleo antiguo, en lo alto de la colina, es donde empezó Súria. Es un barrio donde vive gente: visítalo a pie y en silencio.', font: { nom: 'turismesuria.cat', url: 'https://turismesuria.cat/' } },
+  { icona: 'mountain', f: 'pissarra', t: ca ? 'La potassa i la mina' : 'La potasa y la mina', text: ca ? 'El 1912 es va descobrir potassa a Súria, i la mineria va transformar el poble. El Museu de la Mineria n’explica la història.' : 'En 1912 se descubrió potasa en Súria, y la minería transformó el pueblo. El Museu de la Mineria explica su historia.', font: { nom: 'suria.cat', url: 'https://www.suria.cat/' } },
+  { icona: 'river', f: 'cel', t: ca ? 'El Cardener' : 'El Cardener', text: ca ? 'El riu travessa el poble. Els camins de la vora són per passejar tranquil·lament.' : 'El río atraviesa el pueblo. Los caminos de la orilla son para pasear tranquilamente.', font: { nom: 'suria.cat', url: 'https://www.suria.cat/' } },
+  { icona: 'leaf', f: 'turo', t: 'La Miranda', text: ca ? 'Restes d’un mas medieval, protagonistes de les Jornades Europees de Patrimoni del 2026 a Súria.' : 'Restos de una masía medieval, protagonistas de las Jornadas Europeas de Patrimonio de 2026 en Súria.', font: { nom: 'suria.cat, notícia', url: 'https://www.suria.cat/actualitat/noticies/les-restes-del-mas-medieval-la-miranda-protagonitzen-les-jornades-europees-de-patrimoni-a-suria' } },
+];
+---
+<AppLayout lang={lang} ruta="descobreix" titol={t.nav.descobreix}>
+  <div class="band" data-f="ocre">
+    <div class="wrap">
+      <p class="kicker">{ca ? 'Per a qui ve de fora (i per a qui ho vol redescobrir)' : 'Para quien viene de fuera (y para quien lo quiere redescubrir)'}</p>
+      <h1 class="h-page">{ca ? 'Súria, amb calma' : 'Súria, con calma'}</h1>
+      <p class="lead" style="margin-top:.75rem">{ca ? 'Un poble per viure’l, no per consumir-lo. Si véns, vine a poc a poc.' : 'Un pueblo para vivirlo, no para consumirlo. Si vienes, ven despacio.'}</p>
+    </div>
+  </div>
+  <div class="wrap stack" style="--s:2rem">
+    <section class="respect" aria-labelledby="respecte">
+      <h2 class="h-sec" id="respecte">{ca ? 'Abans de venir' : 'Antes de venir'}</h2>
+      <ul>
+        <li><Icon name="parking" />{ca ? 'Deixa el cotxe en un aparcament públic i camina.' : 'Deja el coche en un aparcamiento público y camina.'} <a href={URL_PARQUINGS} target="_blank" rel="noopener">{ca ? 'Aparcaments' : 'Aparcamientos'}</a></li>
+        <li><Icon name="people" />{ca ? 'Grups petits. Si sou molts, reserveu una visita guiada.' : 'Grupos pequeños. Si sois muchos, reservad una visita guiada.'}</li>
+        <li><Icon name="moon" />{ca ? 'Als carrers on viu gent, parla baix i respecta portes i finestres.' : 'En las calles donde vive gente, habla bajo y respeta puertas y ventanas.'}</li>
+        <li><Icon name="shop" />{ca ? 'Dina i compra al poble: és la millor manera de dir gràcies.' : 'Come y compra en el pueblo: es la mejor manera de dar las gracias.'}</li>
+      </ul>
+    </section>
+    <section class="places" aria-label={ca ? 'Llocs' : 'Lugares'} style="margin-bottom:2rem">
+      {llocs.map((l) => (
+        <article class="place" data-f={l.f}>
+          <h3><Icon name={l.icona} />{l.t}</h3>
+          <p>{l.text}</p>
+          <p class="source-line">{ca ? 'Font' : 'Fuente'}: <a href={l.font.url} target="_blank" rel="noopener">{l.font.nom}</a></p>
+        </article>
+      ))}
+    </section>
+  </div>
+</AppLayout>

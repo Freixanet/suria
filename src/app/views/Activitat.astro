@@ -1,0 +1,85 @@
+---
+import AppLayout from '../AppLayout.astro';
+import Icon from '../components/Icon.astro';
+import EventCard from '../components/EventCard.astro';
+import Demo from '../components/Demo.astro';
+import { activitats, categories } from '../demo.ts';
+import { comu, href, type Lang } from '../i18n.ts';
+import { activitatsOrdenades, dataDe, franjaH, quan, URL_PARQUINGS } from '../dades.ts';
+
+interface Props { lang: Lang; id: string }
+const { lang, id } = Astro.props;
+const ca = lang === 'ca';
+const t = comu[lang];
+const a = activitats.find((x) => x.id === id)!;
+const c = categories[a.cat];
+const data = dataDe(a);
+const altres = activitatsOrdenades().filter((x) => x.id !== a.id).slice(0, 3);
+const altraLang: Lang = ca ? 'es' : 'ca';
+---
+<AppLayout lang={lang} ruta="agenda" titol={a.titol[lang]} barra={c.nom[lang]} enrere={href(lang, 'agenda')} altra={href(altraLang, 'agenda', a.id)}>
+  <span slot="accions"><button class="iconbtn" data-share data-title={a.titol[lang]} aria-label={ca ? 'Comparteix' : 'Comparte'}><Icon name="share" /></button></span>
+  <div class="detail-hero" data-f={c.facana}>
+    <div class="wrap">
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;position:relative;z-index:1"><span class="tag" style="background:var(--surface)"><Icon name={c.icona} class="i-s" />{c.nom[lang]}</span><Demo lang={lang} /></div>
+      <h1 class="h-page">{a.titol[lang]}</h1>
+      <div class="facts">
+        <p class="fact"><Icon name="calendar" />{quan(data, lang)}</p>
+        <p class="fact"><Icon name="clock" />{franjaH(a, lang)}</p>
+        <p class="fact"><Icon name="pin" />{a.lloc[lang]}</p>
+        <p class="fact"><Icon name="ticket" />{a.preu ? a.preu[lang] : t.gratuit}{a.places ? (ca ? ` · ${a.places} places` : ` · ${a.places} plazas`) : ''}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap detail">
+    <div class="stack" style="--s:1.5rem">
+      <p class="lead">{a.resum[lang]}</p>
+
+      <section class="first" aria-labelledby="first">
+        <h2 id="first"><Icon name="wave" />{ca ? 'Primera vegada? Això és el que passarà' : '¿Primera vez? Esto es lo que pasará'}</h2>
+        <p>{a.esperar[lang]}</p>
+      </section>
+
+      <section class="card" aria-labelledby="buddy">
+        <div class="buddy">
+          <span class="avatar avatar--l" data-f="rosa"><Icon name="people" /></span>
+          <div style="flex:1">
+            <h2 class="h-sec" id="buddy" style="font-size:var(--fs-l)">{ca ? 'No vols anar-hi sol?' : '¿No quieres ir solo?'}</h2>
+            <p class="muted small">{a.companyia ? (ca ? `${a.companyia} persones també busquen companyia per anar-hi.` : `${a.companyia} personas también buscan compañía para ir.`) : (ca ? 'Digues que busques companyia i et posarem en contacte amb algú que també hi va.' : 'Di que buscas compañía y te pondremos en contacto con alguien que también va.')}</p>
+          </div>
+        </div>
+        <button class="btn btn--soft btn--block" style="margin-top:1rem" data-buddy={a.id} aria-pressed="false" data-on={ca ? 'Buscant companyia' : 'Buscando compañía'} data-off={ca ? 'Busco companyia' : 'Busco compañía'}><Icon name="hand" class="i-s" /><span data-lbl>{ca ? 'Busco companyia' : 'Busco compañía'}</span></button>
+      </section>
+
+      <dl class="kv card card--sunk">
+        <div><dt>{ca ? 'Accessibilitat' : 'Accesibilidad'}</dt><dd>{a.accessible[lang]}</dd></div>
+        <div><dt>{ca ? 'Organitza' : 'Organiza'}</dt><dd>{a.organitza[lang]}</dd></div>
+        <div><dt>{ca ? 'Com arribar-hi' : 'Cómo llegar'}</dt><dd>{ca ? 'A peu, si pots. Si véns en cotxe, deixa’l en un ' : 'A pie, si puedes. Si vienes en coche, déjalo en un '}<a href={URL_PARQUINGS} target="_blank" rel="noopener">{ca ? 'aparcament públic' : 'aparcamiento público'}</a>.</dd></div>
+      </dl>
+    </div>
+
+    <aside class="detail__side">
+      <div class="card actionbar">
+        <p class="ev__going"><span class="ev__faces" aria-hidden="true"><i></i><i></i><i></i></span><b class="num" data-rsvp-count={a.id} data-base={a.hiVan}>{a.hiVan}</b> {ca ? 'persones hi van' : 'personas van'}</p>
+        <button class="btn btn--l btn--block" data-rsvp={a.id} aria-pressed="false" data-on={ca ? 'Hi vas · toca per desfer' : 'Vas · toca para deshacer'} data-off={t.hiAniré}><Icon name="check" class="i-s" /><span data-lbl>{t.hiAniré}</span></button>
+        <button class="btn btn--ghost btn--block" data-ics data-titol={a.titol[lang]} data-data={data} data-inici={a.inici} data-fi={a.fi} data-lloc={a.lloc[lang]}><Icon name="calendar" class="i-s" />{ca ? 'Afegeix al calendari' : 'Añade al calendario'}</button>
+        <div style="display:flex;gap:.5rem">
+          <button class="btn btn--soft" style="flex:1" data-save={`a:${a.id}`} aria-pressed="false" data-on={ca ? 'Desat' : 'Guardado'} data-off={ca ? 'Desa' : 'Guarda'}><Icon name="bookmark" class="i-s" /><span data-lbl>{ca ? 'Desa' : 'Guarda'}</span></button>
+          <button class="btn btn--soft" style="flex:1" data-share data-title={a.titol[lang]}><Icon name="share" class="i-s" />{ca ? 'Envia' : 'Envía'}</button>
+        </div>
+        <p class="hint">{ca ? 'Et recordarem l’activitat el dia abans, si tens els avisos activats.' : 'Te recordaremos la actividad el día antes, si tienes los avisos activados.'}</p>
+      </div>
+    </aside>
+  </div>
+
+  <section class="wrap section" aria-labelledby="mes-act" style="margin-bottom:6rem">
+    <h2 class="h-sec" id="mes-act" style="margin-bottom:.875rem">{ca ? 'També aviat' : 'También pronto'}</h2>
+    <div class="evlist">{altres.map((x) => <EventCard a={x} lang={lang} variant="mini" dia />)}</div>
+  </section>
+
+  <div class="sticky-cta">
+    <button class="btn" data-rsvp={a.id} aria-pressed="false" data-on={t.hiVas} data-off={t.hiAniré}><Icon name="check" class="i-s" /><span data-lbl>{t.hiAniré}</span></button>
+    <button class="btn btn--ghost" style="flex:0 0 auto;background:var(--surface)" data-ics data-titol={a.titol[lang]} data-data={data} data-inici={a.inici} data-fi={a.fi} data-lloc={a.lloc[lang]} aria-label={ca ? 'Afegeix al calendari' : 'Añade al calendario'}><Icon name="calendar" class="i-s" /></button>
+  </div>
+</AppLayout>

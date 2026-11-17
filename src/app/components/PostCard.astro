@@ -1,0 +1,36 @@
+---
+import Icon from './Icon.astro';
+import { canals, type Publicacio } from '../demo.ts';
+import { comu, type Lang } from '../i18n.ts';
+interface Props { p: Publicacio; lang: Lang; compacte?: boolean }
+const { p, lang, compacte = false } = Astro.props;
+const c = canals[p.canal];
+const t = comu[lang];
+const respostes = compacte ? p.respostes.slice(0, 1) : p.respostes;
+---
+<article class:list={['post', compacte && 'post--compact']} data-item data-canal={`${p.canal} tot`} data-text={p.text}>
+  <header class="post__head">
+    <span class="avatar" data-f={p.facana}>{p.inicials}</span>
+    <div class="post__who">
+      <strong>{p.autor}</strong>
+      <span class="muted small">{p.etiquetaAutor && <span class="post__badge">{p.etiquetaAutor[lang]} · </span>}{p.fa[lang]}</span>
+    </div>
+    <span class="tag" data-f={c.facana}><Icon name={c.icona} class="i-s" />{c.nom[lang]}</span>
+  </header>
+  <p class="post__text">{p.text}</p>
+  {respostes.length > 0 && (
+    <div class="post__replies">
+      <ul>
+        {respostes.map((r) => (
+          <li class="reply-item"><span class="avatar avatar--s" data-f={r.facana}>{r.inicials}</span><p><strong>{r.autor.split(' ')[0]}</strong> {r.text}</p></li>
+        ))}
+      </ul>
+    </div>
+  )}
+  <footer class="post__foot">
+    <button class="btn btn--s btn--soft" data-thanks={p.id} aria-pressed="false"><Icon name="heart" class="i-s" />{t.gracies} <b class="num" data-thanks-count={p.id} data-base={p.gracies}>{p.gracies}</b></button>
+    {!compacte && <button class="btn btn--s btn--ghost" data-reply={p.id}><Icon name="chat" class="i-s" />{lang === 'ca' ? 'Respon' : 'Responde'}</button>}
+    {compacte && p.respostes.length > 0 && <span class="small muted">{p.respostes.length} {p.respostes.length === 1 ? t.resposta : t.respostes}</span>}
+    {p.resolt && <span class="tag tag--ok">{lang === 'ca' ? 'Resolt' : 'Resuelto'}</span>}
+  </footer>
+</article>

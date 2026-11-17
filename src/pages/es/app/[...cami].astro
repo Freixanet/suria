@@ -1,0 +1,9 @@
+---
+import Router from '../../../app/Router.astro';
+import { camins, type Pantalla } from '../../../app/rutes.ts';
+export function getStaticPaths() {
+  return camins('es');
+}
+const props = Astro.props as Pantalla;
+---
+<Router lang="es" {...props} />

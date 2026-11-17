@@ -1,0 +1,19 @@
+---
+// Marca: les façanes esglaonades del turó i el campanar al capdamunt.
+interface Props { class?: string }
+const { class: cls = 'brand__mark' } = Astro.props;
+---
+<svg class={cls} viewBox="0 0 32 32" aria-hidden="true">
+  <rect x="14.6" y="2" width="2.8" height="9" rx="0.6" fill="var(--ink)" />
+  <path d="M14.2 4.2 16 1.2l1.8 3z" fill="var(--ink)" />
+  <rect x="2" y="15" width="10" height="15" rx="2" fill="var(--ocre)" />
+  <rect x="10.5" y="9.5" width="11" height="20.5" rx="2" fill="var(--teula)" />
+  <rect x="20" y="17" width="10" height="13" rx="2" fill="var(--rosa)" />
+  <g fill="var(--ink)" opacity=".82">
+    <rect x="4.6" y="18.4" width="2" height="2.6" rx=".5" /><rect x="4.6" y="23.4" width="2" height="2.6" rx=".5" />
+    <rect x="13.6" y="13.2" width="2" height="2.6" rx=".5" /><rect x="17" y="13.2" width="2" height="2.6" rx=".5" />
+    <rect x="13.6" y="18.4" width="2" height="2.6" rx=".5" /><rect x="17" y="18.4" width="2" height="2.6" rx=".5" />
+    <rect x="15" y="24" width="3" height="6" rx=".6" />
+    <rect x="23" y="20.4" width="2" height="2.6" rx=".5" /><rect x="26" y="20.4" width="2" height="2.6" rx=".5" />
+  </g>
+</svg>

@@ -1,0 +1,60 @@
+---
+import AppLayout from '../AppLayout.astro';
+import Icon from '../components/Icon.astro';
+import Demo from '../components/Demo.astro';
+import { comercos, tipusComerc } from '../demo.ts';
+import { href, type Lang } from '../i18n.ts';
+import { AVUI, estatComerc, horariText } from '../dades.ts';
+import { diaSetmana } from '../../lib/hora-local.ts';
+
+interface Props { lang: Lang; id: string }
+const { lang, id } = Astro.props;
+const ca = lang === 'ca';
+const c = comercos.find((x) => x.id === id)!;
+const tipus = tipusComerc[c.tipus];
+const e = estatComerc(c.horari);
+const dies = ca ? ['diumenge', 'dilluns', 'dimarts', 'dimecres', 'dijous', 'divendres', 'dissabte'] : ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+const ordre = [1, 2, 3, 4, 5, 6, 0] as const;
+const avui = diaSetmana(AVUI);
+---
+<AppLayout lang={lang} ruta="comerc" titol={c.nom} barra={c.nom} enrere={href(lang, 'comerc')} altra={href(ca ? 'es' : 'ca', 'comerc', c.id)}>
+  <span slot="accions"><button class="iconbtn" data-share data-title={c.nom} aria-label={ca ? 'Comparteix' : 'Comparte'}><Icon name="share" /></button></span>
+  <div class="shopfront" data-f={c.facana} aria-hidden="true">
+    <span class="shopfront__sign">{c.nom}</span><span class="shopfront__door"></span>
+  </div>
+  <div class="wrap detail">
+    <div class="stack" style="--s:1.25rem">
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+        <span class:list={['tag', e.obert ? 'tag--ok' : 'tag--off']} data-horari={JSON.stringify(c.horari)}><span data-lbl>{e.text[lang]}</span></span>
+        {c.destacat && <span class="tag tag--sponsor" title={ca ? 'El negoci paga per aparèixer primer. No canvia cap dada.' : 'El negocio paga por aparecer primero. No cambia ningún dato.'}>{ca ? 'Destacat · patrocinat' : 'Destacado · patrocinado'}</span>}
+        <Demo lang={lang} />
+      </div>
+      <div>
+        <p class="kicker">{tipus.nom[lang]} · {c.zona[lang]}</p>
+        <h1 class="h-page" style="font-size:var(--fs-2xl);margin-top:.375rem">{c.nom}</h1>
+      </div>
+      <p class="lead">{c.descripcio[lang]}</p>
+      <p style="font:600 1.0625rem var(--display);color:var(--f-tinta)" data-f={c.facana}>«{c.ofici[lang]}»</p>
+      {c.oferta && <div class="card card--f" data-f="teula" style="display:flex;gap:.75rem;align-items:center"><Icon name="ticket" /><div><p class="kicker">{ca ? 'Oferta de la setmana' : 'Oferta de la semana'}</p><strong style="font-family:var(--display);font-size:1.125rem">{c.oferta[lang]}</strong></div></div>}
+      <div class="servlist">{c.serveis.map((s) => <span class="tag tag--line">{s[lang]}</span>)}</div>
+
+      <section aria-labelledby="horari">
+        <h2 class="h-sec" id="horari" style="margin-bottom:.5rem">{ca ? 'Horari' : 'Horario'}</h2>
+        <table class="hours">
+          <caption class="sr">{ca ? 'Horari setmanal' : 'Horario semanal'}</caption>
+          <tbody>
+            {ordre.map((d) => <tr aria-current={d === avui ? 'date' : undefined}><th scope="row">{dies[d]}{d === avui ? (ca ? ' · avui' : ' · hoy') : ''}</th><td>{horariText(c.horari[d], lang)}</td></tr>)}
+          </tbody>
+        </table>
+      </section>
+      <p class="honest"><Icon name="check" class="i-s" /><span>{c.actualitzat[lang]}. {ca ? 'Mostrem l’horari que comunica el negoci; no és una confirmació en directe.' : 'Mostramos el horario que comunica el negocio; no es una confirmación en directo.'}</span></p>
+    </div>
+    <aside class="detail__side">
+      <div class="card actionbar">
+        <a class="btn btn--l btn--block" href={`https://www.openstreetmap.org/search?query=${encodeURIComponent('Súria')}`} target="_blank" rel="noopener"><Icon name="route" class="i-s" />{ca ? 'Com arribar-hi' : 'Cómo llegar'}</a>
+        <button class="btn btn--soft btn--block" data-save={`c:${c.id}`} aria-pressed="false" data-on={ca ? 'Al teu llistat' : 'En tu lista'} data-off={ca ? 'Desa al teu llistat' : 'Guarda en tu lista'}><Icon name="bookmark" class="i-s" /><span data-lbl>{ca ? 'Desa al teu llistat' : 'Guarda en tu lista'}</span></button>
+        <p class="hint">{ca ? 'Alguna dada no és correcta?' : '¿Algún dato no es correcto?'} <a href={href(lang, 'comunitat')}>{ca ? 'Avisa’ns' : 'Avísanos'}</a></p>
+      </div>
+    </aside>
+  </div>
+</AppLayout>

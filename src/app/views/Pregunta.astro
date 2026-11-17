@@ -1,0 +1,120 @@
+---
+import AppLayout from '../AppLayout.astro';
+import Icon from '../components/Icon.astro';
+import { comu, href, type Lang } from '../i18n.ts';
+import type { IconName } from '../icons.ts';
+import { comercos, tipusComerc } from '../demo.ts';
+import { activitatsOrdenades, bus, dataDe, franjaH, informacio, passos, quan, URL_AGENDA, URL_FARMACIES, URL_PARQUINGS } from '../dades.ts';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ca = lang === 'ca';
+const t = comu[lang];
+const norm = (s: string) => s.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase();
+
+const dadesBus = await bus();
+const info = await informacio();
+const llistaPassos = await passos();
+const kb = {
+  lang,
+  bus: {
+    sentits: dadesBus.sentits.map((s) => ({ id: s.id, etiqueta: s.etiqueta[lang], horaris: s.horaris })),
+    festius: dadesBus.festius,
+    fonts: dadesBus.fonts.map((f) => ({ nom: f.nom[lang], url: f.url })),
+  },
+  info: info.map((i) => ({
+    titol: i.titol[lang],
+    descripcio: i.descripcio[lang],
+    enllacos: i.enllacos.map((e) => ({ nom: e.text[lang], url: e.url })),
+    paraules: norm(`${i.titol.ca} ${i.titol.es} ${i.descripcio.ca} ${i.descripcio.es} ${i.enllacos.map((e) => e.text.ca + ' ' + e.text.es).join(' ')}`),
+  })),
+  passos: llistaPassos.map((p) => ({
+    id: p.id,
+    titol: p.titol[lang],
+    text: p.text[lang],
+    accions: p.accions.filter((a) => a.tipus === 'web').map((a) => ({ text: a.text[lang], url: (a as { url: string }).url })),
+    fonts: p.fonts.map((f) => ({ nom: f.nom[lang], url: f.url })),
+  })),
+  activitats: activitatsOrdenades().slice(0, 6).map((a) => ({ titol: a.titol[lang], quan: quan(dataDe(a), lang), hora: franjaH(a, lang), lloc: a.lloc[lang], url: href(lang, 'agenda', a.id) })),
+  comercos: comercos.map((c) => ({ nom: c.nom, tipus: tipusComerc[c.tipus].nom[lang], horari: c.horari, url: href(lang, 'comerc', c.id) })),
+  urls: { farmacies: URL_FARMACIES, parquings: URL_PARQUINGS, agenda: href(lang, 'agenda'), comerc: href(lang, 'comerc'), comunitat: href(lang, 'comunitat'), oficial: URL_AGENDA },
+};
+
+const suggeriments: { icona: IconName; f: string; text: string }[] = ca
+  ? [
+      { icona: 'bus', f: 'pissarra', text: 'Quan passa el pròxim bus a Manresa?' },
+      { icona: 'home2', f: 'cel', text: 'Com m’empadrono a Súria?' },
+      { icona: 'pill', f: 'rosa', text: 'Quina farmàcia és de guàrdia avui?' },
+      { icona: 'calendar', f: 'ocre', text: 'Què puc fer aquest cap de setmana?' },
+      { icona: 'recycle', f: 'turo', text: 'On llenço un sofà o un matalàs?' },
+      { icona: 'fork', f: 'teula', text: 'On puc sopar avui?' },
+    ]
+  : [
+      { icona: 'bus', f: 'pissarra', text: '¿Cuándo pasa el próximo bus a Manresa?' },
+      { icona: 'home2', f: 'cel', text: '¿Cómo me empadrono en Súria?' },
+      { icona: 'pill', f: 'rosa', text: '¿Qué farmacia está de guardia hoy?' },
+      { icona: 'calendar', f: 'ocre', text: '¿Qué puedo hacer este fin de semana?' },
+      { icona: 'recycle', f: 'turo', text: '¿Dónde tiro un sofá o un colchón?' },
+      { icona: 'fork', f: 'teula', text: '¿Dónde puedo cenar hoy?' },
+    ];
+---
+<AppLayout lang={lang} ruta="pregunta" titol={ca ? 'Pregunta a Súria' : 'Pregunta a Súria'} barra={t.nav.pregunta}>
+  <Fragment slot="accions">
+    <button class="iconbtn" data-open="historial" aria-label={ca ? 'Converses anteriors' : 'Conversaciones anteriores'}><Icon name="history" /></button>
+    <button class="iconbtn" data-chat-new-top aria-label={ca ? 'Conversa nova' : 'Conversación nueva'}><Icon name="edit" /></button>
+  </Fragment>
+
+  <div class="chat" data-chat>
+    <script type="application/json" id="kb" set:html={JSON.stringify(kb)} />
+    <button hidden data-chat-new></button>
+    <div class="chat__scroll">
+      <div class="chat__empty" data-chat-empty>
+        <div class="orb rise"><Icon name="spark" /></div>
+        <h1 class="chat__title rise" style="--d:1">{ca ? 'Què vols saber de Súria?' : '¿Qué quieres saber de Súria?'}</h1>
+        <p class="muted rise" style="--d:2;max-width:34ch">{ca ? 'Pregunta com ho faries a un veí. Et responc amb dades del poble i et dic sempre d’on les trec.' : 'Pregunta como lo harías a un vecino. Te respondo con datos del pueblo y te digo siempre de dónde los saco.'}</p>
+        <span class="status rise" style="--d:3">{ca ? 'Mode demostració · el model d’IA encara no està connectat' : 'Modo demostración · el modelo de IA aún no está conectado'}</span>
+        <div class="suggest">
+          {suggeriments.map((s, i) => (
+            <button type="button" data-suggest={s.text} data-f={s.f} class="rise" style={`--d:${4 + i}`}><span class="row__ico"><Icon name={s.icona} /></span>{s.text}</button>
+          ))}
+        </div>
+      </div>
+      <div class="chat__log" role="log" data-chat-log aria-label={ca ? 'Conversa' : 'Conversación'}></div>
+    </div>
+
+    <div class="dock">
+      <form class="composer" data-chat-form>
+        <div data-chat-attachments></div>
+        <label for="chat-input" class="sr">{t.preguntaPlaceholder}</label>
+        <textarea id="chat-input" rows="1" data-chat-input placeholder={t.preguntaPlaceholder} enterkeyhint="send" autocomplete="off"></textarea>
+        <div class="composer__bar">
+          <button type="button" class="iconbtn" data-chat-attach aria-label={ca ? 'Adjunta una foto o document' : 'Adjunta una foto o documento'}><Icon name="plus" /></button>
+          <input type="file" accept="image/*,.pdf" hidden data-chat-file />
+          <button type="button" class="iconbtn" data-chat-mic aria-pressed="false" aria-label={ca ? 'Dicta amb la veu' : 'Dicta con la voz'}><Icon name="mic" /></button>
+          <span class="composer__hint">{ca ? 'Retorn per enviar · Maj+Retorn, línia nova' : 'Intro para enviar · Mayús+Intro, línea nueva'}</span>
+          <button class="send" data-chat-send aria-label={ca ? 'Envia' : 'Envía'} disabled>
+            <Icon name="arrowUp" class="i i-up" /><Icon name="stop" class="i i-stop" />
+          </button>
+        </div>
+      </form>
+      <p class="disclaimer">{ca ? 'Pot equivocar-se. Comprova les dades importants a la font oficial.' : 'Puede equivocarse. Comprueba los datos importantes en la fuente oficial.'}</p>
+    </div>
+  </div>
+
+  <dialog class="sheet" id="historial" aria-labelledby="hist-t">
+    <div class="sheet__grab" aria-hidden="true"></div>
+    <div class="sheet__in">
+      <div class="sheet__head">
+        <h2 class="h-sec" id="hist-t">{ca ? 'Converses' : 'Conversaciones'}</h2>
+        <button class="iconbtn" data-close aria-label={t.tancar}><Icon name="close" /></button>
+      </div>
+      <p class="hint" style="margin-bottom:.5rem;display:flex;gap:.375rem;align-items:center"><Icon name="lock" class="i-s" /> {ca ? 'Es desen només en aquest dispositiu.' : 'Se guardan solo en este dispositivo.'}</p>
+      <div class="rows" data-hist-list></div>
+    </div>
+  </dialog>
+</AppLayout>
+
+<style is:global>
+  .main:has(.chat) { padding-bottom: calc(var(--tab-h) + env(safe-area-inset-bottom, 0px)); }
+  @media (min-width: 64rem) { .main:has(.chat) { padding-bottom: 0; } }
+</style>

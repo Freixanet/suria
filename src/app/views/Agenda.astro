@@ -1,0 +1,69 @@
+---
+import AppLayout from '../AppLayout.astro';
+import Icon from '../components/Icon.astro';
+import EventCard from '../components/EventCard.astro';
+import Demo from '../components/Demo.astro';
+import { categories, type Categoria } from '../demo.ts';
+import { href, type Lang } from '../i18n.ts';
+import { AVUI, activitatsOrdenades, dataDe, nomDiaCurt, numDia, quan, setmana, URL_AGENDA } from '../dades.ts';
+import { diaMes } from '../../lib/format.ts';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ca = lang === 'ca';
+const llista = activitatsOrdenades();
+const dies = setmana();
+const ambActivitat = new Set(llista.map(dataDe));
+const perDia = dies.map((d) => ({ d, items: llista.filter((a) => dataDe(a) === d) })).filter((g) => g.items.length);
+const cats = Object.entries(categories) as [Categoria, (typeof categories)[Categoria]][];
+---
+<AppLayout lang={lang} ruta="agenda" titol="Agenda">
+  <div class="band" data-f="ocre">
+    <div class="wrap">
+      <p class="kicker">{ca ? 'Què passa al poble' : 'Qué pasa en el pueblo'}</p>
+      <h1 class="h-page">Agenda</h1>
+      <p class="lead" style="margin-top:.75rem">{ca ? 'Apunta’t amb un toc. Si hi vas per primera vegada, t’expliquem què passarà i pots dir que busques companyia.' : 'Apúntate con un toque. Si vas por primera vez, te explicamos qué pasará y puedes decir que buscas compañía.'}</p>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="filters" data-filters="agenda">
+      <div class="days" role="group" aria-label={ca ? 'Dia' : 'Día'}>
+        <button class="day day--all" data-group="dia" data-value="tot" aria-pressed="true"><b style="font-size:1rem">{ca ? 'Tots' : 'Todos'}</b></button>
+        {dies.map((d) => (
+          <button class:list={['day', ambActivitat.has(d) && 'day--has']} data-group="dia" data-value={d} aria-pressed="false" aria-label={quan(d, lang)}>
+            <small>{d === AVUI ? (ca ? 'avui' : 'hoy') : nomDiaCurt(d, lang)}</small><b class="num">{numDia(d)}</b>
+          </button>
+        ))}
+      </div>
+      <div class="chips" role="group" aria-label={ca ? 'Tipus' : 'Tipo'}>
+        <button class="chip" data-group="cat" data-value="tot" data-reset="extra" aria-pressed="true">{ca ? 'Tot' : 'Todo'}</button>
+        <button class="chip" data-group="extra" data-value="primera" aria-pressed="false" data-f="cel"><Icon name="wave" class="i-s" />{ca ? 'Primera vegada' : 'Primera vez'}</button>
+        <button class="chip" data-group="extra" data-value="gratuit" aria-pressed="false">{ca ? 'Gratuït' : 'Gratis'}</button>
+        {cats.map(([id, c]) => <button class="chip" data-group="cat" data-value={id} aria-pressed="false" data-f={c.facana}><span class="chip__dot"></span>{c.nom[lang]}</button>)}
+      </div>
+      <button class="sr" data-group="extra" data-value="tot" aria-pressed="true" tabindex="-1">·</button>
+    </div>
+
+    <p style="margin-block:.25rem 1.25rem"><Demo lang={lang} llarg /></p>
+
+    <div id="agenda">
+      {perDia.map(({ d, items }) => (
+        <section class="daygroup" data-hide-empty aria-label={quan(d, lang)}>
+          <h2 class="daygroup__h">{quan(d, lang)} <small>{d === AVUI || d === dies[1] ? diaMes(d, lang) : ''}</small></h2>
+          <div class="evlist">{items.map((a) => <EventCard a={a} lang={lang} />)}</div>
+        </section>
+      ))}
+    </div>
+    <div class="empty" data-empty-for="agenda" hidden>
+      <strong>{ca ? 'Res per aquest filtre' : 'Nada con este filtro'}</strong>
+      <p>{ca ? 'Prova un altre dia o tipus. També pots proposar una activitat a la comunitat.' : 'Prueba otro día o tipo. También puedes proponer una actividad en la comunidad.'}</p>
+    </div>
+
+    <div class="section protonote">
+      <Icon name="info" />
+      <p>{ca ? 'L’agenda oficial de l’Ajuntament continua a ' : 'La agenda oficial del Ayuntamiento sigue en '}<a href={URL_AGENDA} target="_blank" rel="noopener">suria.cat/agenda</a>. {ca ? 'Aquí hi sumarem les activitats de les entitats i dels veïns, revisades abans de publicar-se.' : 'Aquí sumaremos las actividades de las entidades y de los vecinos, revisadas antes de publicarse.'}</p>
+    </div>
+    <p style="margin-top:1rem"><a class="btn btn--ghost" href={href(lang, 'comunitat')}><Icon name="plus" class="i-s" />{ca ? 'Proposa una activitat' : 'Propón una actividad'}</a></p>
+  </div>
+</AppLayout>

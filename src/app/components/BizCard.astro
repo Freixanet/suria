@@ -1,0 +1,26 @@
+---
+import Icon from './Icon.astro';
+import { tipusComerc, type Comerc } from '../demo.ts';
+import { href, type Lang } from '../i18n.ts';
+import { estatComerc } from '../dades.ts';
+interface Props { c: Comerc; lang: Lang }
+const { c, lang } = Astro.props;
+const tipus = tipusComerc[c.tipus];
+const e = estatComerc(c.horari);
+---
+<article class="biz" data-f={c.facana} data-item data-tipus={`${c.tipus} tot`} data-ara={e.obert ? 'obert tot' : 'tancat tot'} data-text={`${c.nom} ${tipus.nom[lang]} ${c.descripcio[lang]} ${c.zona[lang]}`}>
+  <div class="biz__front" aria-hidden="true">
+    <span class="biz__sign">{c.nom}</span>
+    <span class="biz__win"></span>
+    <Icon name={tipus.icona} class="biz__ico" />
+  </div>
+  <div class="biz__body">
+    <div class="biz__tags">
+      <span class:list={['tag', e.obert ? 'tag--ok' : 'tag--off']} data-horari={JSON.stringify(c.horari)}><span data-lbl>{e.text[lang]}</span></span>
+      {c.destacat && <span class="tag tag--sponsor">{lang === 'ca' ? 'Destacat' : 'Destacado'}</span>}
+    </div>
+    <h3 class="biz__name"><a class="stretch" href={href(lang, 'comerc', c.id)}>{c.nom}</a></h3>
+    <p class="small muted">{tipus.nom[lang]} · {c.zona[lang]}</p>
+    {c.oferta && <p class="biz__offer"><Icon name="ticket" class="i-s" />{c.oferta[lang]}</p>}
+  </div>
+</article>

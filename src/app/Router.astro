@@ -1,0 +1,33 @@
+---
+import type { Lang } from './i18n.ts';
+import type { Pantalla } from './rutes.ts';
+import Avui from './views/Avui.astro';
+import Agenda from './views/Agenda.astro';
+import Activitat from './views/Activitat.astro';
+import Comunitat from './views/Comunitat.astro';
+import Comerc from './views/Comerc.astro';
+import Negoci from './views/Negoci.astro';
+import Pregunta from './views/Pregunta.astro';
+import Gestions from './views/Gestions.astro';
+import Benvinguda from './views/Benvinguda.astro';
+import Compte from './views/Compte.astro';
+import Mes from './views/Mes.astro';
+import Negocis from './views/Negocis.astro';
+import Descobreix from './views/Descobreix.astro';
+
+interface Props extends Pantalla { lang: Lang }
+const { lang, ruta, id } = Astro.props;
+---
+{ruta === 'avui' && <Avui lang={lang} />}
+{ruta === 'agenda' && !id && <Agenda lang={lang} />}
+{ruta === 'agenda' && id && <Activitat lang={lang} id={id} />}
+{ruta === 'comunitat' && <Comunitat lang={lang} />}
+{ruta === 'comerc' && !id && <Comerc lang={lang} />}
+{ruta === 'comerc' && id && <Negoci lang={lang} id={id} />}
+{ruta === 'pregunta' && <Pregunta lang={lang} />}
+{ruta === 'gestions' && <Gestions lang={lang} />}
+{ruta === 'benvinguda' && <Benvinguda lang={lang} />}
+{ruta === 'compte' && <Compte lang={lang} />}
+{ruta === 'mes' && <Mes lang={lang} />}
+{ruta === 'negocis' && <Negocis lang={lang} />}
+{ruta === 'descobreix' && <Descobreix lang={lang} />}
