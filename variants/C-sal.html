@@ -1,0 +1,327 @@
+<title>Súria Sal</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400..700&family=JetBrains+Mono:wght@400;600&display=swap">
+<script>document.documentElement.dataset.variant = 'sal';</script>
+<style>
+  /* Variant C · «Sal»: l'assistent és la interfície. Un sol fil, fosc mineral (sal i silvinita), targetes vives dins la conversa.
+     Tema únic fosc per decisió: tots els colors són explícits i no depenen del tema de l'amfitrió. */
+  :root {
+    --bg: #0b0c0e; --panel: #14161a; --panel-2: #1b1e23; --line: rgb(240 236 228 / 0.1); --line-2: rgb(240 236 228 / 0.18);
+    --salt: #f0ece4; --salt-2: #b9b6ae; --salt-3: #8e8b84;
+    --silv: #ff6a45; --silv-soft: rgb(255 106 69 / 0.14); --mint: #5fe3b4; --mint-soft: rgb(95 227 180 / 0.12); --gold: #ffc861;
+    --display: 'Familjen Grotesk', ui-sans-serif, system-ui, sans-serif; --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --tap: 46px; color-scheme: dark;
+  }
+  html[data-text="l"] { font-size: 112.5%; } html[data-text="xl"] { font-size: 125%; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--salt); font: 1.0625rem/1.55 var(--display); -webkit-font-smoothing: antialiased; }
+  body::after { content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background: radial-gradient(40rem 26rem at 10% -5%, rgb(255 106 69 / 0.16), transparent 70%), radial-gradient(34rem 26rem at 110% 30%, rgb(95 227 180 / 0.08), transparent 70%), conic-gradient(from 210deg at 70% 0%, transparent 0 40deg, rgb(255 255 255 / 0.02) 40deg 44deg, transparent 44deg 120deg, rgb(255 255 255 / 0.02) 120deg 123deg, transparent 123deg); }
+  h1, h2, h3, p { margin: 0; } ul { margin: 0; padding: 0; list-style: none; }
+  button, input, textarea { font: inherit; color: inherit; } button { cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--mint); outline-offset: 2px; border-radius: 8px; }
+  .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr); min-height: 100%; }
+  @media (min-width: 62rem) { .layout { grid-template-columns: 15rem minmax(0, 1fr); } }
+  .spaces { display: none; }
+  @media (min-width: 62rem) { .spaces { display: flex; flex-direction: column; gap: 4px; position: sticky; top: 0; height: 100vh; padding: 22px 14px; border-right: 1px solid var(--line); } }
+  .spaces p { font: 600 0.6875rem var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--salt-3); padding: 14px 10px 6px; }
+  .spaces button { display: flex; align-items: center; gap: 10px; min-height: 42px; padding: 0 10px; border: 0; border-radius: 10px; background: none; color: var(--salt-2); text-align: left; }
+  .spaces button:hover { background: var(--panel); color: var(--salt); }
+  .spaces button i { width: 8px; height: 8px; border-radius: 2px; background: var(--c, var(--salt-3)); transform: rotate(45deg); }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.25rem; letter-spacing: -0.02em; padding: 0 10px; }
+  .logo svg { width: 26px; height: 26px; }
+  .top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; display: flex; align-items: center; gap: 10px; padding: 12px max(16px, env(safe-area-inset-right, 0px)) 12px max(16px, env(safe-area-inset-left, 0px)); background: rgb(11 12 14 / 0.8); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 25; background: var(--bg); }
+  @media (min-width: 62rem) { .top .logo { display: none; } }
+  .status { display: inline-flex; align-items: center; gap: 8px; font: 500 0.75rem var(--mono); color: var(--salt-2); padding: 6px 10px; border-radius: 99px; background: var(--panel); border: 1px solid var(--line); }
+  .status::before { content: ''; width: 7px; height: 7px; border-radius: 99px; background: var(--gold); box-shadow: 0 0 10px var(--gold); }
+  .iconb { margin-left: auto; width: var(--tap); height: var(--tap); border-radius: 99px; border: 1px solid var(--line); background: var(--panel); display: grid; place-items: center; font-weight: 700; }
+  .thread { max-width: 46rem; margin: 0 auto; padding: 18px max(16px, env(safe-area-inset-right, 0px)) calc(19rem + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); display: grid; gap: 22px; }
+  .ai { display: grid; gap: 10px; }
+  .ai > .by { display: flex; align-items: center; gap: 8px; font: 600 0.75rem var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--silv); }
+  .ai > .by svg { width: 14px; height: 14px; }
+  .ai .txt { font-size: 1.125rem; line-height: 1.55; color: var(--salt); }
+  .ai .txt p + p, .ai .txt p + ul, .ai .txt ul + p { margin-top: 10px; }
+  .ai .txt ul { display: grid; gap: 6px; } .ai .txt li { padding-left: 18px; position: relative; } .ai .txt li::before { content: ''; position: absolute; left: 2px; top: 0.65em; width: 7px; height: 7px; background: var(--silv); transform: rotate(45deg); }
+  .ai .txt strong { color: #fff; }
+  .hello { font-size: clamp(2.2rem, 1.6rem + 3vw, 3.2rem); line-height: 1.02; letter-spacing: -0.035em; font-weight: 600; }
+  .hello em { font-style: normal; color: var(--silv); }
+  .me { justify-self: end; max-width: 85%; padding: 10px 16px; border-radius: 18px 18px 4px 18px; background: var(--salt); color: var(--bg); font-weight: 500; }
+  .card { border-radius: 20px; background: var(--panel); border: 1px solid var(--line); padding: 16px; }
+  .ticker { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; align-items: end; }
+  .ticker .big { font: 600 clamp(2.6rem, 2rem + 3vw, 3.4rem)/1 var(--mono); letter-spacing: -0.04em; color: #fff; grid-row: span 2; }
+  .ticker small { font: 500 0.75rem var(--mono); color: var(--salt-3); letter-spacing: 0.06em; text-transform: uppercase; }
+  .row3 { display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (min-width: 40rem) { .row3 { grid-template-columns: 1.4fr 1fr 1fr; } }
+  .row3 .card:first-child { grid-column: 1 / -1; }
+  @media (min-width: 40rem) { .row3 .card:first-child { grid-column: auto; } }
+  .k { font: 500 0.6875rem var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--salt-3); margin-bottom: 8px; }
+  .v { font-size: 1.25rem; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; }
+  .carousel { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(15rem, 78%); gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin: 0 -16px; padding: 0 16px 4px; }
+  .carousel > * { scroll-snap-align: start; }
+  @media (min-width: 46rem) { .carousel { grid-auto-columns: minmax(15rem, 46%); } }
+  .ev { display: grid; gap: 6px; align-content: start; }
+  .ev .t { font: 600 0.8125rem var(--mono); color: var(--mint); }
+  .ev h3 { font-size: 1.125rem; line-height: 1.25; letter-spacing: -0.01em; }
+  .ev p { font-size: 0.9375rem; color: var(--salt-2); }
+  .pill { display: inline-flex; align-items: center; gap: 6px; min-height: 38px; padding: 0 14px; border-radius: 99px; border: 1px solid var(--line-2); background: none; font-weight: 600; font-size: 0.9375rem; text-decoration: none; color: var(--salt); }
+  .pill.hot { background: var(--silv); border-color: var(--silv); color: #1a0a05; }
+  .pill[aria-pressed="true"] { background: var(--mint-soft); border-color: var(--mint); color: var(--mint); }
+  .acts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .demo { display: inline-flex; font: 500 0.6875rem var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--salt-3); border: 1px dashed var(--salt-3); padding: 1px 6px; border-radius: 4px; }
+  .post { display: grid; gap: 8px; }
+  .post .who { display: flex; align-items: center; gap: 10px; font-weight: 600; }
+  .post .who span { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; background: var(--panel-2); font: 600 0.75rem var(--mono); color: var(--gold); }
+  .post .who small { color: var(--salt-3); font-weight: 400; font: 400 0.75rem var(--mono); }
+  .q { background: linear-gradient(135deg, rgb(255 106 69 / 0.16), rgb(255 200 97 / 0.06)); border-color: rgb(255 106 69 / 0.35); }
+  .q p.big { font-size: 1.5rem; line-height: 1.15; letter-spacing: -0.02em; font-weight: 600; }
+  .typing { display: inline-flex; gap: 5px; } .typing i { width: 7px; height: 7px; background: var(--salt-3); transform: rotate(45deg); }
+  @media (prefers-reduced-motion: no-preference) { .typing i { animation: b 1s infinite; } .typing i:nth-child(2) { animation-delay: .15s; } .typing i:nth-child(3) { animation-delay: .3s; } @keyframes b { 40% { opacity: 1; transform: rotate(45deg) translateY(-4px); } 0%, 100% { opacity: .4; } } }
+  .dock { position: fixed; z-index: 30; left: 0; right: 0; bottom: 0; padding: 12px max(12px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px)); padding-top: 28px; background: linear-gradient(rgb(11 12 14 / 0), var(--bg) 26px); }
+  @media (min-width: 62rem) { .dock { left: 15rem; } }
+  .dock-in { max-width: 46rem; margin: 0 auto; }
+  .spacechips { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin-bottom: 8px; }
+  .spacechips button { flex: none; min-height: 36px; padding: 0 12px; border-radius: 99px; border: 1px solid var(--line); background: var(--panel); color: var(--salt-2); font-size: 0.875rem; font-weight: 600; }
+  .comp { border-radius: 22px; background: var(--panel-2); border: 1px solid var(--line-2); padding: 6px; box-shadow: 0 20px 50px -20px rgb(0 0 0 / 0.8); }
+  .comp:focus-within { border-color: var(--silv); box-shadow: 0 0 0 4px var(--silv-soft); }
+  .mode { display: inline-flex; padding: 3px; border-radius: 99px; background: var(--bg); margin: 4px 0 2px 4px; }
+  .mode button { min-height: 32px; padding: 0 12px; border: 0; border-radius: 99px; background: none; color: var(--salt-3); font: 600 0.75rem var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
+  .mode button[aria-pressed="true"] { background: var(--panel); color: var(--salt); }
+  .comp textarea { display: block; width: 100%; border: 0; outline: none; resize: none; background: none; padding: 10px 12px 4px; max-height: 9rem; }
+  .comp .barc { display: flex; align-items: center; gap: 4px; }
+  .comp .ib { width: 42px; height: 42px; border-radius: 99px; border: 0; background: none; color: var(--salt-2); display: grid; place-items: center; }
+  .comp .send { margin-left: auto; background: var(--silv); color: #1a0a05; }
+  .fine { text-align: center; font: 400 0.6875rem var(--mono); color: var(--salt-3); margin-top: 8px; }
+  .sheet { position: fixed; z-index: 50; inset: auto 0 0 0; padding: 22px max(18px, env(safe-area-inset-right, 0px)) calc(22px + env(safe-area-inset-bottom, 0px)) max(18px, env(safe-area-inset-left, 0px)); background: var(--panel); border-top: 1px solid var(--line-2); border-radius: 26px 26px 0 0; transform: translateY(105%); transition: transform 0.3s; }
+  .sheet.on { transform: none; } .sheet > div { max-width: 34rem; margin: 0 auto; display: grid; gap: 12px; }
+  .sheet input { min-height: 3.1rem; padding: 0 14px; border-radius: 14px; border: 1px solid var(--line-2); background: var(--bg); }
+  .seg { display: flex; gap: 6px; } .seg button { flex: 1; min-height: 46px; border-radius: 12px; border: 1px solid var(--line-2); background: none; font-weight: 700; }
+  .seg button[aria-pressed="true"] { border-color: var(--mint); color: var(--mint); background: var(--mint-soft); }
+  #toast { position: fixed; z-index: 60; left: 50%; top: calc(70px + env(safe-area-inset-top, 0px)); translate: -50% -10px; opacity: 0; padding: 10px 16px; border-radius: 99px; background: var(--salt); color: var(--bg); font-weight: 600; transition: 0.25s; pointer-events: none; }
+  #toast.on { opacity: 1; translate: -50% 0; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="layout">
+  <aside class="spaces" aria-label="Espais">
+    <span class="logo"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 28 9v14l-12 7L4 23V9z" fill="none" stroke="#ff6a45" stroke-width="2"/><path d="M16 2v28M4 9l24 14M28 9 4 23" stroke="#f0ece4" stroke-opacity=".35" stroke-width="1"/></svg>súria</span>
+    <p>Espais</p>
+    <button data-space="avui" style="--c:#ffc861"><i></i>El dia d’avui</button>
+    <button data-space="agenda" style="--c:#5fe3b4"><i></i>Agenda</button>
+    <button data-space="veins" style="--c:#ff6a45"><i></i>Veïns</button>
+    <button data-space="comerc" style="--c:#b9b6ae"><i></i>Comerç</button>
+    <button data-space="tramits" style="--c:#8ab4ff"><i></i>Tràmits</button>
+    <p>Tu</p>
+    <button data-space="jo"><i></i>El meu compte</button>
+    <button data-space="nou"><i></i>Nova conversa</button>
+  </aside>
+  <div>
+    <header class="top"><span class="logo"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 28 9v14l-12 7L4 23V9z" fill="none" stroke="#ff6a45" stroke-width="2"/></svg>súria</span><span class="status">Mode demostració</span><button class="iconb" id="mebtn" aria-label="El meu compte">·</button></header>
+    <main class="thread" id="thread" role="log" aria-live="polite" aria-label="Conversa amb Súria"></main>
+  </div>
+</div>
+<div class="dock"><div class="dock-in">
+  <div class="spacechips" role="group" aria-label="Espais">
+    <button data-space="avui">☼ Avui</button><button data-space="agenda">◇ Agenda</button><button data-space="veins">◆ Veïns</button><button data-space="comerc">◈ Comerç</button><button data-space="tramits">▣ Tràmits</button><button data-space="jo">○ Jo</button>
+  </div>
+  <form class="comp" id="cf">
+    <div class="mode" role="group" aria-label="Què vols fer"><button type="button" data-mode="ask" aria-pressed="true">Pregunta</button><button type="button" data-mode="post" aria-pressed="false">Publica al poble</button></div>
+    <label for="cq" style="position:absolute;left:-9999px">Missatge</label>
+    <textarea id="cq" rows="1" placeholder="Què necessites avui?"></textarea>
+    <div class="barc"><button type="button" class="ib" aria-label="Adjunta" data-toast="Els adjunts arribaran quan hi hagi model connectat">＋</button><button type="button" class="ib" aria-label="Dicta" id="mic">◉</button><button class="ib send" aria-label="Envia">↑</button></div>
+  </form>
+  <p class="fine">Respon amb dades de la plataforma (d’exemple). Comprova les importants a la font oficial.</p>
+</div></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+// Motor comú dels prototips: dades d'exemple, estat al dispositiu, assistent de demostració i petites utilitats.
+// Tot el contingut és D'EXEMPLE (no són dades reals de Súria).
+const SURIA = (() => {
+  const KEY = 'suria-variant-' + (document.documentElement.dataset.variant || 'x');
+  const fresh = () => ({ user: null, going: {}, thanks: {}, buddy: {}, votes: {}, posts: [], text: 'm', chat: [] });
+  let st = fresh();
+  try { st = { ...fresh(), ...JSON.parse(localStorage.getItem(KEY) || '{}') }; } catch (e) { /* sense emmagatzematge */ }
+  const subs = new Set();
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) { /* opcional */ } subs.forEach((f) => f(st)); };
+  const state = { get: () => st, set(fn) { fn(st); save(); }, on(f) { subs.add(f); } };
+
+  const DOW = ['diumenge', 'dilluns', 'dimarts', 'dimecres', 'dijous', 'divendres', 'dissabte'];
+  const DOWS = ['dg', 'dl', 'dt', 'dc', 'dj', 'dv', 'ds'];
+  const MON = ['gener', 'febrer', 'març', 'abril', 'maig', 'juny', 'juliol', 'agost', 'setembre', 'octubre', 'novembre', 'desembre'];
+  const day = (n) => { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + n); return d; };
+  const cap = (s) => s[0].toUpperCase() + s.slice(1);
+  const dayLabel = (n) => (n === 0 ? 'Avui' : n === 1 ? 'Demà' : `${cap(DOW[day(n).getDay()])} ${day(n).getDate()}`);
+  const longDate = (d = new Date()) => `${cap(DOW[d.getDay()])}, ${d.getDate()} ${['març', 'abril', 'agost', 'octubre'].includes(MON[d.getMonth()]) ? 'd’' : 'de '}${MON[d.getMonth()]}`;
+  const hhmm = (d = new Date()) => `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+  const greet = () => { const h = new Date().getHours(); return h < 6 ? 'Bona nit' : h < 14 ? 'Bon dia' : h < 20 ? 'Bona tarda' : 'Bon vespre'; };
+
+  const events = [
+    { id: 'passeig', d: 0, h: '10:00', end: '11:30', cat: 'Natura', tone: 'mint', t: 'Passeig a ritme lent pel riu', l: 'Pont vell', going: 18, first: true, x: 'El grup espera cinc minuts. El ritme el marca qui va més a poc a poc. A la meitat hi ha bancs.' },
+    { id: 'tauletes', d: 0, h: '17:00', end: '18:30', cat: 'Gent gran', tone: 'coral', t: 'Tarda de tauletes i mòbils', l: 'Biblioteca', going: 12, first: true, x: 'Entres, et donen un cafè i et presenten qui t’ajudarà. Pots preguntar el mateix deu vegades.' },
+    { id: 'contes', d: 1, h: '17:30', end: '18:15', cat: 'Famílies', tone: 'sky', t: 'Contes amb llanterna', l: 'Biblioteca infantil', going: 29, x: 'Infants a terra amb coixins, famílies al darrere. Uns 40 minuts.' },
+    { id: 'cor', d: 1, h: '20:00', end: '21:30', cat: 'Cultura', tone: 'sun', t: 'Assaig obert del cor', l: 'Casal cultural', going: 23, first: true, x: 'Seus al fons. Al descans et pregunten si vols provar. Dir que no també està bé.' },
+    { id: 'sopar', d: 3, h: '20:30', end: '22:30', cat: 'Veïnat', tone: 'lilac', t: 'Sopar de benvinguda als nous veïns', l: 'Casal cultural', going: 41, first: true, x: 'Algú t’espera a la porta i et presenta gent. Taules llargues, sense lloc fix.' },
+    { id: 'mercat', d: 4, h: '10:00', end: '20:00', cat: 'Mercat', tone: 'sun', t: 'Mercat d’hivern de productors', l: 'Plaça major', going: 134, x: 'Al matí és més tranquil. A la tarda hi ha música.' },
+    { id: 'ball', d: 5, h: '17:00', end: '19:30', cat: 'Gent gran', tone: 'coral', t: 'Ball de diumenge', l: 'Casal de la gent gran', going: 52, x: 'Comença amb peces lentes. Hi ha cadires a tot el voltant.' },
+    { id: 'reparem', d: 7, h: '10:00', end: '13:00', cat: 'Veïnat', tone: 'lilac', t: 'Reparem junts', l: 'Taller del casal', going: 15, first: true, x: 'T’apuntes a l’entrada i esperes torn amb un cafè.' },
+  ];
+  const posts = [
+    { id: 'p1', a: 'Irene V.', i: 'IV', tone: 'sky', badge: 'Nova veïna', ch: 'Hola, sóc nova', m: 22, t: 'Fa un mes que vivim aquí amb la meva filla de 5 anys. Busquem un parc tranquil per les tardes i, si hi ha altres famílies noves, ens encantaria conèixer-vos.', th: 21, r: [['RM', 'coral', 'Rosa', 'Els divendres som unes quantes famílies al parc del riu cap a les sis.']] },
+    { id: 'p2', a: 'Toni R.', i: 'TR', tone: 'coral', ch: 'Avís', m: 70, t: 'Ojo: esta mañana hay obras en la entrada del pueblo y un solo carril. Salid con tiempo.', th: 36, r: [['MF', 'lilac', 'Marta', 'Gràcies! A les 8 ja hi havia cua.']] },
+    { id: 'p3', a: 'Associació de veïns', i: 'AV', tone: 'mint', badge: 'Entitat', ch: 'Dono un cop de mà', m: 1500, t: 'Busquem dues persones per acompanyar a comprar, un matí a la setmana, veïnes grans que viuen soles.', th: 48, r: [['IV', 'sky', 'Irene', 'Jo puc els dimecres!']] },
+    { id: 'p4', a: 'Montse C.', i: 'MC', tone: 'lilac', ch: 'Perdut i trobat', m: 200, t: 'He trobat unes ulleres de lectura amb funda vermella al banc de la plaça.', th: 14, r: [] },
+  ];
+  const shops = [
+    { id: 'forn', n: 'Forn de l’Alba', k: 'Forn', tone: 'sun', o: [['07:00', '14:00'], ['17:00', '20:00']], offer: 'Dijous: segona barra a meitat de preu' },
+    { id: 'cafe', n: 'Cafè de la Plaça', k: 'Bar', tone: 'coral', o: [['07:00', '20:00']], offer: 'Menú del dia: 13,50 €', featured: true },
+    { id: 'hort', n: 'L’Hort Verd', k: 'Fruita', tone: 'mint', o: [['08:30', '13:30'], ['17:00', '20:00']], offer: 'Entrega gratis a gent gran' },
+    { id: 'taverna', n: 'La Taverna del Pont', k: 'Tapes', tone: 'coral', o: [['12:00', '16:00'], ['19:30', '23:00']], offer: 'Dimecres: tapa + canya, 4 €' },
+  ];
+  const proposal = { t: 'Més bancs a la pujada del centre', n: 212, goal: 250 };
+  const bus = ['06:50', '07:55', '08:40', '09:55', '11:00', '12:05', '13:10', '14:50', '16:25', '17:20', '18:45', '19:45'];
+  const nextBus = (k = 3) => bus.filter((b) => b >= hhmm()).slice(0, k);
+  const minsTo = (b) => { const [h, m] = b.split(':').map(Number); const n = new Date(); return h * 60 + m - (n.getHours() * 60 + n.getMinutes()); };
+  const isOpen = (s) => s.o.some(([a, b]) => hhmm() >= a && hhmm() < b);
+  const t24 = (x) => x.replace(':', '.');
+
+  const norm = (s) => s.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase();
+  const has = (q, ...w) => w.some((x) => new RegExp(`(^|[^a-z0-9])${x}`).test(q));
+  function answer(raw) {
+    const q = norm(raw);
+    if (has(q, 'bus', 'autobus', 'manresa')) {
+      const n = nextBus();
+      return { text: n.length ? `El pròxim bus cap a Manresa surt a les **${t24(n[0])} h** (d’aquí a ${minsTo(n[0])} min).\nDesprés: ${n.slice(1).map(t24).join(', ')} h.\n\nHorari d’exemple del prototip.` : 'Avui ja no surten més busos cap a Manresa. El primer de demà és a les **6.50 h**.', actions: [] };
+    }
+    if (has(q, 'empadron', 'padro', 'padron')) return { text: '**Empadronar-te** és la porta de tot: metge, escola i ajuts.\n- Porta el DNI o NIE i el contracte de lloguer.\n- Fes-ho en línia o a l’oficina d’atenció ciutadana.\n- Guarda el justificant: te’l demanaran al CAP.', actions: [['Guia pas a pas', '#jo']] };
+    if (has(q, 'moble', 'mueble', 'sofa', 'matalas', 'colchon')) return { text: 'Els mobles es recullen **a la porta**, demanant-ho amb una setmana d’antelació. Deixa’ls la nit abans, al costat de la porta.', actions: [] };
+    if (has(q, 'farmac', 'guardia')) return { text: 'Farmàcia de guàrdia (dada d’exemple): **Farmàcia de la Plaça**, fins demà a les 9.00 h.\nSi és una urgència, truca al **112**.', actions: [['Truca al 112', 'tel:112']] };
+    if (has(q, 'sopar', 'cenar', 'obert', 'abierto', 'menjar', 'comer', 'tapes', 'pa(?![a-z])', 'forn', 'cafe')) {
+      const o = shops.filter(isOpen);
+      return { text: (o.length ? 'Obert ara, segons el que diuen els mateixos negocis:\n' : 'Ara està tot tancat. Aquests obren aviat:\n') + (o.length ? o : shops).map((s) => `- **${s.n}** · ${s.offer}`).join('\n'), actions: [] };
+    }
+    if (has(q, 'que fer', 'que faig', 'que hacer', 'agenda', 'cap de setmana', 'fin de semana', 'avui', 'hoy', 'activitat')) {
+      return { text: 'Això és el que hi ha aviat:\n' + events.slice(0, 4).map((e) => `- **${e.t}** · ${dayLabel(e.d)}, ${t24(e.h)} h · ${e.l}`).join('\n') + '\n\nA cada activitat t’expliquem què passarà i pots dir que busques companyia.', actions: [['Obre l’agenda', '#agenda']] };
+    }
+    if (has(q, 'nou', 'nueva', 'nuevo', 'acabo', 'arribat', 'gent', 'amics', 'amigos')) return { text: 'Benvingut! Aquesta setmana hi ha un **sopar de benvinguda** on algú t’esperarà a la porta per presentar-te gent. I tens una guia dels primers 30 dies.', actions: [['Sopar de benvinguda', '#agenda/sopar']] };
+    if (has(q, '112', 'emergenc', 'urgenc', 'policia')) return { text: 'En una emergència, truca al **112**: gratuït i 24 hores.', actions: [['Truca al 112', 'tel:112']] };
+    return { text: 'Encara no tinc aquesta resposta: funciono en **mode demostració**, sense cap model d’IA connectat, i només responc amb el que hi ha a la plataforma.\n\nPots preguntar-ho a la comunitat: algú del poble ho sabrà.', actions: [['Pregunta-ho a la comunitat', '#comunitat']] };
+  }
+  async function stream(text, onChunk, signal) {
+    const wait = (ms) => new Promise((res, rej) => { const id = setTimeout(res, ms); signal && signal.addEventListener('abort', () => { clearTimeout(id); rej(new Error('abort')); }, { once: true }); });
+    await wait(500);
+    let out = '';
+    for (const w of text.match(/\S+\s*/g) || []) { await wait(14 + Math.random() * 24); out += w; onChunk(out); }
+    return out;
+  }
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+  const md = (t) => {
+    const lines = esc(t).split('\n'); let h = ''; let ul = false;
+    for (const l of lines) {
+      const f = l.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      if (l.startsWith('- ')) { if (!ul) { h += '<ul>'; ul = true; } h += `<li>${f.slice(2)}</li>`; }
+      else { if (ul) { h += '</ul>'; ul = false; } if (l.trim()) h += `<p>${f}</p>`; }
+    }
+    return h + (ul ? '</ul>' : '');
+  };
+  let tt;
+  const toast = (m) => { const el = document.getElementById('toast'); if (!el) return; el.textContent = m; el.classList.add('on'); clearTimeout(tt); tt = setTimeout(() => el.classList.remove('on'), 2400); };
+  const initials = (n) => { const p = n.trim().split(/\s+/); return ((p[0] || '')[0] + (p.length > 1 ? p[p.length - 1][0] : '')).toUpperCase(); };
+  const ago = (m) => (m < 60 ? `fa ${m} min` : m < 1440 ? `fa ${Math.round(m / 60)} h` : m < 2880 ? 'ahir' : `fa ${Math.round(m / 1440)} dies`);
+  const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+  return { state, events, posts, shops, proposal, nextBus, minsTo, isOpen, t24, dayLabel, longDate, greet, answer, stream, md, esc, toast, initials, ago, day, DOWS, reduced, hhmm };
+})();
+
+const S = SURIA, $ = (q) => document.querySelector(q), th = $('#thread');
+let mode = 'ask';
+document.documentElement.dataset.text = S.state.get().text;
+const spark = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 14.6 9.4 22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z"/></svg>';
+const ai = (inner) => `<section class="ai"><p class="by">${spark}Súria</p>${inner}</section>`;
+const goPill = (e) => { const on = !!S.state.get().going[e.id]; return `<button class="pill ${on ? '' : 'hot'}" data-go="${e.id}" aria-pressed="${on}">${on ? '✓ Hi vas' : 'Hi vaig'}</button>`; };
+
+const cards = {
+  avui() {
+    const b = S.nextBus(3), u = S.state.get().user;
+    return ai(`<h1 class="hello">${S.greet()}${u ? `, <em>${S.esc(u.n.split(' ')[0])}</em>` : ''}.<br>Això és el que importa avui.</h1>
+      <div class="row3">
+        <div class="card"><p class="k">Bus → Manresa</p><div class="ticker"><span class="big">${b[0] ? S.t24(b[0]) : '—'}</span><small>${b[0] ? `d’aquí a ${S.minsTo(b[0])} min` : 'demà 6.50'}</small><span class="mono" style="color:var(--salt-2)">${b.slice(1).map(S.t24).join(' · ')}</span></div></div>
+        <div class="card"><p class="k">Farmàcia</p><p class="v">Farmàcia de la Plaça</p><p class="mono" style="font-size:.75rem;color:var(--salt-3);margin-top:4px">fins 09.00</p></div>
+        <div class="card"><p class="k">Aquesta nit</p><p class="v">Orgànica i resta</p><p class="mono" style="font-size:.75rem;color:var(--salt-3);margin-top:4px">des de 20.00</p></div>
+      </div>
+      <p class="txt">Hi ha <strong>${S.events.filter((e) => e.d <= 1).length} activitats</strong> entre avui i demà. Les marcades amb ◇ són bones per anar-hi per primera vegada.</p>
+      ${cards.evs(S.events.filter((e) => e.d <= 3))}
+      <div class="card q"><p class="k" style="color:var(--gold)">Pregunta de la setmana · 58 respostes</p><p class="big">Quin racó del poble ensenyaries a algú que acaba d’arribar?</p><div class="acts"><button class="pill" data-postprompt="El meu racó és…">Respon al poble</button></div></div>
+      <p><span class="demo">Contingut d’exemple</span></p>`);
+  },
+  evs(list) { return `<div class="carousel">${list.map((e) => `<article class="card ev"><span class="t">${S.dayLabel(e.d).toUpperCase()} · ${S.t24(e.h)}${e.first ? ' · ◇' : ''}</span><h3>${e.t}</h3><p>${e.l} · <span class="mono">${e.going + (S.state.get().going[e.id] ? 1 : 0)}</span> hi van</p><div class="acts">${goPill(e)}<button class="pill" data-more="${e.id}">Què passarà?</button></div></article>`).join('')}</div>`; },
+  agenda() { return ai(`<p class="txt">Aquesta és l’agenda de la setmana. Si vas sol, digues-m’ho i et presento algú que també hi va.</p>${cards.evs(S.events)}<p><span class="demo">Exemple</span></p>`); },
+  veins() {
+    const mine = S.state.get().posts.map((p) => ({ i: S.state.get().user?.i || 'TU', a: S.state.get().user?.n || 'Tu', m: 0, t: p.t, id: p.id, th: 0, ch: 'Publicat ara' }));
+    return ai(`<p class="txt">Això es mou al veïnat. Pots respondre o donar les gràcies directament.</p>${[...mine.reverse(), ...S.posts].slice(0, 5).map((p) => `<article class="card post"><p class="who"><span>${p.i}</span>${S.esc(p.a)} <small>${p.m === 0 ? 'ara' : S.ago(p.m)} · ${p.ch}</small></p><p>${S.esc(p.t)}</p><div class="acts"><button class="pill" data-thx="${p.id}" aria-pressed="${!!S.state.get().thanks[p.id]}">♥ Gràcies ${p.th + (S.state.get().thanks[p.id] ? 1 : 0)}</button></div></article>`).join('')}<p><span class="demo">Exemple</span></p>`);
+  },
+  comerc() { return ai(`<p class="txt">Comerços que diuen ells mateixos el seu horari. Ara són les <strong class="mono">${S.t24(S.hhmm())}</strong>.</p><div class="row3" style="grid-template-columns:repeat(auto-fit,minmax(13rem,1fr))">${S.shops.map((s) => `<div class="card"><p class="k" style="color:${S.isOpen(s) ? 'var(--mint)' : 'var(--salt-3)'}">${S.isOpen(s) ? '● obert ara' : '○ tancat'}${s.featured ? ' · destacat' : ''}</p><p class="v">${s.n}</p><p style="color:var(--salt-2);font-size:.9375rem;margin-top:4px">${s.offer}</p></div>`).join('')}</div><p><span class="demo">Exemple</span></p>`); },
+  tramits() { return ai(`<p class="txt">Digues-me què has de fer amb les teves paraules. Els més demanats:</p><div class="acts">${['Com m’empadrono?', 'On llenço un matalàs?', 'Quina farmàcia és de guàrdia?', 'Acabo d’arribar'].map((q) => `<button class="pill" data-q="${q}">${q}</button>`).join('')}</div>`); },
+  jo() {
+    const s = S.state.get();
+    return ai(`<div class="card"><p class="k">El teu compte</p><p class="v">${s.user ? S.esc(s.user.n) : 'Encara no has entrat'}</p><p style="color:var(--salt-2);font-size:.9375rem;margin-top:4px">${s.user ? `${Object.keys(s.going).length} activitats · ${Object.keys(s.thanks).length} gràcies donades` : 'Llegir-ho tot és lliure. Per participar, només cal el teu nom.'}</p>
+      <p class="k" style="margin-top:16px">Mida del text</p><div class="seg">${[['m', 'A'], ['l', 'A+'], ['xl', 'A++']].map(([k, l]) => `<button data-size="${k}" aria-pressed="${s.text === k}">${l}</button>`).join('')}</div>
+      <div class="acts">${s.user ? '<button class="pill" id="logout">Surt</button>' : '<button class="pill hot" id="login">Entra</button>'}</div></div>`);
+  },
+};
+function push(html) { th.insertAdjacentHTML('beforeend', html); const el = th.lastElementChild; const tall = el.offsetHeight > innerHeight * 0.55; el.scrollIntoView({ block: tall ? 'start' : 'end', behavior: S.reduced() ? 'auto' : 'smooth' }); }
+function space(k) {
+  if (k === 'nou') { th.innerHTML = cards.avui(); scrollTo(0, 0); return; }
+  const labels = { avui: 'Què hi ha avui?', agenda: 'Ensenya’m l’agenda', veins: 'Què es diu al veïnat?', comerc: 'Què és obert ara?', tramits: 'Necessito fer un tràmit', jo: 'El meu compte' };
+  push(`<div class="me">${labels[k]}</div>`); push(cards[k]());
+}
+async function ask(q) {
+  q = q.trim(); if (!q) return;
+  push(`<div class="me">${S.esc(q)}</div>`);
+  const a = S.answer(q); push(ai(`<div class="txt"><span class="typing" aria-label="Pensant"><i></i><i></i><i></i></span></div>`));
+  const box = th.lastElementChild.querySelector('.txt');
+  const down = () => window.scrollTo({ top: document.documentElement.scrollHeight });
+  await S.stream(a.text, (t) => { box.innerHTML = S.md(t); down(); });
+  setTimeout(down, 30);
+  if (a.actions.length) box.insertAdjacentHTML('afterend', `<div class="acts">${a.actions.map(([l, h]) => h.startsWith('#') ? `<button class="pill" data-space="${h === '#agenda' || h.startsWith('#agenda') ? 'agenda' : h === '#comunitat' ? 'veins' : 'tramits'}">${l} →</button>` : `<a class="pill" href="${h}">${l}</a>`).join('')}</div>`);
+}
+function sheet(html) { $('#sheet').innerHTML = `<div>${html}<button class="pill" id="closesheet" style="justify-content:center">Tanca</button></div>`; $('#sheet').classList.add('on'); setTimeout(() => $('#sheet').querySelector('input,button')?.focus(), 50); }
+const closeSheet = () => $('#sheet').classList.remove('on');
+function needUser() {
+  if (S.state.get().user) return false;
+  sheet(`<p class="k">Un moment</p><p class="hello" style="font-size:2rem">Com et diuen?</p><p style="color:var(--salt-2)">Només el nom: així els veïns saben qui hi va. Res surt del dispositiu.</p><form id="si" style="display:grid;gap:10px"><label for="nm" class="k">Nom i cognom</label><input id="nm" autocomplete="name" placeholder="Marta Puig"><button class="pill hot" style="justify-content:center;min-height:48px">Entra</button></form>`);
+  $('#si').onsubmit = (e) => { e.preventDefault(); const n = $('#nm').value.trim(); if (n.length < 2) return; S.state.set((s) => { s.user = { n, i: S.initials(n) }; }); closeSheet(); $('#mebtn').textContent = S.state.get().user.i; S.toast(`Hola, ${n.split(' ')[0]}`); };
+  return true;
+}
+function setMode(m) { mode = m; document.querySelectorAll('[data-mode]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === m))); $('#cq').placeholder = m === 'ask' ? 'Què necessites avui?' : 'Escriu al poble com si parlessis amb un veí…'; }
+document.addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.space) { space(b.dataset.space); return; }
+  if (b.dataset.q) { ask(b.dataset.q); return; }
+  if (b.dataset.mode) { if (b.dataset.mode === 'post' && needUser()) return; setMode(b.dataset.mode); $('#cq').focus(); return; }
+  if (b.dataset.postprompt) { if (needUser()) return; setMode('post'); $('#cq').value = b.dataset.postprompt; $('#cq').focus(); return; }
+  if (b.dataset.toast) { S.toast(b.dataset.toast); return; }
+  if (b.dataset.go) { if (needUser()) return; const id = b.dataset.go; S.state.set((s) => { s.going[id] ? delete s.going[id] : (s.going[id] = 1); }); const on = !!S.state.get().going[id]; document.querySelectorAll(`[data-go="${id}"]`).forEach((x) => { x.setAttribute('aria-pressed', String(on)); x.classList.toggle('hot', !on); x.textContent = on ? '✓ Hi vas' : 'Hi vaig'; }); S.toast(on ? 'Apuntat. T’avisaré el dia abans.' : 'Ja no hi vas'); return; }
+  if (b.dataset.more) { const ev = S.events.find((x) => x.id === b.dataset.more); push(`<div class="me">Què passarà a «${ev.t}»?</div>`); push(ai(`<div class="txt"><p>${ev.x}</p><p>És a <strong>${ev.l}</strong>, ${S.dayLabel(ev.d).toLowerCase()} a les <strong>${S.t24(ev.h)} h</strong>.</p></div><div class="acts">${goPill(ev)}<button class="pill" data-buddy="${ev.id}" aria-pressed="${!!S.state.get().buddy[ev.id]}">Hi vull anar acompanyat</button></div>`)); return; }
+  if (b.dataset.buddy) { if (needUser()) return; S.state.set((s) => { s.buddy[b.dataset.buddy] = 1; }); b.setAttribute('aria-pressed', 'true'); S.toast('Et presentaré algú que també hi va'); return; }
+  if (b.dataset.thx) { if (needUser()) return; const id = b.dataset.thx; S.state.set((s) => { s.thanks[id] ? delete s.thanks[id] : (s.thanks[id] = 1); }); b.setAttribute('aria-pressed', String(!!S.state.get().thanks[id])); return; }
+  if (b.dataset.size) { S.state.set((s) => { s.text = b.dataset.size; }); document.documentElement.dataset.text = b.dataset.size; b.parentElement.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); return; }
+  if (b.id === 'mebtn') { space('jo'); return; }
+  if (b.id === 'login') { needUser(); return; }
+  if (b.id === 'logout') { S.state.set((s) => { s.user = null; }); $('#mebtn').textContent = '·'; S.toast('Has sortit'); return; }
+  if (b.id === 'closesheet') { closeSheet(); return; }
+  if (b.id === 'mic') { const SR = window.SpeechRecognition || window.webkitSpeechRecognition; if (!SR) { S.toast('Aquest navegador no pot escoltar'); return; } const r = new SR(); r.lang = 'ca-ES'; r.onresult = (ev) => { $('#cq').value = ev.results[0][0].transcript; }; r.start(); S.toast('T’escolto…'); }
+});
+$('#cf').addEventListener('submit', (e) => {
+  e.preventDefault(); const v = $('#cq').value.trim(); if (!v) return; $('#cq').value = '';
+  if (mode === 'post') { S.state.set((s) => { s.posts.push({ id: 'm' + Date.now(), t: v }); }); push(`<div class="me">${S.esc(v)}</div>`); push(ai('<p class="txt">Publicat al veïnat. Un moderador del poble ho revisa i t’avisaré quan algú respongui.</p>')); setMode('ask'); return; }
+  ask(v);
+});
+$('#cq').addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); $('#cf').requestSubmit(); } });
+document.addEventListener('keydown', (e) => e.key === 'Escape' && closeSheet());
+if (S.state.get().user) $('#mebtn').textContent = S.state.get().user.i;
+th.innerHTML = cards.avui();
+</script>

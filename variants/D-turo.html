@@ -1,0 +1,356 @@
+<title>Súria Turó</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Inter+Tight:wght@400..700&display=swap">
+<script>document.documentElement.dataset.variant = 'turo';</script>
+<style>
+  /* Variant D · «Turó»: el poble és la interfície. Escena generativa del turó de façanes amb la llum de l'hora;
+     marcadors per a activitats, comerços, serveis i veïns. Un sol aspecte decidit: el cel fa de tema,
+     i els panells són sempre de vidre clar amb tinta fosca (colors explícits, independents del tema de l'amfitrió). */
+  :root {
+    --glass: rgb(255 255 255 / 0.88); --glass-2: rgb(255 255 255 / 0.7); --ink: #14171c; --ink-2: #434a53; --ink-3: #626a74; --line: rgb(20 23 28 / 0.12);
+    --sun: #ffc23d; --coral: #ff6b4a; --lilac: #7f6cf2; --mint: #22b07d; --river: #2b63d9;
+    --display: 'Unbounded', ui-sans-serif, system-ui, sans-serif; --text: 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
+    --tap: 46px; color-scheme: light;
+  }
+  html, body { height: 100%; }
+  html[data-text="l"] { font-size: 112.5%; } html[data-text="xl"] { font-size: 125%; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #0e1730; color: var(--ink); font: 1rem/1.45 var(--text); overflow: hidden; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, p { margin: 0; } button, input { font: inherit; color: inherit; } button { cursor: pointer; }
+  :focus-visible { outline: 3px solid var(--river); outline-offset: 2px; border-radius: 10px; }
+  #scene { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+  #pins { position: fixed; inset: 0; pointer-events: none; }
+  .pin { position: absolute; translate: -50% -100%; pointer-events: auto; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50% 50% 50% 4px; rotate: -45deg; border: 3px solid #fff; background: var(--c); box-shadow: 0 8px 18px -6px rgb(0 0 0 / 0.5); transition: transform 0.2s, opacity 0.3s; }
+  .pin span { rotate: 45deg; font: 700 0.875rem var(--display); color: #14171c; }
+  .pin:hover, .pin[aria-pressed="true"] { transform: scale(1.18); }
+  .pin.dim { opacity: 0.35; filter: grayscale(0.7); }
+  @media (prefers-reduced-motion: no-preference) { .pin.now::after { content: ''; position: absolute; inset: -8px; border-radius: inherit; border: 2px solid var(--c); animation: ping 1.8s ease-out infinite; } @keyframes ping { to { inset: -18px; opacity: 0; } } }
+  .ui { position: fixed; z-index: 10; }
+  .head { top: calc(10px + env(safe-area-inset-top, 0px)); left: max(10px, env(safe-area-inset-left, 0px)); right: max(10px, env(safe-area-inset-right, 0px)); display: grid; gap: 8px; }
+  .row1 { display: flex; gap: 8px; align-items: center; }
+  .glass { background: var(--glass); backdrop-filter: blur(18px) saturate(1.6); -webkit-backdrop-filter: blur(18px) saturate(1.6); box-shadow: 0 0 0 1px var(--line), 0 18px 40px -20px rgb(0 0 0 / 0.5); }
+  .brand { display: flex; align-items: center; gap: 10px; padding: 8px 14px 8px 8px; border-radius: 999px; }
+  .brand b { font: 700 1rem var(--display); letter-spacing: -0.02em; }
+  @media (max-width: 30rem) { .brand { padding: 8px; } .brand b { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); } .clock { padding: 6px 10px; gap: 6px; } }
+  .brand i { width: 30px; height: 30px; border-radius: 50%; background: conic-gradient(from 180deg, var(--coral), var(--sun), var(--mint), var(--river), var(--coral)); }
+  .clock { flex: 1; display: flex; align-items: center; gap: 10px; padding: 6px 14px; border-radius: 999px; min-width: 0; }
+  .clock output { font: 700 1.05rem var(--display); font-variant-numeric: tabular-nums; min-width: 4.2ch; }
+  .clock input { flex: 1; width: 0; min-width: 0; accent-color: var(--ink); height: 32px; }
+  .clock button { border: 0; background: var(--ink); color: #fff; border-radius: 99px; min-height: 32px; padding: 0 10px; font-size: 0.8125rem; font-weight: 700; }
+  .me { width: var(--tap); height: var(--tap); border-radius: 50%; border: 0; display: grid; place-items: center; font-weight: 700; }
+  .layers { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+  .layers button { flex: none; display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px; border-radius: 999px; border: 0; font-weight: 650; font-size: 0.9375rem; }
+  .layers button i { width: 12px; height: 12px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 2px #fff; }
+  .layers button[aria-pressed="false"] { opacity: 0.55; }
+  .panel { left: 0; right: 0; bottom: 0; max-height: 62dvh; display: flex; flex-direction: column; border-radius: 28px 28px 0 0; padding: 8px max(16px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); transition: max-height 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .panel.min { max-height: 11.5rem; }
+  @media (min-width: 60rem) { .panel, .panel.min { left: auto; right: 16px; top: 140px; bottom: 16px; width: 25rem; max-height: none; border-radius: 28px; padding: 12px 18px 16px; } }
+  .grab { width: 44px; height: 5px; border-radius: 99px; background: rgb(20 23 28 / 0.25); margin: 4px auto 8px; border: 0; padding: 0; display: block; }
+  @media (min-width: 60rem) { .grab { display: none; } }
+  .pbody { overflow-y: auto; overscroll-behavior: contain; flex: 1; display: grid; gap: 12px; align-content: start; padding-bottom: 6px; }
+  .eyebrow { font: 700 0.6875rem var(--display); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+  .title { font: 700 1.5rem/1.1 var(--display); letter-spacing: -0.03em; }
+  .demo { display: inline-flex; padding: 1px 7px; border: 1px dashed var(--ink-3); border-radius: 5px; font-size: 0.6875rem; font-weight: 700; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em; }
+  .item { display: flex; gap: 12px; align-items: center; width: 100%; padding: 10px; border: 0; border-radius: 16px; background: var(--glass-2); text-align: left; box-shadow: 0 0 0 1px var(--line); }
+  .item .dot { width: 38px; height: 38px; flex: none; border-radius: 12px; background: var(--c); display: grid; place-items: center; font: 700 0.875rem var(--display); }
+  .item b { display: block; font-weight: 650; line-height: 1.25; } .item small { color: var(--ink-3); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: var(--tap); padding: 0 18px; border-radius: 999px; border: 0; background: var(--ink); color: #fff; font-weight: 700; text-decoration: none; }
+  .btn.alt { background: rgb(20 23 28 / 0.07); color: var(--ink); }
+  .btn[aria-pressed="true"] { background: #d6f2e5; color: #0e5a3c; }
+  .acts { display: flex; gap: 8px; flex-wrap: wrap; }
+  .hero-k { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .hero-k div { padding: 10px; border-radius: 14px; background: var(--glass-2); box-shadow: 0 0 0 1px var(--line); }
+  .hero-k b { display: block; font: 700 1.25rem var(--display); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .hero-k small { font-size: 0.75rem; color: var(--ink-3); font-weight: 600; }
+  .ask { display: flex; gap: 6px; padding: 6px; border-radius: 999px; background: #fff; box-shadow: 0 0 0 1px var(--line); margin-top: 8px; }
+  .ask input { flex: 1; min-width: 0; border: 0; outline: none; padding: 0 12px; background: none; min-height: 40px; }
+  .ask button { width: 40px; height: 40px; border-radius: 99px; border: 0; background: var(--ink); color: #fff; }
+  .msg { padding: 12px 14px; border-radius: 16px; background: var(--glass-2); box-shadow: 0 0 0 1px var(--line); }
+  .msg.q { justify-self: end; background: var(--ink); color: #fff; }
+  .msg ul { padding-left: 18px; margin: 6px 0 0; display: grid; gap: 4px; } .msg p + p { margin-top: 8px; }
+  .sky-label { position: fixed; z-index: 5; left: max(16px, env(safe-area-inset-left, 0px)); top: calc(126px + env(safe-area-inset-top, 0px)); color: #fff; text-shadow: 0 2px 20px rgb(0 0 0 / 0.4); pointer-events: none; }
+  .sky-label h1 { font: 700 clamp(1.9rem, 1.2rem + 3.4vw, 3.6rem)/1 var(--display); letter-spacing: -0.04em; }
+  .sky-label p { font-weight: 600; opacity: 0.9; margin-top: 6px; }
+  .credit { position: fixed; z-index: 4; left: 50%; translate: -50% 0; bottom: 12.5rem; font-size: 0.6875rem; color: rgb(255 255 255 / 0.75); }
+  @media (min-width: 60rem) { .credit { bottom: 16px; } }
+  #toast { position: fixed; z-index: 60; left: 50%; top: calc(120px + env(safe-area-inset-top, 0px)); translate: -50% -8px; opacity: 0; padding: 10px 16px; border-radius: 99px; background: var(--ink); color: #fff; font-weight: 650; transition: 0.25s; pointer-events: none; }
+  #toast.on { opacity: 1; translate: -50% 0; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<canvas id="scene" aria-hidden="true"></canvas>
+<div id="pins" role="group" aria-label="Llocs del poble"></div>
+<div class="sky-label" id="skylabel"><h1 id="skyh"></h1><p id="skyp"></p></div>
+<div class="ui head">
+  <div class="row1">
+    <span class="brand glass"><i aria-hidden="true"></i><b>Súria</b></span>
+    <label class="clock glass" for="t"><output id="tout" aria-live="polite"></output><input id="t" type="range" min="360" max="1439" step="5" aria-label="Hora del dia"><button type="button" id="now">Ara</button></label>
+    <button class="me glass" id="me" aria-label="El meu compte">·</button>
+  </div>
+  <div class="layers" role="group" aria-label="Capes">
+    <button class="glass" data-layer="ev" aria-pressed="true" style="--c:var(--sun)"><i></i>Agenda</button>
+    <button class="glass" data-layer="shop" aria-pressed="true" style="--c:var(--coral)"><i></i>Comerç</button>
+    <button class="glass" data-layer="srv" aria-pressed="true" style="--c:var(--lilac)"><i></i>Serveis</button>
+    <button class="glass" data-layer="post" aria-pressed="true" style="--c:var(--mint)"><i></i>Veïns</button>
+  </div>
+</div>
+<section class="ui panel glass min" id="panel" aria-label="Detall"><button class="grab" id="grab" aria-label="Amplia o redueix el panell"></button><div class="pbody" id="pbody"></div></section>
+<p class="credit">Escena generada · contingut d’exemple</p>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+// Motor comú dels prototips: dades d'exemple, estat al dispositiu, assistent de demostració i petites utilitats.
+// Tot el contingut és D'EXEMPLE (no són dades reals de Súria).
+const SURIA = (() => {
+  const KEY = 'suria-variant-' + (document.documentElement.dataset.variant || 'x');
+  const fresh = () => ({ user: null, going: {}, thanks: {}, buddy: {}, votes: {}, posts: [], text: 'm', chat: [] });
+  let st = fresh();
+  try { st = { ...fresh(), ...JSON.parse(localStorage.getItem(KEY) || '{}') }; } catch (e) { /* sense emmagatzematge */ }
+  const subs = new Set();
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) { /* opcional */ } subs.forEach((f) => f(st)); };
+  const state = { get: () => st, set(fn) { fn(st); save(); }, on(f) { subs.add(f); } };
+
+  const DOW = ['diumenge', 'dilluns', 'dimarts', 'dimecres', 'dijous', 'divendres', 'dissabte'];
+  const DOWS = ['dg', 'dl', 'dt', 'dc', 'dj', 'dv', 'ds'];
+  const MON = ['gener', 'febrer', 'març', 'abril', 'maig', 'juny', 'juliol', 'agost', 'setembre', 'octubre', 'novembre', 'desembre'];
+  const day = (n) => { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + n); return d; };
+  const cap = (s) => s[0].toUpperCase() + s.slice(1);
+  const dayLabel = (n) => (n === 0 ? 'Avui' : n === 1 ? 'Demà' : `${cap(DOW[day(n).getDay()])} ${day(n).getDate()}`);
+  const longDate = (d = new Date()) => `${cap(DOW[d.getDay()])}, ${d.getDate()} ${['març', 'abril', 'agost', 'octubre'].includes(MON[d.getMonth()]) ? 'd’' : 'de '}${MON[d.getMonth()]}`;
+  const hhmm = (d = new Date()) => `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+  const greet = () => { const h = new Date().getHours(); return h < 6 ? 'Bona nit' : h < 14 ? 'Bon dia' : h < 20 ? 'Bona tarda' : 'Bon vespre'; };
+
+  const events = [
+    { id: 'passeig', d: 0, h: '10:00', end: '11:30', cat: 'Natura', tone: 'mint', t: 'Passeig a ritme lent pel riu', l: 'Pont vell', going: 18, first: true, x: 'El grup espera cinc minuts. El ritme el marca qui va més a poc a poc. A la meitat hi ha bancs.' },
+    { id: 'tauletes', d: 0, h: '17:00', end: '18:30', cat: 'Gent gran', tone: 'coral', t: 'Tarda de tauletes i mòbils', l: 'Biblioteca', going: 12, first: true, x: 'Entres, et donen un cafè i et presenten qui t’ajudarà. Pots preguntar el mateix deu vegades.' },
+    { id: 'contes', d: 1, h: '17:30', end: '18:15', cat: 'Famílies', tone: 'sky', t: 'Contes amb llanterna', l: 'Biblioteca infantil', going: 29, x: 'Infants a terra amb coixins, famílies al darrere. Uns 40 minuts.' },
+    { id: 'cor', d: 1, h: '20:00', end: '21:30', cat: 'Cultura', tone: 'sun', t: 'Assaig obert del cor', l: 'Casal cultural', going: 23, first: true, x: 'Seus al fons. Al descans et pregunten si vols provar. Dir que no també està bé.' },
+    { id: 'sopar', d: 3, h: '20:30', end: '22:30', cat: 'Veïnat', tone: 'lilac', t: 'Sopar de benvinguda als nous veïns', l: 'Casal cultural', going: 41, first: true, x: 'Algú t’espera a la porta i et presenta gent. Taules llargues, sense lloc fix.' },
+    { id: 'mercat', d: 4, h: '10:00', end: '20:00', cat: 'Mercat', tone: 'sun', t: 'Mercat d’hivern de productors', l: 'Plaça major', going: 134, x: 'Al matí és més tranquil. A la tarda hi ha música.' },
+    { id: 'ball', d: 5, h: '17:00', end: '19:30', cat: 'Gent gran', tone: 'coral', t: 'Ball de diumenge', l: 'Casal de la gent gran', going: 52, x: 'Comença amb peces lentes. Hi ha cadires a tot el voltant.' },
+    { id: 'reparem', d: 7, h: '10:00', end: '13:00', cat: 'Veïnat', tone: 'lilac', t: 'Reparem junts', l: 'Taller del casal', going: 15, first: true, x: 'T’apuntes a l’entrada i esperes torn amb un cafè.' },
+  ];
+  const posts = [
+    { id: 'p1', a: 'Irene V.', i: 'IV', tone: 'sky', badge: 'Nova veïna', ch: 'Hola, sóc nova', m: 22, t: 'Fa un mes que vivim aquí amb la meva filla de 5 anys. Busquem un parc tranquil per les tardes i, si hi ha altres famílies noves, ens encantaria conèixer-vos.', th: 21, r: [['RM', 'coral', 'Rosa', 'Els divendres som unes quantes famílies al parc del riu cap a les sis.']] },
+    { id: 'p2', a: 'Toni R.', i: 'TR', tone: 'coral', ch: 'Avís', m: 70, t: 'Ojo: esta mañana hay obras en la entrada del pueblo y un solo carril. Salid con tiempo.', th: 36, r: [['MF', 'lilac', 'Marta', 'Gràcies! A les 8 ja hi havia cua.']] },
+    { id: 'p3', a: 'Associació de veïns', i: 'AV', tone: 'mint', badge: 'Entitat', ch: 'Dono un cop de mà', m: 1500, t: 'Busquem dues persones per acompanyar a comprar, un matí a la setmana, veïnes grans que viuen soles.', th: 48, r: [['IV', 'sky', 'Irene', 'Jo puc els dimecres!']] },
+    { id: 'p4', a: 'Montse C.', i: 'MC', tone: 'lilac', ch: 'Perdut i trobat', m: 200, t: 'He trobat unes ulleres de lectura amb funda vermella al banc de la plaça.', th: 14, r: [] },
+  ];
+  const shops = [
+    { id: 'forn', n: 'Forn de l’Alba', k: 'Forn', tone: 'sun', o: [['07:00', '14:00'], ['17:00', '20:00']], offer: 'Dijous: segona barra a meitat de preu' },
+    { id: 'cafe', n: 'Cafè de la Plaça', k: 'Bar', tone: 'coral', o: [['07:00', '20:00']], offer: 'Menú del dia: 13,50 €', featured: true },
+    { id: 'hort', n: 'L’Hort Verd', k: 'Fruita', tone: 'mint', o: [['08:30', '13:30'], ['17:00', '20:00']], offer: 'Entrega gratis a gent gran' },
+    { id: 'taverna', n: 'La Taverna del Pont', k: 'Tapes', tone: 'coral', o: [['12:00', '16:00'], ['19:30', '23:00']], offer: 'Dimecres: tapa + canya, 4 €' },
+  ];
+  const proposal = { t: 'Més bancs a la pujada del centre', n: 212, goal: 250 };
+  const bus = ['06:50', '07:55', '08:40', '09:55', '11:00', '12:05', '13:10', '14:50', '16:25', '17:20', '18:45', '19:45'];
+  const nextBus = (k = 3) => bus.filter((b) => b >= hhmm()).slice(0, k);
+  const minsTo = (b) => { const [h, m] = b.split(':').map(Number); const n = new Date(); return h * 60 + m - (n.getHours() * 60 + n.getMinutes()); };
+  const isOpen = (s) => s.o.some(([a, b]) => hhmm() >= a && hhmm() < b);
+  const t24 = (x) => x.replace(':', '.');
+
+  const norm = (s) => s.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase();
+  const has = (q, ...w) => w.some((x) => new RegExp(`(^|[^a-z0-9])${x}`).test(q));
+  function answer(raw) {
+    const q = norm(raw);
+    if (has(q, 'bus', 'autobus', 'manresa')) {
+      const n = nextBus();
+      return { text: n.length ? `El pròxim bus cap a Manresa surt a les **${t24(n[0])} h** (d’aquí a ${minsTo(n[0])} min).\nDesprés: ${n.slice(1).map(t24).join(', ')} h.\n\nHorari d’exemple del prototip.` : 'Avui ja no surten més busos cap a Manresa. El primer de demà és a les **6.50 h**.', actions: [] };
+    }
+    if (has(q, 'empadron', 'padro', 'padron')) return { text: '**Empadronar-te** és la porta de tot: metge, escola i ajuts.\n- Porta el DNI o NIE i el contracte de lloguer.\n- Fes-ho en línia o a l’oficina d’atenció ciutadana.\n- Guarda el justificant: te’l demanaran al CAP.', actions: [['Guia pas a pas', '#jo']] };
+    if (has(q, 'moble', 'mueble', 'sofa', 'matalas', 'colchon')) return { text: 'Els mobles es recullen **a la porta**, demanant-ho amb una setmana d’antelació. Deixa’ls la nit abans, al costat de la porta.', actions: [] };
+    if (has(q, 'farmac', 'guardia')) return { text: 'Farmàcia de guàrdia (dada d’exemple): **Farmàcia de la Plaça**, fins demà a les 9.00 h.\nSi és una urgència, truca al **112**.', actions: [['Truca al 112', 'tel:112']] };
+    if (has(q, 'sopar', 'cenar', 'obert', 'abierto', 'menjar', 'comer', 'tapes', 'pa(?![a-z])', 'forn', 'cafe')) {
+      const o = shops.filter(isOpen);
+      return { text: (o.length ? 'Obert ara, segons el que diuen els mateixos negocis:\n' : 'Ara està tot tancat. Aquests obren aviat:\n') + (o.length ? o : shops).map((s) => `- **${s.n}** · ${s.offer}`).join('\n'), actions: [] };
+    }
+    if (has(q, 'que fer', 'que faig', 'que hacer', 'agenda', 'cap de setmana', 'fin de semana', 'avui', 'hoy', 'activitat')) {
+      return { text: 'Això és el que hi ha aviat:\n' + events.slice(0, 4).map((e) => `- **${e.t}** · ${dayLabel(e.d)}, ${t24(e.h)} h · ${e.l}`).join('\n') + '\n\nA cada activitat t’expliquem què passarà i pots dir que busques companyia.', actions: [['Obre l’agenda', '#agenda']] };
+    }
+    if (has(q, 'nou', 'nueva', 'nuevo', 'acabo', 'arribat', 'gent', 'amics', 'amigos')) return { text: 'Benvingut! Aquesta setmana hi ha un **sopar de benvinguda** on algú t’esperarà a la porta per presentar-te gent. I tens una guia dels primers 30 dies.', actions: [['Sopar de benvinguda', '#agenda/sopar']] };
+    if (has(q, '112', 'emergenc', 'urgenc', 'policia')) return { text: 'En una emergència, truca al **112**: gratuït i 24 hores.', actions: [['Truca al 112', 'tel:112']] };
+    return { text: 'Encara no tinc aquesta resposta: funciono en **mode demostració**, sense cap model d’IA connectat, i només responc amb el que hi ha a la plataforma.\n\nPots preguntar-ho a la comunitat: algú del poble ho sabrà.', actions: [['Pregunta-ho a la comunitat', '#comunitat']] };
+  }
+  async function stream(text, onChunk, signal) {
+    const wait = (ms) => new Promise((res, rej) => { const id = setTimeout(res, ms); signal && signal.addEventListener('abort', () => { clearTimeout(id); rej(new Error('abort')); }, { once: true }); });
+    await wait(500);
+    let out = '';
+    for (const w of text.match(/\S+\s*/g) || []) { await wait(14 + Math.random() * 24); out += w; onChunk(out); }
+    return out;
+  }
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+  const md = (t) => {
+    const lines = esc(t).split('\n'); let h = ''; let ul = false;
+    for (const l of lines) {
+      const f = l.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      if (l.startsWith('- ')) { if (!ul) { h += '<ul>'; ul = true; } h += `<li>${f.slice(2)}</li>`; }
+      else { if (ul) { h += '</ul>'; ul = false; } if (l.trim()) h += `<p>${f}</p>`; }
+    }
+    return h + (ul ? '</ul>' : '');
+  };
+  let tt;
+  const toast = (m) => { const el = document.getElementById('toast'); if (!el) return; el.textContent = m; el.classList.add('on'); clearTimeout(tt); tt = setTimeout(() => el.classList.remove('on'), 2400); };
+  const initials = (n) => { const p = n.trim().split(/\s+/); return ((p[0] || '')[0] + (p.length > 1 ? p[p.length - 1][0] : '')).toUpperCase(); };
+  const ago = (m) => (m < 60 ? `fa ${m} min` : m < 1440 ? `fa ${Math.round(m / 60)} h` : m < 2880 ? 'ahir' : `fa ${Math.round(m / 1440)} dies`);
+  const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+  return { state, events, posts, shops, proposal, nextBus, minsTo, isOpen, t24, dayLabel, longDate, greet, answer, stream, md, esc, toast, initials, ago, day, DOWS, reduced, hhmm };
+})();
+
+const S = SURIA, $ = (q) => document.querySelector(q);
+document.documentElement.dataset.text = S.state.get().text;
+const cv = $('#scene'), ctx = cv.getContext('2d');
+let W = 0, H = 0, DPR = 1, minutes = 0, buildings = [], layers = { ev: true, shop: true, srv: true, post: true }, selected = null, chat = [];
+const nowMin = () => { const d = new Date(); return Math.max(360, d.getHours() * 60 + d.getMinutes()); };
+const fmt = (m) => `${String(Math.floor(m / 60) % 24).padStart(2, '0')}.${String(m % 60).padStart(2, '0')}`;
+const hm = (m) => `${String(Math.floor(m / 60) % 24).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
+
+// Aleatori amb llavor: el turó és sempre el mateix.
+let seed = 7; const rnd = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+const FAC = ['#e9b44c', '#d0643a', '#e8b7a8', '#f1ece2', '#d9cfbf', '#c99a6b', '#e7d3a6', '#b8573a'];
+const lerp = (a, b, t) => a + (b - a) * t;
+const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+const mix = (a, b, t) => { const A = hex(a), B = hex(b); return `rgb(${A.map((v, i) => Math.round(lerp(v, B[i], t))).join(',')})`; };
+const SKY = [[360, '#2a2f5a', '#f2a07a'], [450, '#7fa9dc', '#ffd9b0'], [720, '#5ea4f2', '#dff0ff'], [1050, '#6a8fd8', '#ffd3a1'], [1140, '#3d3f7e', '#ff8e5e'], [1230, '#121b3e', '#3b3a6e'], [1440, '#070b1e', '#16203f']];
+function skyAt(m) { for (let i = 0; i < SKY.length - 1; i++) { const [a, t1, b1] = SKY[i], [b, t2, b2] = SKY[i + 1]; if (m >= a && m <= b) { const t = (m - a) / (b - a); return [mix(t1, t2, t), mix(b1, b2, t)]; } } return [SKY[6][1], SKY[6][2]]; }
+const nightAt = (m) => (m < 420 ? 1 - (m - 360) / 60 : m < 1080 ? 0 : m < 1200 ? (m - 1080) / 120 : 1);
+
+function layout() {
+  DPR = Math.min(2, devicePixelRatio || 1); W = innerWidth; H = innerHeight;
+  cv.width = W * DPR; cv.height = H * DPR; ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  seed = 7; buildings = [];
+  const desk = W >= 960, cx = desk ? (W - 25 * 16) / 2 : W / 2;
+  const base = desk ? H * 0.86 : H * 0.7, rows = 9, rowH = Math.min(46, H * 0.05), maxHalf = Math.min(W * (desk ? 0.34 : 0.62), 520);
+  for (let r = 0; r < rows; r++) {
+    const half = maxHalf * (1 - r / (rows + 1.2)) ** 1.25, y = base - r * rowH * 0.92;
+    let x = cx - half;
+    while (x < cx + half) {
+      const w = 22 + rnd() * 34 * (1 - r / 14), h = rowH * (1.15 + rnd() * 0.9);
+      buildings.push({ x, y, w, h, c: FAC[Math.floor(rnd() * FAC.length)], r, win: Array.from({ length: 8 }, () => rnd()) });
+      x += w + 1 + rnd() * 3;
+    }
+  }
+  const topY = base - rows * rowH * 0.92;
+  buildings.tower = { x: cx - 9, y: topY + 8, w: 18, h: rowH * 3.2 };
+  buildings.cx = cx; buildings.base = base;
+}
+function draw() {
+  const [top, bottom] = skyAt(minutes), night = nightAt(minutes);
+  const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, top); g.addColorStop(0.75, bottom); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  // Sol o lluna
+  const t = Math.min(1, Math.max(0, (minutes - 420) / (1170 - 420)));
+  const sx = lerp(W * 0.12, W * 0.88, t), sy = H * 0.42 - Math.sin(t * Math.PI) * H * 0.26;
+  ctx.fillStyle = night > 0.6 ? 'rgba(240,238,225,.9)' : 'rgba(255,214,120,.95)';
+  const narrow = W < 600, mx = narrow ? W * 0.84 : night > 0.6 ? W * 0.78 : sx, my = narrow ? Math.max(250, night > 0.6 ? 0 : sy) : night > 0.6 ? H * 0.2 : sy;
+  ctx.beginPath(); ctx.arc(mx, my, night > 0.6 ? 16 : narrow ? 20 : 26, 0, Math.PI * 2); ctx.fill();
+  if (night > 0.3) { seed = 99; ctx.fillStyle = `rgba(255,255,255,${0.7 * night})`; for (let i = 0; i < 90; i++) ctx.fillRect(rnd() * W, rnd() * H * 0.5, 1.4, 1.4); }
+  // Serres
+  [[0.55, 0.62, '#4b5f7a'], [0.6, 0.7, '#3a4c64']].forEach(([a, b, c], k) => { ctx.fillStyle = mix(c, '#0b1020', night * 0.7); ctx.beginPath(); ctx.moveTo(0, H * b); for (let x = 0; x <= W; x += 40) ctx.lineTo(x, H * a + Math.sin(x / (120 + k * 60) + k) * 22 + Math.cos(x / 70) * 8); ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.fill(); });
+  // Riu
+  const base = buildings.base; ctx.fillStyle = mix('#3c7bd8', '#0f1d3d', night); ctx.fillRect(0, base + 4, W, H - base);
+  ctx.strokeStyle = `rgba(255,255,255,${0.25 - night * 0.1})`; ctx.lineWidth = 2;
+  for (let y = base + 18; y < H; y += 16) { ctx.beginPath(); for (let x = 0; x <= W; x += 8) ctx.lineTo(x, y + Math.sin(x / 26 + y) * 3); ctx.stroke(); }
+  // Façanes
+  for (const b of buildings) {
+    ctx.fillStyle = mix(b.c, '#1a1f33', night * 0.62); ctx.fillRect(b.x, b.y - b.h, b.w, b.h + 4);
+    ctx.fillStyle = mix('#8f3a22', '#2a1a1a', night * 0.6); ctx.fillRect(b.x - 1, b.y - b.h - 4, b.w + 2, 5);
+    const cols = Math.max(1, Math.floor(b.w / 12)), rowsW = Math.max(1, Math.floor(b.h / 14));
+    for (let i = 0; i < cols; i++) for (let j = 0; j < rowsW; j++) {
+      const k = b.win[(i + j * 3) % 8], lit = night > 0.15 && k < 0.55 * night + 0.05;
+      ctx.fillStyle = lit ? `rgba(255,${200 + Math.round(k * 40)},120,${0.6 + night * 0.4})` : mix('#3a3f4a', '#0d1120', night * 0.5);
+      ctx.fillRect(b.x + 4 + i * (b.w - 6) / cols, b.y - b.h + 5 + j * 13, 4, 6);
+    }
+  }
+  const tw = buildings.tower; ctx.fillStyle = mix('#d9cfbf', '#22273a', night * 0.6); ctx.fillRect(tw.x, tw.y - tw.h, tw.w, tw.h);
+  ctx.beginPath(); ctx.moveTo(tw.x - 3, tw.y - tw.h); ctx.lineTo(tw.x + tw.w / 2, tw.y - tw.h - 22); ctx.lineTo(tw.x + tw.w + 3, tw.y - tw.h); ctx.fillStyle = mix('#8f3a22', '#2a1a1a', night * 0.6); ctx.fill();
+  ctx.fillStyle = night > 0.3 ? 'rgba(255,220,140,.9)' : 'rgba(30,30,40,.6)'; ctx.fillRect(tw.x + 6, tw.y - tw.h + 12, 6, 9);
+}
+
+// Marcadors sobre l'escena
+function points() {
+  const pick = (r, k) => { const row = buildings.filter((b) => b.r === r); const b = row[Math.floor(row.length * k)] || buildings[0]; return { x: b.x + b.w / 2, y: b.y - b.h }; };
+  const P = [];
+  S.events.filter((e) => e.d <= 1).forEach((e, i) => P.push({ type: 'ev', id: e.id, c: 'var(--sun)', label: S.t24(e.h).split('.')[0], ...pick([1, 3, 5, 6][i % 4], [0.2, 0.7, 0.4, 0.55][i % 4]), data: e }));
+  S.shops.forEach((s, i) => P.push({ type: 'shop', id: s.id, c: 'var(--coral)', label: '€', ...pick([0, 2, 0, 4][i], [0.12, 0.85, 0.6, 0.3][i]), data: s }));
+  [{ id: 'farmacia', n: 'Farmàcia de guàrdia', d: 'Farmàcia de la Plaça · fins demà 9.00 h', o: [['00:00', '24:00']] }, { id: 'oac', n: 'Atenció ciutadana', d: 'Padró, certificats i tràmits · matins', o: [['09:00', '14:00']] }, { id: 'bus', n: 'Parada del bus', d: 'Bus cap a Manresa', o: [['06:50', '19:46']] }]
+    .forEach((s, i) => P.push({ type: 'srv', id: s.id, c: 'var(--lilac)', label: ['+', 'i', 'B'][i], ...pick([2, 1, 0][i], [0.35, 0.45, 0.95][i]), data: s }));
+  S.posts.slice(0, 3).forEach((p, i) => P.push({ type: 'post', id: p.id, c: 'var(--mint)', label: p.i[0], ...pick([4, 2, 7][i], [0.75, 0.15, 0.5][i]), data: p }));
+  return P;
+}
+const openAt = (o) => o.some(([a, b]) => hm(minutes) >= a && hm(minutes) < b);
+function renderPins() {
+  $('#pins').innerHTML = points().filter((p) => layers[p.type]).map((p) => {
+    const dim = p.type === 'shop' ? !openAt(p.data.o) : p.type === 'srv' ? !openAt(p.data.o) : p.type === 'ev' ? (p.data.d === 0 && hm(minutes) > p.data.end) : false;
+    const now = p.type === 'ev' && p.data.d === 0 && hm(minutes) >= p.data.h && hm(minutes) <= p.data.end;
+    const name = p.type === 'ev' ? p.data.t : p.type === 'shop' ? p.data.n : p.type === 'srv' ? p.data.n : `${p.data.a}: ${p.data.t.slice(0, 40)}`;
+    return `<button class="pin ${dim ? 'dim' : ''} ${now ? 'now' : ''}" style="left:${p.x}px;top:${p.y}px;--c:${p.c}" data-pin="${p.type}:${p.id}" aria-pressed="${selected === p.type + ':' + p.id}" aria-label="${S.esc(name)}"><span>${p.label}</span></button>`;
+  }).join('');
+}
+function skyText() {
+  const h = minutes / 60, u = S.state.get().user;
+  $('#skyh').textContent = `${h < 14 ? 'Bon dia' : h < 20 ? 'Bona tarda' : 'Bona nit'}${u ? ', ' + u.n.split(' ')[0] : ''}.`;
+  const open = S.shops.filter((s) => openAt(s.o)).length;
+  $('#skyp').textContent = `${S.longDate()} · ${open} ${open === 1 ? 'comerç obert' : 'comerços oberts'} a les ${fmt(minutes)}`;
+  $('#tout').textContent = fmt(minutes);
+}
+function nextBusAt(k = 3) { return ['06:50', '07:55', '08:40', '09:55', '11:00', '12:05', '13:10', '14:50', '16:25', '17:20', '18:45', '19:45'].filter((b) => b >= hm(minutes)).slice(0, k); }
+function panelHome() {
+  const b = nextBusAt(2), evs = S.events.filter((e) => e.d === 0 && e.end > hm(minutes)).concat(S.events.filter((e) => e.d === 1)).slice(0, 3);
+  return `<div><p class="eyebrow">Ara al turó · ${fmt(minutes)} h</p><p class="title" style="margin-top:4px">Toca un lloc del poble o pregunta</p></div>
+    <form class="ask" id="askf"><label for="aq" style="position:absolute;left:-9999px">Pregunta</label><input id="aq" placeholder="Pregunta al poble…" autocomplete="off"><button aria-label="Pregunta">↑</button></form>
+    <div class="hero-k"><div><b>${b[0] ? S.t24(b[0]) : '—'}</b><small>Bus a Manresa</small></div><div><b>${S.shops.filter((s) => openAt(s.o)).length}/${S.shops.length}</b><small>Comerços oberts</small></div><div><b>${evs.length}</b><small>Activitats</small></div></div>
+    ${evs.map((e) => `<button class="item" data-pin="ev:${e.id}"><span class="dot" style="--c:var(--sun)">${S.t24(e.h).split('.')[0]}</span><span><b>${e.t}</b><small>${S.dayLabel(e.d)} · ${e.l}</small></span></button>`).join('')}
+    <p><span class="demo">Exemple</span></p>`;
+}
+function panelPin(key) {
+  const [type, id] = key.split(':'), p = points().find((x) => x.type === type && x.id === id), d = p.data;
+  const back = '<button class="btn alt" id="back">← Tot el poble</button>';
+  if (type === 'ev') { const on = !!S.state.get().going[d.id]; return `<p class="eyebrow" style="color:#a06a00">${S.dayLabel(d.d)} · ${S.t24(d.h)}–${S.t24(d.end)} h</p><p class="title">${d.t}</p><p style="color:var(--ink-2)">${d.l} · ${d.going + (on ? 1 : 0)} hi van</p><div class="msg"><b>Primera vegada?</b> ${d.x}</div><div class="acts"><button class="btn" data-go="${d.id}" aria-pressed="${on}">${on ? '✓ Hi vas' : 'Hi vaig'}</button><button class="btn alt" data-buddy="${d.id}">Busco companyia</button></div>${back}`; }
+  if (type === 'shop') return `<p class="eyebrow" style="color:${openAt(d.o) ? '#0e7a52' : 'var(--ink-3)'}">${openAt(d.o) ? '● Obert a les ' + fmt(minutes) : '○ Tancat a les ' + fmt(minutes)}${d.featured ? ' · Destacat' : ''}</p><p class="title">${d.n}</p><p style="color:var(--ink-2)">${d.k} · horari ${d.o.map(([a, b]) => S.t24(a) + '–' + S.t24(b)).join(' i ')}</p><div class="msg">🎟 ${d.offer}</div><span class="demo">Exemple</span>${back}`;
+  if (type === 'srv') return `<p class="eyebrow" style="color:#4b3cc4">Servei</p><p class="title">${d.n}</p><p style="color:var(--ink-2)">${d.d}</p>${d.id === 'bus' ? `<div class="msg">Pròxims a partir de les ${fmt(minutes)}: <b>${nextBusAt(3).map(S.t24).join(' · ') || 'demà 6.50'}</b></div>` : ''}<span class="demo">Exemple</span>${back}`;
+  const th = !!S.state.get().thanks[d.id];
+  return `<p class="eyebrow" style="color:#0e7a52">${d.ch} · ${S.ago(d.m)}</p><p class="title" style="font-size:1.2rem">${S.esc(d.a)}</p><p>${S.esc(d.t)}</p><div class="acts"><button class="btn alt" data-thx="${d.id}" aria-pressed="${th}">♥ Gràcies ${d.th + (th ? 1 : 0)}</button></div>${back}`;
+}
+function panelChat() {
+  return `<p class="eyebrow">Pregunta al poble · mode demostració</p><div style="display:grid;gap:8px" id="clog" role="log" aria-live="polite">${chat.map((m) => `<div class="msg ${m.r === 'me' ? 'q' : ''}">${m.r === 'me' ? S.esc(m.t) : S.md(m.t)}</div>`).join('')}</div>
+    <form class="ask" id="askf"><label for="aq" style="position:absolute;left:-9999px">Pregunta</label><input id="aq" placeholder="Una altra pregunta…" autocomplete="off"><button aria-label="Pregunta">↑</button></form><button class="btn alt" id="back">← Tot el poble</button>`;
+}
+let panelMode = 'home';
+function renderPanel(expand) {
+  $('#pbody').innerHTML = panelMode === 'home' ? panelHome() : panelMode === 'chat' ? panelChat() : panelPin(panelMode);
+  if (expand) $('#panel').classList.remove('min');
+}
+async function ask(q) {
+  q = q.trim(); if (!q) return; panelMode = 'chat'; chat.push({ r: 'me', t: q }); const a = S.answer(q); chat.push({ r: 'ai', t: '…' });
+  renderPanel(true); $('#aq')?.focus();
+  await S.stream(a.text, (t) => { chat[chat.length - 1].t = t; const log = $('#clog'); if (log) { log.lastElementChild.innerHTML = S.md(t); log.lastElementChild.scrollIntoView({ block: 'nearest' }); } });
+}
+function setTime(m) { minutes = m; $('#t').value = m; draw(); renderPins(); skyText(); if (panelMode === 'home') renderPanel(false); }
+function needUser() {
+  if (S.state.get().user) return false;
+  panelMode = 'login'; $('#pbody').innerHTML = `<p class="eyebrow">Un moment</p><p class="title">Com et diuen?</p><p style="color:var(--ink-2)">Només el nom, perquè els veïns sàpiguen qui hi va. Res surt del dispositiu.</p><form id="si" style="display:grid;gap:8px"><label for="nm" class="eyebrow">Nom i cognom</label><input id="nm" class="item" style="min-height:48px" autocomplete="name" placeholder="Marta Puig"><button class="btn">Entra</button></form><button class="btn alt" id="back">← Tot el poble</button>`;
+  $('#panel').classList.remove('min'); $('#nm').focus();
+  $('#si').onsubmit = (e) => { e.preventDefault(); const n = $('#nm').value.trim(); if (n.length < 2) return; S.state.set((s) => { s.user = { n, i: S.initials(n) }; }); $('#me').textContent = S.initials(n); S.toast(`Hola, ${n.split(' ')[0]}`); panelMode = 'home'; renderPanel(); skyText(); };
+  return true;
+}
+document.addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.pin) { selected = b.dataset.pin; panelMode = b.dataset.pin; renderPins(); renderPanel(true); return; }
+  if (b.dataset.layer) { layers[b.dataset.layer] = !layers[b.dataset.layer]; b.setAttribute('aria-pressed', String(layers[b.dataset.layer])); renderPins(); return; }
+  if (b.id === 'back') { selected = null; panelMode = 'home'; renderPins(); renderPanel(); return; }
+  if (b.id === 'grab') { $('#panel').classList.toggle('min'); return; }
+  if (b.id === 'now') { setTime(nowMin()); return; }
+  if (b.id === 'me') { if (!needUser()) { panelMode = 'me'; $('#pbody').innerHTML = `<p class="eyebrow">El teu compte</p><p class="title">${S.esc(S.state.get().user.n)}</p><p style="color:var(--ink-2)">${Object.keys(S.state.get().going).length} activitats · ${Object.keys(S.state.get().thanks).length} gràcies</p><p class="eyebrow" style="margin-top:6px">Mida del text</p><div class="acts">${[['m', 'A'], ['l', 'A+'], ['xl', 'A++']].map(([k, l]) => `<button class="btn alt" data-size="${k}" aria-pressed="${S.state.get().text === k}">${l}</button>`).join('')}</div><button class="btn alt" id="logout">Surt</button><button class="btn alt" id="back">← Tot el poble</button>`; $('#panel').classList.remove('min'); } return; }
+  if (b.dataset.size) { S.state.set((s) => { s.text = b.dataset.size; }); document.documentElement.dataset.text = b.dataset.size; b.parentElement.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); return; }
+  if (b.id === 'logout') { S.state.set((s) => { s.user = null; }); $('#me').textContent = '·'; panelMode = 'home'; renderPanel(); skyText(); return; }
+  if (b.dataset.go) { if (needUser()) return; const id = b.dataset.go; S.state.set((s) => { s.going[id] ? delete s.going[id] : (s.going[id] = 1); }); S.toast(S.state.get().going[id] ? 'Apuntat. T’ho recordarem.' : 'Ja no hi vas'); renderPanel(); return; }
+  if (b.dataset.buddy) { if (needUser()) return; S.state.set((s) => { s.buddy[b.dataset.buddy] = 1; }); S.toast('Et presentarem algú que també hi va'); return; }
+  if (b.dataset.thx) { if (needUser()) return; const id = b.dataset.thx; S.state.set((s) => { s.thanks[id] ? delete s.thanks[id] : (s.thanks[id] = 1); }); renderPanel(); }
+});
+document.addEventListener('submit', (e) => { if (e.target.id === 'askf') { e.preventDefault(); const v = $('#aq').value; ask(v); } });
+$('#t').addEventListener('input', (e) => setTime(Number(e.target.value)));
+let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { layout(); draw(); renderPins(); }, 120); });
+if (S.state.get().user) $('#me').textContent = S.state.get().user.i;
+layout(); setTime(nowMin()); renderPanel();
+</script>
