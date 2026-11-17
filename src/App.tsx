@@ -30,7 +30,9 @@ function usePrefs() {
     const apply = () => {
       if (prefs.text !== 'm') d.dataset.text = prefs.text; else delete d.dataset.text;
       if (prefs.contrast) d.dataset.contrast = 'high'; else delete d.dataset.contrast;
-      const dark = prefs.theme === 'dark' || (prefs.theme === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+      const host = (window as unknown as { __hostTheme?: string }).__hostTheme;
+      const system = host ? host === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+      const dark = prefs.theme === 'dark' || (prefs.theme === 'system' && system);
       if (dark) d.dataset.theme = 'dark'; else delete d.dataset.theme;
     };
     apply();

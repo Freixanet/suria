@@ -4,7 +4,7 @@ import { Icon } from '../components/Icon';
 import { Avatar, Demo } from '../components/Bits';
 import { events, groups, shops } from '../lib/demo';
 import { dayLabel, pick, time, useLang, useT } from '../lib/i18n';
-import { getState, setPrefs, setState, useStore } from '../lib/store';
+import { getState, resetAll, setPrefs, setState, useStore } from '../lib/store';
 import { toast } from '../lib/ui';
 import { dateOf } from '../lib/when';
 
@@ -128,7 +128,7 @@ export default function Me() {
           <button className="btn btn--line btn--block" onClick={() => { setState((x) => ({ ...x, user: null })); toast(t('Has sortit', 'Has salido')); navigate('/'); }}><Icon name="LogOut" size={18} />{t('Surt', 'Sal')}</button>
           <button className="btn btn--line btn--block" style={{ color: 'var(--danger)' }} onClick={() => {
             if (!confirm) { setConfirm(true); return; }
-            localStorage.removeItem('suria:v1'); location.href = '/';
+            resetAll(); toast(t('Compte esborrat', 'Cuenta borrada')); navigate('/');
           }}><Icon name="Trash2" size={18} />{confirm ? t('Toca de nou per esborrar-ho tot', 'Toca de nuevo para borrarlo todo') : t('Esborra el compte', 'Borra la cuenta')}</button>
         </div>
       </section>

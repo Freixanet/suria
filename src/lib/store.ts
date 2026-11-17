@@ -106,3 +106,10 @@ export const initialsOf = (name: string) => {
 };
 
 export const uid = () => Math.random().toString(36).slice(2, 10);
+
+/** Esborra tot el que l'app ha guardat en aquest dispositiu. */
+export function resetAll() {
+  try { localStorage.removeItem(KEY); } catch { /* opcional */ }
+  state = fresh();
+  subs.forEach((f) => f());
+}

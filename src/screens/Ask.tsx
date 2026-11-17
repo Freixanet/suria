@@ -36,6 +36,13 @@ function Rich({ text, typing }: { text: string; typing?: boolean }) {
   return <div className="msg__rich">{blocks}{typing && <span className="caret" aria-hidden="true" />}</div>;
 }
 
+/** sessionStorage pot no estar disponible (navegació privada, iframes): mai ha de trencar el xat. */
+const ss = {
+  get: (k: string) => { try { return sessionStorage.getItem(k); } catch { return null; } },
+  set: (k: string, v: string) => { try { sessionStorage.setItem(k, v); } catch { /* opcional */ } },
+  del: (k: string) => { try { sessionStorage.removeItem(k); } catch { /* opcional */ } },
+};
+
 const titleOf = (s: string) => (s.length > 52 ? s.slice(0, 50).trimEnd() + '…' : s);
 
 export default function Ask() {
@@ -43,7 +50,7 @@ export default function Ask() {
   const lang = useLang();
   const [params, setParams] = useSearchParams();
   const chats = useStore((s) => s.chats);
-  const [chatId, setChatId] = useState<string | null>(() => sessionStorage.getItem('suria:xat'));
+  const [chatId, setChatId] = useState<string | null>(() => ss.get('suria:xat'));
   const chat = chats.find((c) => c.id === chatId) ?? null;
   const [draft, setDraft] = useState('');
   const [busy, setBusy] = useState(false);
@@ -61,7 +68,7 @@ export default function Ask() {
 
   const save = (c: Chat) => {
     setState((s) => ({ ...s, chats: [c, ...s.chats.filter((x) => x.id !== c.id)].slice(0, 40) }));
-    sessionStorage.setItem('suria:xat', c.id);
+    ss.set('suria:xat', c.id);
     setChatId(c.id);
   };
   const scroll = () => requestAnimationFrame(() => end.current?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'end' }));
@@ -119,7 +126,7 @@ export default function Ask() {
 
   function newChat() {
     ctrl.current?.abort();
-    sessionStorage.removeItem('suria:xat');
+    ss.del('suria:xat');
     setChatId(null);
     setLive(null);
     setVotes({});
@@ -133,7 +140,7 @@ export default function Ask() {
     if (q && !asked.current) {
       asked.current = true;
       setParams({}, { replace: true });
-      sessionStorage.removeItem('suria:xat');
+      ss.del('suria:xat');
       setChatId(null);
       setTimeout(() => {
         const base: Chat = { id: uid(), title: titleOf(q), msgs: [{ role: 'user', text: q, at: Date.now() }], at: Date.now() };
@@ -271,7 +278,7 @@ export default function Ask() {
                 {chats.length === 0 && <p className="muted" style={{ padding: '1rem 0' }}>{t('Encara no hi ha converses.', 'Todavía no hay conversaciones.')}</p>}
                 {chats.map((c) => (
                   <div key={c.id} className="row" style={{ gap: '.25rem' }}>
-                    <button className="row__body" style={{ border: 0, background: 'none', textAlign: 'left', padding: 0 }} onClick={() => { setChatId(c.id); sessionStorage.setItem('suria:xat', c.id); setHistory(false); scroll(); }}>
+                    <button className="row__body" style={{ border: 0, background: 'none', textAlign: 'left', padding: 0 }} onClick={() => { setChatId(c.id); ss.set('suria:xat', c.id); setHistory(false); scroll(); }}>
                       <span className="row__title">{c.title}</span>
                       <span className="row__sub">{new Intl.DateTimeFormat(lang, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }).format(c.at)} · {c.msgs.length} {t('missatges', 'mensajes')}</span>
                     </button>
