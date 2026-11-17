@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ca">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#F4F2EC" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0C0E10" media="(prefers-color-scheme: dark)" />
+    <meta name="description" content="Súria, cada dia: què passa, qui ho fa i com fer-ho. Per a veïns, comerços i nouvinguts." />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <title>Súria</title>
+    <script>
+      // Preferències abans de pintar (sense parpelleig de tema o mida de text).
+      try {
+        var s = (JSON.parse(localStorage.getItem('suria:v1') || '{}').prefs) || {};
+        var d = document.documentElement;
+        if (s.text && s.text !== 'm') d.dataset.text = s.text;
+        if (s.contrast) d.dataset.contrast = 'high';
+        if (s.theme === 'dark' || (s.theme !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches)) d.dataset.theme = 'dark';
+        if (s.lang) d.lang = s.lang;
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

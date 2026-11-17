@@ -1,0 +1,134 @@
+/* Súria · sistema visual
+   Idea: «la plaça». Un paper càlid i net on tot es llegeix bé, un blau de riu per a l'acció
+   i un to propi per a cada part de la vida del poble. Tipografia editorial (Instrument Serif)
+   per a la veu, Geist per a la interfície. Pensat per durar: pocs colors, molt espai, contrast alt. */
+
+:root {
+  /* Superfícies */
+  --paper: #f4f2ec;
+  --paper-2: #ebe8e0;
+  --card: #ffffff;
+  --card-2: #faf9f6;
+  --ink: #0f1214;
+  --ink-2: #3c4248;
+  --ink-3: #5f666d;
+  --line: rgb(15 18 20 / 0.09);
+  --line-2: rgb(15 18 20 / 0.16);
+  --veil: rgb(244 242 236 / 0.82);
+  --scrim: rgb(12 14 16 / 0.44);
+
+  /* Acció: el riu Cardener */
+  --accent: #2440e6;
+  --accent-ink: #ffffff;
+  --accent-soft: #e5e9ff;
+  --accent-deep: #1a2fb0;
+
+  /* Tons de secció (fort / suau / text) */
+  --sun: #ffd84d;   --sun-soft: #fff3c4;   --sun-ink: #5f4500;
+  --coral: #ff7a59; --coral-soft: #ffe4da; --coral-ink: #8a2c12;
+  --mint: #2fbf8a;  --mint-soft: #d9f4e8;  --mint-ink: #0c5539;
+  --lilac: #8b7cf6; --lilac-soft: #ebe8ff; --lilac-ink: #3a2ea3;
+  --sky: #4fb3ff;   --sky-soft: #def0ff;   --sky-ink: #0a4a78;
+  --stone: #9aa0a6; --stone-soft: #eceae4; --stone-ink: #33383d;
+
+  --ok: #12804f;
+  --ok-soft: #dcf3e7;
+  --warn: #a85b00;
+  --danger: #c0352b;
+
+  /* Secció actual (es redefineix amb data-tone) */
+  --tone: var(--accent);
+  --tone-soft: var(--accent-soft);
+  --tone-ink: var(--accent-deep);
+
+  /* Tipografia */
+  --sans: 'Geist Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --serif: 'Instrument Serif', ui-serif, Georgia, serif;
+  --fs-12: 0.75rem;
+  --fs-14: 0.875rem;
+  --fs-15: 0.9375rem;
+  --fs-17: 1.0625rem;
+  --fs-19: 1.1875rem;
+  --fs-22: 1.375rem;
+  --fs-28: clamp(1.5rem, 1.2rem + 1.2vw, 1.75rem);
+  --fs-36: clamp(1.875rem, 1.4rem + 2vw, 2.5rem);
+  --fs-display: clamp(2.75rem, 1.6rem + 5.4vw, 5.5rem);
+
+  /* Espai, forma i moviment */
+  --gutter: clamp(1rem, 0.55rem + 2vw, 2rem);
+  --gap: clamp(0.75rem, 0.5rem + 0.9vw, 1.25rem);
+  --r-8: 8px;
+  --r-12: 12px;
+  --r-16: 16px;
+  --r-20: 20px;
+  --r-28: 28px;
+  --r-36: 36px;
+  --tap: 2.875rem;
+  --bar-h: 4.25rem;
+  --top-h: 3.75rem;
+  --rail-w: 16.5rem;
+  --max: 76rem;
+  --sh-1: 0 1px 2px rgb(15 18 20 / 0.04), 0 1px 1px rgb(15 18 20 / 0.03);
+  --sh-2: 0 1px 2px rgb(15 18 20 / 0.05), 0 8px 24px -6px rgb(15 18 20 / 0.12);
+  --sh-3: 0 2px 4px rgb(15 18 20 / 0.05), 0 24px 64px -16px rgb(15 18 20 / 0.32);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --paper: #0c0e10;
+  --paper-2: #14171a;
+  --card: #15181b;
+  --card-2: #1a1e22;
+  --ink: #f2f0ea;
+  --ink-2: #c6c9cd;
+  --ink-3: #9aa1a8;
+  --line: rgb(242 240 234 / 0.09);
+  --line-2: rgb(242 240 234 / 0.18);
+  --veil: rgb(12 14 16 / 0.8);
+  --scrim: rgb(0 0 0 / 0.6);
+  --accent: #7d92ff;
+  --accent-ink: #0c0e10;
+  --accent-soft: #1d2448;
+  --accent-deep: #b3c0ff;
+  --sun-soft: #3a3214;   --sun-ink: #ffe27a;
+  --coral-soft: #3d2019; --coral-ink: #ffb39e;
+  --mint-soft: #12301f;  --mint-ink: #8ce6c0;
+  --lilac-soft: #26214a; --lilac-ink: #c9c1ff;
+  --sky-soft: #10293d;   --sky-ink: #a6d6ff;
+  --stone-soft: #22262a; --stone-ink: #d5d8db;
+  --ok: #6fdba7;
+  --ok-soft: #12301f;
+  --warn: #ffb867;
+  --danger: #ff8a80;
+  --sh-1: 0 0 0 1px rgb(255 255 255 / 0.02);
+  --sh-2: 0 12px 32px -8px rgb(0 0 0 / 0.6);
+  --sh-3: 0 30px 80px -20px rgb(0 0 0 / 0.8);
+  color-scheme: dark;
+}
+
+/* Contrast alt: vores visibles i text més fosc. */
+:root[data-contrast='high'] {
+  --ink-2: var(--ink);
+  --ink-3: #2c3136;
+  --line: rgb(15 18 20 / 0.28);
+  --line-2: rgb(15 18 20 / 0.5);
+}
+:root[data-theme='dark'][data-contrast='high'] {
+  --ink-3: #e3e5e8;
+  --line: rgb(242 240 234 / 0.32);
+  --line-2: rgb(242 240 234 / 0.55);
+}
+
+/* Mida del text (afecta tota la interfície perquè tot va en rem). */
+:root[data-text='l'] { font-size: 112.5%; }
+:root[data-text='xl'] { font-size: 125%; }
+
+[data-tone='sun'] { --tone: var(--sun); --tone-soft: var(--sun-soft); --tone-ink: var(--sun-ink); }
+[data-tone='coral'] { --tone: var(--coral); --tone-soft: var(--coral-soft); --tone-ink: var(--coral-ink); }
+[data-tone='mint'] { --tone: var(--mint); --tone-soft: var(--mint-soft); --tone-ink: var(--mint-ink); }
+[data-tone='lilac'] { --tone: var(--lilac); --tone-soft: var(--lilac-soft); --tone-ink: var(--lilac-ink); }
+[data-tone='sky'] { --tone: var(--sky); --tone-soft: var(--sky-soft); --tone-ink: var(--sky-ink); }
+[data-tone='stone'] { --tone: var(--stone); --tone-soft: var(--stone-soft); --tone-ink: var(--stone-ink); }
+[data-tone='accent'] { --tone: var(--accent); --tone-soft: var(--accent-soft); --tone-ink: var(--accent-deep); }
