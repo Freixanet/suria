@@ -94,7 +94,7 @@ export function Home() {
   const w = useWeather();
   const steps = useStore((s) => Object.keys(s.steps).length);
   const voted = useStore((s) => s.votes[poll.id]);
-  const soon = [...events].filter((e) => e.day <= 3).sort((a, b) => a.day - b.day || a.start.localeCompare(b.start)).slice(0, 6);
+  const soon = [...events].filter((e) => e.day <= 4).sort((a, b) => a.day - b.day || a.start.localeCompare(b.start)).slice(0, 6);
   const today = events.filter((e) => e.day === 0).length;
   const first = user?.name.split(' ')[0];
   const prop = proposals[0];
