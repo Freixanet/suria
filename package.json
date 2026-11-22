@@ -9,6 +9,7 @@
   },
   "scripts": {
     "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
+    "typecheck": "ASTRO_TELEMETRY_DISABLED=1 astro check",
     "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
     "build:proves": "ASTRO_TELEMETRY_DISABLED=1 SURIA_PROVES=1 astro build --outDir dist-proves",
     "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
@@ -21,8 +22,10 @@
     "astro": "7.3.8"
   },
   "devDependencies": {
+    "@astrojs/check": "0.9.12",
     "@axe-core/playwright": "4.13.0",
     "@playwright/test": "1.64.0",
-    "lighthouse": "13.5.0"
+    "lighthouse": "13.5.0",
+    "typescript": "5.9.3"
   }
 }
